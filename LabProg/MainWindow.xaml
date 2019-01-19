@@ -1,0 +1,498 @@
+﻿<Window x:Class="LabProg.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:properties="clr-namespace:LabProg.Properties"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        Title="Лаборатория МГД, ТГУ" Height="600" Width="800" Closing="Window_Closing" Opacity="0.9" >
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="90px"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu FontFamily="Tahoma" FontSize="16">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выход" Click="CloseApp"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit" ></MenuItem>
+            <MenuItem Header="View" ></MenuItem>
+        </Menu>
+        <Grid Column="0" Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ScrollViewer Padding="3" Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" VerticalScrollBarVisibility="Auto">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center"  FontSize="16">Операции с насосом:</TextBlock>
+                    <Expander Grid.Row="1" Header="Управление"  FontSize="16" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PumpManaging, Mode=TwoWay}">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="7*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="30px"></RowDefinition>
+                                <RowDefinition Height="30px"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="20,2,2,2">Показания датчика:</TextBlock>
+                            <TextBlock x:Name="ConfocalLb" Grid.Row="0" Grid.Column="1">0.0</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="20,2,2,2">Установите уровень:</TextBlock>
+                            <TextBox x:Name="CbConfocalLevel" Grid.Row="1" Grid.Column="1" Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}"/>
+                            <Grid Row="2" Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Margin="10,2,4,2">Пуск</Button>
+                                <Button Grid.Column="1" Margin="10,2,4,2">Текущий</Button>
+                            </Grid>
+                            <Grid Row="3" Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" Grid.Row="0" Margin="20,2,4,2" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}">Реверс</CheckBox>
+                                <CheckBox Grid.Column="1" Grid.Row="0" Margin="20,2,4,2" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpActive, Mode=TwoWay}">Активно</CheckBox>
+                            </Grid>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="2" Header="Настройки"  FontSize="16" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PumpSettings, Mode=TwoWay}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Margin="10,2,5,2">Порт насоса</TextBlock>
+                            <ComboBox x:Name = "CbPumpPort" Grid.Column="1" Margin="10,2,5,2">
+                                <TextBlock>COM1</TextBlock>
+                                <TextBlock>COM2</TextBlock>
+                                <TextBlock>COM3</TextBlock>
+                            </ComboBox>
+                        </Grid>
+                    </Expander>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer Padding="3" Grid.Column="0" Grid.Row="1" FontFamily="Tahoma" FontSize="16" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center" >Операции с зеркалом:</TextBlock>
+                    <Expander Grid.Row="1" Header="Управление" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=MirrorManaging, Mode=TwoWay}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0" Grid.Column="0" Margin="5,2,5,2">Налево</Button>
+                            <Button Grid.Row="0" Grid.Column="1" Margin="5,2,5,2">Направо</Button>
+                            <Button Grid.Row="0" Grid.Column="2" Margin="5,2,5,2">Произвольно</Button>
+                            <Button Grid.Row="1" Grid.Column="0" Margin="5,2,5,2">Шагать налево</Button>
+                            <Button Grid.Row="1" Grid.Column="2" Margin="5,2,5,2">Шагать направо</Button>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="2" Header="Настроки" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=MirrorSetup, Mode=TwoWay}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Margin="10,2,5,2">Порт зеркала</TextBlock>
+                            <ComboBox x:Name ="CbMirrorPort"  Grid.Column="1" Grid.Row="0" Margin="10,2,5,2">
+                                <TextBlock>COM1</TextBlock>
+                                <TextBlock>COM2</TextBlock>
+                                <TextBlock>COM3</TextBlock>
+                            </ComboBox>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="10,2,5,2">Левая точка</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="1" Margin="10,2,5,2" Text=""></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="2" Margin="10,2,5,2">Правая точка</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="2" Margin="10,2,5,2" Text=""></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="10,2,5,2">Шаг</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="3" Margin="10,2,5,2" Text=""></TextBox>
+                        </Grid>
+                    </Expander>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer Grid.Column="0" Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontSize="16">Операции с Лазером:</TextBlock>
+            </ScrollViewer>
+
+            <ScrollViewer Grid.Column="0" Grid.Row="3" FontFamily="Tahoma" FontSize="16" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"  TextAlignment="Center" VerticalAlignment="Center" >Управление блоком питания:</TextBlock>
+                    <Expander Grid.Row="1" Header="Общее управление">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Row="0" Grid.Column="1">Соединиться с портом</CheckBox>
+                            <GroupBox Grid.Row="1" Grid.Column="0"></GroupBox>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="2" Header="Канал 0 (УФ диод 1):" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=ExChannel1, Mode=TwoWay}">
+                    <Grid Margin="10,10,10,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="PwrCh0Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel0On, Mode=TwoWay}" 
+                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
+                            <ComboBox x:Name="CbModeCh0"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                <TextBlock>Регулирование по напряжению</TextBlock>
+                                <TextBlock>Регулирование по току</TextBlock>
+                                <TextBlock>Синусоидальный сигнал</TextBlock>
+                                <TextBlock>ШИМ сигнал</TextBlock>
+                            </ComboBox>
+                            <TextBlock x:Name="TbChannel0Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                            <TextBox x:Name="TbCh0Bias" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"
+                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0Bias, Mode=TwoWay}"
+                                     ></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                            <TextBox x:Name="TbChannel0Amplitude" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                            <TextBox x:Name="TbCh0MaxVolts" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5" 
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0MaxVolts, Mode=TwoWay}" ></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"></TextBox>
+                            <Button x:Name="PwrCh0Read"  Grid.Column="0" Grid.Row="9" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                            <Button x:Name="PwrCh0Write"  Grid.Column="1" Grid.Row="9" Margin="5,5,5,5" Click="PwrCh0Write_Click">Записать</Button>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="3" Header="Канал 1 (УФ диод 2):">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="PwrCh1Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel1On, Mode=TwoWay}" 
+                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
+                            <ComboBox x:Name="CbModeCh1"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                <TextBlock>Регулирование по напряжению</TextBlock>
+                                <TextBlock>Регулирование по току</TextBlock>
+                                <TextBlock>Синусоидальный сигнал</TextBlock>
+                                <TextBlock>ШИМ сигнал</TextBlock>
+                            </ComboBox>
+                            <TextBlock x:Name="TbChannel1Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                            <TextBox x:Name="TbCh1Bias"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1Bias, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                            <TextBox x:Name="TbChannel1Amplitude" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                            <TextBox x:Name="TbCh1MaxVolts" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1MaxVolts, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"></TextBox>
+                            <Button x:Name="PwrCh1Read"  Grid.Column="0" Grid.Row="9" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                            <Button x:Name="PwrCh1Write" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5" Click="PwrCh1Write_Click">Записать</Button>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="4" Header="Канал 2 (ИК источник 1):">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="PwrCh2Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel2On, Mode=TwoWay}" 
+                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
+                            <ComboBox x:Name="CbModeCh2"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                <TextBlock>Регулирование по напряжению</TextBlock>
+                                <TextBlock>Регулирование по току</TextBlock>
+                                <TextBlock>Синусоидальный сигнал</TextBlock>
+                                <TextBlock>ШИМ сигнал</TextBlock>
+                            </ComboBox>
+                            <TextBlock x:Name="TbChannel2Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                            <TextBox x:Name="TbCh2Bias" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2Bias, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                            <TextBox x:Name="TbChannel2Amplitude" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                            <TextBox x:Name="TbCh2MaxVolts" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2MaxVolts, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"></TextBox>
+                            <Button x:Name="PwrCh2Read"  Grid.Column="0" Grid.Row="9" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                            <Button x:Name="PwrCh2Write" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5" Click="PwrCh2Write_Click">Записать</Button>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="5" Header="Канал 3 (ИК источник 2):">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="PwrCh3Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}" 
+                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
+                            <ComboBox x:Name="CbModeCh3"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                <TextBlock>Регулирование по напряжению</TextBlock>
+                                <TextBlock>Регулирование по току</TextBlock>
+                                <TextBlock>Синусоидальный сигнал</TextBlock>
+                                <TextBlock>ШИМ сигнал</TextBlock>
+                            </ComboBox>
+                            <TextBlock x:Name="TbChannel3Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                            <TextBox x:Name="TbCh3Bias" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3Bias, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                            <TextBox x:Name="TbChannel3Amplitude" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                            <TextBox x:Name="TbCh3MaxVolts" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3MaxVolts, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"></TextBox>
+                            <Button x:Name="PwrCh3Read"  Grid.Column="0" Grid.Row="9" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                            <Button x:Name="PwrCh3Write" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5" Click="PwrCh3Write_Click">Записать</Button>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="6" Header="Канал 4 (Микрокомпрессор):">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="PwrCh4Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel4On, Mode=TwoWay}" 
+                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
+                            <ComboBox x:Name="CbModeCh4"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                <TextBlock>Регулирование по напряжению</TextBlock>
+                                <TextBlock>Регулирование по току</TextBlock>
+                                <TextBlock>Синусоидальный сигнал</TextBlock>
+                                <TextBlock>ШИМ сигнал</TextBlock>
+                            </ComboBox>
+                            <TextBlock x:Name="TbChannel4Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                            <TextBox x:Name="TbChannel4Amplitude" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4MaxVolts, Mode=TwoWay}"></TextBox>
+                            <Button x:Name="PwrCh4Read"  Grid.Column="0" Grid.Row="9" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                            <Button Grid.Column="1" Grid.Row="9" Margin="5,5,5,5">Записать</Button>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="7" Header="Канал 5:">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="PwrCh5Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel5On, Mode=TwoWay}" 
+                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
+                            <ComboBox x:Name="CbModeCh5"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                <TextBlock>Регулирование по напряжению</TextBlock>
+                                <TextBlock>Регулирование по току</TextBlock>
+                                <TextBlock>Синусоидальный сигнал</TextBlock>
+                                <TextBlock>ШИМ сигнал</TextBlock>
+                            </ComboBox>
+                            <TextBlock x:Name="TbChannel5Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                            <TextBox x:Name="TbChannel5Amplitude" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5MaxVolts, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"></TextBox>
+                            <Button x:Name="PwrCh5Read"  Grid.Column="0" Grid.Row="9" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                            <Button Grid.Column="1" Grid.Row="9" Margin="5,5,5,5">Записать</Button>
+                        </Grid>
+                    </Expander>
+                    <Expander Grid.Row="8" Header="Настройки" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PowerManaging, Mode=TwoWay}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0">Порт насоса</TextBlock>
+                            <ComboBox x:Name="CbPowerPort" Grid.Column="1">
+                                <TextBlock>COM1</TextBlock>
+                                <TextBlock>COM2</TextBlock>
+                                <TextBlock>COM3</TextBlock>
+                            </ComboBox>
+                        </Grid>
+                    </Expander>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="4"></ScrollViewer>
+        </Grid>
+        <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Dt}"/>
+                    <GridViewColumn Width="Auto" Header="Сообщение" DisplayMemberBinding="{Binding LogText}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
