@@ -14,26 +14,25 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="90px"></RowDefinition>
         </Grid.RowDefinitions>
-        <Menu FontFamily="Tahoma" FontSize="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" FontSize="16" Grid.ColumnSpan="2">
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Click="CloseApp"></MenuItem>
             </MenuItem>
             <MenuItem Header="Edit" ></MenuItem>
             <MenuItem Header="View" ></MenuItem>
         </Menu>
-        <Grid Column="0" Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Column="0" Grid.Row="1" Background="Azure" FontFamily="Tahoma" FontSize="16" VerticalScrollBarVisibility="Auto">
+        <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <ScrollViewer Padding="3" Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" VerticalScrollBarVisibility="Auto">
                 <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -90,9 +89,9 @@
                         </Grid>
                     </Expander>
                 </Grid>
-            </ScrollViewer>
-            <ScrollViewer Padding="3" Grid.Column="0" Grid.Row="1" FontFamily="Tahoma" FontSize="16" VerticalScrollBarVisibility="Auto">
-                <Grid>
+            
+           
+                <Grid  Grid.Column="0" Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -146,13 +145,10 @@
                         </Grid>
                     </Expander>
                 </Grid>
-            </ScrollViewer>
-            <ScrollViewer Grid.Column="0" Grid.Row="2" VerticalScrollBarVisibility="Auto">
-                <TextBlock TextAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontSize="16">Операции с Лазером:</TextBlock>
-            </ScrollViewer>
-
-            <ScrollViewer Grid.Column="0" Grid.Row="3" FontFamily="Tahoma" FontSize="16" VerticalScrollBarVisibility="Auto">
-                <Grid>
+            
+                <TextBlock Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontSize="16">Операции с Лазером:</TextBlock>
+           
+                <Grid Grid.Column="0" Grid.Row="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -198,7 +194,9 @@
                                     <CheckBox Grid.Row="1" Grid.Column="0" x:Name="PwrCh2Check" Margin="5,5,5,5" 
                                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel2On, Mode=TwoWay}" 
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff">Ик Источник 1</CheckBox>
-                                    <CheckBox Grid.Row="1" Grid.Column="1">Ик Источник 2</CheckBox>
+                                    <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PwrCh3Check" Margin="5,5,5,5"
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}" 
+                                              Checked="PwrCanelOn" Unchecked="PwrChannelOff">Ик Источник 2</CheckBox>
                                     <CheckBox Grid.Row="2" Grid.Column="0">Микрокомпрессор</CheckBox>
                                     <CheckBox Grid.Row="2" Grid.Column="1">Свободный канал</CheckBox>
                                 </Grid>
@@ -366,9 +364,9 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <CheckBox x:Name="PwrCh3Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                            <CheckBox   Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}" 
-                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                                      >Включить</CheckBox>
                             <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
                             <ComboBox x:Name="CbModeCh3"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
                                 <TextBlock>Регулирование по напряжению</TextBlock>
@@ -505,9 +503,9 @@
                         </Grid>
                     </Expander>
                 </Grid>
-            </ScrollViewer>
-            <ScrollViewer Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="4"></ScrollViewer>
+           
         </Grid>
+        </ScrollViewer>
         <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
