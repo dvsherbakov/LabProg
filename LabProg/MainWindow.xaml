@@ -177,15 +177,39 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column="1">Соединиться с портом</CheckBox>
-                            <GroupBox Grid.Row="1" Grid.Column="0"></GroupBox>
+                            <CheckBox Grid.Row="0"  Checked="PwrPortOn" Unchecked="PwrPortOff">Соединиться с портом</CheckBox>
+                            <GroupBox Grid.Row="1" Header="Включение каналов:">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Row="0" Grid.Column="0"  x:Name="PwrCh0Check"  Margin="5,5,5,5" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel0On, Mode=TwoWay}" 
+                                              Checked="PwrCanelOn" Unchecked="PwrChannelOff">УФ Диод 1</CheckBox>
+                                    <CheckBox Grid.Row="0" Grid.Column="1" x:Name="PwrCh1Check"  Margin="5,5,5,5" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel1On, Mode=TwoWay}" 
+                                              Checked="PwrCanelOn" Unchecked="PwrChannelOff">УФ Диод 2</CheckBox>
+                                    <CheckBox Grid.Row="1" Grid.Column="0" x:Name="PwrCh2Check" Margin="5,5,5,5" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel2On, Mode=TwoWay}" 
+                                              Checked="PwrCanelOn" Unchecked="PwrChannelOff">Ик Источник 1</CheckBox>
+                                    <CheckBox Grid.Row="1" Grid.Column="1">Ик Источник 2</CheckBox>
+                                    <CheckBox Grid.Row="2" Grid.Column="0">Микрокомпрессор</CheckBox>
+                                    <CheckBox Grid.Row="2" Grid.Column="1">Свободный канал</CheckBox>
+                                </Grid>
+
+                            </GroupBox>
                         </Grid>
                     </Expander>
                     <Expander Grid.Row="2" Header="Канал 0 (УФ диод 1):" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=ExChannel1, Mode=TwoWay}">
                     <Grid Margin="10,10,10,10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -199,9 +223,8 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                            <CheckBox x:Name="PwrCh0Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
-                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel0On, Mode=TwoWay}" 
-                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                            <CheckBox Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel0On, Mode=TwoWay}" >Включить</CheckBox>
                             <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
                             <ComboBox x:Name="CbModeCh0"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
                                 <TextBlock>Регулирование по напряжению</TextBlock>
@@ -248,9 +271,8 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <CheckBox x:Name="PwrCh1Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
-                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel1On, Mode=TwoWay}" 
-                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                            <CheckBox   Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel1On, Mode=TwoWay}" >Включить</CheckBox>
                             <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
                             <ComboBox x:Name="CbModeCh1"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
                                 <TextBlock>Регулирование по напряжению</TextBlock>
@@ -296,9 +318,9 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <CheckBox x:Name="PwrCh2Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                            <CheckBox Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel2On, Mode=TwoWay}" 
-                                      Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
+                                      >Включить</CheckBox>
                             <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
                             <ComboBox x:Name="CbModeCh2"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
                                 <TextBlock>Регулирование по напряжению</TextBlock>

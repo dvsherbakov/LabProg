@@ -12,6 +12,16 @@ namespace LabProg
             if (((Button)sender).Name == "PwrCh1Read") PwrSerial.GetChanellData(1);
         }
 
+        private void PwrPortOn(object sender, RoutedEventArgs e)
+        {
+            pwrSerial.OpenPort();
+        }
+
+        private void PwrPortOff(object sender, RoutedEventArgs e)
+        {
+            pwrSerial.OpenPort();
+        }
+
         private void PwrCanelOn(object sender, RoutedEventArgs e)
         {
             switch (((CheckBox)sender).Name)
