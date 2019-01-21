@@ -19,7 +19,7 @@ namespace LabProg
 
         private void PwrPortOff(object sender, RoutedEventArgs e)
         {
-            pwrSerial.OpenPort();
+            pwrSerial.ClosePort();
         }
 
         private void PwrCanelOn(object sender, RoutedEventArgs e)

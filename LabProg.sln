@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabProg", "LabProg\LabProg.csproj", "{806003A1-BF6F-4EE8-8E2F-CDAF3218D9A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{76C587F6-C961-4589-833C-48FF51C50CB2}"
-	ProjectSection(SolutionItems) = preProject
-		LogBoxItem.cs = LogBoxItem.cs
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

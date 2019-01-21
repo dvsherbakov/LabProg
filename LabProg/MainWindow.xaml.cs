@@ -20,6 +20,7 @@ namespace LabProg
     public partial class MainWindow : Window
     {
         readonly PwrSerial pwrSerial;
+        readonly PumpSerial pumpSerial;
 
         public MainWindow()
         {
@@ -27,6 +28,7 @@ namespace LabProg
             LogBox.Items.Add(new LogBoxItem { Dt = DateTime.Now, LogText = "Приложение запущено" });
             InitInternalComponents();
             pwrSerial = new PwrSerial(CbPowerPort.Text);
+            pumpSerial = new PumpSerial(CbPumpPort.Text);
         }
 
         private void CloseApp(object sender, RoutedEventArgs e)

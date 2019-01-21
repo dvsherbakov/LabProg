@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
 
 namespace LabProg
 {
-    public class Pump
+    public class PumpSerial
     {
         private readonly SerialPort _mPort;
+        private bool Active = false;
+        private readonly List<string> RecievedData;
 
-        public Pump(string portStr)
+        public PumpSerial(string portStr)
         {
+            RecievedData = new List<string>();
             _mPort = new SerialPort(portStr)
             {
                 BaudRate = int.Parse("9600"),
@@ -19,7 +23,38 @@ namespace LabProg
                 Handshake = Handshake.None,
                 RtsEnable = true
             };
+            _mPort.DataReceived += DataReceivedHandler;
+
+        }
+
+        public void OpenPort()
+        {
             _mPort.Open();
+            Active = true;
+        }
+
+        public void ClosePort()
+        {
+            _mPort.Close();
+            Active = false;
+            StopPump();
+        }
+
+        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            var cnt = _mPort.ReadBufferSize;
+            var mRxdata = new byte[cnt + 1];
+            try
+            {
+                _mPort.Read(mRxdata, 0, cnt);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            var ascii = Encoding.ASCII;
+            RecievedData.Add(ascii.GetString(mRxdata));
         }
 
         public string ReadPortData()
@@ -39,11 +74,7 @@ namespace LabProg
             return ascii.GetString(mRxdata);
         }
 
-        public void ClosePort()
-        {
-            _mPort.Close();
-        }
-
+        
         public void StartPump()
         {
             _mPort.Write("s");

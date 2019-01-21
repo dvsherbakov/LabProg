@@ -55,9 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Confocal.cs" />
+    <Compile Include="ConfocalHelper.cs" />
     <Compile Include="InitHelper.cs" />
     <Compile Include="ModBus.cs" />
-    <Compile Include="Pump.cs" />
+    <Compile Include="PumpSerial.cs" />
     <Compile Include="PwrHelper.cs" />
     <Compile Include="PwrMode.cs" />
     <Compile Include="PwrParams.cs" />

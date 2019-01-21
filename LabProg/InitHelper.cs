@@ -1,11 +1,13 @@
 ﻿using System.Windows;
 using System.IO.Ports;
 using System.Windows.Controls;
+using Timer = System.Timers.Timer;
 
 namespace LabProg
 {
     public partial class MainWindow : Window
     {
+        Timer ConfocalTimer;
         private void InitInternalComponents()
         {
             CbPumpPort.Items.Clear();
@@ -36,6 +38,13 @@ namespace LabProg
             SetChanellBiasTitle(1);
         }
 
-        
+        private void InitPumpItems()
+        {
+            var ConfocalTimer = new Timer
+            {
+                Interval = 1000
+            };
+            ConfocalTimer.Elapsed += PeackInfo;
+        }
     }
 }

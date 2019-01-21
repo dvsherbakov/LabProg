@@ -70,7 +70,7 @@
                                     <ColumnDefinition Width="3*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Column="0" Grid.Row="0" Margin="20,2,4,2" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}">Реверс</CheckBox>
-                                <CheckBox Grid.Column="1" Grid.Row="0" Margin="20,2,4,2" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpActive, Mode=TwoWay}">Активно</CheckBox>
+                                <CheckBox Grid.Column="1" Grid.Row="0" Margin="20,2,4,2" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpActive, Mode=TwoWay}" Checked="PumpPortOn" Unchecked="PumpPortOff">Активно</CheckBox>
                             </Grid>
                         </Grid>
                     </Expander>
@@ -499,6 +499,7 @@
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
                                 <TextBlock>COM3</TextBlock>
+                                <TextBlock>COM9</TextBlock>
                             </ComboBox>
                         </Grid>
                     </Expander>

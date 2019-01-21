@@ -11,7 +11,7 @@ namespace LabProg
 {
     internal class PwrSerial
     {
-        private static System.IO.Ports.SerialPort Port;
+        private static SerialPort Port;
         private byte[] _rxdata;
         private static readonly List<string> ErrList = new List<string>();
         //readonly Timer _aTimer = new Timer();
@@ -20,6 +20,7 @@ namespace LabProg
         public PwrSerial(string port)
         {
             modBus = new ModBus();
+            if (port == "") port = "COM9";
             Port = new SerialPort(port)
             {
                 BaudRate = 115200,
@@ -36,6 +37,11 @@ namespace LabProg
         public void OpenPort()
         {
             Port.Open();
+        }
+
+        public void ClosePort()
+        {
+            Port.Close();
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
