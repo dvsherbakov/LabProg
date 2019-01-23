@@ -19,6 +19,7 @@ namespace LabProg
                 CbPowerPort.Items.Add(s);
             }
             InitPwrItems();
+            InitPumpItems();
         }
 
         private void InitPwrItems()
@@ -40,7 +41,7 @@ namespace LabProg
 
         private void InitPumpItems()
         {
-            var ConfocalTimer = new Timer
+            ConfocalTimer = new Timer
             {
                 Interval = 1000
             };

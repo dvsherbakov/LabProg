@@ -8,12 +8,13 @@ namespace LabProg
     public class PumpSerial
     {
         private readonly SerialPort _mPort;
-        private bool Active = false;
+        private bool active = false;
         private readonly List<string> RecievedData;
 
         public PumpSerial(string portStr)
         {
             RecievedData = new List<string>();
+            if (portStr == "") portStr = "COM7";
             _mPort = new SerialPort(portStr)
             {
                 BaudRate = int.Parse("9600"),
@@ -30,16 +31,19 @@ namespace LabProg
         public void OpenPort()
         {
             _mPort.Open();
-            Active = true;
+            active = true;
         }
 
         public void ClosePort()
         {
             _mPort.Close();
-            Active = false;
+            active = false;
             StopPump();
         }
-
+        public bool Active()
+        {
+            return active;
+        }
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             var cnt = _mPort.ReadBufferSize;

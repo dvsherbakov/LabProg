@@ -27,6 +27,7 @@ namespace LabProg
             InitializeComponent();
             LogBox.Items.Add(new LogBoxItem { Dt = DateTime.Now, LogText = "Приложение запущено" });
             InitInternalComponents();
+            
             pwrSerial = new PwrSerial(CbPowerPort.Text);
             pumpSerial = new PumpSerial(CbPumpPort.Text);
         }

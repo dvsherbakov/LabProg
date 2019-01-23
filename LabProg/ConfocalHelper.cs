@@ -4,6 +4,8 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Threading;
+using Timer = System.Timers.Timer;
 
 namespace LabProg
 {
@@ -15,6 +17,7 @@ namespace LabProg
         private bool FDirection { get; set; }
         private int PrevRev { get; set; }
         private string _prevSpeed;
+        public delegate void NextPrimeDelegate();
 
         private void PeackInfo(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -28,6 +31,9 @@ namespace LabProg
                     var json = wc.DownloadString("http://169.254.168.150/datagen.php?type=Meas&callback=callback&_=" +
                                 timestamp);
                     x = GetTemp(json);
+
+
+                    ShowRes(x.ToString("N5"));
                     //Invoke(new AddMessageDelegate(ShowRes), x.ToString("N5"));
                 }
             }
@@ -55,13 +61,15 @@ namespace LabProg
             return lst.Count > 0 ? lst.Average() : 0;
         }
 
-        private delegate void AddMessageDelegate(string message);
+        //private delegate void AddMessageDelegate(string message);
 
         private void ShowRes(string message)
         {
-            ConfocalLb.Text = message;
-
-            var res = double.Parse(message) - double.Parse(CbConfocalLevel.Text.Replace('.', ','));
+            Dispatcher.Invoke(()=>ConfocalLb.Text = message);
+            string txt = null;
+            Dispatcher.Invoke(()=>txt= CbConfocalLevel.Text);
+            if (txt.Length == 0) txt = @"0.0";
+            var res = double.Parse(message) - double.Parse(txt.Replace('.', ','));
             if ((Math.Abs(res) > 0.001) && AutoStop)
             {
                 pumpSerial.StartPump();
@@ -109,7 +117,15 @@ namespace LabProg
         private void PumpPortOn(object sender, RoutedEventArgs e)
         {
             PumpActive = true;
+           if (ConfocalTimer==null){
+                ConfocalTimer = new Timer
+                {
+                    Interval = 1000
+                };
+                ConfocalTimer.Elapsed += PeackInfo;
+            }
             ConfocalTimer.Start();
+            if (!pumpSerial.Active()) pumpSerial.OpenPort();
         }
         private void PumpPortOff(object sender, RoutedEventArgs e)
         {
