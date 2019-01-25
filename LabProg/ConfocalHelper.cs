@@ -132,5 +132,11 @@ namespace LabProg
             PumpActive = false;
             ConfocalTimer.Stop();
         }
+
+        private void PumpStartButton(object sender, RoutedEventArgs e)
+        {
+            if (!pumpSerial.Active()) pumpSerial.OpenPort();
+            pumpSerial.StartPump();
+        }
     }
 }
