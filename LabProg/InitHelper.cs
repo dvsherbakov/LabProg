@@ -36,6 +36,7 @@ namespace LabProg
             CbModeCh4.SelectedIndex = Properties.Settings.Default.PwrModeCh4;
             CbModeCh5.SelectedIndex = Properties.Settings.Default.PwrModeCh5;
             CbPowerPort.SelectedIndex = Properties.Settings.Default.PwrPortIndex;
+            CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
             SetChanellBiasTitle(1);
         }
 

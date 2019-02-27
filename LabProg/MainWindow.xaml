@@ -507,7 +507,7 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0">Порт насоса</TextBlock>
+                            <TextBlock Grid.Column="0">Порт блока питания</TextBlock>
                             <ComboBox x:Name="CbPowerPort" Grid.Column="1">
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
