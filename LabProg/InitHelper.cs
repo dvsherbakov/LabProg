@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.IO.Ports;
-using System.Windows.Controls;
 using Timer = System.Timers.Timer;
 
 namespace LabProg
