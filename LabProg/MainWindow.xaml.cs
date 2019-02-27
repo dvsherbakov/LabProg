@@ -46,6 +46,8 @@ namespace LabProg
             Properties.Settings.Default.PwrModeCh4 = CbModeCh4.SelectedIndex;
             Properties.Settings.Default.PwrModeCh5 = CbModeCh5.SelectedIndex;
             Properties.Settings.Default.PwrPortIndex = CbPowerPort.SelectedIndex;
+            Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
+            
             Properties.Settings.Default.Save();
         }
 

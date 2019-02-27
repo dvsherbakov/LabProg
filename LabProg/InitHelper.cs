@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.IO.Ports;
-using System.Windows.Controls;
 using Timer = System.Timers.Timer;
 
 namespace LabProg
@@ -36,6 +35,8 @@ namespace LabProg
             CbModeCh4.SelectedIndex = Properties.Settings.Default.PwrModeCh4;
             CbModeCh5.SelectedIndex = Properties.Settings.Default.PwrModeCh5;
             CbPowerPort.SelectedIndex = Properties.Settings.Default.PwrPortIndex;
+            CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
+            //new line
             SetChanellBiasTitle(1);
         }
 
