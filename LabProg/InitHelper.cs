@@ -9,8 +9,8 @@ namespace LabProg
         Timer ConfocalTimer;
         private void InitInternalComponents()
         {
-            CbPumpPort.Items.Clear();
-            CbMirrorPort.Items.Clear();
+            //CbPumpPort.Items.Clear();
+            //CbMirrorPort.Items.Clear();
             foreach (var s in SerialPort.GetPortNames())
             {
                 CbPumpPort.Items.Add(s);
