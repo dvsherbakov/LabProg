@@ -22,7 +22,7 @@ namespace LabProg
         }
 
         private void InitPwrItems()
-        {
+        { //LoadSettings
             var dl= new PwrModes();
             CbModeCh1.Items.Clear();
             CbModeCh1.ItemsSource = dl.GetValues();
@@ -36,8 +36,24 @@ namespace LabProg
             CbModeCh5.SelectedIndex = Properties.Settings.Default.PwrModeCh5;
             CbPowerPort.SelectedIndex = Properties.Settings.Default.PwrPortIndex;
             CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
+            CbLaserPort.SelectedIndex = Properties.Settings.Default.LaserPortIndex;
             //new line
             SetChanellBiasTitle(1);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        { //Save Settings
+            Properties.Settings.Default.PwrModeCh0 = CbModeCh0.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh1 = CbModeCh1.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh2 = CbModeCh2.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh3 = CbModeCh3.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh4 = CbModeCh4.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh5 = CbModeCh5.SelectedIndex;
+            Properties.Settings.Default.PwrPortIndex = CbPowerPort.SelectedIndex;
+            Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
+            Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
+
+            Properties.Settings.Default.Save();
         }
 
         private void InitPumpItems()
