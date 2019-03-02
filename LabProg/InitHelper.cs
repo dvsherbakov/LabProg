@@ -6,7 +6,7 @@ namespace LabProg
 {
     public partial class MainWindow : Window
     {
-        Timer ConfocalTimer;
+        private Timer _confocalTimer;
         private void InitInternalComponents()
         {
             //CbPumpPort.Items.Clear();
@@ -37,7 +37,7 @@ namespace LabProg
             CbPowerPort.SelectedIndex = Properties.Settings.Default.PwrPortIndex;
             CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
             CbLaserPort.SelectedIndex = Properties.Settings.Default.LaserPortIndex;
-            //new line
+            CbPyroPort.SelectedIndex = Properties.Settings.Default.PyroPortIndex;
             SetChanellBiasTitle(1);
         }
 
@@ -52,17 +52,17 @@ namespace LabProg
             Properties.Settings.Default.PwrPortIndex = CbPowerPort.SelectedIndex;
             Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
             Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
-
+            Properties.Settings.Default.PyroPortIndex = CbPyroPort.SelectedIndex;
             Properties.Settings.Default.Save();
         }
 
         private void InitPumpItems()
         {
-            ConfocalTimer = new Timer
+            _confocalTimer = new Timer
             {
                 Interval = 1000
             };
-            ConfocalTimer.Elapsed += PeackInfo;
+            _confocalTimer.Elapsed += PeackInfo;
         }
     }
 }

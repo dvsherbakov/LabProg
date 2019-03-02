@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
+using LabProg.Resources;
 
 namespace LabProg
 {
@@ -21,6 +22,7 @@ namespace LabProg
     {
         readonly PwrSerial pwrSerial;
         readonly PumpSerial pumpSerial;
+        private PyroSerial _pyroSerial;
 
         public MainWindow()
         {
@@ -30,6 +32,7 @@ namespace LabProg
             
             pwrSerial = new PwrSerial(CbPowerPort.Text);
             pumpSerial = new PumpSerial(CbPumpPort.Text);
+            _pyroSerial = new PyroSerial(CbPyroPort.Text);
         }
 
         private void CloseApp(object sender, RoutedEventArgs e)

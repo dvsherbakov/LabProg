@@ -117,20 +117,20 @@ namespace LabProg
         private void PumpPortOn(object sender, RoutedEventArgs e)
         {
             PumpActive = true;
-           if (ConfocalTimer==null){
-                ConfocalTimer = new Timer
+           if (_confocalTimer==null){
+                _confocalTimer = new Timer
                 {
                     Interval = 1000
                 };
-                ConfocalTimer.Elapsed += PeackInfo;
+                _confocalTimer.Elapsed += PeackInfo;
             }
-            ConfocalTimer.Start();
+            _confocalTimer.Start();
             if (!pumpSerial.Active()) pumpSerial.OpenPort();
         }
         private void PumpPortOff(object sender, RoutedEventArgs e)
         {
             PumpActive = false;
-            ConfocalTimer.Stop();
+            _confocalTimer.Stop();
         }
 
         private void PumpStartButton(object sender, RoutedEventArgs e)
