@@ -178,7 +178,7 @@
                                 <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="4*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Подключиться к порту</CheckBox>
+                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Checked="LaserPortOn" Unchecked="LaserPortOff">Подключиться к порту</CheckBox>
                             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Мощность</TextBlock>
                             <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
                             <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=LaserPower, Mode=TwoWay}"/>
