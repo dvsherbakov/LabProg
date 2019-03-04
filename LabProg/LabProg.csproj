@@ -67,6 +67,7 @@
     <Compile Include="PwrMode.cs" />
     <Compile Include="PwrParams.cs" />
     <Compile Include="PwrSerial.cs" />
+    <Compile Include="PyroHelper.cs" />
     <Compile Include="PyroSerial.cs" />
     <Compile Include="Settings.cs" />
     <Page Include="MainWindow.xaml">
@@ -123,6 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\upwork.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
