@@ -6,11 +6,11 @@ namespace LabProg
 {
     public partial class MainWindow : Window
     {
-        Timer ConfocalTimer;
+        private Timer _confocalTimer;
         private void InitInternalComponents()
         {
-            CbPumpPort.Items.Clear();
-            CbMirrorPort.Items.Clear();
+            //CbPumpPort.Items.Clear();
+            //CbMirrorPort.Items.Clear();
             foreach (var s in SerialPort.GetPortNames())
             {
                 CbPumpPort.Items.Add(s);
@@ -22,7 +22,7 @@ namespace LabProg
         }
 
         private void InitPwrItems()
-        {
+        { //LoadSettings
             var dl= new PwrModes();
             CbModeCh1.Items.Clear();
             CbModeCh1.ItemsSource = dl.GetValues();
@@ -36,17 +36,33 @@ namespace LabProg
             CbModeCh5.SelectedIndex = Properties.Settings.Default.PwrModeCh5;
             CbPowerPort.SelectedIndex = Properties.Settings.Default.PwrPortIndex;
             CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
-            //new line
+            CbLaserPort.SelectedIndex = Properties.Settings.Default.LaserPortIndex;
+            CbPyroPort.SelectedIndex = Properties.Settings.Default.PyroPortIndex;
             SetChanellBiasTitle(1);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        { //Save Settings
+            Properties.Settings.Default.PwrModeCh0 = CbModeCh0.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh1 = CbModeCh1.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh2 = CbModeCh2.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh3 = CbModeCh3.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh4 = CbModeCh4.SelectedIndex;
+            Properties.Settings.Default.PwrModeCh5 = CbModeCh5.SelectedIndex;
+            Properties.Settings.Default.PwrPortIndex = CbPowerPort.SelectedIndex;
+            Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
+            Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
+            Properties.Settings.Default.PyroPortIndex = CbPyroPort.SelectedIndex;
+            Properties.Settings.Default.Save();
         }
 
         private void InitPumpItems()
         {
-            ConfocalTimer = new Timer
+            _confocalTimer = new Timer
             {
                 Interval = 1000
             };
-            ConfocalTimer.Elapsed += PeackInfo;
+            _confocalTimer.Elapsed += PeackInfo;
         }
     }
 }

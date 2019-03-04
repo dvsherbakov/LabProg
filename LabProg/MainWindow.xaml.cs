@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
+using LabProg.Resources;
 
 namespace LabProg
 {
@@ -21,6 +22,7 @@ namespace LabProg
     {
         readonly PwrSerial pwrSerial;
         readonly PumpSerial pumpSerial;
+        private PyroSerial _pyroSerial;
 
         public MainWindow()
         {
@@ -30,6 +32,7 @@ namespace LabProg
             
             pwrSerial = new PwrSerial(CbPowerPort.Text);
             pumpSerial = new PumpSerial(CbPumpPort.Text);
+            _pyroSerial = new PyroSerial(CbPyroPort.Text);
         }
 
         private void CloseApp(object sender, RoutedEventArgs e)
@@ -37,19 +40,7 @@ namespace LabProg
             Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Properties.Settings.Default.PwrModeCh0 = CbModeCh0.SelectedIndex;
-            Properties.Settings.Default.PwrModeCh1 = CbModeCh1.SelectedIndex;
-            Properties.Settings.Default.PwrModeCh2 = CbModeCh2.SelectedIndex;
-            Properties.Settings.Default.PwrModeCh3 = CbModeCh3.SelectedIndex;
-            Properties.Settings.Default.PwrModeCh4 = CbModeCh4.SelectedIndex;
-            Properties.Settings.Default.PwrModeCh5 = CbModeCh5.SelectedIndex;
-            Properties.Settings.Default.PwrPortIndex = CbPowerPort.SelectedIndex;
-            Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
-            
-            Properties.Settings.Default.Save();
-        }
+       
 
 
         
