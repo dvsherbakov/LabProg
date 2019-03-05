@@ -10,14 +10,22 @@ namespace LabProg
 
         private void LaserPortOn(object sender, RoutedEventArgs e)
         {
-            _pyroSerial.OpenPort();
-            _pyroTimer.Start();
+            try
+            {
+                _pyroSerial.OpenPort();
+                _pyroTimer.Start();
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт пирометра" });
+            } catch (Exception ex)
+            {
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
+            }
         }
 
         private void LaserPortOff(object sender, RoutedEventArgs e)
         {
             _pyroSerial.ClosePort();
             _pyroTimer.Stop();
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт пирометра" });
         }
 
     }

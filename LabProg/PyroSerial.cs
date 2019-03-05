@@ -28,7 +28,6 @@ namespace LabProg.Resources
                 RtsEnable = true
             };
             _port.DataReceived += DataReceivedHandler;
-           
             _aTimer.Elapsed += OnTimedEvent;
             _aTimer.Interval = 300;
             
@@ -67,14 +66,11 @@ namespace LabProg.Resources
         private static float RcConvert(byte[] rData)
         {
             var tmp = new byte[4];
-
             tmp[0] = 0;
             tmp[1] = 0;
             tmp[2] = rData[0];
             tmp[3] = rData[1];
-
             float res = tmp[0] << 24 | tmp[1] << 16 | tmp[2] << 8 | tmp[3];
-
             return (res - 1000) / 10;
         }
 

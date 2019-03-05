@@ -606,7 +606,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Dt}"/>
-                    <GridViewColumn Width="Auto" Header="Сообщение" DisplayMemberBinding="{Binding LogText}"/>
+                    <GridViewColumn Width="1700" Header="Сообщение" DisplayMemberBinding="{Binding LogText}"/>
                 </GridView>
             </ListView.View>
         </ListView>
