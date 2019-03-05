@@ -34,7 +34,7 @@ namespace LabProg
 
 
                     ShowRes(x.ToString("N5"));
-                    //Invoke(new AddMessageDelegate(ShowRes), x.ToString("N5"));
+                    
                 }
             }
         }

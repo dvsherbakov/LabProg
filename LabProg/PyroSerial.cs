@@ -74,6 +74,7 @@ namespace LabProg.Resources
             tmp[3] = rData[1];
 
             float res = tmp[0] << 24 | tmp[1] << 16 | tmp[2] << 8 | tmp[3];
+
             return (res - 1000) / 10;
         }
 
@@ -93,6 +94,12 @@ namespace LabProg.Resources
         {
             byte[] buf = {01};
             Write(buf);
+        }
+
+        public float GetLastRes()
+        {
+            _tempLog.TryGetValue(_rxidx - 1, out float val);
+            return val;
         }
     }
 }
