@@ -28,10 +28,18 @@ namespace LabProg
             {
                 using (var wc = new WebClient())
                 {
-                    var json = wc.DownloadString("http://169.254.168.150/datagen.php?type=Meas&callback=callback&_=" +
-                                timestamp);
-                    x = GetTemp(json);
-
+                    try
+                    {
+                        var json = wc.DownloadString(
+                            "http://169.254.168.150/datagen.php?type=Meas&callback=callback&_=" +
+                            timestamp);
+                        x = GetTemp(json);
+                    }
+                    catch (Exception ex)
+                    {
+                        Dispatcher.Invoke(() =>
+                            LogBox.Items.Insert(0, new LogBoxItem {Dt = DateTime.Now, LogText = ex.Message}));
+                    }
 
                     ShowRes(x.ToString("N5"));
                     
@@ -125,7 +133,19 @@ namespace LabProg
                 _confocalTimer.Elapsed += PeackInfo;
             }
             _confocalTimer.Start();
-            if (!pumpSerial.Active()) pumpSerial.OpenPort();
+            if (!pumpSerial.Active())
+            {
+                try
+                {
+                    pumpSerial.OpenPort();
+                }
+                catch (Exception ex)
+                {
+                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
+                    CbPumpActive.IsChecked = false;
+                }
+
+            }
         }
         private void PumpPortOff(object sender, RoutedEventArgs e)
         {
@@ -135,7 +155,18 @@ namespace LabProg
 
         private void PumpStartButton(object sender, RoutedEventArgs e)
         {
-            if (!pumpSerial.Active()) pumpSerial.OpenPort();
+            if (!pumpSerial.Active()) {
+                try
+                {
+                    pumpSerial.OpenPort();
+                }
+                catch (Exception ex)
+                {
+                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
+                    CbPumpActive.IsChecked = false;
+                }
+
+            }
             pumpSerial.StartPump();
         }
     }

@@ -71,7 +71,7 @@
                                     <ColumnDefinition Width="61*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Column="0" Grid.Row="0" Margin="20,2,4,2" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}" Grid.ColumnSpan="2">Реверс</CheckBox>
-                                <CheckBox Grid.Column="2" Grid.Row="0" Margin="20,2,4,2"  Checked="PumpPortOn" Unchecked="PumpPortOff">Активно</CheckBox>
+                                <CheckBox Grid.Column="2" Grid.Row="0" x:Name="CbPumpActive" Margin="20,2,4,2"  Checked="PumpPortOn" Unchecked="PumpPortOff">Активно</CheckBox>
                             </Grid>
                         </Grid>
                     </Expander>
@@ -245,7 +245,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Row="0"  Checked="PwrPortOn" Unchecked="PwrPortOff">Соединиться с портом</CheckBox>
+                            <CheckBox Grid.Row="0" x:Name="CbConnectPwrPort" Checked="PwrPortOn" Unchecked="PwrPortOff">Соединиться с портом</CheckBox>
                             <GroupBox Grid.Row="1" Header="Включение каналов:">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -606,7 +606,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Dt}"/>
-                    <GridViewColumn Width="Auto" Header="Сообщение" DisplayMemberBinding="{Binding LogText}"/>
+                    <GridViewColumn Width="1700" Header="Сообщение" DisplayMemberBinding="{Binding LogText}"/>
                 </GridView>
             </ListView.View>
         </ListView>
