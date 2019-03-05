@@ -14,7 +14,15 @@ namespace LabProg
 
         private void PwrPortOn(object sender, RoutedEventArgs e)
         {
-            pwrSerial.OpenPort();
+            try
+            {
+                pwrSerial.OpenPort();
+            }
+            catch (Exception ex)
+            {
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
+                CbConnectPwrPort.IsChecked = false;
+            }
         }
 
         private void PwrPortOff(object sender, RoutedEventArgs e)
