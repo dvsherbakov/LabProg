@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace LabProg
 {
@@ -32,7 +33,11 @@ namespace LabProg
             CmdList.Add(new LCommand(22, "?SOM0F\r", "Set operating mode", "SOM"));
             CmdList.Add(new LCommand(23, "?SAP1\r", "Set auto power-up", "SAP"));
             CmdList.Add(new LCommand(24, "?SAS1\r", "Set Auto Start", "SAS"));
+        }
 
+        public LCommand GetCommand(int id)
+        {
+            return CmdList.FirstOrDefault(x => x.Id == id);
         }
 
         public class LCommand
