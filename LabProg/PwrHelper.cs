@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace LabProg
 {
 
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private void ReadPwrParam(object sender, RoutedEventArgs e)
         {
@@ -16,7 +16,7 @@ namespace LabProg
         {
             try
             {
-                pwrSerial.OpenPort();
+                _pwrSerial.OpenPort();
             }
             catch (Exception ex)
             {
@@ -27,7 +27,7 @@ namespace LabProg
 
         private void PwrPortOff(object sender, RoutedEventArgs e)
         {
-            pwrSerial.ClosePort();
+            _pwrSerial.ClosePort();
         }
 
         private void PwrCanelOn(object sender, RoutedEventArgs e)
@@ -150,35 +150,35 @@ namespace LabProg
 
         private void PwrCh0Write_Click(object sender, RoutedEventArgs e)
         {
-            int mv = int.Parse(TbCh0MaxVolts.Text);
-            if (mv <= 10000) pwrSerial.SetMaxVolts(0, mv);
-            int bias = int.Parse(TbCh0Bias.Text);
-            if (bias <= 10000) pwrSerial.SetBias(0, bias);
+            var mv = int.Parse(TbCh0MaxVolts.Text);
+            if (mv <= 10000) _pwrSerial.SetMaxVolts(0, mv);
+            var bias = int.Parse(TbCh0Bias.Text);
+            if (bias <= 10000) _pwrSerial.SetBias(0, bias);
             
         }
 
         private void PwrCh1Write_Click(object sender, RoutedEventArgs e)
         {
             int mv = int.Parse(TbCh1MaxVolts.Text);
-            if (mv <= 10000) pwrSerial.SetMaxVolts(1, mv);
+            if (mv <= 10000) _pwrSerial.SetMaxVolts(1, mv);
             int bias = int.Parse(TbCh1Bias.Text);
-            if (bias <= 10000) pwrSerial.SetBias(1, bias);
+            if (bias <= 10000) _pwrSerial.SetBias(1, bias);
         }
 
         private void PwrCh2Write_Click(object sender, RoutedEventArgs e)
         {
             int mv = int.Parse(TbCh2MaxVolts.Text);
-            if (mv <= 3000) pwrSerial.SetMaxVolts(2, mv);
+            if (mv <= 3000) _pwrSerial.SetMaxVolts(2, mv);
             int bias = int.Parse(TbCh2Bias.Text);
-            if (bias <= 3000) pwrSerial.SetBias(2, bias);
+            if (bias <= 3000) _pwrSerial.SetBias(2, bias);
         }
 
         private void PwrCh3Write_Click(object sender, RoutedEventArgs e)
         {
             int mv = int.Parse(TbCh3MaxVolts.Text);
-            if (mv <= 3000) pwrSerial.SetMaxVolts(3, mv);
+            if (mv <= 3000) _pwrSerial.SetMaxVolts(3, mv);
             int bias = int.Parse(TbCh3Bias.Text);
-            if (bias <= 3000) pwrSerial.SetBias(3, bias);
+            if (bias <= 3000) _pwrSerial.SetBias(3, bias);
         }
     }
 }

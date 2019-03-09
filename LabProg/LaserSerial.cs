@@ -5,7 +5,6 @@ namespace LabProg
     class LaserSerial
     {
         private readonly SerialPort _mPort;
-        private bool active = false;
 
         public LaserSerial(string portStr)
         {
@@ -20,8 +19,16 @@ namespace LabProg
                 Handshake = Handshake.None,
                 RtsEnable = true
             };
-
         }
 
+        public void OpenPort()
+        {
+            _mPort.Open();
+        }
+
+        public void ClosePort()
+        {
+            _mPort.Close();
+        }
     }
 }
