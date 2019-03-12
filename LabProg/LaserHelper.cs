@@ -19,6 +19,15 @@ namespace LabProg
             {
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
             }
+            try
+            {
+                _laserSerial.OpenPort();
+            }
+            catch (Exception ex)
+            {
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт лазера" });
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
+            }
         }
 
         private void LaserPortOff(object sender, RoutedEventArgs e)
@@ -26,6 +35,7 @@ namespace LabProg
             _pyroSerial.ClosePort();
             _pyroTimer.Stop();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт пирометра" });
+            _laserSerial.ClosePort();
         }
 
     }

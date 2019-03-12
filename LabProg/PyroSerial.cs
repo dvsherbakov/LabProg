@@ -58,13 +58,20 @@ namespace LabProg.Resources
             {
                 ErrList.Add(ex.Message);
             }
-            //float t = ;
-            _tempLog.Add(_rxidx, RcConvert(_rxdata));
+            float t = RcConvert(_rxdata);
+           
+                _tempLog.Add(_rxidx, t);
             _rxidx++;
         }
 
         private static float RcConvert(byte[] rData)
         {
+            while (rData[0] > 10)
+            {
+                var tLst = new List<Byte>(rData);
+                tLst.RemoveAt(0);
+                rData = tLst.ToArray();
+            }
             var tmp = new byte[4];
             tmp[0] = 0;
             tmp[1] = 0;

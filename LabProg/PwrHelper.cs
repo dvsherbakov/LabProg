@@ -32,35 +32,38 @@ namespace LabProg
 
         private void PwrCanelOn(object sender, RoutedEventArgs e)
         {
-            switch (((CheckBox)sender).Name)
+            if (LogBox != null)
             {
-                case "PwrCh0Check":
-                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 0" });
-                    PwrSerial.SetChannelOn(0);
-                    break;
-                case "PwrCh1Check":
-                    PwrSerial.SetChannelOn(1);
-                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 1" });
-                    break;
-                case "PwrCh2Check":
-                    PwrSerial.SetChannelOn(2);
-                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 2" });
-                    break;
-                case "PwrCh3Check":
-                    PwrSerial.SetChannelOn(3);
-                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 3" });
-                    break;
-                case "PwrCh4Check":
-                    PwrSerial.SetChannelOn(4);
-                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 4" });
-                    break;
-                case "PwrCh5Check":
-                    PwrSerial.SetChannelOn(5);
-                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 5" });
-                    break;
-                default:
-                    PwrSerial.SetChannelOn(9);
-                    break;
+                switch (((CheckBox)sender).Name)
+                {
+                    case "PwrCh0Check":
+                        LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 0" });
+                        PwrSerial.SetChannelOn(0);
+                        break;
+                    case "PwrCh1Check":
+                        PwrSerial.SetChannelOn(1);
+                        LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 1" });
+                        break;
+                    case "PwrCh2Check":
+                        PwrSerial.SetChannelOn(2);
+                        LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 2" });
+                        break;
+                    case "PwrCh3Check":
+                        PwrSerial.SetChannelOn(3);
+                        LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 3" });
+                        break;
+                    case "PwrCh4Check":
+                        PwrSerial.SetChannelOn(4);
+                        LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 4" });
+                        break;
+                    case "PwrCh5Check":
+                        PwrSerial.SetChannelOn(5);
+                        LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 5" });
+                        break;
+                    default:
+                        PwrSerial.SetChannelOn(9);
+                        break;
+                }
             }
         }
 

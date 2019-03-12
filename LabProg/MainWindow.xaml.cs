@@ -10,6 +10,7 @@ namespace LabProg
         readonly PwrSerial pwrSerial;
         readonly PumpSerial pumpSerial;
         private PyroSerial _pyroSerial;
+        private LaserSerial _laserSerial;
 
         public MainWindow()
         {
@@ -20,6 +21,7 @@ namespace LabProg
             pwrSerial = new PwrSerial(CbPowerPort.Text);
             pumpSerial = new PumpSerial(CbPumpPort.Text);
             _pyroSerial = new PyroSerial(CbPyroPort.Text);
+            _laserSerial = new LaserSerial(CbLaserPort.Text);
         }
 
         private void CloseApp(object sender, RoutedEventArgs e)
