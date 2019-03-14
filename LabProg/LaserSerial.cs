@@ -64,7 +64,12 @@ namespace LabProg
                 }
 
                 var ascii = Encoding.ASCII;
-                _msgList.Add(ascii.GetString(mRxdata));
+                var answrs = ascii.GetString(mRxdata).Split('\r');
+                foreach (var s in answrs)
+                {
+                    if ((s.Length > 3)&&(s.Length<50))
+                    _msgList.Add(s);
+                }
             }
             catch (Exception ex)
             {
