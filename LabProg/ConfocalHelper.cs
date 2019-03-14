@@ -80,7 +80,7 @@ namespace LabProg
             var res = double.Parse(message) - double.Parse(txt.Replace('.', ','));
             if ((Math.Abs(res) > 0.001) && AutoStop)
             {
-                pumpSerial.StartPump();
+                _pumpSerial.StartPump();
                 AutoStop = false;
                 return;
             }
@@ -91,11 +91,11 @@ namespace LabProg
             if (rvs != PrevRev)
             {
                 if (rvs < 0)
-                    pumpSerial.SetCounterClockwiseDirection();
+                    _pumpSerial.SetCounterClockwiseDirection();
                 if (rvs > 0)
-                    pumpSerial.SetClockwiseDirection();
+                    _pumpSerial.SetClockwiseDirection();
                 if (rvs == 0)
-                    pumpSerial.StopPump();
+                    _pumpSerial.StopPump();
                 PrevRev = rvs;
             }
             else if (Math.Abs(res) > 0.001 && PumpActive)
@@ -110,14 +110,14 @@ namespace LabProg
                 if (Math.Abs(res) > 1) speed = "280 "; //ToFourStr(333);
                 if (_prevSpeed == speed) return;
 
-                pumpSerial.SetSpeed(speed);
+                _pumpSerial.SetSpeed(speed);
 
 
                 _prevSpeed = speed;
             }
             else
             {
-                pumpSerial.StopPump();
+                _pumpSerial.StopPump();
                 AutoStop = true;
             }
         }
@@ -133,11 +133,11 @@ namespace LabProg
                 _confocalTimer.Elapsed += PeackInfo;
             }
             _confocalTimer.Start();
-            if (!pumpSerial.Active())
+            if (!_pumpSerial.Active())
             {
                 try
                 {
-                    pumpSerial.OpenPort();
+                    _pumpSerial.OpenPort();
                 }
                 catch (Exception ex)
                 {
@@ -155,10 +155,10 @@ namespace LabProg
 
         private void PumpStartButton(object sender, RoutedEventArgs e)
         {
-            if (!pumpSerial.Active()) {
+            if (!_pumpSerial.Active()) {
                 try
                 {
-                    pumpSerial.OpenPort();
+                    _pumpSerial.OpenPort();
                 }
                 catch (Exception ex)
                 {
@@ -167,7 +167,7 @@ namespace LabProg
                 }
 
             }
-            pumpSerial.StartPump();
+            _pumpSerial.StartPump();
         }
     }
 }

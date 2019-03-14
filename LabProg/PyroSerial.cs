@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Timers;
 
-namespace LabProg.Resources
+namespace LabProg
 {
-    class PyroSerial
+    internal class PyroSerial
     {
         private static SerialPort _port;
         private byte[] _rxdata;
@@ -18,7 +18,7 @@ namespace LabProg.Resources
         {
             if (port == "") port = "COM5";
             _rxidx = 0;
-            _port = new System.IO.Ports.SerialPort(port)
+            _port = new SerialPort(port)
             {
                 BaudRate = 115200,
                 Parity = Parity.None,

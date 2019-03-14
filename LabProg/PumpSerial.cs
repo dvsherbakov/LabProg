@@ -8,7 +8,7 @@ namespace LabProg
     public class PumpSerial
     {
         private readonly SerialPort _mPort;
-        private bool active = false;
+        private bool _active;
         private readonly List<string> RecievedData;
 
         public PumpSerial(string portStr)
@@ -31,18 +31,18 @@ namespace LabProg
         public void OpenPort()
         {
             _mPort.Open();
-            active = true;
+            _active = true;
         }
 
         public void ClosePort()
         {
             _mPort.Close();
-            active = false;
+            _active = false;
             StopPump();
         }
         public bool Active()
         {
-            return active;
+            return _active;
         }
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {

@@ -13,8 +13,10 @@ namespace LabProg
             try
             {
                 _pyroSerial.OpenPort();
-                _pyroTimer.Start();
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт пирометра" });
+                _pyroTimer.Start();
+                _laserSerial.OpenPort();
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт лазера" });
             } catch (Exception ex)
             {
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
@@ -36,6 +38,7 @@ namespace LabProg
             _pyroTimer.Stop();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт пирометра" });
             _laserSerial.ClosePort();
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт лазера" });
         }
 
     }
