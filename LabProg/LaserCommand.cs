@@ -42,7 +42,6 @@ namespace LabProg
     }
     public class LCommand
     {
-
         public readonly int Id;
         public readonly string Description;
         public readonly string SCommand;
