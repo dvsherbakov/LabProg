@@ -35,7 +35,7 @@ namespace LabProg
             CmdList.Add(new LCommand(24, "?SAS1\r", "Set Auto Start", "SAS"));
         }
 
-        public LCommand getCmdById(int id)
+        public LCommand GetCmdById(int id)
         {
             return CmdList.Where(x => x.Id == id).FirstOrDefault();
         }

@@ -8,7 +8,7 @@ namespace LabProg
     internal class LaserSerial
     {
         private readonly SerialPort _mPort;
-        private readonly LaserCommand _cmdList;
+        private readonly LaserCommand lCommand;
         private static List<string> _errList;
         private static List<string> _msgList;
 
@@ -16,7 +16,6 @@ namespace LabProg
         {
             _errList = new List<string>();
             _msgList = new List<string>();
-            _cmdList = new LaserCommand();  
             if (portStr == "") portStr = "COM2";
             _mPort = new SerialPort(portStr)
             {
@@ -34,12 +33,11 @@ namespace LabProg
         public void OpenPort()
         {
             _mPort.Open();
-            SendCmd(1);
-            SendCmd(4);
-            SendCmd(10);
-            SendCmd(11);
-            SendCmd(12);
-            SendCmd(13);
+            SendCommand(1);
+            SendCommand(7);
+            SendCommand(16);
+            SendCommand(21);
+            SendCommand(13);
 
         }
 
@@ -48,23 +46,6 @@ namespace LabProg
             _mPort.Close();
         }
 
-        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
-        {
-            var cnt = _mPort.ReadBufferSize;
-            var mRxdata = new byte[cnt + 1];
-            try
-            {
-                _mPort.Read(mRxdata, 0, cnt);
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
-        public void ClosePort()
-        {
-            _mPort.Close();
-        }
 
         private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
@@ -92,18 +73,11 @@ namespace LabProg
             }
         }
 
-        private  void InitLaserCommands()
-        {
-            SendCommand(_cmdList.GetCommand(1));
-            SendCommand(_cmdList.GetCommand(7));
-            SendCommand(_cmdList.GetCommand(16));
-            SendCommand(_cmdList.GetCommand(21));
-            SendCommand(_cmdList.GetCommand(13));
-        }
+       
 
-        private  void SendCommand(LaserCommand.LCommand cmd)
+        private  void SendCommand(int cmd)
         {
-            _mPort.Write(cmd.SCommand);
+            _mPort.Write(lCommand.GetCmdById(cmd).SCommand);
         }
     }
 }

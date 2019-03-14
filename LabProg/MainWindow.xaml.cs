@@ -6,8 +6,8 @@ namespace LabProg
 
     public partial class MainWindow
     {
-        readonly PwrSerial pwrSerial;
-        readonly PumpSerial pumpSerial;
+        readonly PwrSerial _pwrSerial;
+        readonly PumpSerial _pumpSerial;
         private PyroSerial _pyroSerial;
         private LaserSerial _laserSerial;
 
@@ -16,7 +16,7 @@ namespace LabProg
             InitializeComponent();
             LogBox.Items.Add(new LogBoxItem { Dt = DateTime.Now, LogText = "Приложение запущено" });
             InitInternalComponents();
-            
+
             _pwrSerial = new PwrSerial(CbPowerPort.Text);
             _pumpSerial = new PumpSerial(CbPumpPort.Text);
             _pyroSerial = new PyroSerial(CbPyroPort.Text);
