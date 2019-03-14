@@ -28,7 +28,6 @@ namespace LabProg.Resources
                 RtsEnable = true
             };
             _port.DataReceived += DataReceivedHandler;
-           
             _aTimer.Elapsed += OnTimedEvent;
             _aTimer.Interval = 300;
             
@@ -59,20 +58,25 @@ namespace LabProg.Resources
             {
                 ErrList.Add(ex.Message);
             }
-            //float t = ;
-            _tempLog.Add(_rxidx, RcConvert(_rxdata));
+            float t = RcConvert(_rxdata);
+           
+                _tempLog.Add(_rxidx, t);
             _rxidx++;
         }
 
         private static float RcConvert(byte[] rData)
         {
+            while (rData[0] > 10)
+            {
+                var tLst = new List<Byte>(rData);
+                tLst.RemoveAt(0);
+                rData = tLst.ToArray();
+            }
             var tmp = new byte[4];
-
             tmp[0] = 0;
             tmp[1] = 0;
             tmp[2] = rData[0];
             tmp[3] = rData[1];
-
             float res = tmp[0] << 24 | tmp[1] << 16 | tmp[2] << 8 | tmp[3];
             return (res - 1000) / 10;
         }
@@ -93,6 +97,12 @@ namespace LabProg.Resources
         {
             byte[] buf = {01};
             Write(buf);
+        }
+
+        public float GetLastRes()
+        {
+            _tempLog.TryGetValue(_rxidx - 1, out float val);
+            return val;
         }
     }
 }

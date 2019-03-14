@@ -7,6 +7,7 @@ namespace LabProg
     public partial class MainWindow : Window
     {
         private Timer _confocalTimer;
+        private Timer _pyroTimer;
         private void InitInternalComponents()
         {
             //CbPumpPort.Items.Clear();
@@ -19,6 +20,7 @@ namespace LabProg
             }
             InitPwrItems();
             InitPumpItems();
+            InitPyroTimer();
         }
 
         private void InitPwrItems()
@@ -60,9 +62,18 @@ namespace LabProg
         {
             _confocalTimer = new Timer
             {
-                Interval = 1000
+                Interval = 2000
             };
             _confocalTimer.Elapsed += PeackInfo;
+        }
+
+        private void InitPyroTimer()
+        {
+            _pyroTimer = new Timer
+            {
+                Interval = 1000
+            };
+            _pyroTimer.Elapsed += PeackPyroInfo;
         }
     }
 }

@@ -71,7 +71,7 @@
                                     <ColumnDefinition Width="61*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Column="0" Grid.Row="0" Margin="20,2,4,2" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}" Grid.ColumnSpan="2">Реверс</CheckBox>
-                                <CheckBox Grid.Column="2" Grid.Row="0" Margin="20,2,4,2"  Checked="PumpPortOn" Unchecked="PumpPortOff">Активно</CheckBox>
+                                <CheckBox Grid.Column="2" Grid.Row="0" x:Name="CbPumpActive" Margin="20,2,4,2"  Checked="PumpPortOn" Unchecked="PumpPortOff">Активно</CheckBox>
                             </Grid>
                         </Grid>
                     </Expander>
@@ -178,14 +178,14 @@
                                 <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="4*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Подключиться к порту</CheckBox>
+                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Checked="LaserPortOn" Unchecked="LaserPortOff">Подключиться к порту</CheckBox>
                             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Мощность</TextBlock>
                             <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
                             <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=LaserPower, Mode=TwoWay}"/>
                             <Button Grid.Row="1" Grid.Column="3" Margin="3,3,3,3">Применить</Button>
                             <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">Автоматически</CheckBox>
                             <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Температура</TextBlock>
-                            <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
+                            <TextBlock Grid.Row="3" x:Name ="PyroTemp" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
                             <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PyroTemp, Mode=TwoWay}"></TextBox>
                             <Button Grid.Row="3" Grid.Column="3"  Margin="3,3,3,3">Старт</Button>
                         </Grid>                        
@@ -245,7 +245,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Row="0"  Checked="PwrPortOn" Unchecked="PwrPortOff">Соединиться с портом</CheckBox>
+                            <CheckBox Grid.Row="0" x:Name="CbConnectPwrPort" Checked="PwrPortOn" Unchecked="PwrPortOff">Соединиться с портом</CheckBox>
                             <GroupBox Grid.Row="1" Header="Включение каналов:">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -606,7 +606,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Dt}"/>
-                    <GridViewColumn Width="Auto" Header="Сообщение" DisplayMemberBinding="{Binding LogText}"/>
+                    <GridViewColumn Width="1700" Header="Сообщение" DisplayMemberBinding="{Binding LogText}"/>
                 </GridView>
             </ListView.View>
         </ListView>

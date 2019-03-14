@@ -1,0 +1,2 @@
+﻿smartpwr6_tool.pl -serial COM9 -baud 115200 -addr 1 -p0
+

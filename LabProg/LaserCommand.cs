@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace LabProg
 {
     internal class LaserCommand
     {
-        public readonly List<LCommand> CmdList = new List<LCommand>();
+        public List<LCommand> CmdList = new List<LCommand>();
 
         public LaserCommand()
         {
@@ -32,24 +33,28 @@ namespace LabProg
             CmdList.Add(new LCommand(22, "?SOM0F\r", "Set operating mode", "SOM"));
             CmdList.Add(new LCommand(23, "?SAP1\r", "Set auto power-up", "SAP"));
             CmdList.Add(new LCommand(24, "?SAS1\r", "Set Auto Start", "SAS"));
-
         }
 
-        public class LCommand
+        public LCommand getCmdById(int id)
         {
-
-            public readonly int Id;
-            public readonly string Description;
-            public readonly string SCommand;
-            public readonly string SAnswer;
-
-            public LCommand(int i, string cmd, string descr, string ans)
-            {
-                Id = i;
-                Description = descr;
-                SCommand = cmd;
-                SAnswer = ans;
-            }
+            return CmdList.Where(x => x.Id == id).FirstOrDefault();
         }
     }
+    public class LCommand
+    {
+
+        public readonly int Id;
+        public readonly string Description;
+        public readonly string SCommand;
+        public readonly string SAnswer;
+
+        public LCommand(int i, string cmd, string descr, string ans)
+        {
+            Id = i;
+            Description = descr;
+            SCommand = cmd;
+            SAnswer = ans;
+        }
+    }
+    
 }
