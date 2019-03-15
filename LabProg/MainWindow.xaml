@@ -195,6 +195,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
@@ -224,6 +225,7 @@
                                 <TextBlock>COM8</TextBlock>
                                 <TextBlock>COM9</TextBlock>
                             </ComboBox>
+                           
                         </Grid>
                     </Expander>
                 </Grid>

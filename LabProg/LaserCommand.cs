@@ -39,6 +39,11 @@ namespace LabProg
         {
             return CmdList.Where(x => x.Id == id).FirstOrDefault();
         }
+
+        //public LCommand SetPowerLvl(int lvl)
+        //{
+
+        //}
     }
     public class LCommand
     {
