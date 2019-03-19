@@ -178,7 +178,7 @@
                                 <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="4*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Checked="LaserPortOn" Unchecked="LaserPortOff">Подключиться к порту</CheckBox>
+                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ChbLaserPort" Checked="LaserPortOn" Unchecked="LaserPortOff">Подключиться к порту</CheckBox>
                             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Мощность</TextBlock>
                             <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
                             <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=LaserPower, Mode=TwoWay}"/>
@@ -241,14 +241,14 @@
                                 <TextBlock Grid.Row="0" Grid.Column="1" Margin="5">Разн. темп.</TextBlock>
                                 <TextBlock Grid.Row="0" Grid.Column="2" Margin="5">Изм. мощ.</TextBlock>
                                 <TextBlock Grid.Row="1" Grid.Column="0">Граница MAX</TextBlock>
-                                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" x:Name="PowMax"></TextBox>
-                                <TextBox Grid.Row="1" Grid.Column="2" TextAlignment="Center"  x:Name="TempMax"></TextBox>
+                                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" x:Name="PowMax" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMax, Mode=TwoWay}"></TextBox>
+                                <TextBox Grid.Row="1" Grid.Column="2" TextAlignment="Center"  x:Name="TempMax" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMax, Mode=TwoWay}"></TextBox>
                                 <TextBlock Grid.Row="2" Grid.Column="0">Граница средн</TextBlock>
-                                <TextBox Grid.Row="2" Grid.Column="1" TextAlignment="Center"  x:Name="PowMid"></TextBox>
-                                <TextBox Grid.Row="2" Grid.Column="2" TextAlignment="Center"  x:Name="TempMid"></TextBox>
+                                <TextBox Grid.Row="2" Grid.Column="1" TextAlignment="Center"  x:Name="PowMid" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMid, Mode=TwoWay}"></TextBox>
+                                <TextBox Grid.Row="2" Grid.Column="2" TextAlignment="Center"  x:Name="TempMid" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMid, Mode=TwoWay}"></TextBox>
                                 <TextBlock Grid.Row="3" Grid.Column="0">Граница MIN</TextBlock>
-                                <TextBox Grid.Row="3" Grid.Column="1" TextAlignment="Center"  x:Name="PowMin"></TextBox>
-                                <TextBox Grid.Row="3" Grid.Column="2" TextAlignment="Center"  x:Name="TempMin"></TextBox>
+                                <TextBox Grid.Row="3" Grid.Column="1" TextAlignment="Center"  x:Name="PowMin" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMin, Mode=TwoWay}"></TextBox>
+                                <TextBox Grid.Row="3" Grid.Column="2" TextAlignment="Center"  x:Name="TempMin" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMin, Mode=TwoWay}"></TextBox>
                             </Grid>
                         </Grid>
                     </Expander>

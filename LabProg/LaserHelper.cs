@@ -15,20 +15,22 @@ namespace LabProg
                 _pyroSerial.OpenPort();
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт пирометра" });
                 _pyroTimer.Start();
-                _laserSerial.OpenPort();
-                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт лазера" });
+               // _laserSerial.OpenPort();
+               // LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт лазера" });
             } catch (Exception ex)
             {
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
+                ChbLaserPort.IsChecked = false;
             }
             try
             {
                 _laserSerial.OpenPort();
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт лазера" });
             }
             catch (Exception ex)
             {
-                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт лазера" });
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
+                ChbLaserPort.IsChecked = false;
             }
         }
 

@@ -550,5 +550,77 @@ namespace LabProg.Properties {
                 this["PyroPortIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PowMax {
+            get {
+                return ((string)(this["PowMax"]));
+            }
+            set {
+                this["PowMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TempMax {
+            get {
+                return ((string)(this["TempMax"]));
+            }
+            set {
+                this["TempMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PowMid {
+            get {
+                return ((string)(this["PowMid"]));
+            }
+            set {
+                this["PowMid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TempMid {
+            get {
+                return ((string)(this["TempMid"]));
+            }
+            set {
+                this["TempMid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PowMin {
+            get {
+                return ((string)(this["PowMin"]));
+            }
+            set {
+                this["PowMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TempMin {
+            get {
+                return ((string)(this["TempMin"]));
+            }
+            set {
+                this["TempMin"] = value;
+            }
+        }
     }
 }
