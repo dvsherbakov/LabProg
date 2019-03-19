@@ -225,7 +225,31 @@
                                 <TextBlock>COM8</TextBlock>
                                 <TextBlock>COM9</TextBlock>
                             </ComboBox>
-                           
+                            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5">Название</TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="5">Разн. темп.</TextBlock>
+                                <TextBlock Grid.Row="0" Grid.Column="2" Margin="5">Изм. мощ.</TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="0">Граница MAX</TextBlock>
+                                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" x:Name="PowMax"></TextBox>
+                                <TextBox Grid.Row="1" Grid.Column="2" TextAlignment="Center"  x:Name="TempMax"></TextBox>
+                                <TextBlock Grid.Row="2" Grid.Column="0">Граница средн</TextBlock>
+                                <TextBox Grid.Row="2" Grid.Column="1" TextAlignment="Center"  x:Name="PowMid"></TextBox>
+                                <TextBox Grid.Row="2" Grid.Column="2" TextAlignment="Center"  x:Name="TempMid"></TextBox>
+                                <TextBlock Grid.Row="3" Grid.Column="0">Граница MIN</TextBlock>
+                                <TextBox Grid.Row="3" Grid.Column="1" TextAlignment="Center"  x:Name="PowMin"></TextBox>
+                                <TextBox Grid.Row="3" Grid.Column="2" TextAlignment="Center"  x:Name="TempMin"></TextBox>
+                            </Grid>
                         </Grid>
                     </Expander>
                 </Grid>

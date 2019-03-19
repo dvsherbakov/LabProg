@@ -4,7 +4,6 @@ using System.Windows.Controls;
 
 namespace LabProg
 {
-
     public partial class MainWindow : Window
     {
         private void PeackPyroInfo(object source, System.Timers.ElapsedEventArgs e)
