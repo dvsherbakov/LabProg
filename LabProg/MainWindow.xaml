@@ -295,8 +295,12 @@
                                     <CheckBox Grid.Row="1" Grid.Column="1" x:Name="PwrCh3Check" Margin="5,5,5,5"
                                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}" 
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff" >Ик Источник 2</CheckBox>
-                                    <CheckBox Grid.Row="2" Grid.Column="0" Margin="5,5,5,5">Микрокомпрессор</CheckBox>
-                                    <CheckBox Grid.Row="2" Grid.Column="1" Margin="5,5,5,5">Свободный канал</CheckBox>
+                                    <CheckBox Grid.Row="2" Grid.Column="0" Margin="5,5,5,5" x:Name="PwrCh4Check"
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel4On, Mode=TwoWay}" 
+                                              Checked="PwrCanelOn" Unchecked="PwrChannelOff">Микрокомпрессор</CheckBox>
+                                    <CheckBox Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" x:Name="PwrCh5Check"
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel5On, Mode=TwoWay}" 
+                                              Checked="PwrCanelOn" Unchecked="PwrChannelOff">Нагрев стекла</CheckBox>
                                 </Grid>
 
                             </GroupBox>
@@ -526,7 +530,7 @@
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="PwrCh4Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                    <CheckBox  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel4On, Mode=TwoWay}" 
                                       Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
                                     <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
@@ -555,7 +559,7 @@
                                     <Button Grid.Column="1" Grid.Row="9" Margin="5,5,5,5">Записать</Button>
                                 </Grid>
                             </Expander>
-                            <Expander Grid.Row="5" Header="Канал 5:">
+                            <Expander Grid.Row="5" Header="Канал 5: (Нагрев стекла)">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"></RowDefinition>
@@ -573,7 +577,7 @@
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox x:Name="PwrCh5Check"  Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                    <CheckBox   Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel5On, Mode=TwoWay}" 
                                       Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
                                     <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>

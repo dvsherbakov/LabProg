@@ -33,6 +33,7 @@ namespace LabProg
             CmdList.Add(new LCommand(22, "?SOM0F\r", "Set operating mode", "SOM"));
             CmdList.Add(new LCommand(23, "?SAP1\r", "Set auto power-up", "SAP"));
             CmdList.Add(new LCommand(24, "?SAS1\r", "Set Auto Start", "SAS"));
+            CmdList.Add(new LCommand(30, "?TPP\r", "Get temp Power", "GPP"));
         }
 
         public LCommand GetCmdById(int id)
@@ -44,6 +45,17 @@ namespace LabProg
         //{
 
         //}
+
+        public int GetCommandByMem(string mem)
+        {
+            int res = 0;
+            foreach (var cmd in CmdList)
+            {
+                if (mem.Contains(cmd.SAnswer)) res = cmd.Id;
+            }
+
+            return res;
+        }
     }
     public class LCommand
     {

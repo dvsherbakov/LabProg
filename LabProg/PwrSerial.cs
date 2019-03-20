@@ -113,7 +113,7 @@ namespace LabProg
                 }
                 case 5:
                 {
-                    byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x0, 0x2E, 0x72 };
+                    byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x1, 0xEF, 0xB2 };
                     Write(dt);
                     break;
                 }
@@ -156,7 +156,7 @@ namespace LabProg
                 }
                 case 5:
                 {
-                    byte[] dt = {  };
+                    byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x0, 0x2E, 0x72 };
                     Write(dt);
                     break;
                 }
