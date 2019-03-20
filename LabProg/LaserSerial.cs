@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace LabProg
 {
@@ -73,7 +75,7 @@ namespace LabProg
             }
             catch (Exception ex)
             {
-                //Dispatcher.Invoke(() => LogBox.Items.Add(new LogBoxItem { Dt = DateTime.Now, LogText = "Приложение запущено" }));
+                //Dispatcher.Invoke(() => windowLogBox.Items.Add(new LogBoxItem { Dt = DateTime.Now, LogText = "Приложение запущено" }));
                 _errList.Add(ex.Message);
             }
         }
