@@ -38,17 +38,18 @@ namespace LabProg
 
         public LCommand GetCmdById(int id)
         {
-            return CmdList.Where(x => x.Id == id).FirstOrDefault();
+            return CmdList.FirstOrDefault(x => x.Id == id);
         }
 
-        //public LCommand SetPowerLvl(int lvl)
-        //{
-
-        //}
+        public LCommand SetPowerLvl(int lvl)
+        {
+            var pwr = (int)(lvl * 4095 / 800);
+            return new LCommand(40, $"?SLP{pwr:X3}\r", "Set Level Power", "SLP");
+        }
 
         public int GetCommandByMem(string mem)
         {
-            int res = 0;
+            var res = 0;
             foreach (var cmd in CmdList)
             {
                 if (mem.Contains(cmd.SAnswer)) res = cmd.Id;

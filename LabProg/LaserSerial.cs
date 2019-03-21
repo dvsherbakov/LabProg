@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -10,10 +11,11 @@ namespace LabProg
     internal class LaserSerial
     {
         private readonly SerialPort _mPort;
-        private readonly LaserCommand lCommand;
+        private readonly LaserCommand _lCommand;
         private static List<string> _errList;
         private static List<string> _msgList;
-
+        private int _dPower;
+        private int DMaxPower;
         public LaserSerial(string portStr)
         {
             _errList = new List<string>();
@@ -28,7 +30,7 @@ namespace LabProg
                 Handshake = Handshake.None,
                 RtsEnable = true
             };
-            lCommand = new LaserCommand();
+            _lCommand = new LaserCommand();
             _mPort.DataReceived += DataReceivedHandler;
         }
 
@@ -49,8 +51,17 @@ namespace LabProg
             _mPort.Close();
         }
 
+        public int GetDPower()
+        {
+            return _dPower;
+        }
 
-        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        public int GetMaxPower()
+        {
+            return DMaxPower;
+        }
+
+        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             var sp = (SerialPort)sender;
             try
@@ -72,7 +83,9 @@ namespace LabProg
                 {
                     if ((s.Length > 3)&&(s.Length<50))
                     _msgList.Add(s);
+                    SetResMatt(s);
                 }
+
             }
             catch (Exception ex)
             {
@@ -82,13 +95,32 @@ namespace LabProg
         }
 
        private void SetResMatt(string res)
-        {
-
-        }
+       {
+           var cmd = _lCommand.GetCommandByMem(res);
+           switch (cmd)
+           {
+               case 7:
+               {
+                   var match = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
+                   if (match.Success)
+                       DMaxPower = Convert.ToInt32(match.Groups[1].Value);
+                   break;
+               }
+               case 9:
+               {
+                   var match = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
+                   if (match.Success)
+                       _dPower = Convert.ToInt32(match.Groups[1].Value);
+                   break;
+               }
+                default:
+                    break;
+           }
+       }
 
         private  void SendCommand(int cmd)
         {
-            _mPort.Write(lCommand.GetCmdById(cmd).SCommand);
+            _mPort.Write(_lCommand.GetCmdById(cmd).SCommand);
         }
     }
 }

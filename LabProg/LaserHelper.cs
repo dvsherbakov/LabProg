@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace LabProg
 {
 
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
 
         private void LaserPortOn(object sender, RoutedEventArgs e)
@@ -15,8 +14,6 @@ namespace LabProg
                 _pyroSerial.OpenPort();
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт пирометра" });
                 _pyroTimer.Start();
-               // _laserSerial.OpenPort();
-               // LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт лазера" });
             } catch (Exception ex)
             {
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
