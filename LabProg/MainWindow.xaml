@@ -587,8 +587,9 @@
                                         <TextBlock>Синусоидальный сигнал</TextBlock>
                                         <TextBlock>ШИМ сигнал</TextBlock>
                                     </ComboBox>
-                                    <TextBlock x:Name="TbChannel5Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"></TextBox>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                                    <TextBox x:Name="TbChannel5Bias" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Bias, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
                                     <TextBox x:Name="TbChannel5Amplitude" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Частота(Гц)</TextBlock>
@@ -598,12 +599,12 @@
                                     <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
                                     <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                    <TextBox x:Name="TbCh5MaxVolts" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5MaxVolts, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальный ток</TextBlock>
                                     <TextBox Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"></TextBox>
                                     <Button x:Name="PwrCh5Read"  Grid.Column="0" Grid.Row="9" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
-                                    <Button Grid.Column="1" Grid.Row="9" Margin="5,5,5,5">Записать</Button>
+                                    <Button Grid.Column="1" Grid.Row="9" Margin="5,5,5,5" Click="PwrCh5Write_Click">Записать</Button>
                                 </Grid>
                             </Expander>
                         </Grid>

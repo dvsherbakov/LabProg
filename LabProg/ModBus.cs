@@ -109,6 +109,26 @@ namespace LabProg
             return _buff.ToArray();
         }
 
+        public byte[] GetBias(int dest, int bias)
+        {
+            _buff.Clear();
+            _buff.Add(0x01);
+            _buff.Add(0x10);
+            var d = BitConverter.GetBytes((short)dest).Reverse().ToArray();
+            _buff.Add(d[0]);
+            _buff.Add(d[1]);
+            _buff.Add(0x0);
+            _buff.Add(0x1);
+            _buff.Add(0x2);
+            var b = BitConverter.GetBytes((short)bias).Reverse().ToArray();
+            _buff.Add(b[0]);
+            _buff.Add(b[1]);
+            var crcMdb = GetCrc(_buff.ToArray());
+            _buff.Add((byte)(crcMdb & 0xFF));
+            _buff.Add((byte)((crcMdb >> 8) & 0xFF));
+            return _buff.ToArray();
+        }
+
         private static ushort GetCrc(IEnumerable<byte> mdbBuf)
         {
             ushort crc = 0xFFFF;
