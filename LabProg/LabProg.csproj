@@ -125,8 +125,5 @@
   <ItemGroup>
     <Resource Include="Resources\upwork.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="TextFile1.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
