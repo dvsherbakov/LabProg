@@ -34,6 +34,12 @@ namespace LabProg
             CmdList.Add(new LCommand(23, "?SAP1\r", "Set auto power-up", "SAP"));
             CmdList.Add(new LCommand(24, "?SAS1\r", "Set Auto Start", "SAS"));
             CmdList.Add(new LCommand(30, "?TPP\r", "Get temp Power", "GPP"));
+            CmdList.Add(new LCommand(35, "?POn\r", "Power On", "POn"));
+            CmdList.Add(new LCommand(36, "?POf\r", "Power Off", "POf"));
+            CmdList.Add(new LCommand(37, "?LOn\r", "Laser On", "LOn"));
+            CmdList.Add(new LCommand(38, "?LOf\r", "Laser Off", "LOf"));
+
+
         }
 
         public LCommand GetCmdById(int id)

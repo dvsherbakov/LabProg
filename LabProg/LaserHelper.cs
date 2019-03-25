@@ -14,7 +14,8 @@ namespace LabProg
                 _pyroSerial.OpenPort();
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт пирометра" });
                 _pyroTimer.Start();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
                 ChbLaserPort.IsChecked = false;
@@ -40,5 +41,26 @@ namespace LabProg
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт лазера" });
         }
 
+        private void SetLaserPwr(object sender, RoutedEventArgs e)
+        {
+            var pwrText = TbLaserPwr.Text;
+            if (Int32.TryParse(pwrText, out int outPwr))
+            {
+                _laserSerial.SetPower(outPwr);
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка установить мощность лазера в {outPwr}" });
+            }
+        }
+
+        private void SetLaserOn(object sender, RoutedEventArgs e)
+        {
+            _laserSerial.SetOn();
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка включения лазера" });
+        }
+
+        private void SetLaserOff(object sender, RoutedEventArgs e)
+        {
+            _laserSerial.SetOff();
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка выключения лазера" });
+        }
     }
 }

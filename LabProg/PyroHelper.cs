@@ -9,6 +9,7 @@ namespace LabProg
         private void PeackPyroInfo(object source, System.Timers.ElapsedEventArgs e)
         {
             Dispatcher.Invoke(() => PyroTemp.Text = _pyroSerial.GetLastRes().ToString("N2"));
+            Dispatcher.Invoke(() => TbCurrentLPwr.Text = _laserSerial.GetLasePower().ToString());
         }
     }
 }

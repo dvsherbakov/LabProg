@@ -16,6 +16,9 @@ namespace LabProg
         private static List<string> _msgList;
         private int _dPower;
         private int DMaxPower;
+        private float TempAmb;
+        private int lPwr;
+
         public LaserSerial(string portStr)
         {
             _errList = new List<string>();
@@ -32,6 +35,9 @@ namespace LabProg
             };
             _lCommand = new LaserCommand();
             _mPort.DataReceived += DataReceivedHandler;
+            _dPower = 0;
+            DMaxPower = 0;
+            TempAmb = 0f;
         }
 
         public void OpenPort()
@@ -44,6 +50,7 @@ namespace LabProg
             SendCommand(21);
             SendCommand(13);
             SendCommand(30);
+            SendCommand(23);
         }
 
         public void ClosePort()
@@ -97,30 +104,62 @@ namespace LabProg
        private void SetResMatt(string res)
        {
            var cmd = _lCommand.GetCommandByMem(res);
-           switch (cmd)
-           {
-               case 7:
-               {
-                   var match = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
-                   if (match.Success)
-                       DMaxPower = Convert.ToInt32(match.Groups[1].Value);
-                   break;
-               }
-               case 9:
-               {
-                   var match = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
-                   if (match.Success)
-                       _dPower = Convert.ToInt32(match.Groups[1].Value);
-                   break;
-               }
+            switch (cmd)
+            {
+                case 7:
+                    Match mpwr = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
+                    if (mpwr.Success)
+                        DMaxPower = Convert.ToInt32(mpwr.Groups[1].Value);
+                    break;
+                case 9:
+                    var dpwr = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
+                    if (dpwr.Success)
+                        _dPower = Convert.ToInt32(dpwr.Groups[1].Value);
+                    break;
+                case 11:
+                    var tmpa = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
+                    if (tmpa.Success)
+                       TempAmb = Convert.ToInt32(tmpa.Groups[1].Value);
+                    break;
+                case 16:
+                    var lpwr = res.Substring(4);
+                    int b = Convert.ToInt32(lpwr, 16);
+                    lPwr = (int)(b * 800 / 4095);
+                    break;
                 default:
                     break;
-           }
+            }
        }
 
         private  void SendCommand(int cmd)
         {
             _mPort.Write(_lCommand.GetCmdById(cmd).SCommand);
+        }
+
+        public void SetPower(int pwr)
+        {
+            var cmd = _lCommand.SetPowerLvl(pwr);
+            if (_mPort.IsOpen)
+            {
+                _mPort.Write(cmd.SCommand);
+            }
+        }
+
+        public int GetLasePower()
+        {
+            return lPwr;
+        }
+
+        public void SetOn()
+        {
+            SendCommand(35);
+            SendCommand(37);
+        }
+
+        public void SetOff()
+        {
+            SendCommand(36);
+            SendCommand(38);
         }
     }
 }
