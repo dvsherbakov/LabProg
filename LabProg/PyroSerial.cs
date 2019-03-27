@@ -16,7 +16,7 @@ namespace LabProg
 
         public PyroSerial(string port)
         {
-            if (port == "") port = "COM5";
+            if (port == "") port = "COM4";
             _rxidx = 0;
             _port = new SerialPort(port)
             {

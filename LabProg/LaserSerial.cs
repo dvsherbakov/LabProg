@@ -23,7 +23,7 @@ namespace LabProg
         {
             _errList = new List<string>();
             _msgList = new List<string>();
-            if (portStr == "") portStr = "COM2";
+            if (portStr == "") portStr = "COM6";
             _mPort = new SerialPort(portStr)
             {
                 BaudRate = 500000,
