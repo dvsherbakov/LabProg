@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows;
+using System.Text;
 
 namespace LabProg
 {
@@ -49,6 +50,8 @@ namespace LabProg
                 var cnt = sp.ReadBufferSize;
                 _rxdata = new byte[cnt + 1];
                 var rc = sp.Read(_rxdata, 0, cnt);
+                var ascii = Encoding.ASCII;
+                var answrs = ascii.GetString(_rxdata).Split('\r');
             }
             catch (Exception ex)
             {

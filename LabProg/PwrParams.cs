@@ -39,7 +39,7 @@ namespace LabProg
 
         //#SmartPWR Read/Write Holding Registeres
 
-        const int REG_P0_ENABLE = 2000;
+        public const int REG_P0_ENABLE = 2000;
         const int REG_P0_MODE = 2001;
         const int REG_P0_AMPLITUDE = 2002;
         public const int REG_P0_BIAS = 2003;
@@ -49,7 +49,7 @@ namespace LabProg
         public const int REG_P0_MAX_VOLTS = 2007;
         const int REG_P0_MAX_AMPS = 2008;
 
-        const int REG_P1_ENABLE = 2010;
+        public const int REG_P1_ENABLE = 2010;
         const int REG_P1_MODE = 2011;
         const int REG_P1_AMPLITUDE = 2012;
         public const int REG_P1_BIAS = 2013;
@@ -59,7 +59,7 @@ namespace LabProg
         public const int REG_P1_MAX_VOLTS = 2017;
         const int REG_P1_MAX_AMPS = 2018;
 
-        const int REG_P2_ENABLE = 2020;
+        public const int REG_P2_ENABLE = 2020;
         const int REG_P2_MODE = 2021;
         const int REG_P2_AMPLITUDE = 2022;
         public const int REG_P2_BIAS = 2023;
@@ -69,7 +69,7 @@ namespace LabProg
         public const int REG_P2_MAX_VOLTS = 2027;
         const int REG_P2_MAX_AMPS = 2028;
 
-        const int REG_P3_ENABLE = 2030;
+        public const int REG_P3_ENABLE = 2030;
         const int REG_P3_MODE = 2031;
         const int REG_P3_AMPLITUDE = 2032;
         public const int REG_P3_BIAS = 2033;
@@ -79,7 +79,7 @@ namespace LabProg
         public const int REG_P3_MAX_VOLTS = 2037;
         const int REG_P3_MAX_AMPS = 2038;
 
-        const int REG_P4_ENABLE = 2040;
+        public const int REG_P4_ENABLE = 2040;
         const int REG_P4_MODE = 2041;
         const int REG_P4_AMPLITUDE = 2042;
         public const int REG_P4_BIAS = 2043;
@@ -89,7 +89,7 @@ namespace LabProg
         public const int REG_P4_MAX_VOLTS = 2047;
         const int REG_P4_MAX_AMPS = 2048;
 
-        const int REG_P5_ENABLE = 2050;
+        public const int REG_P5_ENABLE = 2050;
         const int REG_P5_MODE = 2051;
         const int REG_P5_AMPLITUDE = 2052;
         public const int REG_P5_BIAS = 2053;

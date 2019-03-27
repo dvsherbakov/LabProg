@@ -9,7 +9,12 @@ namespace LabProg
     {
         private void ReadPwrParam(object sender, RoutedEventArgs e)
         {
+            if (((Button)sender).Name == "PwrCh0Read") PwrSerial.GetChanellData(0);
             if (((Button)sender).Name == "PwrCh1Read") PwrSerial.GetChanellData(1);
+            if (((Button)sender).Name == "PwrCh2Read") PwrSerial.GetChanellData(2);
+            if (((Button)sender).Name == "PwrCh3Read") PwrSerial.GetChanellData(3);
+            if (((Button)sender).Name == "PwrCh4Read") PwrSerial.GetChanellData(4);
+            if (((Button)sender).Name == "PwrCh5Read") PwrSerial.GetChanellData(5);
         }
 
         private void PwrPortOn(object sender, RoutedEventArgs e)
@@ -23,11 +28,6 @@ namespace LabProg
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
                 CbConnectPwrPort.IsChecked = false;
             }
-        }
-
-        public void PwrSendMessage(object sender, RoutedEventArgs e)
-        {
-            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = e.ToString() });
         }
 
         private void PwrPortOff(object sender, RoutedEventArgs e)
