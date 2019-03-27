@@ -25,6 +25,11 @@ namespace LabProg
             }
         }
 
+        public void PwrSendMessage(object sender, RoutedEventArgs e)
+        {
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = e.ToString() });
+        }
+
         private void PwrPortOff(object sender, RoutedEventArgs e)
         {
             _pwrSerial.ClosePort();

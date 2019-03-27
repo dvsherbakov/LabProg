@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Timers;
-using System.Windows.Controls;
+using System.Windows.Threading;
+using System.Windows;
 
 namespace LabProg
 {
@@ -31,7 +29,6 @@ namespace LabProg
                 RtsEnable = true
             };
             Port.DataReceived += DataReceivedHandler;
-            //Port.Open();
         }
 
         public void OpenPort()

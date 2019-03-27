@@ -8,6 +8,7 @@ namespace LabProg
     {
         private Timer _confocalTimer;
         private Timer _pyroTimer;
+        System.Windows.Threading.Dispatcher _dispatcher;
         private void InitInternalComponents()
         {
             //CbPumpPort.Items.Clear();
@@ -21,6 +22,8 @@ namespace LabProg
             InitPwrItems();
             InitPumpItems();
             InitPyroTimer();
+
+            _dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
         }
 
         private void InitPwrItems()

@@ -30,7 +30,6 @@ namespace LabProg
             _port.DataReceived += DataReceivedHandler;
             _aTimer.Elapsed += OnTimedEvent;
             _aTimer.Interval = 300;
-            
         }
 
         public void OpenPort()
@@ -47,20 +46,19 @@ namespace LabProg
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            var sp = (SerialPort) sender;
+            var sp = (SerialPort)sender;
             try
             {
                 var cnt = sp.ReadBufferSize;
                 _rxdata = new byte[cnt + 1];
-               sp.Read(_rxdata, 0, cnt);
+                sp.Read(_rxdata, 0, cnt);
             }
             catch (Exception ex)
             {
                 ErrList.Add(ex.Message);
             }
             float t = RcConvert(_rxdata);
-           
-                _tempLog.Add(_rxidx, t);
+            _tempLog.Add(_rxidx, t);
             _rxidx++;
         }
 

@@ -25,7 +25,6 @@ namespace LabProg
                 RtsEnable = true
             };
             _mPort.DataReceived += DataReceivedHandler;
-
         }
 
         public void OpenPort()
@@ -82,32 +81,26 @@ namespace LabProg
         public void StartPump()
         {
             _mPort.Write("s");
-            //Thread.Sleep(100); 
         }
 
         public void StopPump()
         {
             _mPort.Write("t");
-            //Thread.Sleep(100);
         }
 
         public void SetClockwiseDirection()
         {
             _mPort.Write("r");
-            //Thread.Sleep(100);
         }
 
         public void SetCounterClockwiseDirection()
         {
             _mPort.Write("l");
-            //Thread.Sleep(100);
         }
 
         public void SetSpeed(string speed)
         {
-            //ReadPortData();
             _mPort.Write(speed);
-            //Thread.Sleep(100);
         }
     }
 }
