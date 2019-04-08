@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CameraHelper.cs" />
     <Compile Include="LaserHelper.cs" />
     <Compile Include="Confocal.cs" />
     <Compile Include="ConfocalHelper.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="PCO_ConvertStructures.cs" />
     <Compile Include="PCO_Convert_LibWrapper.cs" />
     <Compile Include="PCO_GetErrorTextClass.cs" />
+    <Compile Include="PCO_SDK_LibWrapper.cs" />
     <Compile Include="PumpSerial.cs" />
     <Compile Include="PwrHelper.cs" />
     <Compile Include="PwrMode.cs" />
