@@ -32,6 +32,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Margin="5,5,5,5">
                     <Grid.RowDefinitions>
@@ -309,7 +310,7 @@
                         </Grid>
                     </Expander>
                     <Expander Grid.Row="2" Header="Каналы">
-                        <Grid Margin="20,5,5,5">
+                        <Grid Margin="20,5,1,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -446,7 +447,7 @@
                                         <TextBlock>Синусоидальный сигнал</TextBlock>
                                         <TextBlock>ШИМ сигнал</TextBlock>
                                     </ComboBox>
-                                    <TextBlock x:Name="TbChannel2Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                                    <TextBlock x:Name="TbChannel2Bias" Grid.Column="0" Grid.Row="2" Margin="5,5,1,5">Напряжение смешения(Регулируемый ток)</TextBlock>
                                     <TextBox x:Name="TbCh2Bias" Grid.Column="1" Grid.Row="2" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2Bias, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
@@ -484,10 +485,10 @@
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox   Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" 
+                                    <CheckBox   Grid.Column="0" Grid.Row="0" Margin="5,5,1,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}" 
                                       >Включить</CheckBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Режим работы</TextBlock>
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Margin="5,5,1,5" >Режим работы</TextBlock>
                                     <ComboBox x:Name="CbModeCh3"  Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
                                         <TextBlock>Регулирование по напряжению</TextBlock>
                                         <TextBlock>Регулирование по току</TextBlock>
@@ -612,7 +613,7 @@
                         </Grid>
                     </Expander>
                     <Expander Grid.Row="8" Header="Настройки" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PowerManaging, Mode=TwoWay}">
-                        <Grid Margin="20,5,5,5">
+                        <Grid Margin="20,5,1,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -629,6 +630,25 @@
                                 <TextBlock>COM8</TextBlock>
                                 <TextBlock>COM9</TextBlock>
                             </ComboBox>
+                        </Grid>
+                    </Expander>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="4" Margin="5,5,1,5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0">Управление камерой</TextBlock>
+                    <Expander Grid.Row="1" Header="Общее управление" Margin="10,5,1,5">
+                        <Grid  Margin="10,5,1,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <CheckBox Grid.Row="0">Соединится с камерой</CheckBox>
+                            <CheckBox Grid.Row="1" IsEnabled="False">Прочитать состояние</CheckBox>
                         </Grid>
                     </Expander>
                 </Grid>
