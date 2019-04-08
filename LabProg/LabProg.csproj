@@ -62,6 +62,9 @@
     <Compile Include="LaserCommand.cs" />
     <Compile Include="LaserSerial.cs" />
     <Compile Include="ModBus.cs" />
+    <Compile Include="PCO_ConvertStructures.cs" />
+    <Compile Include="PCO_Convert_LibWrapper.cs" />
+    <Compile Include="PCO_GetErrorTextClass.cs" />
     <Compile Include="PumpSerial.cs" />
     <Compile Include="PwrHelper.cs" />
     <Compile Include="PwrMode.cs" />
