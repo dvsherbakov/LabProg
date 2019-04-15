@@ -4,8 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using PCOConvertStructures;
 
-namespace LabProg
+namespace PCOConvertDll
 {
     class PCO_Convert_LibWrapper
     {

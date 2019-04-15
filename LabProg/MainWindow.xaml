@@ -646,9 +646,16 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <CheckBox Grid.Row="0">Соединится с камерой</CheckBox>
-                            <CheckBox Grid.Row="1" IsEnabled="False">Прочитать состояние</CheckBox>
+                            <CheckBox Grid.Row="0" x:Name="cbOpenCamera" Checked="ConnectToCamera">Соединится с камерой</CheckBox>
+                            <CheckBox Grid.Row="1" x:Name="cbGetDescription" IsEnabled="False" Checked="OnGetDescription">Прочитать состояние</CheckBox>
+                            <CheckBox Grid.Row="2" x:Name="cbStartCamera" IsEnabled="False" Checked="OnStartRecord">Start</CheckBox>
+                            <CheckBox Grid.Row="3" x:Name="cbGrabCamera" IsEnabled="False" Checked=" OnGrabImage">Grab</CheckBox>
+                            <CheckBox Grid.Row="4" x:Name="cbStopCamera" IsEnabled="False" Checked="OnStopRecord">Stop</CheckBox>
+                            <CheckBox Grid.Row="5" x:Name="cbCloseCamera">Close</CheckBox>
                         </Grid>
                     </Expander>
                 </Grid>
@@ -663,5 +670,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Image x:Name="PictureBox1"  Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="106,158,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>
