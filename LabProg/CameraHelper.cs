@@ -4,6 +4,8 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using PCOConvertDll;
 using PCOConvertStructures;
 
@@ -249,24 +251,14 @@ namespace LabProg
 
             if ((convertDialog == IntPtr.Zero) && (convertHandle != IntPtr.Zero))
             {
-               // PCO_Convert_LibWrapper.PCO_OpenConvertDialog(ref convertDialog, this.Handle, "Convert Dialog", WM_APPp100, convertHandle, this.Right, this.Top);
+                var hdl = new WindowInteropHelper(this).Handle;
+                PCO_Convert_LibWrapper.PCO_OpenConvertDialog(ref convertDialog, hdl, "Convert Dialog", WM_APPp100, convertHandle, 500, 100);
             }
 
             //Mandatory for Cameralink and GigE. Don't care for all other interfaces, so leave it intact here.
 
             err = PCO_SDK_LibWrapper.PCO_AddBufferEx(cameraHandle, 0, 0, bufnr, (UInt16)width, (UInt16)height, (UInt16)pcoDescr.wDynResDESC);
 
-            // There are two possibilities to synch. with the camera. Either by polling or by event.
-            // To use polling uncomment the Polling Block and comment the Event Block
-            // Begin Polling Block
-            // UInt32 dwStatusDll = 0, dwStatusDrv = 0;
-            // do
-            // {
-            //   err = PCO_SDK_LibWrapper.PCO_GetBufferStatus(cameraHandle, bufnr, ref dwStatusDll, ref dwStatusDrv);
-            // } while ((dwStatusDll & 0x8000) == 0);
-            // End Polling Block
-
-            // Begin Event Block
             bool bImageIsOk = false;
             uint res = WaitForSingleObject(evhandle, 3000);
             if (res == 0)
@@ -325,10 +317,30 @@ namespace LabProg
             Marshal.Copy(imagedata, 0, pixelStartAddress, imagedata.Length);
 
             imagebmp.UnlockBits(picData);
-            imagebmp.Save("fileo1.jpg", ImageFormat.Jpeg);
+            //imagebmp.Save("fileo1.jpg", ImageFormat.Jpeg);
+            BitmapImage bmpImage = BitmapToImageSource(imagebmp);
+            PictureBox1.Source = null;
+            PictureBox1.Source = bmpImage;
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = " Получено изображение с камеры" });
+            
             // pictureBox1.Height = imagebmp.Height/2;
             //pictureBox1.Width = imagebmp.Width/2;
-           // PictureBox1. Image = imagebmp;
+            // PictureBox1. Image = imagebmp;
+        }
+
+        BitmapImage BitmapToImageSource(Bitmap bitmap)
+        {
+            using (System.IO.MemoryStream memory = new System.IO.MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                memory.Position = 0;
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.StreamSource = memory;
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.EndInit();
+                return bitmapimage;
+            }
         }
     }
 

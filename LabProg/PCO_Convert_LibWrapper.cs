@@ -22,27 +22,14 @@ namespace PCOConvertDll
          * ***********************************************************************************************************************/
         #region PCO Convert Object API Calls
 
-        // Creates a new convert object based on the PCO_SensorInfor structure. Convert structure handle will be used during conversion.
-        // Call PCO_ConvertDelete to unload convert dll.
-        // pHandle = Int handle to store the address of the created convert object
-        // pSensorInfo = Pass by Ref SensorInfo structure
-        // iConvertType = Int variable to determine the conversion type
-        // returns Int error code value
         [DllImport("PCO_Conv.dll", EntryPoint = "PCO_ConvertCreate",
             ExactSpelling = false, CallingConvention = CallingConvention.StdCall)]
         public static extern int PCO_ConvertCreate(ref IntPtr pHandle, ref PCO_ConvertStructures.PCO_SensorInfo pSensorInfo, int iConvertType);
 
-        // Deletes a previously created convert object. Mandatory to call this before closing application
-        // pHandle = Int handle to a previously created convert object
-        // returns Int error code value
         [DllImport("PCO_Conv.dll", EntryPoint = "PCO_ConvertDelete",
             ExactSpelling = false, CallingConvention = CallingConvention.StdCall)]
         public static extern int PCO_ConvertDelete(IntPtr pHandle);
 
-        // Gets all the values of a previously created convert object
-        // pHandle = Int handle to a previously created object
-        // pConvert = Pass by Ref Convert structure
-        // returns Int error code value
         [DllImport("PCO_Conv.dll", EntryPoint = "PCO_ConvertGet", ExactSpelling = false, CallingConvention = CallingConvention.StdCall)]
         public static extern int PCO_ConvertGet(IntPtr pHandle, ref PCO_ConvertStructures.PCO_Convert pConvert);
 
