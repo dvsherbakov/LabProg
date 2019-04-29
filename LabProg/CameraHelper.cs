@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -342,6 +343,18 @@ namespace LabProg
                 return bitmapimage;
             }
         }
+
+        private void OnChangeCameraPath(object sender, EventArgs e)
+        {
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = " Меняем путь сохранения" });
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                    ((TextBox)sender).Text = dialog.SelectedPath;
+            }
+        }
+
     }
 
 

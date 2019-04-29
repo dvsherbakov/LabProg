@@ -658,6 +658,26 @@
                             <CheckBox Grid.Row="5" x:Name="cbCloseCamera">Close</CheckBox>
                         </Grid>
                     </Expander>
+                    <Expander Grid.Row="2" Header="Настройки камеры" Margin="10,5,1,5">
+                        <Grid  Margin="10,5,1,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Частота опроса</TextBlock>
+                            <TextBox Grid.Row="0" Grid.Column="1" 
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=FreqCam, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Сохранять кадры</TextBlock>
+                            <CheckBox Grid.Row="1" Grid.Column="1" Margin="20,3,3,3"></CheckBox>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Путь сохранения</TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1" PreviewMouseDown="OnChangeCameraPath"></TextBox>
+                        </Grid>
+                    </Expander>
                 </Grid>
 
             </Grid>

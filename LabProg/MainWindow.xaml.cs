@@ -26,6 +26,6 @@ namespace LabProg
         private void CloseApp(object sender, RoutedEventArgs e)
         {
             Close();
-        }        
+        }
     }
 }
