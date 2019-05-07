@@ -320,9 +320,14 @@ namespace LabProg
             imagebmp.UnlockBits(picData);
             if (cbSaveCameraImage.IsChecked.Value)
             {
+                string propPath = "";
                 if (Properties.Settings.Default.CameraSavePath.Length>0)
                 {
-                    //var propPath = 
+                    propPath = Properties.Settings.Default.CameraSavePath;
+                }
+                else
+                {
+                    propPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 }
                 //imagebmp.Save("fileo1.jpg", ImageFormat.Jpeg);
             }
