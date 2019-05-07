@@ -99,7 +99,7 @@ namespace LabProg
 
             err = PCO_SDK_LibWrapper.PCO_GetImageStruct(cameraHandle, ref pcoImage);
 
-            ushort usfwsize;// = (ushort)Marshal.SizeOf(typeof(PCO_SC2_Firmware_DESC));
+            ushort usfwsize = (ushort)Marshal.SizeOf(typeof(PCO_SC2_Firmware_DESC));
 
             usfwsize = (ushort)Marshal.SizeOf(typeof(PCO_FW_Vers));
             pcoCameraType.strHardwareVersion.Board = new PCO_SC2_Hardware_DESC[10];
@@ -205,7 +205,7 @@ namespace LabProg
             err = PCO_SDK_LibWrapper.PCO_CancelImages(cameraHandle);
         }
 
-        private void OnGrabImage(object sender, EventArgs e)
+        private void OnGrabImage(object sender, EventArgs evt)
         {
             int err = 0;
             int size;
@@ -318,11 +318,18 @@ namespace LabProg
             Marshal.Copy(imagedata, 0, pixelStartAddress, imagedata.Length);
 
             imagebmp.UnlockBits(picData);
-            //imagebmp.Save("fileo1.jpg", ImageFormat.Jpeg);
+            if (cbSaveCameraImage.IsChecked.Value)
+            {
+                if (Properties.Settings.Default.CameraSavePath.Length>0)
+                {
+                    //var propPath = 
+                }
+                //imagebmp.Save("fileo1.jpg", ImageFormat.Jpeg);
+            }
             BitmapImage bmpImage = BitmapToImageSource(imagebmp);
             PictureBox1.Source = null;
             PictureBox1.Source = bmpImage;
-            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = " Получено изображение с камеры" });
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
             
             // pictureBox1.Height = imagebmp.Height/2;
             //pictureBox1.Width = imagebmp.Width/2;

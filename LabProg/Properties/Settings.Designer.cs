@@ -634,5 +634,17 @@ namespace LabProg.Properties {
                 this["FreqCam"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CameraSavePath {
+            get {
+                return ((string)(this["CameraSavePath"]));
+            }
+            set {
+                this["CameraSavePath"] = value;
+            }
+        }
     }
 }

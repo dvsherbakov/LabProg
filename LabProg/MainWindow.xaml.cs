@@ -25,6 +25,8 @@ namespace LabProg
 
         private void CloseApp(object sender, RoutedEventArgs e)
         {
+            //PwrChannelOff(sender, e);
+            //PwrSerial.SetChannelOff(0);
             Close();
         }
     }

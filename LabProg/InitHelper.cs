@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.IO.Ports;
 using Timer = System.Timers.Timer;
+using System.Threading;
 
 namespace LabProg
 {
@@ -8,6 +9,8 @@ namespace LabProg
     {
         private Timer _confocalTimer;
         private Timer _pyroTimer;
+        private Timer _cameraTimer;
+
         System.Windows.Threading.Dispatcher _dispatcher;
         private void InitInternalComponents()
         {
@@ -59,6 +62,12 @@ namespace LabProg
             Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
             Properties.Settings.Default.PyroPortIndex = CbPyroPort.SelectedIndex;
             Properties.Settings.Default.Save();
+            PwrSerial.SetChannelOff(0); Thread.Sleep(300);
+            PwrSerial.SetChannelOff(1); Thread.Sleep(300);
+            PwrSerial.SetChannelOff(2); Thread.Sleep(300);
+            PwrSerial.SetChannelOff(3); Thread.Sleep(300);
+            PwrSerial.SetChannelOff(4); Thread.Sleep(300);
+            PwrSerial.SetChannelOff(5); Thread.Sleep(300);
         }
 
         private void InitPumpItems()
@@ -77,6 +86,14 @@ namespace LabProg
                 Interval = 1000
             };
             _pyroTimer.Elapsed += PeackPyroInfo;
+        }
+
+        private void InitCameraTimer()
+        {
+            _cameraTimer = new Timer
+            {
+                Interval = 1000
+            };
         }
     }
 }

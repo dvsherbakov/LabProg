@@ -79,86 +79,92 @@ namespace LabProg
 
         public static void SetChannelOn(int channel)
         {
-            switch (channel)
+            if (Port.IsOpen)
             {
-                case 0:
+                switch (channel)
                 {
-                    byte[] dt = {0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x1, 0x2, 0xC0};
-                    Write(dt);
-                    break;
-                }
-                case 1:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x7, 0xDA,  0x0, 0x1, 0x2, 0x0, 0x1, 0x2, 0x6A };
-                    Write(dt);
-                    break;
-                }
-                case 2:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x1, 0x6, 0xB4 };
-                    Write(dt);
-                    break;
-                }
-                case 3:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x1, 0x6, 0x1E };
-                    Write(dt);
-                    break;
-                }
-                case 4:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x1, 0x4, 0xE8 };
-                    Write(dt);
-                    break;
-                }
-                case 5:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x1, 0xEF, 0xB2 };
-                    Write(dt);
-                    break;
+                    case 0:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x1, 0x2, 0xC0 };
+                            Write(dt);
+                            break;
+                        }
+                    case 1:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x1, 0x2, 0x6A };
+                            Write(dt);
+                            break;
+                        }
+                    case 2:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x1, 0x6, 0xB4 };
+                            Write(dt);
+                            break;
+                        }
+                    case 3:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x1, 0x6, 0x1E };
+                            Write(dt);
+                            break;
+                        }
+                    case 4:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x1, 0x4, 0xE8 };
+                            Write(dt);
+                            break;
+                        }
+                    case 5:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x1, 0xEF, 0xB2 };
+                            Write(dt);
+                            break;
+                        }
                 }
             }
         }
 
         public static void SetChannelOff(int channel)
         {
-            switch (channel)
+            if (Port.IsOpen)
             {
-                case 0:
+                switch (channel)
                 {
-                    byte[] dt = { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0x0 };
-                    Write(dt);
-                    break;
-                }
-                case 1:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0xAA };
-                    Write(dt);
-                    break;
-                }
-                case 2:
-                {
-                    byte[] dt = {0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0x74};
-                    Write(dt);
-                    break;
-                }
-                case 3:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0xDE };
-                    Write(dt);
-                    break;
-                }
-                case 4:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC5, 0x28 };
-                    Write(dt);
-                    break;
-                }
-                case 5:
-                {
-                    byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x0, 0x2E, 0x72 };
-                    Write(dt);
-                    break;
+                    case 0:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0x0 };
+                            Write(dt);
+                            break;
+                        }
+                    case 1:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0xAA };
+                            Write(dt);
+                            break;
+                        }
+                    case 2:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0x74 };
+                            Write(dt);
+                            break;
+                        }
+                    case 3:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0xDE };
+                            Write(dt);
+                            break;
+                        }
+                    case 4:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC5, 0x28 };
+                            Write(dt);
+                            break;
+                        }
+                    case 5:
+                        {
+                            byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x0, 0x2E, 0x72 };
+                            Write(dt);
+                            break;
+                        }
                 }
             }
         }
