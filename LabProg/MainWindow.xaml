@@ -640,7 +640,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0">Управление камерой</TextBlock>
-                    <Expander Grid.Row="1" Header="Общее управление" Margin="10,5,1,5">
+                    <Expander Grid.Row="1" Header="Общее управление" Margin="10,1,1,1">
                         <Grid  Margin="10,5,1,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -658,9 +658,10 @@
                             <CheckBox Grid.Row="5" x:Name="cbCloseCamera">Close</CheckBox>
                         </Grid>
                     </Expander>
-                    <Expander Grid.Row="2" Header="Настройки камеры" Margin="10,5,1,5">
+                    <Expander Grid.Row="2" Header="Настройки камеры" Margin="10,1,1,1">
                         <Grid  Margin="10,5,1,5">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -672,10 +673,12 @@
                             <TextBlock Grid.Row="0" Grid.Column="0">Частота опроса</TextBlock>
                             <TextBox Grid.Row="0" Grid.Column="1" 
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=FreqCam, Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="0">Сохранять кадры</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0"  Margin="1">Сохранять кадры</TextBlock>
                             <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage"  Margin="20,3,3,3"></CheckBox>
-                            <TextBlock Grid.Row="2" Grid.Column="0">Путь сохранения</TextBlock>
-                            <TextBox Grid.Row="2" Grid.Column="1" PreviewMouseDown="OnChangeCameraPath" Text="{Binding Source={x:Static properties:Settings.Default}, Path=CameraSavePath, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="1">Путь сохранения</TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1"  Margin="1" PreviewMouseDown="OnChangeCameraPath" Text="{Binding Source={x:Static properties:Settings.Default}, Path=CameraSavePath, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Row="3" Grid.Column="0"  Margin="1">Префикс имени файла</TextBlock>
+                            <TextBox Grid.Row="3" Grid.Column="1" Margin="1"></TextBox>
                         </Grid>
                     </Expander>
                 </Grid>

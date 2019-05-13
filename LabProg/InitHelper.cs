@@ -94,6 +94,7 @@ namespace LabProg
             {
                 Interval = 1000
             };
+            _cameraTimer.Elapsed += OnTimerTeak;
         }
     }
 }

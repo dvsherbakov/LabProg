@@ -358,12 +358,20 @@ namespace LabProg
 
         private void OnChangeCameraPath(object sender, EventArgs e)
         {
-            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = " Меняем путь сохранения" });
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Меняем путь сохранения" });
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
                     ((TextBox)sender).Text = dialog.SelectedPath;
+            }
+        }
+
+        private void OnTimerTeak(object sender, EventArgs e)
+        {
+            if (cbGrabCamera.IsChecked.Value)
+            {
+                OnGrabImage(sender, e);
             }
         }
 
