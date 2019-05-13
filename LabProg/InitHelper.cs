@@ -25,7 +25,7 @@ namespace LabProg
             InitPwrItems();
             InitPumpItems();
             InitPyroTimer();
-
+            InitCameraTimer();
             _dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
         }
 

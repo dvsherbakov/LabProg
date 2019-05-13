@@ -191,6 +191,7 @@ namespace LabProg
             {
                 PCO_SDK_LibWrapper.PCO_EnableDialogCam(camDialog, false);
             }
+            _cameraTimer.Start();
         }
 
         private void OnStopRecord(object sender, EventArgs e)
@@ -203,6 +204,7 @@ namespace LabProg
                 PCO_SDK_LibWrapper.PCO_EnableDialogCam(camDialog, true);
             }
             err = PCO_SDK_LibWrapper.PCO_CancelImages(cameraHandle);
+            _cameraTimer.Stop();
         }
 
         private void OnGrabImage(object sender, EventArgs evt)
@@ -318,23 +320,26 @@ namespace LabProg
             Marshal.Copy(imagedata, 0, pixelStartAddress, imagedata.Length);
 
             imagebmp.UnlockBits(picData);
-            if (cbSaveCameraImage.IsChecked.Value)
+            bool isOnSave = false;
+            Dispatcher.Invoke(() => isOnSave = cbSaveCameraImage.IsChecked.Value);
+            if (isOnSave)
             {
                 string propPath = "";
-                if (Properties.Settings.Default.CameraSavePath.Length>0)
-                {
-                    propPath = Properties.Settings.Default.CameraSavePath;
-                }
-                else
+                Dispatcher.Invoke(() => propPath = tbSaveCamPath.Text);
+                if (propPath.Length<=0)
                 {
                     propPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 }
-                //imagebmp.Save("fileo1.jpg", ImageFormat.Jpeg);
+                //imagebmp.Save(propPath"fileo1.jpg", ImageFormat.Jpeg);
             }
-            BitmapImage bmpImage = BitmapToImageSource(imagebmp);
-            PictureBox1.Source = null;
-            PictureBox1.Source = bmpImage;
-            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
+           
+            Dispatcher.Invoke(() =>
+            {
+                BitmapImage bmpImage = BitmapToImageSource(imagebmp);
+                PictureBox1.Source = null;
+                PictureBox1.Source = bmpImage;
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
+            });
             
             // pictureBox1.Height = imagebmp.Height/2;
             //pictureBox1.Width = imagebmp.Width/2;
@@ -369,7 +374,9 @@ namespace LabProg
 
         private void OnTimerTeak(object sender, EventArgs e)
         {
-            if (cbGrabCamera.IsChecked.Value)
+            bool isReady = false;
+            Dispatcher.Invoke(() => isReady = cbGrabCamera.IsChecked.Value);
+            if (isReady)
             {
                 OnGrabImage(sender, e);
             }
