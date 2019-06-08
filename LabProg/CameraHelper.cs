@@ -325,12 +325,19 @@ namespace LabProg
             if (isOnSave)
             {
                 string propPath = "";
-                Dispatcher.Invoke(() => propPath = tbSaveCamPath.Text);
+                string prefix = "00";
+                Dispatcher.Invoke(() =>
+                {
+                    propPath = tbSaveCamPath.Text;
+                    prefix = tbSaveCamPrefix.Text; 
+                });
                 if (propPath.Length<=0)
                 {
                     propPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 }
-                //imagebmp.Save(propPath"fileo1.jpg", ImageFormat.Jpeg);
+                var dt = DateTime.Now;
+                var fName = $"{propPath}\\{prefix}-{dt.Month}-{dt.Day}-{dt.Hour}-{dt.Minute}-{dt.Second}_{dt.Millisecond}.jpg";
+                imagebmp.Save(fName, ImageFormat.Jpeg);
             }
            
             Dispatcher.Invoke(() =>
@@ -370,6 +377,11 @@ namespace LabProg
                 if (result == System.Windows.Forms.DialogResult.OK)
                     ((TextBox)sender).Text = dialog.SelectedPath;
             }
+        }
+
+        private void OnChangeCameraInterval(object sender, EventArgs e)
+        {
+            _cameraTimer.Interval = getCameraTimerInterval();
         }
 
         private void OnTimerTeak(object sender, EventArgs e)

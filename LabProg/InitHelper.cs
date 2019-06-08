@@ -46,6 +46,8 @@ namespace LabProg
             CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
             CbLaserPort.SelectedIndex = Properties.Settings.Default.LaserPortIndex;
             CbPyroPort.SelectedIndex = Properties.Settings.Default.PyroPortIndex;
+            tbSaveCamPath.Text = Properties.Settings.Default.CameraSavePath;
+            tbSaveCamPrefix.Text = Properties.Settings.Default.CameraSavePrefix;
             SetChanellBiasTitle(1);
         }
 
@@ -61,6 +63,8 @@ namespace LabProg
             Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
             Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
             Properties.Settings.Default.PyroPortIndex = CbPyroPort.SelectedIndex;
+            Properties.Settings.Default.CameraSavePath = tbSaveCamPath.Text;
+            Properties.Settings.Default.CameraSavePrefix = tbSaveCamPrefix.Text;
             Properties.Settings.Default.Save();
             PwrSerial.SetChannelOff(0); Thread.Sleep(300);
             PwrSerial.SetChannelOff(1); Thread.Sleep(300);
@@ -88,11 +92,21 @@ namespace LabProg
             _pyroTimer.Elapsed += PeackPyroInfo;
         }
 
+        private int getCameraTimerInterval()
+        {
+            var str = Properties.Settings.Default.FreqCam;
+            var br = double.TryParse(str, out double outTime);
+            if (br)
+                return (int)(outTime * 1000);
+            else
+                return 1000;
+        }
+
         private void InitCameraTimer()
         {
             _cameraTimer = new Timer
             {
-                Interval = 1000
+                Interval = getCameraTimerInterval()
             };
             _cameraTimer.Elapsed += OnTimerTeak;
         }

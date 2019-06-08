@@ -674,11 +674,11 @@
                             <TextBox Grid.Row="0" Grid.Column="1" 
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=FreqCam, Mode=TwoWay}"></TextBox>
                             <TextBlock Grid.Row="1" Grid.Column="0"  Margin="1">Сохранять кадры</TextBlock>
-                            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage"  Margin="20,3,3,3"></CheckBox>
+                            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage" Checked="OnChangeCameraInterval" Margin="20,3,3,3"></CheckBox>
                             <TextBlock Grid.Row="2" Grid.Column="0" Margin="1">Путь сохранения</TextBlock>
-                            <TextBox Grid.Row="2" Grid.Column="1"  x:Name="tbSaveCamPath" Margin="1" PreviewMouseDown="OnChangeCameraPath" Text="{Binding Source={x:Static properties:Settings.Default}, Path=CameraSavePath, Mode=TwoWay}"></TextBox>
+                            <TextBox Grid.Row="2" Grid.Column="1"  x:Name="tbSaveCamPath" Margin="1" PreviewMouseDown="OnChangeCameraPath"></TextBox>
                             <TextBlock Grid.Row="3" Grid.Column="0"  Margin="1">Префикс имени файла</TextBlock>
-                            <TextBox Grid.Row="3" Grid.Column="1" Margin="1"></TextBox>
+                            <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSaveCamPrefix"  Margin="1"></TextBox>
                         </Grid>
                     </Expander>
                 </Grid>

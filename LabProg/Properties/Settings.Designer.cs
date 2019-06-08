@@ -646,5 +646,17 @@ namespace LabProg.Properties {
                 this["CameraSavePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CameraSavePrefix {
+            get {
+                return ((string)(this["CameraSavePrefix"]));
+            }
+            set {
+                this["CameraSavePrefix"] = value;
+            }
+        }
     }
 }
