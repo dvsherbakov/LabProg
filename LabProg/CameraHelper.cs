@@ -27,6 +27,8 @@ namespace LabProg
         private const int WM_APPp100 = 0x8000 + 100;
         private const int WM_APPp101 = 0x8000 + 101;
         private const int WM_APPp102 = 0x8000 + 102;
+        private int countSaved = 0;
+        private int MaxCameraFrame;
         int bufwidth = 0, bufheight = 0;
         byte[] imagedata;
         short bufnr = -1;
@@ -337,7 +339,15 @@ namespace LabProg
                 }
                 var dt = DateTime.Now;
                 var fName = $"{propPath}\\{prefix}-{dt.Month}-{dt.Day}-{dt.Hour}-{dt.Minute}-{dt.Second}_{dt.Millisecond}.jpg";
-                imagebmp.Save(fName, ImageFormat.Jpeg);
+                if (!Properties.Settings.Default.CameraMaxFrameOn)
+                {
+                    imagebmp.Save(fName, ImageFormat.Jpeg);
+                } else if (countSaved<=MaxCameraFrame)
+                {
+                    imagebmp.Save(fName, ImageFormat.Jpeg);
+                    Dispatcher.Invoke(() => tbCurrentFrame.Text = countSaved.ToString());
+                    countSaved++;
+                }
             }
            
             Dispatcher.Invoke(() =>
@@ -348,9 +358,6 @@ namespace LabProg
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
             });
             
-            // pictureBox1.Height = imagebmp.Height/2;
-            //pictureBox1.Width = imagebmp.Width/2;
-            // PictureBox1. Image = imagebmp;
         }
 
         BitmapImage BitmapToImageSource(Bitmap bitmap)
@@ -381,7 +388,7 @@ namespace LabProg
 
         private void OnChangeCameraInterval(object sender, EventArgs e)
         {
-            _cameraTimer.Interval = getCameraTimerInterval();
+            _cameraTimer.Interval = GetCameraTimerInterval();
         }
 
         private void OnTimerTeak(object sender, EventArgs e)
@@ -394,9 +401,14 @@ namespace LabProg
             }
         }
 
+        private void OnChangeFrameMaxCount(object sender, EventArgs e)
+        {
+            var str = tbFrameCount.Text;
+            var res = int.TryParse(str, out int fc);
+            if (res) MaxCameraFrame = fc; else MaxCameraFrame = 100;
+        }
+
     }
-
-
 
     [StructLayout(LayoutKind.Sequential)]
     public struct PCO_SC2_Hardware_DESC

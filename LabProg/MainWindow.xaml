@@ -639,7 +639,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0">Управление камерой</TextBlock>
+                    <TextBlock Grid.Row="0" TextAlignment="Center">Управление камерой</TextBlock>
                     <Expander Grid.Row="1" Header="Общее управление" Margin="10,1,1,1">
                         <Grid  Margin="10,5,1,5">
                             <Grid.RowDefinitions>
@@ -665,6 +665,9 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -673,12 +676,19 @@
                             <TextBlock Grid.Row="0" Grid.Column="0">Частота опроса</TextBlock>
                             <TextBox Grid.Row="0" Grid.Column="1" 
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=FreqCam, Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="0"  Margin="1">Сохранять кадры</TextBlock>
-                            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage" Checked="OnChangeCameraInterval" Margin="20,3,3,3"></CheckBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="1">Сохранять кадры</TextBlock>
+                            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage" Checked="OnChangeCameraInterval" Margin="20,3,1,1"></CheckBox>
                             <TextBlock Grid.Row="2" Grid.Column="0" Margin="1">Путь сохранения</TextBlock>
-                            <TextBox Grid.Row="2" Grid.Column="1"  x:Name="tbSaveCamPath" Margin="1" PreviewMouseDown="OnChangeCameraPath"></TextBox>
-                            <TextBlock Grid.Row="3" Grid.Column="0"  Margin="1">Префикс имени файла</TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbSaveCamPath" Margin="1" PreviewMouseDown="OnChangeCameraPath"></TextBox>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Margin="1">Префикс имени файла</TextBlock>
                             <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSaveCamPrefix"  Margin="1"></TextBox>
+                            <TextBlock Grid.Row="4" Grid.Column="0">Ограничение по кадрам</TextBlock>
+                            <CheckBox Grid.Row="4" Grid.Column="1" Margin="20,3,1,1" x:Name="cbCameraMaxFrameOn"
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CameraMaxFrameOn, Mode=TwoWay}"></CheckBox>
+                            <TextBlock Grid.Row="5" Grid.Column="0" Margin="1">Max. число кадров</TextBlock>
+                            <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbFrameCount" Margin="1"></TextBox>
+                            <TextBlock Grid.Row="6" Grid.Column="0">Текущее значение</TextBlock>
+                            <TextBlock Grid.Row="6" Grid.Column="1" TextAlignment="Center" x:Name="tbCurrentFrame"></TextBlock>
                         </Grid>
                     </Expander>
                 </Grid>

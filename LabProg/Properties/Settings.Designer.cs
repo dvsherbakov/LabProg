@@ -658,5 +658,29 @@ namespace LabProg.Properties {
                 this["CameraSavePrefix"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CameraFrameMaxCount {
+            get {
+                return ((string)(this["CameraFrameMaxCount"]));
+            }
+            set {
+                this["CameraFrameMaxCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CameraMaxFrameOn {
+            get {
+                return ((bool)(this["CameraMaxFrameOn"]));
+            }
+            set {
+                this["CameraMaxFrameOn"] = value;
+            }
+        }
     }
 }
