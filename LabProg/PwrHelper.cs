@@ -141,7 +141,6 @@ namespace LabProg
                     else TbChannel4Amplitude.IsEnabled = true;
                     break;
             }
-
         }
 
         private void ChanelModeChanged(object sender, SelectionChangedEventArgs e)
@@ -153,9 +152,7 @@ namespace LabProg
             if (((ComboBox)sender).Name == "CbModeCh4") SetChanellBiasTitle(4);
             if (((ComboBox)sender).Name == "CbModeCh5") SetChanellBiasTitle(5);
         }
-
-
-
+               
         private void PwrCh0Write_Click(object sender, RoutedEventArgs e)
         {
             var mv = int.Parse(TbCh0MaxVolts.Text);
@@ -184,6 +181,14 @@ namespace LabProg
         private void PwrCh3Write_Click(object sender, RoutedEventArgs e)
         {
             int mv = int.Parse(TbCh3MaxVolts.Text);
+            if ((mv <= 3000) && (mv > 0)) _pwrSerial.SetMaxVolts(3, mv);
+            int bias = int.Parse(TbCh3Bias.Text);
+            if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(3, bias);
+        }
+
+        private void PwrCh4Write_Click(object sender, RoutedEventArgs e)
+        {
+            int mv = int.Parse(TbCh4MaxVolts.Text);
             if ((mv <= 3000) && (mv > 0)) _pwrSerial.SetMaxVolts(3, mv);
             int bias = int.Parse(TbCh3Bias.Text);
             if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(3, bias);

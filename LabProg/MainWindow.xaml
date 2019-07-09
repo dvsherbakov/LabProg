@@ -554,12 +554,12 @@
                                     <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
                                     <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"></TextBox>
+                                    <TextBox x:Name="TbCh4MaxVolts" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальный ток</TextBlock>
                                     <TextBox Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4MaxVolts, Mode=TwoWay}"></TextBox>
                                     <Button x:Name="PwrCh4Read"  Grid.Column="0" Grid.Row="9" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
-                                    <Button Grid.Column="1" Grid.Row="9" Margin="5,5,5,5">Записать</Button>
+                                    <Button Grid.Column="1" Grid.Row="9" Margin="5,5,5,5" Click="PwrCh4Write_Click">Записать</Button>
                                 </Grid>
                             </Expander>
                             <Expander Grid.Row="5" Header="Канал 5: (Нагрев стекла)">
