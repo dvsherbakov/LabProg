@@ -109,6 +109,7 @@
     <Compile Include="PwrSerial.cs" />
     <Compile Include="PyroHelper.cs" />
     <Compile Include="PyroSerial.cs" />
+    <Compile Include="ReleSerial.cs" />
     <Compile Include="Settings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
