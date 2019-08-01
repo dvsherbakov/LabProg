@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
+using System.Windows.Threading;
 
 namespace LabProg
 {
@@ -13,7 +14,7 @@ namespace LabProg
 
         public ReleSerial(string port)
         {
-            if (port == "") port = "COM4";
+            if (port == "") port = "COM8";
             Port = new SerialPort(port)
             {
                 BaudRate = 9600,
@@ -35,10 +36,14 @@ namespace LabProg
                 var rc = sp.Read(_rxdata, 0, cnt);
                 var ascii = Encoding.ASCII;
                 var answrs = ascii.GetString(_rxdata).Split('\r');
+                foreach (var anw in answrs)
+                {
+                   // Dispatcher.Invoke(() =>  LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт пирометра" }); anw));
+                }
             }
             catch (Exception ex)
             {
-                Console.Write(ex.Message);
+               // Dispatcher.Invoke(() => lbText.Items.Add(ex.Message));
             }
         }
 
