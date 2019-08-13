@@ -90,3 +90,9 @@ result of 1 ch
 3 порт зеркало
 6 порт лазер
 8 в хабе, 5 с лицевой панели: порт ардуино
+
+P0: enable=0, mode=3, amplitude=4500 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=8000 mV, max_amps=1000 mA
+P1: enable=0, mode=3, amplitude=4500 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=8000 mV, max_amps=1000 mA
+P2: enable=0, mode=3, amplitude=2000 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=3000 mV, max_amps=1490 mA
+P3: enable=0, mode=3, amplitude=2000 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=3000 mV, max_amps=1490 mA
+P5: enable=0, mode=0, amplitude=2000 mV, bias=1544 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=2000 mV, max_amps=1000 mA
