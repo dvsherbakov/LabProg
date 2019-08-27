@@ -8,6 +8,9 @@
         WindowState="Maximized"
         Icon="Resources/upwork.ico"
         Title="Лаборатория МГД, ТГУ" Height="600" Width="950" Closing="Window_Closing" Opacity="0.9" >
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml" />
+    </Window.Resources>
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -307,6 +310,7 @@
                                 </Grid>
 
                             </GroupBox>
+                            <ToggleButton Grid.Row="2" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6" />
                         </Grid>
                     </Expander>
                     <Expander Grid.Row="2" Header="Каналы">
