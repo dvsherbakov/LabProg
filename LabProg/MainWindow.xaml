@@ -36,6 +36,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Margin="5,5,5,5">
                     <Grid.RowDefinitions>
@@ -696,7 +697,34 @@
                         </Grid>
                     </Expander>
                 </Grid>
-
+                <Grid Grid.Row="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" TextAlignment="Center">Управление освещением</TextBlock>
+                    <Expander Grid.Row="2" Header="Настройки" Margin="10,1,1,1">
+                        <Grid Margin="20,5,1,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0">Порт управления освещением</TextBlock>
+                            <ComboBox x:Name="CbArduinoPort" Grid.Column="1">
+                                <TextBlock>COM1</TextBlock>
+                                <TextBlock>COM2</TextBlock>
+                                <TextBlock>COM3</TextBlock>
+                                <TextBlock>COM4</TextBlock>
+                                <TextBlock>COM5</TextBlock>
+                                <TextBlock>COM6</TextBlock>
+                                <TextBlock>COM7</TextBlock>
+                                <TextBlock>COM8</TextBlock>
+                                <TextBlock>COM9</TextBlock>
+                            </ComboBox>
+                        </Grid>
+                    </Expander>
+                </Grid>
             </Grid>
         </ScrollViewer>
         <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0">

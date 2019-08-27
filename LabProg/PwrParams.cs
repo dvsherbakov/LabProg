@@ -36,7 +36,6 @@ namespace LabProg
         const int reg_read_time = 17;
         const int reg_read_tempr = 19;
 
-
         //#SmartPWR Read/Write Holding Registeres
 
         public const int REG_P0_ENABLE = 2000;
