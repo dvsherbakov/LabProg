@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace LabProg
 {
@@ -39,7 +40,7 @@ namespace LabProg
         {
             if (LogBox != null)
             {
-                switch (((CheckBox)sender).Name)
+                switch (((ToggleButton)sender).Name)
                 {
                     case "PwrCh0Check":
                         LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен канал 0" });
@@ -74,7 +75,7 @@ namespace LabProg
 
         private void PwrChannelOff(object sender, RoutedEventArgs e)
         {
-            switch (((CheckBox)sender).Name)
+            switch (((ToggleButton)sender).Name)
             {
                 case "PwrCh0Check":
                     PwrSerial.SetChannelOff(0);
