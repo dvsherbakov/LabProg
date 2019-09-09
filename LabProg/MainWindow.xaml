@@ -18,7 +18,7 @@
             <RowDefinition Height="90px"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
             <ColumnDefinition Width="7*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Menu Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" FontSize="16" Grid.ColumnSpan="2">
@@ -28,7 +28,99 @@
             <MenuItem Header="Edit" ></MenuItem>
             <MenuItem Header="View" ></MenuItem>
         </Menu>
-        <ScrollViewer Grid.Column="0" Grid.Row="1" Background="Azure" FontFamily="Tahoma" FontSize="16" VerticalScrollBarVisibility="Auto">
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
+            <TabControl TabStripPlacement="Left" Margin="8" Grid.Column="0">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border Name="Border" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" Margin="2,0" Background="#252e37">
+                                        <ContentPresenter x:Name="ContentSite"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    ContentSource="Header"
+                                    Margin="4"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+                <TabItem VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <TabItem.Header>
+                        <StackPanel>
+                            <ContentControl Content="{StaticResource PumpIcon}" Margin="5"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel>
+                        <TextBlock TextAlignment="Center">Операции с насосом</TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TabItem.Header>
+                        <StackPanel>
+                            <ContentControl Content="{StaticResource LaserIcon}"  Margin="5"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel>
+                        <TextBlock TextAlignment="Center">Управление лазером</TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TabItem.Header>
+                        <StackPanel>
+                            <ContentControl Content="{StaticResource PowerIcon}"  Margin="5"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel>
+                        <TextBlock TextAlignment="Center">Управление блоком питания</TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TabItem.Header>
+                        <StackPanel>
+                            <ContentControl Content="{StaticResource CameraIcon}"  Margin="5"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel>
+                        <TextBlock TextAlignment="Center">Управление камерой</TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TabItem.Header>
+                        <StackPanel>
+                            <ContentControl Content="{StaticResource MirrorIcon}"  Margin="5"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel>
+                        <TextBlock TextAlignment="Center">Управление камерой</TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TabItem.Header>
+                        <StackPanel>
+                            <ContentControl Content="{StaticResource LightIcon}"  Margin="5"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel>
+                        <TextBlock TextAlignment="Center">Управление камерой</TextBlock>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            <ScrollViewer Grid.Column="1" Grid.Row="1" Background="Azure" FontFamily="Tahoma" FontSize="16" VerticalScrollBarVisibility="Auto">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -727,6 +819,7 @@
                 </Grid>
             </Grid>
         </ScrollViewer>
+        </Grid>
         <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0">
             <ListView.View>
                 <GridView>
