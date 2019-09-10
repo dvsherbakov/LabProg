@@ -149,13 +149,24 @@
                                 <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="4*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ChbLaserPort" Checked="LaserPortOn" Unchecked="LaserPortOff">Подключиться к порту</CheckBox>
-                            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ChbLaserOn" Checked="SetLaserOn" Unchecked="SetLaserOff">Излучение!</CheckBox>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                                       VerticalAlignment="Center">Подключиться к порту</TextBlock>
+                            <ToggleButton Grid.Row="0" Grid.Column="3" x:Name="ChbLaserPort" 
+                                          Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"
+                                          Checked="LaserPortOn" Unchecked="LaserPortOff"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                                       VerticalAlignment="Center">Излучение!</TextBlock>
+                            <ToggleButton Grid.Row="1" Grid.Column="3" x:Name="ChbLaserOn" 
+                                          Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"
+                                          Checked="SetLaserOn" Unchecked="SetLaserOff"></ToggleButton>
                             <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Мощность</TextBlock>
                             <TextBlock x:Name="TbCurrentLPwr" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
                             <TextBox Grid.Row="2" x:Name="TbLaserPwr" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=LaserPower, Mode=TwoWay}"/>
-                            <Button Grid.Row="2" Grid.Column="3" Margin="3,3,3,3" Click="SetLaserPwr">Применить</Button>
-                            <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">Автоматически</CheckBox>
+                            <Button Grid.Row="2" Grid.Column="3" Margin="3" Click="SetLaserPwr">Применить</Button>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                                       VerticalAlignment="Center">Автоматически</TextBlock>
+                            <ToggleButton Grid.Row="3" Grid.Column="3" 
+                                           Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"/>
                             <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Температура</TextBlock>
                             <TextBlock Grid.Row="4" x:Name ="PyroTemp" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
                             <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PyroTemp, Mode=TwoWay}"></TextBox>
@@ -260,8 +271,8 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*"></ColumnDefinition>
-                                        <ColumnDefinition Width="4*"></ColumnDefinition>
-                                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                                        <ColumnDefinition Width="5*"></ColumnDefinition>
                                         <ColumnDefinition Width="2*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Row="0" Grid.Column="1"  Margin="5,5,5,5" >УФ Диод 1</TextBlock>
@@ -277,8 +288,8 @@
                                                   IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel2On, Mode=TwoWay}" 
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff"/>
                                     <TextBlock Grid.Row="1" Grid.Column="2"  Margin="5,5,5,5">Ик Источник 2</TextBlock>
-                                    <ToggleButton x:Name="PwrCh3Check" Grid.Row="1" Grid.Column="3" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}"
-                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}" 
+                                    <ToggleButton x:Name="PwrCh3Check" Grid.Row="1" Grid.Column="3" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}" 
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}"
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff"/>
                                     <TextBlock Grid.Row="2" Grid.Column="1" Margin="5,5,5,5">Микрокомпрессор</TextBlock>
                                     <ToggleButton x:Name="PwrCh4Check" Grid.Row="2" Grid.Column="0" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}"
