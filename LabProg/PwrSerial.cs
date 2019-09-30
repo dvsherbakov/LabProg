@@ -12,9 +12,13 @@ namespace LabProg
     {
         private static SerialPort Port;
         private byte[] _rxdata;
+
         private static readonly List<string> ErrList = new List<string>();
         //readonly Timer _aTimer = new Timer();
         private static ModBus modBus;
+
+        public delegate void RecievedData(object sender, EventArgs e);
+        public event RecievedData onRecieve;
 
         public PwrSerial(string port)
         {
@@ -50,6 +54,8 @@ namespace LabProg
                 var cnt = sp.ReadBufferSize;
                 _rxdata = new byte[cnt + 1];
                 var rc = sp.Read(_rxdata, 0, cnt);
+                EventArgs ea = new EventArgs();
+                onRecieve(this, e);
                 var ascii = Encoding.ASCII;
                 var answrs = ascii.GetString(_rxdata).Split('\r');
             }
@@ -196,5 +202,6 @@ namespace LabProg
             Thread.Sleep(1000);
         }
     }
+
 }
 

@@ -18,11 +18,17 @@ namespace LabProg
             if (((Button)sender).Name == "PwrCh5Read") PwrSerial.GetChanellData(5);
         }
 
+        public void GetSignal(object sender, EventArgs e)
+        {
+            Console.WriteLine(e);
+        }
+
         private void PwrPortOn(object sender, RoutedEventArgs e)
         {
             try
             {
                 _pwrSerial.OpenPort();
+                _pwrSerial.onRecieve += GetSignal;
             }
             catch (Exception ex)
             {
