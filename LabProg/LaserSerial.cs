@@ -133,7 +133,8 @@ namespace LabProg
 
         private  void SendCommand(int cmd)
         {
-            _mPort.Write(_lCommand.GetCmdById(cmd).SCommand);
+            if (_mPort.IsOpen)
+                _mPort.Write(_lCommand.GetCmdById(cmd).SCommand);
         }
 
         public void SetPower(int pwr)
