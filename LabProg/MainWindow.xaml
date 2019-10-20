@@ -77,11 +77,11 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,4,4,4">Показания датчика:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,4,10,4">Показания датчика:</TextBlock>
                             <TextBlock x:Name="ConfocalLb" Grid.Row="0" Grid.Column="1" Width="80"  Margin="10,4,4,4" HorizontalAlignment="Center">0.0</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="10,4,2,4">Установите уровень:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="4">Установите уровень:</TextBlock>
                             <TextBox x:Name="CbConfocalLevel" Grid.Row="1" Grid.Column="1" Margin="4" Width="80"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" HorizontalAlignment="Center"/>
                             <Grid Row="2" Column="0" Grid.ColumnSpan="2">
