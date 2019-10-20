@@ -621,41 +621,7 @@
                                 </Grid>
                             </TabItem>
                         </TabControl>
-                        <Expander Grid.Row="2" Header="Каналы">
-                            <Grid Margin="20,5,1,5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Expander Grid.Row="0" Header="Канал 0 (УФ диод 1):" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=ExChannel1, Mode=TwoWay}">
-                                    
-                                </Expander>
-                                <Expander Grid.Row="1" Header="Канал 1 (УФ диод 2):">
-                                    
-                                </Expander>
-                                <Expander Grid.Row="2" Header="Канал 2 (ИК источник 1):">
-                                    
-                                </Expander>
-                                <Expander Grid.Row="3" Header="Канал 3 (ИК источник 2):">
-                                    
-                                </Expander>
-                                <Expander Grid.Row="4" Header="Канал 4 (Микрокомпрессор):">
-                                    
-                                </Expander>
-                                <Expander Grid.Row="5" Header="Канал 5: (Нагрев стекла)">
-                                    
-                                </Expander>
-                            </Grid>
-                        </Expander>
+                        
                         <Expander Grid.Row="8" Header="Настройки" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PowerManaging, Mode=TwoWay}">
                             <Grid Margin="20,5,1,5">
                                 <Grid.ColumnDefinitions>
