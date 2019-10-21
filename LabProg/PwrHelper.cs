@@ -20,7 +20,11 @@ namespace LabProg
 
         public void GetSignal(object sender, EventArgs e)
         {
-            Console.WriteLine(e);
+            //Console.WriteLine(e);
+            //PwrSerial.GetChanellData(1);
+            var btSignal = sender as PwrSerial;
+            var rs = BitConverter.ToString(btSignal._rxdata);
+            Dispatcher.Invoke(() => LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText =  $"Блок питания: {rs}" }));
         }
 
         private void PwrPortOn(object sender, RoutedEventArgs e)

@@ -11,7 +11,7 @@ namespace LabProg
     internal class PwrSerial
     {
         private static SerialPort Port;
-        private byte[] _rxdata;
+        public byte[] _rxdata { get; set; }
 
         private static readonly List<string> ErrList = new List<string>();
         //readonly Timer _aTimer = new Timer();
@@ -58,6 +58,7 @@ namespace LabProg
                 onRecieve(this, e);
                 var ascii = Encoding.ASCII;
                 var answrs = ascii.GetString(_rxdata).Split('\r');
+                var ans = BitConverter.ToString(_rxdata);
             }
             catch (Exception ex)
             {
@@ -79,7 +80,8 @@ namespace LabProg
 
         public static void GetChanellData(int channel)
         {
-            byte[] dt = { 0x1, 0x3, 0x7, 0xD0, 0x0, 0x9, 0x85, 0x41 };
+            byte[] dt = modBus.GetQueryChannel(channel);
+                //{ 0x1, 0x3, 0x7, 0xD0, 0x0, 0x9, 0x85, 0x41 };
             Write(dt);
         }
 

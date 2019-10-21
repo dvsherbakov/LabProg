@@ -130,41 +130,18 @@ namespace LabProg
         }
 
         public byte[] GetQueryChannel(int ch)
-        {
-            byte[] dt = { 0xD0, 0xDA, 0xE4, 0xEE, 0xF8, 0x1, 0x2, 0x0, 0x0, 0xC3, 0x0 };
-
-            int cmd=0;
-
-            switch (ch)
-            {
-                case 0:
-                    cmd = PwrParams.REG_P0_ENABLE;
-                    break;
-                case 1:
-                    cmd = PwrParams.REG_P1_ENABLE;
-                    break;
-                case 2:
-                    cmd = PwrParams.REG_P2_ENABLE;
-                    break;
-                case 3:
-                    cmd = PwrParams.REG_P3_ENABLE;
-                    break;
-                case 4:
-                    cmd = PwrParams.REG_P4_ENABLE;
-                    break;
-                case 5:
-                    cmd = PwrParams.REG_P5_ENABLE;
-                    break;
-            }
-
+        { 
             _buff.Clear();
             _buff.Add(0x01);
             _buff.Add(0x03);
-            var d = BitConverter.GetBytes((short)cmd).Reverse().ToArray();
-            _buff.Add(d[0]);
-            _buff.Add(d[1]);
-
-            return dt;
+            _buff.Add(0x07);
+            _buff.Add((byte)(208 + ((byte)ch  * 10)));
+            _buff.Add(0x0);
+            _buff.Add(0x9);
+            var crcMdb = GetCrc(_buff.ToArray());
+            _buff.Add((byte)(crcMdb & 0xFF));
+            _buff.Add((byte)((crcMdb >> 8) & 0xFF));
+            return _buff.ToArray();
         }
 
         private static ushort GetCrc(IEnumerable<byte> mdbBuf)
