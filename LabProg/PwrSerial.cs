@@ -12,7 +12,7 @@ namespace LabProg
     {
         private static SerialPort Port;
         public byte[] _rxdata { get; set; }
-
+        public static byte ChCommand { get; set; }
         private static readonly List<string> ErrList = new List<string>();
         //readonly Timer _aTimer = new Timer();
         private static ModBus modBus;
@@ -78,11 +78,12 @@ namespace LabProg
             }
         }
 
-        public static void GetChanellData(int channel)
+        public static void GetChanellData(byte channel)
         {
             byte[] dt = modBus.GetQueryChannel(channel);
                 //{ 0x1, 0x3, 0x7, 0xD0, 0x0, 0x9, 0x85, 0x41 };
             Write(dt);
+            ChCommand = channel;
         }
 
         public static void SetChannelOn(int channel)

@@ -110,9 +110,32 @@ p0 ena
 p0 dis
 01-03-12-00-00-00-03-11-94-0B-B8-01-90-00-32-00-00-1F-40-03-E8-1E-80
 
+byte 7 - mode
+byte 8-9 - amplitude
 10-11 byte - BIAS
+12-13 byte - Freq
+14-15 byte - duty
+16-17 byte - phase
+18-19 byte - max volts
+20-21 bytes - max amps
 
 p0 enable=0, mode=3, amplitude=4500 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=8000 mV, max_amps=1000 mA
 01-03-12-00-00-00-03-11-94-0B-B8-01-90-00-32-00-00-1F-40-03-E8-1E-80
 p1 enable=0, mode=3, amplitude=4500 mV, bias=2585 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=8000 mV, max_amps=1000 mA 
 01-03-12-00-00-00-03-11-94-0A-19-01-90-00-32-00-00-1F-40-03-E8-E5-BD
+
+
+p5 enable=0, mode=0, amplitude=2000 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=3000 mV, max_amps=1000 mA
+01-83-03-01-31-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+
+enable=0, mode=1, amplitude=2000 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=3000 mV, max_amps=1000 mA
+01-83-03-01-31-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+
+thisP4: enable=0, mode=0, amplitude=2000 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=12199 mV, max_amps=2500 mA
+01-03-12-00-00-00-00-07-D0-0B-B8-01-90-00-32-00-00-2F-A7-09-C4-02-59
+
+P4: enable=0, mode=1, amplitude=2000 mV, bias=3000 mV, freq=400 Hz, duty=50%, phase = 0, max_volts=12199 mV, max_amps=2500 mA
+01-03-12-00-00-00-01-07-D0-0B-B8-01-90-00-32-00-00-2F-A7-09-C4-C3-59
+
+07-D0 = 2000
+11-94 = 4500
