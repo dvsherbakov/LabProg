@@ -104,6 +104,7 @@
     <Compile Include="PCO_SDK_LibWrapper.cs" />
     <Compile Include="PumpSerial.cs" />
     <Compile Include="PwrHelper.cs" />
+    <Compile Include="PwrItem.cs" />
     <Compile Include="PwrMode.cs" />
     <Compile Include="PwrParams.cs" />
     <Compile Include="PwrSerial.cs" />
