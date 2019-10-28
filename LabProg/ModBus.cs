@@ -134,8 +134,16 @@ namespace LabProg
             _buff.Clear();
             _buff.Add(0x01);
             _buff.Add(0x03);
-            _buff.Add(0x07);
-            _buff.Add((byte)(208 + ((byte)ch  * 10)));
+            if (ch == 5)
+            {
+                _buff.Add(0x08);
+                _buff.Add(0x02);
+            }
+            else
+            {
+                _buff.Add(0x07);
+                _buff.Add((byte)(208 + ((byte)ch * 10)));
+            }
             _buff.Add(0x0);
             _buff.Add(0x9);
             var crcMdb = GetCrc(_buff.ToArray());

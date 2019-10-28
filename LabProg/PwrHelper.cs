@@ -24,6 +24,19 @@ namespace LabProg
             //PwrSerial.GetChanellData(1);
             var btSignal = sender as PwrSerial;
             var rs = BitConverter.ToString(btSignal._rxdata);
+            PwrItem pi = new PwrItem(btSignal._rxdata);
+            if (pi.IsCorrect)
+            {
+                switch (PwrSerial.CurChannel)
+                {
+                    case 0:
+                        Dispatcher.Invoke(() => CbModeCh0.SelectedIndex = pi.Mode);
+                        Properties.Settings.Default.PwrCh0Bias = pi.Bias.ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
             Dispatcher.Invoke(() => LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText =  $"Блок питания: {rs}" }));
         }
 

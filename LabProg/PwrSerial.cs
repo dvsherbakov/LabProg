@@ -10,6 +10,7 @@ namespace LabProg
 {
     internal class PwrSerial
     {
+        public static int CurChannel {get;set;}
         private static SerialPort Port;
         public byte[] _rxdata { get; set; }
         public static byte ChCommand { get; set; }
@@ -22,6 +23,7 @@ namespace LabProg
 
         public PwrSerial(string port)
         {
+            CurChannel = 99;
             modBus = new ModBus();
             if (port == "") port = "COM9";
             Port = new SerialPort(port)
@@ -54,11 +56,14 @@ namespace LabProg
                 var cnt = sp.ReadBufferSize;
                 _rxdata = new byte[cnt + 1];
                 var rc = sp.Read(_rxdata, 0, cnt);
-                EventArgs ea = new EventArgs();
-                onRecieve(this, e);
-                var ascii = Encoding.ASCII;
-                var answrs = ascii.GetString(_rxdata).Split('\r');
-                var ans = BitConverter.ToString(_rxdata);
+                if (cnt > 3 && _rxdata[0] == 1 && _rxdata[1] == 3 && _rxdata[2] == 18)
+                {
+                    EventArgs ea = new EventArgs();
+                    onRecieve(this, e);
+                }
+                //var ascii = Encoding.ASCII;
+                //var answrs = ascii.GetString(_rxdata).Split('\r');
+                //var ans = BitConverter.ToString(_rxdata);
             }
             catch (Exception ex)
             {
@@ -80,6 +85,7 @@ namespace LabProg
 
         public static void GetChanellData(byte channel)
         {
+            CurChannel = channel;
             byte[] dt = modBus.GetQueryChannel(channel);
                 //{ 0x1, 0x3, 0x7, 0xD0, 0x0, 0x9, 0x85, 0x41 };
             Write(dt);
