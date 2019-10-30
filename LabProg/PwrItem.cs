@@ -5,6 +5,7 @@ namespace LabProg
     class PwrItem
     {
         public int Mode { get; set; }
+        public int Amplitude { get; set; }
         public int Bias { get; set; }
         public int Frequency { get; set; }
         public int Duty { get; set; }
@@ -26,6 +27,7 @@ namespace LabProg
             else
             {
                 Mode = GetMode(raw);
+                Amplitude = GetAmplitude(raw);
                 Bias = GetBIAS(raw);
                 Frequency = GetFrequency(raw);
                 Duty = GetDuty(raw);

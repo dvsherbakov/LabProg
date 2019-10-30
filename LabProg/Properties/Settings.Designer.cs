@@ -12,7 +12,7 @@ namespace LabProg.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -692,6 +692,126 @@ namespace LabProg.Properties {
             }
             set {
                 this["ArduinoPortIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh0Amplitude {
+            get {
+                return ((string)(this["PwrCh0Amplitude"]));
+            }
+            set {
+                this["PwrCh0Amplitude"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh0Frequency {
+            get {
+                return ((string)(this["PwrCh0Frequency"]));
+            }
+            set {
+                this["PwrCh0Frequency"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh0Duty {
+            get {
+                return ((string)(this["PwrCh0Duty"]));
+            }
+            set {
+                this["PwrCh0Duty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh0Phase {
+            get {
+                return ((string)(this["PwrCh0Phase"]));
+            }
+            set {
+                this["PwrCh0Phase"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh0MaxAmps {
+            get {
+                return ((string)(this["PwrCh0MaxAmps"]));
+            }
+            set {
+                this["PwrCh0MaxAmps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh1Amplitude {
+            get {
+                return ((string)(this["PwrCh1Amplitude"]));
+            }
+            set {
+                this["PwrCh1Amplitude"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh1Frequency {
+            get {
+                return ((string)(this["PwrCh1Frequency"]));
+            }
+            set {
+                this["PwrCh1Frequency"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh1Duty {
+            get {
+                return ((string)(this["PwrCh1Duty"]));
+            }
+            set {
+                this["PwrCh1Duty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh1Phase {
+            get {
+                return ((string)(this["PwrCh1Phase"]));
+            }
+            set {
+                this["PwrCh1Phase"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh1MaxAmps {
+            get {
+                return ((string)(this["PwrCh1MaxAmps"]));
+            }
+            set {
+                this["PwrCh1MaxAmps"] = value;
             }
         }
     }
