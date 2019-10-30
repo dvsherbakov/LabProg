@@ -69,6 +69,26 @@ namespace LabProg
                         Properties.Settings.Default.PwrCh3MaxVolts = pi.MaxVolts.ToString();
                         Properties.Settings.Default.PwrCh3MaxAmps = pi.MaxAmps.ToString();
                         break;
+                    case 4:
+                        Dispatcher.Invoke(() => CbModeCh4.SelectedIndex = pi.Mode);
+                        Properties.Settings.Default.PwrCh4Bias = pi.Bias.ToString();
+                        Properties.Settings.Default.PwrCh4Amplitude = pi.Amplitude.ToString();
+                        Properties.Settings.Default.PwrCh4Frequency = pi.Frequency.ToString();
+                        Properties.Settings.Default.PwrCh4Duty = pi.Duty.ToString();
+                        Properties.Settings.Default.PwrCh4Phase = pi.Phase.ToString();
+                        Properties.Settings.Default.PwrCh4MaxVolts = pi.MaxVolts.ToString();
+                        Properties.Settings.Default.PwrCh4MaxAmps = pi.MaxAmps.ToString();
+                        break;
+                    case 5:
+                        Dispatcher.Invoke(() => CbModeCh5.SelectedIndex = pi.Mode);
+                        Properties.Settings.Default.PwrCh5Bias = pi.Bias.ToString();
+                        Properties.Settings.Default.PwrCh5Amplitude = pi.Amplitude.ToString();
+                        Properties.Settings.Default.PwrCh5Frequency = pi.Frequency.ToString();
+                        Properties.Settings.Default.PwrCh5Duty = pi.Duty.ToString();
+                        Properties.Settings.Default.PwrCh5Phase = pi.Phase.ToString();
+                        Properties.Settings.Default.PwrCh5MaxVolts = pi.MaxVolts.ToString();
+                        Properties.Settings.Default.PwrCh5MaxAmps = pi.MaxAmps.ToString();
+                        break;
                     default:
                         break;
                 }

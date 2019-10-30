@@ -934,5 +934,125 @@ namespace LabProg.Properties {
                 this["PwrCh3MaxAmps"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh4Amplitude {
+            get {
+                return ((string)(this["PwrCh4Amplitude"]));
+            }
+            set {
+                this["PwrCh4Amplitude"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh4Frequency {
+            get {
+                return ((string)(this["PwrCh4Frequency"]));
+            }
+            set {
+                this["PwrCh4Frequency"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh4Duty {
+            get {
+                return ((string)(this["PwrCh4Duty"]));
+            }
+            set {
+                this["PwrCh4Duty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh4Phase {
+            get {
+                return ((string)(this["PwrCh4Phase"]));
+            }
+            set {
+                this["PwrCh4Phase"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh4MaxAmps {
+            get {
+                return ((string)(this["PwrCh4MaxAmps"]));
+            }
+            set {
+                this["PwrCh4MaxAmps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh5Amplitude {
+            get {
+                return ((string)(this["PwrCh5Amplitude"]));
+            }
+            set {
+                this["PwrCh5Amplitude"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh5Frequency {
+            get {
+                return ((string)(this["PwrCh5Frequency"]));
+            }
+            set {
+                this["PwrCh5Frequency"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh5Duty {
+            get {
+                return ((string)(this["PwrCh5Duty"]));
+            }
+            set {
+                this["PwrCh5Duty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh5Phase {
+            get {
+                return ((string)(this["PwrCh5Phase"]));
+            }
+            set {
+                this["PwrCh5Phase"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PwrCh5MaxAmps {
+            get {
+                return ((string)(this["PwrCh5MaxAmps"]));
+            }
+            set {
+                this["PwrCh5MaxAmps"] = value;
+            }
+        }
     }
 }

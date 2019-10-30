@@ -569,20 +569,26 @@
                                         <TextBlock>ШИМ сигнал</TextBlock>
                                     </ComboBox>
                                     <TextBlock x:Name="TbChannel4Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Bias, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                    <TextBox x:Name="TbChannel4Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></TextBox>
+                                    <TextBox x:Name="TbChannel4Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Amplitude, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Frequency, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Duty, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Phase, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox x:Name="TbCh4MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"></TextBox>
+                                    <TextBox x:Name="TbCh4MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4MaxVolts, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
                                     <TextBox Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
-                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4MaxVolts, Mode=TwoWay}"></TextBox>
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4MaxAmps, Mode=TwoWay}"></TextBox>
                                     <Button x:Name="PwrCh4Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
                                     <Button Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh4Write_Click">Записать</Button>
                                 </Grid>
@@ -624,18 +630,23 @@
                                     <TextBox x:Name="TbChannel5Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Bias, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                    <TextBox x:Name="TbChannel5Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"></TextBox>
+                                    <TextBox x:Name="TbChannel5Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Amplitude, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Frequency, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Duty, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Phase, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
                                     <TextBox x:Name="TbCh5MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5MaxVolts, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5MaxAmps, Mode=TwoWay}"></TextBox>
                                     <Button x:Name="PwrCh5Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
                                     <Button Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh5Write_Click">Записать</Button>
                                 </Grid>
