@@ -92,8 +92,18 @@ namespace LabProg
                     default:
                         break;
                 }
+                Dispatcher.Invoke(() => LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now,
+                    LogText = $"Чтение из бп, канал {PwrSerial.CurChannel}, успешно" }));
             }
-            Dispatcher.Invoke(() => LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText =  $"Блок питания: {rs}" }));
+            else
+            {
+                Dispatcher.Invoke(() => LogBox.Items.Insert(0, new LogBoxItem
+                {
+                    Dt = DateTime.Now,
+                    LogText = $"Нераспознаный ответ БП"
+                }));
+            }
+           
         }
 
         private void PwrPortOn(object sender, RoutedEventArgs e)
