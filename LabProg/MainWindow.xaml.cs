@@ -11,8 +11,9 @@ namespace LabProg
         private PyroSerial _pyroSerial;
         private LaserSerial _laserSerial;
 
-        public MainWindow()
+        public MainWindow(bool fDirection)
         {
+            FDirection = fDirection;
             InitializeComponent();
             LogBox.Items.Add(new LogBoxItem { Dt = DateTime.Now, LogText = "Приложение запущено" });
             InitInternalComponents();

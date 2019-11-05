@@ -4,13 +4,12 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Threading;
 using Timer = System.Timers.Timer;
 
 namespace LabProg
 {
 
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private bool AutoStop { get; set; }
         private bool PumpActive { get; set; }
