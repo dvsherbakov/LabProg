@@ -2,6 +2,9 @@
 using System.Text;
 using System.IO.Ports;
 
+
+// пока не рефакторить, не готово 
+
 namespace LabProg
 {
     class ReleSerial
