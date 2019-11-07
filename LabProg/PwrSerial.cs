@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Threading;
+using System.Windows.Threading;
+using System.Windows;
+using System.Text;
 
 namespace LabProg
 {

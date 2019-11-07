@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace LabProg
 {
@@ -95,7 +99,7 @@ namespace LabProg
 
         [DllImport("sc2_cam.dll", EntryPoint = "PCO_GetCameraType",
            ExactSpelling = false, CallingConvention = CallingConvention.StdCall)]
-        public static extern int PCO_GetCameraType(IntPtr pHandle, ref PcoCameraType strCameraType);
+        public static extern int PCO_GetCameraType(IntPtr pHandle, ref PCO_CameraType strCameraType);
 
         [DllImport("sc2_cam.dll", EntryPoint = "PCO_GetCameraName",
             ExactSpelling = false, CallingConvention = CallingConvention.StdCall)]

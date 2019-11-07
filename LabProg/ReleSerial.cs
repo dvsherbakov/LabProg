@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.IO.Ports;
+using System.Windows.Threading;
 
 namespace LabProg
 {
@@ -37,7 +41,7 @@ namespace LabProg
                    // Dispatcher.Invoke(() =>  LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт пирометра" }); anw));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                // Dispatcher.Invoke(() => lbText.Items.Add(ex.Message));
             }
