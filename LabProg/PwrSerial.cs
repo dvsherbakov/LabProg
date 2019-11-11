@@ -198,15 +198,18 @@ namespace LabProg
             
         }
 
+        public void SetAmplitudes(int chanell, int amplitude)
+        {
+            byte[] dt = { };
+            dt = modBus.GetMaxVolts(PwrParams.Amplitudes[chanell], amplitude);
+            Write(dt);
+            Thread.Sleep(1000);
+        }
+
         public void SetBias(int chanell, int bias)
         {
             byte[] dt = { };
-            if (chanell == 0) { dt = modBus.GetMaxVolts(PwrParams.REG_P0_BIAS, bias); }
-            if (chanell == 1) { dt = modBus.GetMaxVolts(PwrParams.REG_P1_BIAS, bias); }
-            if (chanell == 2) { dt = modBus.GetMaxVolts(PwrParams.REG_P2_BIAS, bias); }
-            if (chanell == 3) { dt = modBus.GetMaxVolts(PwrParams.REG_P3_BIAS, bias); }
-            if (chanell == 4) { dt = modBus.GetMaxVolts(PwrParams.REG_P4_BIAS, bias); }
-            if (chanell == 5) { dt = modBus.GetMaxVolts(PwrParams.REG_P5_BIAS, bias); }
+            dt = modBus.GetMaxVolts(PwrParams.Biases[chanell], bias); 
             Write(dt);
             Thread.Sleep(1000);
         }
