@@ -43,6 +43,8 @@ namespace LabProg
         public static int[] Freqs = { REG_P0_FREQ, REG_P1_FREQ, REG_P2_FREQ, REG_P3_FREQ, REG_P4_FREQ, REG_P5_FREQ };
         public static int[] Dutys = { REG_P0_DUTY, REG_P1_DUTY, REG_P2_DUTY, REG_P3_DUTY, REG_P4_DUTY, REG_P5_DUTY };
         public static int[] Phases = { REG_P0_PHASE, REG_P1_PHASE, REG_P2_PHASE, REG_P3_PHASE, REG_P4_PHASE, REG_P5_PHASE };
+        public static int[] MaxVolts = { REG_P0_MAX_VOLTS, REG_P1_MAX_VOLTS, REG_P2_MAX_VOLTS, REG_P3_MAX_VOLTS, REG_P4_MAX_VOLTS, REG_P5_MAX_VOLTS };
+        public static int[] MaxAmps = { REG_P0_MAX_AMPS, REG_P1_MAX_AMPS, REG_P2_MAX_AMPS, REG_P3_MAX_AMPS, REG_P4_MAX_AMPS, REG_P5_MAX_AMPS }; 
 
         public const int REG_P0_ENABLE = 2000;
         const int REG_P0_MODE = 2001;
