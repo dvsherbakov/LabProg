@@ -402,7 +402,7 @@
                                     <TextBox x:Name="TbChannel1Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1Bias, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                    <TextBox x:Name="TbChannel1Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1Frequency, Mode=TwoWay}"></TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
                                     <TextBox Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
