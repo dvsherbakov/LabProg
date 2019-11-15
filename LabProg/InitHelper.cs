@@ -1,15 +1,17 @@
-﻿using System.IO.Ports;
+﻿using System.Windows;
+using System.IO.Ports;
 using Timer = System.Timers.Timer;
 using System.Threading;
 
 namespace LabProg
 {
-    public partial class MainWindow
+    public partial class MainWindow : Window
     {
         private Timer _confocalTimer;
         private Timer _pyroTimer;
         private Timer _cameraTimer;
 
+        System.Windows.Threading.Dispatcher _dispatcher;
         private void InitInternalComponents()
         {
             //CbPumpPort.Items.Clear();
@@ -24,6 +26,7 @@ namespace LabProg
             InitPumpItems();
             InitPyroTimer();
             InitCameraTimer();
+            _dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
         }
 
         private void InitPwrItems()
@@ -44,11 +47,11 @@ namespace LabProg
             CbLaserPort.SelectedIndex = Properties.Settings.Default.LaserPortIndex;
             CbPyroPort.SelectedIndex = Properties.Settings.Default.PyroPortIndex;
             CbArduinoPort.SelectedIndex = Properties.Settings.Default.ArduinoPortIndex;
-            TbSaveCamPath.Text = Properties.Settings.Default.CameraSavePath;
-            TbSaveCamPrefix.Text = Properties.Settings.Default.CameraSavePrefix;
+            tbSaveCamPath.Text = Properties.Settings.Default.CameraSavePath;
+            tbSaveCamPrefix.Text = Properties.Settings.Default.CameraSavePrefix;
             tbFrameCount.Text = Properties.Settings.Default.CameraFrameMaxCount;
             SetChanellBiasTitle(1);
-            OnChangeFrameMaxCount();
+            OnChangeFrameMaxCount(this, null);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -64,8 +67,8 @@ namespace LabProg
             Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
             Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
             Properties.Settings.Default.PyroPortIndex = CbPyroPort.SelectedIndex;
-            Properties.Settings.Default.CameraSavePath = TbSaveCamPath.Text;
-            Properties.Settings.Default.CameraSavePrefix = TbSaveCamPrefix.Text;
+            Properties.Settings.Default.CameraSavePath = tbSaveCamPath.Text;
+            Properties.Settings.Default.CameraSavePrefix = tbSaveCamPrefix.Text;
             Properties.Settings.Default.CameraFrameMaxCount = tbFrameCount.Text;
             Properties.Settings.Default.Save();
             PwrSerial.SetChannelOff(0); Thread.Sleep(300);

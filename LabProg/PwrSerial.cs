@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Threading;
+using System.Windows.Threading;
+using System.Windows;
+using System.Text;
 
 namespace LabProg
 {
@@ -181,29 +184,51 @@ namespace LabProg
             }
         }
 
-        public void SetMaxVolts(int chanell, int maxVolts)
+        public void SetAmplitudes(int chanell, int amplitude)
         {
-            byte[] dt={};
-            if (chanell == 0) { dt = modBus.GetMaxVolts(PwrParams.REG_P0_MAX_VOLTS, maxVolts); }
-            if (chanell == 1) { dt = modBus.GetMaxVolts(PwrParams.REG_P1_MAX_VOLTS, maxVolts); }
-            if (chanell == 2) { dt = modBus.GetMaxVolts(PwrParams.REG_P2_MAX_VOLTS, maxVolts); }
-            if (chanell == 3) { dt = modBus.GetMaxVolts(PwrParams.REG_P3_MAX_VOLTS, maxVolts); }
-            if (chanell == 4) { dt = modBus.GetMaxVolts(PwrParams.REG_P4_MAX_VOLTS, maxVolts); }
-            if (chanell == 5) { dt = modBus.GetMaxVolts(PwrParams.REG_P5_MAX_VOLTS, maxVolts); }
+            byte[] dt = modBus.GetMaxVolts(PwrParams.Amplitudes[chanell], amplitude);
             Write(dt);
             Thread.Sleep(1000);
-            
         }
 
         public void SetBias(int chanell, int bias)
         {
-            byte[] dt = { };
-            if (chanell == 0) { dt = modBus.GetMaxVolts(PwrParams.REG_P0_BIAS, bias); }
-            if (chanell == 1) { dt = modBus.GetMaxVolts(PwrParams.REG_P1_BIAS, bias); }
-            if (chanell == 2) { dt = modBus.GetMaxVolts(PwrParams.REG_P2_BIAS, bias); }
-            if (chanell == 3) { dt = modBus.GetMaxVolts(PwrParams.REG_P3_BIAS, bias); }
-            if (chanell == 4) { dt = modBus.GetMaxVolts(PwrParams.REG_P4_BIAS, bias); }
-            if (chanell == 5) { dt = modBus.GetMaxVolts(PwrParams.REG_P5_BIAS, bias); }
+            byte[] dt = modBus.GetMaxVolts(PwrParams.Biases[chanell], bias); 
+            Write(dt);
+            Thread.Sleep(1000);
+        }
+
+        public void SetFreq(int chanell, int freq)
+        {
+            byte[] dt = modBus.GetMaxVolts(PwrParams.Freqs[chanell], freq);
+            Write(dt);
+            Thread.Sleep(1000);
+        }
+
+        public void SetDuty(int chanell, int duty)
+        {
+            byte[] dt = modBus.GetMaxVolts(PwrParams.Dutys[chanell], duty);
+            Write(dt);
+            Thread.Sleep(1000);
+        }
+
+        public void SetPhase(int chanell, int phase)
+        {
+            byte[] dt = modBus.GetMaxVolts(PwrParams.Phases[chanell], phase);
+            Write(dt);
+            Thread.Sleep(1000);
+        }
+
+        public void SetMaxVolts(int chanell, int maxVolts)
+        {
+            byte[] dt = modBus.GetMaxVolts(PwrParams.MaxVolts[chanell], maxVolts);
+            Write(dt);
+            Thread.Sleep(1000);
+        }
+
+        public void SetMaxAmps(int chanell, int amps)
+        {
+            byte[] dt = modBus.GetMaxVolts(PwrParams.MaxAmps[chanell], amps);
             Write(dt);
             Thread.Sleep(1000);
         }

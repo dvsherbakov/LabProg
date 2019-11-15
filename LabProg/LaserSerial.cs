@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace LabProg
 {
