@@ -184,7 +184,14 @@ namespace LabProg
             }
         }
 
-        public void SetAmplitudes(int chanell, int amplitude)
+        public void SetMode(int chanell, int mode)
+        {
+            byte[] dt = modBus.GetMaxVolts(PwrParams.Modes[chanell], mode);
+            Write(dt);
+            Thread.Sleep(1000);
+        }
+
+        public void SetAmplitude(int chanell, int amplitude)
         {
             byte[] dt = modBus.GetMaxVolts(PwrParams.Amplitudes[chanell], amplitude);
             Write(dt);

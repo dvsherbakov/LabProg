@@ -203,32 +203,32 @@ namespace LabProg
                 case 0:
                     TbChannel0Bias.Text = CbModeCh0.SelectedIndex == 1 ? "Регулируемый ток (мА)" : "Напряжение смещения (мВ) ";
                     if (CbModeCh0.SelectedIndex == 0 || CbModeCh0.SelectedIndex == 1)
-                        TbChannel0Amplitude.IsEnabled = false;
-                    else TbChannel0Amplitude.IsEnabled = true;
+                        TbCh0Amplitude.IsEnabled = false;
+                    else TbCh0Amplitude.IsEnabled = true;
                     break;
                 case 1:
                     TbChannel1Bias.Text = CbModeCh1.SelectedIndex == 1 ? "Регулируемый ток (мА)" : "Напряжение смещения (мВ) ";
                     if (CbModeCh1.SelectedIndex == 0 || CbModeCh1.SelectedIndex == 1)
-                        TbChannel1Amplitude.IsEnabled = false;
-                    else TbChannel1Amplitude.IsEnabled = true;
+                        TbCh1Amplitude.IsEnabled = false;
+                    else TbCh1Amplitude.IsEnabled = true;
                     break;
                 case 2:
                     TbChannel2Bias.Text = CbModeCh2.SelectedIndex == 1 ? "Регулируемый ток (мА)" : "Напряжение смещения (мВ) ";
                     if (CbModeCh2.SelectedIndex == 0 || CbModeCh2.SelectedIndex == 1)
-                        TbChannel2Amplitude.IsEnabled = false;
-                    else TbChannel2Amplitude.IsEnabled = true;
+                        TbCh2Amplitude.IsEnabled = false;
+                    else TbCh2Amplitude.IsEnabled = true;
                     break;
                 case 3:
                     TbChannel3Bias.Text = CbModeCh3.SelectedIndex == 1 ? "Регулируемый ток (мА)" : "Напряжение смещения (мВ) ";
                     if (CbModeCh3.SelectedIndex == 0 || CbModeCh3.SelectedIndex == 1)
-                        TbChannel3Amplitude.IsEnabled = false;
-                    else TbChannel3Amplitude.IsEnabled = true;
+                        TbCh3Amplitude.IsEnabled = false;
+                    else TbCh3Amplitude.IsEnabled = true;
                     break;
                 case 4:
                     TbChannel4Bias.Text = CbModeCh4.SelectedIndex == 1 ? "Регулируемый ток (мА)" : "Напряжение смещения (мВ) ";
                     if (CbModeCh4.SelectedIndex == 0 || CbModeCh4.SelectedIndex == 1)
-                        TbChannel4Amplitude.IsEnabled = false;
-                    else TbChannel4Amplitude.IsEnabled = true;
+                        TbCh4Amplitude.IsEnabled = false;
+                    else TbCh4Amplitude.IsEnabled = true;
                     break;
             }
         }
@@ -245,51 +245,122 @@ namespace LabProg
                
         private void PwrCh0Write_Click(object sender, RoutedEventArgs e)
         {
-            var mv = int.Parse(TbCh0MaxVolts.Text);
-            if ((mv <= 10000) && (mv>0))_pwrSerial.SetMaxVolts(0, mv);
+            var mode = CbModeCh0.SelectedIndex;
+            _pwrSerial.SetMode(0, mode);
+            var amplitude = int.Parse(TbCh0Amplitude.Text);
+            if (amplitude > 0) _pwrSerial.SetAmplitude(0, amplitude);
             var bias = int.Parse(TbCh0Bias.Text);
-            if ((bias <= 10000) && (bias>0)) _pwrSerial.SetBias(0, bias);
-            
+            if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(0, bias);
+            var freq = int.Parse(TbCh0Freq.Text);
+            if (freq > 0) _pwrSerial.SetFreq(0, freq);
+            var duty = int.Parse(TbCh0Duty.Text);
+            if (duty > 0) _pwrSerial.SetDuty(0, duty);
+            var phase = int.Parse(TbCh0Phase.Text);
+            if (phase > 0) _pwrSerial.SetPhase(0, phase);
+            var mv = int.Parse(TbCh0MaxVolts.Text);
+            if ((mv <= 10000) && (mv > 0)) _pwrSerial.SetMaxVolts(0, mv);
+            var ma = int.Parse(TbCh0MaxAmps.Text);
+            if (ma > 0) _pwrSerial.SetMaxAmps(0, ma);
         }
 
         private void PwrCh1Write_Click(object sender, RoutedEventArgs e)
         {
-            int mv = int.Parse(TbCh1MaxVolts.Text);
-            if ((mv <= 10000) && (mv > 0)) _pwrSerial.SetMaxVolts(1, mv);
-            int bias = int.Parse(TbCh1Bias.Text);
+            var mode = CbModeCh1.SelectedIndex;
+            _pwrSerial.SetMode(1, mode);
+            var amplitude = int.Parse(TbCh1Amplitude.Text);
+            if (amplitude > 0) _pwrSerial.SetAmplitude(1, amplitude);
+            var bias = int.Parse(TbCh1Bias.Text);
             if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(1, bias);
+            var freq = int.Parse(TbCh1Freq.Text);
+            if (freq > 0) _pwrSerial.SetFreq(1, freq);
+            var duty = int.Parse(TbCh1Duty.Text);
+            if (duty > 0) _pwrSerial.SetDuty(1, duty);
+            var phase = int.Parse(TbCh1Phase.Text);
+            if (phase > 0) _pwrSerial.SetPhase(1, phase);
+            var mv = int.Parse(TbCh1MaxVolts.Text);
+            if ((mv <= 10000) && (mv > 0)) _pwrSerial.SetMaxVolts(1, mv);
+            var ma = int.Parse(TbCh1MaxAmps.Text);
+            if (ma > 0) _pwrSerial.SetMaxAmps(1, ma);
         }
 
         private void PwrCh2Write_Click(object sender, RoutedEventArgs e)
         {
-            int mv = int.Parse(TbCh2MaxVolts.Text);
-            if ((mv <= 3000)&&(mv > 0)) _pwrSerial.SetMaxVolts(2, mv);
-            int bias = int.Parse(TbCh2Bias.Text);
+            var mode = CbModeCh2.SelectedIndex;
+            _pwrSerial.SetMode(2, mode);
+            var amplitude = int.Parse(TbCh2Amplitude.Text);
+            if (amplitude > 0) _pwrSerial.SetAmplitude(2, amplitude);
+            var bias = int.Parse(TbCh2Bias.Text);
             if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(2, bias);
+            var freq = int.Parse(TbCh2Freq.Text);
+            if (freq > 0) _pwrSerial.SetFreq(2, freq);
+            var duty = int.Parse(TbCh2Duty.Text);
+            if (duty > 0) _pwrSerial.SetDuty(2, duty);
+            var phase = int.Parse(TbCh2Phase.Text);
+            if (phase > 0) _pwrSerial.SetPhase(2, phase);
+            var mv = int.Parse(TbCh2MaxVolts.Text);
+            if ((mv <= 10000) && (mv > 0)) _pwrSerial.SetMaxVolts(2, mv);
+            var ma = int.Parse(TbCh2MaxAmps.Text);
+            if (ma > 0) _pwrSerial.SetMaxAmps(2, ma);
         }
 
         private void PwrCh3Write_Click(object sender, RoutedEventArgs e)
         {
-            int mv = int.Parse(TbCh3MaxVolts.Text);
-            if ((mv <= 3000) && (mv > 0)) _pwrSerial.SetMaxVolts(3, mv);
-            int bias = int.Parse(TbCh3Bias.Text);
+            var mode = CbModeCh3.SelectedIndex;
+            _pwrSerial.SetMode(3, mode);
+            var amplitude = int.Parse(TbCh3Amplitude.Text);
+            if (amplitude > 0) _pwrSerial.SetAmplitude(3, amplitude);
+            var bias = int.Parse(TbCh3Bias.Text);
             if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(3, bias);
+            var freq = int.Parse(TbCh3Freq.Text);
+            if (freq > 0) _pwrSerial.SetFreq(3, freq);
+            var duty = int.Parse(TbCh3Duty.Text);
+            if (duty > 0) _pwrSerial.SetDuty(3, duty);
+            var phase = int.Parse(TbCh3Phase.Text);
+            if (phase > 0) _pwrSerial.SetPhase(3, phase);
+            var mv = int.Parse(TbCh3MaxVolts.Text);
+            if ((mv <= 10000) && (mv > 0)) _pwrSerial.SetMaxVolts(3, mv);
+            var ma = int.Parse(TbCh3MaxAmps.Text);
+            if (ma > 0) _pwrSerial.SetMaxAmps(3, ma);
         }
 
         private void PwrCh4Write_Click(object sender, RoutedEventArgs e)
         {
-            int mv = int.Parse(TbCh4MaxVolts.Text);
-            if ((mv <= 3000) && (mv > 0)) _pwrSerial.SetMaxVolts(3, mv);
-            int bias = int.Parse(TbCh3Bias.Text);
-            if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(3, bias);
+            var mode = CbModeCh4.SelectedIndex;
+            _pwrSerial.SetMode(4, mode);
+            var amplitude = int.Parse(TbCh4Amplitude.Text);
+            if (amplitude > 0) _pwrSerial.SetAmplitude(4, amplitude);
+            var bias = int.Parse(TbCh4Bias.Text);
+            if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(4, bias);
+            var freq = int.Parse(TbCh4Freq.Text);
+            if (freq > 0) _pwrSerial.SetFreq(4, freq);
+            var duty = int.Parse(TbCh4Duty.Text);
+            if (duty > 0) _pwrSerial.SetDuty(4, duty);
+            var phase = int.Parse(TbCh4Phase.Text);
+            if (phase > 0) _pwrSerial.SetPhase(4, phase);
+            var mv = int.Parse(TbCh4MaxVolts.Text);
+            if ((mv <= 10000) && (mv > 0)) _pwrSerial.SetMaxVolts(4, mv);
+            var ma = int.Parse(TbCh4MaxAmps.Text);
+            if (ma > 0) _pwrSerial.SetMaxAmps(4, ma);
         }
 
         private void PwrCh5Write_Click(object sender, RoutedEventArgs e)
         {
-            int mv = int.Parse(TbCh5MaxVolts.Text);
-            if ((mv <= 4200) && (mv > 0)) _pwrSerial.SetMaxVolts(5, mv);
-            int bias = int.Parse(TbChannel5Bias.Text);
-            if (bias > 0) _pwrSerial.SetBias(5, bias);
+            var mode = CbModeCh5.SelectedIndex;
+            _pwrSerial.SetMode(5, mode);
+            var amplitude = int.Parse(TbCh5Amplitude.Text);
+            if (amplitude > 0) _pwrSerial.SetAmplitude(5, amplitude);
+            var bias = int.Parse(TbCh5Bias.Text);
+            if ((bias <= 10000) && (bias > 0)) _pwrSerial.SetBias(5, bias);
+            var freq = int.Parse(TbCh5Freq.Text);
+            if (freq > 0) _pwrSerial.SetFreq(5, freq);
+            var duty = int.Parse(TbCh5Duty.Text);
+            if (duty > 0) _pwrSerial.SetDuty(5, duty);
+            var phase = int.Parse(TbCh5Phase.Text);
+            if (phase > 0) _pwrSerial.SetPhase(5, phase);
+            var mv = int.Parse(TbCh5MaxVolts.Text);
+            if ((mv <= 10000) && (mv > 0)) _pwrSerial.SetMaxVolts(5, mv);
+            var ma = int.Parse(TbCh5MaxAmps.Text);
+            if (ma > 0) _pwrSerial.SetMaxAmps(5, ma);
         }
     }
 }
