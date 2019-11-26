@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -20,7 +21,7 @@ namespace LabProg
 
         public void GetSignal(object sender, EventArgs e)
         {
-            //Console.WriteLine(e);
+            Debug.WriteLine(e);
             //PwrSerial.GetChanellData(1);
             var btSignal = sender as PwrSerial;
             var rs = BitConverter.ToString(btSignal._rxdata);
