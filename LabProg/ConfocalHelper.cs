@@ -75,9 +75,9 @@ namespace LabProg
 
         private void ShowRes(string message)
         {
-            Dispatcher.Invoke(()=>ConfocalLb.Text = message);
+            Dispatcher.Invoke(() => ConfocalLb.Text = message);
             string txt = null;
-            Dispatcher.Invoke(()=>txt= CbConfocalLevel.Text);
+            Dispatcher.Invoke(() => txt = CbConfocalLevel.Text);
             if (txt.Length == 0) txt = @"0.0";
             var res = double.Parse(message) - double.Parse(txt.Replace('.', ','));
             if ((Math.Abs(res) > 0.001) && AutoStop)
