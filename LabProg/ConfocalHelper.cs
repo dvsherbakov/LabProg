@@ -59,14 +59,16 @@ namespace LabProg
         {
             const string pattern = @"\[([0-9,-]+)\]"; //@"callback\(\[((\[((-?\d+,?){8})\],?)+)\]\);";
             var regex = new Regex(pattern);
-            var lst = new List<double>();
+            var res1 = new List<double>();
+            var res2 = new List<double>();
             foreach (Match match in regex.Matches(reqwest))
             {
                 var tmp = match.Groups[1].Value.Split(',');
                 if (tmp.Length <= 1) continue;
-                if (double.TryParse(tmp[1], out var outD)) lst.Add(outD / 1000000);
+                if (double.TryParse(tmp[1], out var outD)) res1.Add(outD / 1000000);
+                if (double.TryParse(tmp[2], out var outE)) res2.Add(outE / 1000000);
             }
-            return lst.Count > 0 ? lst.Average() : 0;
+            return res1.Count > 0 ? res1.Average() : 0;
         }
 
         //private delegate void AddMessageDelegate(string message);
