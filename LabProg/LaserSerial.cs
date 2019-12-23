@@ -162,5 +162,31 @@ namespace LabProg
             SendCommand(36);
             SendCommand(38);
         }
+
+        static byte[] Start()
+        {
+            return new byte[8] { 0X53, 0X08, 0X06, 0X01, 0X00, 0X01, 0X63, 0X0D };
+        }
+
+        static byte[] Stop()
+        {
+            return new byte[8] { 0X53, 0X08, 0X06, 0X01, 0X00, 0X02, 0X64, 0X0D };
+        }
+
+        static byte[] SetPowerLevel(int level)
+        {
+            List<byte> command = new List<byte> { 0x53, 0x08, 0x04, 0x01 };
+            var bts = BitConverter.GetBytes(level);
+            command.Add(bts[1]);
+            command.Add(bts[0]);
+            Int16 sm = 0;
+            foreach (byte x in command)
+                sm += x;
+            var cb = BitConverter.GetBytes(sm);
+            command.Add(cb[0]);
+            command.Add(0x0D);
+
+            return command.ToArray();
+        }
     }
 }
