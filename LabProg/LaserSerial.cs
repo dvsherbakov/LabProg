@@ -26,7 +26,7 @@ namespace LabProg
             if (portStr == "") portStr = "COM6";
             _mPort = new SerialPort(portStr)
             {
-                BaudRate = 500000,
+                BaudRate = 9600,
                 Parity = Parity.None,
                 StopBits = StopBits.One,
                 DataBits = 8,
@@ -163,17 +163,20 @@ namespace LabProg
             SendCommand(38);
         }
 
-        public  byte[] Start()
+        public  void Start()
         {
-            return new byte[8] { 0X53, 0X08, 0X06, 0X01, 0X00, 0X01, 0X63, 0X0D };
+            SetPowerStart();
+            //var cmd =  new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01, 0x63, 0x0D };
+            //_mPort.Write(cmd, 0, 8);
         }
 
-        public  byte[] Stop()
+        public void Stop()
         {
-            return new byte[8] { 0X53, 0X08, 0X06, 0X01, 0X00, 0X02, 0X64, 0X0D };
+            var cmd =  new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
+            _mPort.Write(cmd, 0, 8);
         }
 
-        public  byte[] SetPowerLevel(int level)
+        public void SetPowerLevel(int level)
         {
             List<byte> command = new List<byte> { 0x53, 0x08, 0x04, 0x01 };
             var bts = BitConverter.GetBytes(level);
@@ -186,7 +189,23 @@ namespace LabProg
             command.Add(cb[0]);
             command.Add(0x0D);
 
-            return command.ToArray();
+            var cmd =  command.ToArray();
+            _mPort.Write(cmd, 0, 8);
+        }
+
+        public void SetPowerStart()
+        {
+            List<byte> command = new List<byte> { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01 };
+           
+            Int16 sm = 0;
+            foreach (byte x in command)
+                sm += x;
+            var cb = BitConverter.GetBytes(sm);
+            command.Add(cb[0]);
+            command.Add(0x0D);
+
+            var cmd = command.ToArray();
+            _mPort.Write(cmd, 0, 8);
         }
     }
 }
