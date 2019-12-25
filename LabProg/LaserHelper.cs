@@ -61,7 +61,7 @@ namespace LabProg
 
         private void SetLaserOff(object sender, RoutedEventArgs e)
         {
-            _laserSerial.SetOff();
+            _laserSerial.Stop();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка выключения лазера" });
         }
     }
