@@ -163,17 +163,17 @@ namespace LabProg
             SendCommand(38);
         }
 
-        static byte[] Start()
+        public  byte[] Start()
         {
             return new byte[8] { 0X53, 0X08, 0X06, 0X01, 0X00, 0X01, 0X63, 0X0D };
         }
 
-        static byte[] Stop()
+        public  byte[] Stop()
         {
             return new byte[8] { 0X53, 0X08, 0X06, 0X01, 0X00, 0X02, 0X64, 0X0D };
         }
 
-        static byte[] SetPowerLevel(int level)
+        public  byte[] SetPowerLevel(int level)
         {
             List<byte> command = new List<byte> { 0x53, 0x08, 0x04, 0x01 };
             var bts = BitConverter.GetBytes(level);

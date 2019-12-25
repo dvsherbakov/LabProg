@@ -46,14 +46,16 @@ namespace LabProg
             var pwrText = TbLaserPwr.Text;
             if (Int32.TryParse(pwrText, out int outPwr))
             {
-                _laserSerial.SetPower(outPwr);
+                //_laserSerial.SetPower(outPwr);
+                _laserSerial.SetPowerLevel(outPwr);
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка установить мощность лазера в {outPwr}" });
             }
         }
 
         private void SetLaserOn(object sender, RoutedEventArgs e)
         {
-            _laserSerial.SetOn();
+            //_laserSerial.SetOn();
+            _laserSerial.Start();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка включения лазера" });
         }
 
