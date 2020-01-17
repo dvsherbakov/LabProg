@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         Icon="Resources/upwork.ico"
-        Title="Лаборатория МГД, ТГУ" Height="600" Width="950" Closing="Window_Closing" Opacity="0.9" >
+        Title="Лаборатория МГД, ТГУ" Height="600" Width="1200" Closing="Window_Closing" Opacity="0.9" >
     <Window.Resources>
         <ResourceDictionary Source="Styles.xaml" />
     </Window.Resources>
@@ -90,7 +90,7 @@
                                     <ColumnDefinition Width="3*"/>
                                 </Grid.ColumnDefinitions>
                                 <Button Grid.Column="0" Margin="10,4,4,4" Width="80" Click="PumpStartButton">Пуск</Button>
-                                <Button Grid.Column="1" Margin="10,4,4,4" Width="80">Текущий</Button>
+                                <Button Grid.Column="1" Margin="10,4,4,4" Width="80" Click="Button_Click">Текущий</Button>
                             </Grid>
                             <Grid Row="3" Column="0" Grid.ColumnSpan="2">
                                 <Grid.ColumnDefinitions>

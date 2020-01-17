@@ -29,5 +29,10 @@ namespace LabProg
             //PwrSerial.SetChannelOff(0);
             Close();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            CbConfocalLevel.Text = ConfocalLb.Text;
+        }
     }
 }

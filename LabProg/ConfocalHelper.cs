@@ -13,6 +13,7 @@ namespace LabProg
     public partial class MainWindow : Window
     {
         private bool AutoStop { get; set; }
+        private DateTime AutoStopTime { get; set; }
         private bool PumpActive { get; set; }
         private bool FDirection { get; set; }
         private int PrevRev { get; set; }
@@ -22,9 +23,9 @@ namespace LabProg
         private void PeackInfo(object source, System.Timers.ElapsedEventArgs e)
         {
             var timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            var x = 0.0;
+            DistMeasureRes x = new DistMeasureRes {Dist=0};
             timestamp++;
-            while (Math.Abs(x) < 0.00000001)
+            while (Math.Abs(x.Dist) < 0.00000001)
             {
                 using (var wc = new WebClient())
                 {
@@ -41,7 +42,7 @@ namespace LabProg
                             LogBox.Items.Insert(0, new LogBoxItem {Dt = DateTime.Now, LogText = ex.Message}));
                     }
 
-                    ShowRes(x.ToString("N5"));
+                    ShowRes(x);
                     
                 }
             }
@@ -55,7 +56,7 @@ namespace LabProg
             return res;
         }
 
-        private static double GetTemp(string reqwest)
+        private static DistMeasureRes GetTemp(string reqwest)
         {
             const string pattern = @"\[([0-9,-]+)\]"; //@"callback\(\[((\[((-?\d+,?){8})\],?)+)\]\);";
             var regex = new Regex(pattern);
@@ -68,19 +69,34 @@ namespace LabProg
                 if (double.TryParse(tmp[1], out var outD)) res1.Add(outD / 1000000);
                 if (double.TryParse(tmp[2], out var outE)) res2.Add(outE / 1000000);
             }
-            return res1.Count > 0 ? res1.Average() : 0;
+            DistMeasureRes res = new DistMeasureRes { Dist=0, IsSingle=true};
+
+            if (res2.Average() > res1.Average())
+            {
+                res.Dist = res2.Average() - res1.Average();
+                res.IsSingle = false;
+            }
+
+            else
+                res.Dist = res1.Average();
+
+            return res;
         }
 
         //private delegate void AddMessageDelegate(string message);
 
-        private void ShowRes(string message)
+        private void ShowRes(DistMeasureRes MeasureRes)
         {
-            Dispatcher.Invoke(() => ConfocalLb.Text = message);
+            var reverce = Properties.Settings.Default.PumpReverse;
+            Dispatcher.Invoke(() => ConfocalLb.Text = MeasureRes.Dist.ToString("N5"));
             string txt = null;
             Dispatcher.Invoke(() => txt = CbConfocalLevel.Text);
             if (txt.Length == 0) txt = @"0.0";
-            var res = double.Parse(message) - double.Parse(txt.Replace('.', ','));
-            if ((Math.Abs(res) > 0.001) && AutoStop)
+
+            var subLevel =
+                MeasureRes.Dist - double.Parse(txt.Replace('.', ','));
+            
+            if ((Math.Abs(subLevel) > 0.001) && AutoStop)
             {
                 _pumpSerial.StartPump();
                 AutoStop = false;
@@ -88,7 +104,9 @@ namespace LabProg
             }
 
             int rvs;
-            if (res < 0) rvs = 1; else rvs = -1;
+            if (subLevel < 0) rvs = 1; else rvs = -1;
+            if (reverce) rvs = rvs * (-1);
+            if (!MeasureRes.IsSingle) rvs = rvs * (-1);
 
             if (rvs != PrevRev)
             {
@@ -100,16 +118,16 @@ namespace LabProg
                     _pumpSerial.StopPump();
                 PrevRev = rvs;
             }
-            else if (Math.Abs(res) > 0.001 && PumpActive)
+            else if (Math.Abs(subLevel) > 0.001 && PumpActive)
             {
                 var speed = "11.9";
 
-                if (Math.Abs(res) > 0.001) speed = "0.5 "; //ToFourStr(0.5);
-                if (Math.Abs(res) > 0.005) speed = "5   ";
-                if (Math.Abs(res) > 0.01) speed = "15.0"; //ToFourStr(15);
-                if (Math.Abs(res) > 0.05) speed = "35.5";
-                if (Math.Abs(res) > 0.1) speed = "125 "; //ToFourStr(75);
-                if (Math.Abs(res) > 1) speed = "280 "; //ToFourStr(333);
+                if (Math.Abs(subLevel) > 0.001) speed = "0.5 "; //ToFourStr(0.5);
+                if (Math.Abs(subLevel) > 0.005) speed = "5   ";
+                if (Math.Abs(subLevel) > 0.01) speed = "15.0"; //ToFourStr(15);
+                if (Math.Abs(subLevel) > 0.05) speed = "35.5";
+                if (Math.Abs(subLevel) > 0.1) speed = "125 "; //ToFourStr(75);
+                if (Math.Abs(subLevel) > 1) speed = "280 "; //ToFourStr(333);
                 if (_prevSpeed == speed) return;
 
                 _pumpSerial.SetSpeed(speed);
@@ -172,4 +190,11 @@ namespace LabProg
             _pumpSerial.StartPump();
         }
     }
+
+    class DistMeasureRes
+    {
+        public double Dist { get; set; }
+        public bool IsSingle { get; set; }
+    }
 }
+

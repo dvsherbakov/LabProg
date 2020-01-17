@@ -37,7 +37,7 @@ namespace LabProg
         const int reg_read_tempr = 19;
 
         //#SmartPWR Read/Write Holding Registeres
-        public static int[] Modes = { REG_P0_ENABLE, REG_P1_ENABLE, REG_P2_ENABLE, REG_P3_ENABLE, REG_P4_ENABLE, REG_P5_ENABLE};
+        public static int[] Modes = { REG_P0_MODE, REG_P1_MODE, REG_P2_MODE, REG_P3_MODE, REG_P4_MODE, REG_P5_MODE };
         public static int[] Amplitudes = { REG_P0_AMPLITUDE, REG_P1_AMPLITUDE, REG_P2_AMPLITUDE, REG_P3_AMPLITUDE, REG_P4_AMPLITUDE, REG_P5_AMPLITUDE };
         public static int[] Biases = { REG_P0_BIAS, REG_P1_BIAS, REG_P2_BIAS, REG_P3_BIAS, REG_P4_BIAS, REG_P5_BIAS };
         public static int[] Freqs = { REG_P0_FREQ, REG_P1_FREQ, REG_P2_FREQ, REG_P3_FREQ, REG_P4_FREQ, REG_P5_FREQ };
