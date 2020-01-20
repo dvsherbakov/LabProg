@@ -102,6 +102,7 @@
     <Compile Include="PCO_Convert_LibWrapper.cs" />
     <Compile Include="PCO_GetErrorTextClass.cs" />
     <Compile Include="PCO_SDK_LibWrapper.cs" />
+    <Compile Include="PixelFormatsItems.cs" />
     <Compile Include="PumpSerial.cs" />
     <Compile Include="PwrHelper.cs" />
     <Compile Include="PwrItem.cs" />

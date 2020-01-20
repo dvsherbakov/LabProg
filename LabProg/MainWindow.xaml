@@ -708,6 +708,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -729,6 +730,8 @@
                             <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbFrameCount" Margin="1"></TextBox>
                             <TextBlock Grid.Row="6" Grid.Column="0">Текущее значение</TextBlock>
                             <TextBlock Grid.Row="6" Grid.Column="1" TextAlignment="Center" x:Name="tbCurrentFrame"></TextBlock>
+                            <TextBlock Grid.Row="7" Grid.Column="0">Способ конвертации</TextBlock>
+                            <ComboBox Grid.Row="7" Grid.Column="1" x:Name="CbPixelFormatConv"></ComboBox>
                         </Grid>
                     </StackPanel>
                 </TabItem>

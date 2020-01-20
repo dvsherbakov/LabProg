@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
@@ -312,7 +313,7 @@ namespace LabProg
                 err = PCO_Convert_LibWrapper.PCO_ConvertSetDisplay(convertHandle, ref strDisplay);
                 err = PCO_Convert_LibWrapper.PCO_SetConvertDialog(convertDialog, convertHandle);
             }
-
+            Dispatcher.Invoke(() => Debug.WriteLine(CbPixelFormatConv.SelectedValue));
             imagebmp = new Bitmap(width, height, PixelFormat.Format24bppRgb);//Format24bppRgb
             Rectangle dimension = new Rectangle(0, 0, imagebmp.Width, imagebmp.Height);
             BitmapData picData = imagebmp.LockBits(dimension, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);//Format24bppRgb

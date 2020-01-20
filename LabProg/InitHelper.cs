@@ -22,6 +22,10 @@ namespace LabProg
                 CbMirrorPort.Items.Add(s);
                 CbPowerPort.Items.Add(s);
             }
+            CbPixelFormatConv.ItemsSource = PixelFormatsItems.GetList();
+            CbPixelFormatConv.SelectedValuePath = "Value";
+            CbPixelFormatConv.DisplayMemberPath = "Description";
+            CbPixelFormatConv.SelectedIndex = 7;
             InitPwrItems();
             InitPumpItems();
             InitPyroTimer();
