@@ -18,22 +18,20 @@
             <RowDefinition Height="90px"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"></ColumnDefinition>
-            <ColumnDefinition Width="15*"></ColumnDefinition>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition Width="150*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Menu Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" FontSize="16" Grid.ColumnSpan="2">
+        <Menu Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" FontSize="16" Grid.ColumnSpan="3">
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Click="CloseApp"></MenuItem>
             </MenuItem>
             <MenuItem Header="Edit" ></MenuItem>
             <MenuItem Header="View" ></MenuItem>
         </Menu>
-        <Grid Grid.Column="0" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="0*" />
-            </Grid.ColumnDefinitions>
-            <TabControl TabStripPlacement="Left" Margin="8" Grid.Column="0" FontFamily="Tahoma" FontSize="16">
+        
+
+            <TabControl Grid.Column="0" Grid.Row="1" TabStripPlacement="Left" Margin="8"  FontFamily="Tahoma" FontSize="16" >
                 <TabControl.Resources>
                     <Style TargetType="TabItem">
                         <Setter Property="Template">
@@ -822,106 +820,9 @@
                     </StackPanel>
                 </TabItem>
             </TabControl>
-            <ScrollViewer Grid.Column="1" Grid.Row="1" Background="Azure" FontFamily="Tahoma" FontSize="16" VerticalScrollBarVisibility="Auto">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Margin="5,5,5,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="31*"/>
-                            <ColumnDefinition Width="138*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center"  FontSize="16" Grid.ColumnSpan="2" Margin="0,0,0,127" Grid.RowSpan="2">Операции с насосом:</TextBlock>
-                        <Expander Grid.Row="1" Header="Управление"  FontSize="16" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PumpManaging, Mode=TwoWay}" Grid.ColumnSpan="2">
-                            
-                        </Expander>
-                        <Expander Grid.Row="2" Header="Настройки"  FontSize="16" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PumpSettings, Mode=TwoWay}" Grid.ColumnSpan="2">
-                            
-                        </Expander>
-                    </Grid>
-
-                    <Grid  Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center" >Операции с зеркалом:</TextBlock>
-                        <Expander Grid.Row="1" Header="Управление" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=MirrorManaging, Mode=TwoWay}">
-                            
-                        </Expander>
-                        <Expander Grid.Row="2" Header="Настроки" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=MirrorSetup, Mode=TwoWay}">
-                           
-                        </Expander>
-                    </Grid>
-                    <Grid Grid.Row="2" Margin="5,5,5,5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontSize="16">Операции с Лазером:</TextBlock>
-                        <Expander Grid.Row="1" Header="Управление" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=ExLaserManage, Mode=TwoWay}">
-                            
-                        </Expander>
-                        <Expander Grid.Row="2" Header="Настройки" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=ExLaserSettings, Mode=TwoWay}">
-                            
-                        </Expander>
-                    </Grid>
-                    <Grid Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0"  TextAlignment="Center" VerticalAlignment="Center" >Управление блоком питания:</TextBlock>
-                        <Expander Grid.Row="1" Header="Общее управление">
-                            
-                        </Expander>
-                        
-                        
-                    </Grid>
-                    <Grid Grid.Column="0" Grid.Row="4" Margin="5,5,1,5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" TextAlignment="Center">Управление камерой</TextBlock>
-                        <Expander Grid.Row="1" Header="Общее управление" Margin="10,1,1,1">
-                            
-                        </Expander>
-                        <Expander Grid.Row="2" Header="Настройки камеры" Margin="10,1,1,1">
-                            
-                        </Expander>
-                    </Grid>
-                    <Grid Grid.Row="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" TextAlignment="Center">Управление освещением</TextBlock>
-                        <Expander Grid.Row="2" Header="Настройки" Margin="10,1,1,1">
-                            
-                        </Expander>
-                    </Grid>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
-        <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0">
+            
+        
+        <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Dt}"/>
@@ -929,6 +830,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Image x:Name="PictureBox1"  Grid.Column="1" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Cursor="IBeam" MinWidth="604" MinHeight="600" Stretch="Fill"/>
+        
+        <Image x:Name="PictureBox1"  Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Cursor="IBeam" MinWidth="604" MinHeight="600" Stretch="Fill"/>
     </Grid>
 </Window>
