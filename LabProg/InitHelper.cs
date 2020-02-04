@@ -49,6 +49,7 @@ namespace LabProg
             CbPowerPort.SelectedIndex = Properties.Settings.Default.PwrPortIndex;
             CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
             CbLaserPort.SelectedIndex = Properties.Settings.Default.LaserPortIndex;
+            CbLaserType.SelectedIndex = Properties.Settings.Default.LaserType;
             CbPyroPort.SelectedIndex = Properties.Settings.Default.PyroPortIndex;
             CbArduinoPort.SelectedIndex = Properties.Settings.Default.ArduinoPortIndex;
             tbSaveCamPath.Text = Properties.Settings.Default.CameraSavePath;
@@ -70,6 +71,7 @@ namespace LabProg
             Properties.Settings.Default.ArduinoPortIndex = CbArduinoPort.SelectedIndex;
             Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
             Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
+            Properties.Settings.Default.LaserType = CbLaserType.SelectedIndex;
             Properties.Settings.Default.PyroPortIndex = CbPyroPort.SelectedIndex;
             Properties.Settings.Default.CameraSavePath = tbSaveCamPath.Text;
             Properties.Settings.Default.CameraSavePrefix = tbSaveCamPrefix.Text;

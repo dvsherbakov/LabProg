@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace LabProg
 {
@@ -21,6 +22,7 @@ namespace LabProg
             _pumpSerial = new PumpSerial(CbPumpPort.Text);
             _pyroSerial = new PyroSerial(CbPyroPort.Text);
             _laserSerial = new LaserSerial(CbLaserPort.Text);
+            _laserSerial.SetLaserType(Properties.Settings.Default.LaserType);
         }
 
         private void CloseApp(object sender, RoutedEventArgs e)
@@ -33,6 +35,12 @@ namespace LabProg
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CbConfocalLevel.Text = ConfocalLb.Text;
+        }
+
+        private void CbLaserType_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_laserSerial != null)
+                _laserSerial.SetLaserType(((ComboBox)sender).SelectedIndex);
         }
     }
 }

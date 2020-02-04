@@ -18,6 +18,7 @@ namespace LabProg
         private int DMaxPower;
         private float TempAmb;
         private int lPwr;
+        private int LaseType;
 
         public LaserSerial(string portStr)
         {
@@ -175,7 +176,7 @@ namespace LabProg
             var cmd =  new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
             _mPort.Write(cmd, 0, 8);
         }
-
+        
         public void SetPowerLevel(int level)
         {
             List<byte> command = new List<byte> { 0x53, 0x08, 0x04, 0x01 };
@@ -206,6 +207,11 @@ namespace LabProg
 
             var cmd = command.ToArray();
             _mPort.Write(cmd, 0, 8);
+        }
+
+        public void SetLaserType(int tp)
+        {
+            LaseType = tp;
         }
     }
 }

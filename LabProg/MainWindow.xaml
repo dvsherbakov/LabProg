@@ -60,9 +60,8 @@
                 <TabItem VerticalAlignment="Center" HorizontalAlignment="Center" >
                     <TabItem.Header>
                         <StackPanel>
-                            <ContentControl Content="{StaticResource PumpIcon}" Margin="5"/>
-                           
-                        </StackPanel>
+                        <ContentControl Content="{StaticResource PumpIcon}" Margin="5"/>
+                    </StackPanel>
                     </TabItem.Header>
                     <StackPanel>
                         <TextBlock TextAlignment="Center">Операции с насосом</TextBlock>
@@ -175,6 +174,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
@@ -204,7 +204,12 @@
                                 <TextBlock>COM8</TextBlock>
                                 <TextBlock>COM9</TextBlock>
                             </ComboBox>
-                            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0">
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Тип Лазера</TextBlock>
+                        <ComboBox x:Name="CbLaserType" Grid.Row="2" Grid.Column="1" Margin="10,2,5,2" SelectionChanged="CbLaserType_SelectionChanged">
+                            <TextBlock>Omicron</TextBlock>
+                            <TextBlock>MRL-III-660D</TextBlock>
+                        </ComboBox>
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
