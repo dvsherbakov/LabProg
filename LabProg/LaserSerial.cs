@@ -18,7 +18,7 @@ namespace LabProg
         private int DMaxPower;
         private float TempAmb;
         private int lPwr;
-        private int LaseType;
+        private int LaserType;
 
         public LaserSerial(string portStr)
         {
@@ -140,11 +140,15 @@ namespace LabProg
 
         public void SetPower(int pwr)
         {
-            var cmd = _lCommand.SetPowerLvl(pwr);
-            if (_mPort.IsOpen)
+            if (this.LaserType == 0)
             {
-                _mPort.Write(cmd.SCommand);
+                var cmd = _lCommand.SetPowerLvl(pwr);
+                if (_mPort.IsOpen)
+                {
+                    _mPort.Write(cmd.SCommand);
+                }
             }
+            else SetPowerLevel(pwr);
         }
 
         public int GetLasePower()
@@ -154,21 +158,32 @@ namespace LabProg
 
         public void SetOn()
         {
-            SendCommand(35);
-            SendCommand(37);
+            if (LaserType == 0)
+            {
+                SendCommand(35);
+                SendCommand(37);
+            }
+            else Start();
         }
 
         public void SetOff()
         {
-            SendCommand(36);
-            SendCommand(38);
+            if (LaserType == 0)
+            {
+                SendCommand(36);
+                SendCommand(38);
+            }
+            else Stop();
         }
 
-        public  void Start()
+        public void Start()
         {
-            SetPowerStart();
-            //var cmd =  new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01, 0x63, 0x0D };
-            //_mPort.Write(cmd, 0, 8);
+            if (LaserType == 1) SetPowerStart();
+            else
+            {
+                var cmd = new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01, 0x63, 0x0D };
+                _mPort.Write(cmd, 0, 8);
+            }
         }
 
         public void Stop()
@@ -211,7 +226,7 @@ namespace LabProg
 
         public void SetLaserType(int tp)
         {
-            LaseType = tp;
+            LaserType = tp;
         }
     }
 }
