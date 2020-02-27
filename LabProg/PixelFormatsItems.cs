@@ -10,7 +10,6 @@ namespace LabProg
     
     static class PixelFormatsItems
     {
-
         public static  List<PixelFormatsItem> GetList()
         {
             return new List<PixelFormatsItem> {

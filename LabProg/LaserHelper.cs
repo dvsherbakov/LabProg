@@ -3,10 +3,8 @@ using System.Windows;
 
 namespace LabProg
 {
-
     public partial class MainWindow
     {
-
         private void LaserPortOn(object sender, RoutedEventArgs e)
         {
             try
