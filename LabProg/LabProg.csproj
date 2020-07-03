@@ -68,6 +68,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ATMCD32CS, Version=2.103.30022.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ATMCD32CS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -90,7 +94,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CameraHelper.cs" />
+    <Compile Include="CameraAndor.cs" />
+    <Compile Include="CameraPCO.cs" />
     <Compile Include="LaserHelper.cs" />
     <Compile Include="Confocal.cs" />
     <Compile Include="ConfocalHelper.cs" />

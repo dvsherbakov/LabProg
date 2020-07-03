@@ -53,25 +53,32 @@ namespace LabProg
 
             // Verify board number validity
             // Open a handle to the camera
-            err = PCO_SDK_LibWrapper.PCO_OpenCamera(ref cameraHandle, boardNum);
-            if (err == 0)
+            try
             {
-                UInt16 wrecstate = 0;
-                cbStartCamera.IsEnabled = false;
-                cbStopCamera.IsEnabled = false;
-                cbGetDescription.IsEnabled = true;
-                cbOpenCamera.IsEnabled = false;
-                cbCloseCamera.IsEnabled = true;
+                err = PCO_SDK_LibWrapper.PCO_OpenCamera(ref cameraHandle, boardNum);
+                if (err == 0)
+                {
+                    UInt16 wrecstate = 0;
+                    cbStartCamera.IsEnabled = false;
+                    cbStopCamera.IsEnabled = false;
+                    cbGetDescription.IsEnabled = true;
+                    cbOpenCamera.IsEnabled = false;
+                    cbCloseCamera.IsEnabled = true;
 
-                PCO_SDK_LibWrapper.PCO_GetRecordingState(cameraHandle, ref wrecstate);
-                if (wrecstate != 0)
-                    PCO_SDK_LibWrapper.PCO_SetRecordingState(cameraHandle, 0);
+                    PCO_SDK_LibWrapper.PCO_GetRecordingState(cameraHandle, ref wrecstate);
+                    if (wrecstate != 0)
+                        PCO_SDK_LibWrapper.PCO_SetRecordingState(cameraHandle, 0);
 
-                // buttonOpenCamDialog.Enabled = true;
+                    // buttonOpenCamDialog.Enabled = true;
+                }
+                else
+                {
+                    err = PCO_SDK_LibWrapper.PCO_ResetLib();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                err = PCO_SDK_LibWrapper.PCO_ResetLib();
+                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Ошибка соединения с камерой {ex}" });
             }
         }
 
@@ -393,7 +400,7 @@ namespace LabProg
 
         private void OnTimerTeak(object sender, EventArgs e)
         {
-            bool isReady = false;
+            var isReady = false;
             Dispatcher.Invoke(() => isReady = cbGrabCamera.IsChecked.Value);
             if (isReady)
             {
@@ -404,8 +411,8 @@ namespace LabProg
         private void OnChangeFrameMaxCount(object sender, EventArgs e)
         {
             var str = tbFrameCount.Text;
-            var res = int.TryParse(str, out int fc);
-            if (res) MaxCameraFrame = fc; else MaxCameraFrame = 100;
+            var res = int.TryParse(str, out var fc);
+            MaxCameraFrame = res ? fc : 100;
         }
 
     }
