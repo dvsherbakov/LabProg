@@ -43,6 +43,12 @@ namespace LabProg
             if (!CheckError(4)) return;
         }
 
+        public bool SetAcquisitionMode(int mode)
+        { 
+            f_ErrValue = f_Sdk.SetAcquisitionMode(mode);
+            return CheckError(5);
+        }
+
         private int GetCapsSize()
         {
             return Marshal.SizeOf(f_Caps);
