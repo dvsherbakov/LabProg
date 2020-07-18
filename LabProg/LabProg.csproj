@@ -94,26 +94,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CameraAndor.cs" />
-    <Compile Include="CameraPCO.cs" />
-    <Compile Include="LaserHelper.cs" />
+    <Compile Include="Cams\CameraPCO.cs" />
+    <Compile Include="Lasers\LaserHelper.cs" />
     <Compile Include="Confocal.cs" />
     <Compile Include="ConfocalHelper.cs" />
     <Compile Include="InitHelper.cs" />
-    <Compile Include="LaserCommand.cs" />
-    <Compile Include="LaserSerial.cs" />
-    <Compile Include="ModBus.cs" />
-    <Compile Include="PCO_ConvertStructures.cs" />
-    <Compile Include="PCO_Convert_LibWrapper.cs" />
-    <Compile Include="PCO_GetErrorTextClass.cs" />
-    <Compile Include="PCO_SDK_LibWrapper.cs" />
-    <Compile Include="PixelFormatsItems.cs" />
+    <Compile Include="Lasers\LaserCommand.cs" />
+    <Compile Include="Lasers\LaserSerial.cs" />
+    <Compile Include="Pwr\ModBus.cs" />
+    <Compile Include="Cams\PCO_ConvertStructures.cs" />
+    <Compile Include="Cams\PCO_Convert_LibWrapper.cs" />
+    <Compile Include="Cams\PCO_GetErrorTextClass.cs" />
+    <Compile Include="Cams\PCO_SDK_LibWrapper.cs" />
+    <Compile Include="Cams\PixelFormatsItems.cs" />
     <Compile Include="PumpSerial.cs" />
-    <Compile Include="PwrHelper.cs" />
-    <Compile Include="PwrItem.cs" />
-    <Compile Include="PwrMode.cs" />
-    <Compile Include="PwrParams.cs" />
-    <Compile Include="PwrSerial.cs" />
+    <Compile Include="Pwr\PwrHelper.cs" />
+    <Compile Include="Pwr\PwrItem.cs" />
+    <Compile Include="Pwr\PwrMode.cs" />
+    <Compile Include="Pwr\PwrParams.cs" />
+    <Compile Include="Pwr\PwrSerial.cs" />
     <Compile Include="PyroHelper.cs" />
     <Compile Include="PyroSerial.cs" />
     <Compile Include="ReleSerial.cs" />
@@ -177,5 +176,6 @@
   <ItemGroup>
     <Resource Include="Resources\upwork.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
