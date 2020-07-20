@@ -29,112 +29,189 @@
             <MenuItem Header="Edit" ></MenuItem>
             <MenuItem Header="View" ></MenuItem>
         </Menu>
-        
 
-            <TabControl Grid.Column="0" Grid.Row="1" TabStripPlacement="Left" Margin="8"  FontFamily="Tahoma" FontSize="16" >
-                <TabControl.Resources>
-                    <Style TargetType="TabItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="TabItem">
-                                    <Border Name="Border" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" Margin="2,0" Background="#252e37">
-                                        <ContentPresenter x:Name="ContentSite"
+
+        <TabControl Grid.Column="0" Grid.Row="1" TabStripPlacement="Left" Margin="8"  FontFamily="Tahoma" FontSize="16" >
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" Margin="2,0" Background="#252e37">
+                                    <ContentPresenter x:Name="ContentSite"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
                                     ContentSource="Header"
                                     Margin="4"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="False">
-                                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Resources>
-                <TabItem VerticalAlignment="Center" HorizontalAlignment="Center" >
-                    <TabItem.Header>
-                        <StackPanel>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <TabItem.Header>
+                    <StackPanel>
                         <ContentControl Content="{StaticResource PumpIcon}" Margin="5"/>
                     </StackPanel>
-                    </TabItem.Header>
-                    <StackPanel>
-                        <TextBlock TextAlignment="Center">Операции с насосом</TextBlock>
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,4,10,4">Показания датчика:</TextBlock>
-                            <TextBlock x:Name="ConfocalLb" Grid.Row="0" Grid.Column="1" Width="80"  Margin="10,4,4,4" HorizontalAlignment="Center">0.0</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="4">Установите уровень:</TextBlock>
-                            <TextBox x:Name="CbConfocalLevel" Grid.Row="1" Grid.Column="1" Margin="4" Width="80"
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock TextAlignment="Center">Операции с насосом</TextBlock>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,4,10,4">Показания датчика:</TextBlock>
+                        <TextBlock x:Name="ConfocalLb" Grid.Row="0" Width="80"  Margin="144,4,-7,4" HorizontalAlignment="Center" Grid.ColumnSpan="2"
+                                   Grid.Column="0">0.0</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Margin="4">Установите уровень:</TextBlock>
+                        <TextBox x:Name="CbConfocalLevel" Grid.Row="1" Grid.Column="1" Margin="4" Width="80"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" HorizontalAlignment="Center"/>
-                            <Grid Row="2" Column="0" Grid.ColumnSpan="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Margin="10,4,4,4" Width="80" Click="PumpStartButton">Пуск</Button>
-                                <Button Grid.Column="1" Margin="10,4,4,4" Width="80" Click="Button_Click">Текущий</Button>
-                            </Grid>
-                            <Grid Row="3" Column="0" Grid.ColumnSpan="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                </Grid.ColumnDefinitions>
-                                <ToggleButton Grid.Column="0" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
-                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}"/>
-                                <TextBlock Grid.Column="1" Grid.Row="0" Margin="5">Реверс</TextBlock>
-                                <ToggleButton x:Name="CbPumpActive" Grid.Column="2" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
-                                              Checked="PumpPortOn" Unchecked="PumpPortOff"/>
-                                <TextBlock Grid.Column="3" Grid.Row="0"  Margin="5">Активно</TextBlock>
-                            </Grid>
-                        </Grid>
-                        <Grid>
+                        <Grid Row="2" Column="0" Grid.ColumnSpan="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="10,2,5,2">Порт насоса</TextBlock>
-                            <ComboBox x:Name = "CbPumpPort" Grid.Column="1" Margin="10,2,5,2" Width="80">
-                                <TextBlock>COM1</TextBlock>
-                                <TextBlock>COM2</TextBlock>
-                                <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
-                            </ComboBox>
+                            <Button Grid.Column="0" Margin="10,4,4,4" Width="80" Click="PumpStartButton">Пуск</Button>
+                            <Button Grid.Column="1" Margin="10,4,4,4" Width="80" Click="Button_Click">Текущий</Button>
                         </Grid>
-                    </StackPanel>
-                </TabItem>
-                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TabItem.Header>
-                        <StackPanel>
-                            <ContentControl Content="{StaticResource LaserIcon}"  Margin="5"/>
-                        </StackPanel>
-                    </TabItem.Header>
+                        <Grid Row="3" Column="0" Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton Grid.Column="0" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}"/>
+                            <TextBlock Grid.Column="1" Grid.Row="0" Margin="5">Реверс</TextBlock>
+                            <ToggleButton x:Name="CbPumpActive" Grid.Column="2" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
+                                              Checked="PumpPortOn" Unchecked="PumpPortOff"/>
+                            <TextBlock Grid.Column="3" Grid.Row="0"  Margin="5">Активно</TextBlock>
+                        </Grid>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Margin="10,2,5,2">Порт насоса</TextBlock>
+                        <ComboBox x:Name = "CbPumpPort" Grid.Column="1" Margin="10,2,5,2" Width="80">
+                            <TextBlock>COM1</TextBlock>
+                            <TextBlock>COM2</TextBlock>
+                            <TextBlock>COM3</TextBlock>
+                            <TextBlock>COM4</TextBlock>
+                            <TextBlock>COM5</TextBlock>
+                            <TextBlock>COM6</TextBlock>
+                            <TextBlock>COM7</TextBlock>
+                            <TextBlock>COM8</TextBlock>
+                            <TextBlock>COM9</TextBlock>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TabItem.Header>
                     <StackPanel>
-                        <TextBlock TextAlignment="Center">Управление лазером</TextBlock>
-                        <Grid Margin="20,5,5,5">
+                        <ContentControl Content="{StaticResource LaserIcon}"  Margin="5"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock TextAlignment="Center">Управление лазером</TextBlock>
+                    <Grid Margin="20,5,5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                                       VerticalAlignment="Center">Подключиться к порту</TextBlock>
+                        <ToggleButton Grid.Row="0" Grid.Column="3" x:Name="ChbLaserPort" 
+                                          Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"
+                                          Checked="LaserPortOn" Unchecked="LaserPortOff"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                                       VerticalAlignment="Center">Излучение!</TextBlock>
+                        <ToggleButton Grid.Row="1" Grid.Column="3" x:Name="ChbLaserOn" 
+                                          Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"
+                                          Checked="SetLaserOn" Unchecked="SetLaserOff"></ToggleButton>
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Мощность</TextBlock>
+                        <TextBlock x:Name="TbCurrentLPwr" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
+                        <TextBox Grid.Row="2" x:Name="TbLaserPwr" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=LaserPower, Mode=TwoWay}"/>
+                        <Button Grid.Row="2" Grid.Column="3" Margin="3" Click="SetLaserPwr">Применить</Button>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                                       VerticalAlignment="Center">Автоматически</TextBlock>
+                        <ToggleButton Grid.Row="3" Grid.Column="3" 
+                                           Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Температура</TextBlock>
+                        <TextBlock Grid.Row="4" x:Name ="PyroTemp" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PyroTemp, Mode=TwoWay}"></TextBox>
+                        <Button Grid.Row="4" Grid.Column="3"  Margin="3,3,3,3">Старт</Button>
+                    </Grid>
+                    <Grid Margin="20,5,5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Порт лазера</TextBlock>
+                        <ComboBox x:Name="CbLaserPort" Grid.Row="0" Grid.Column="1" Margin="10,2,5,2">
+                            <TextBlock>COM1</TextBlock>
+                            <TextBlock>COM2</TextBlock>
+                            <TextBlock>COM3</TextBlock>
+                            <TextBlock>COM4</TextBlock>
+                            <TextBlock>COM5</TextBlock>
+                            <TextBlock>COM6</TextBlock>
+                            <TextBlock>COM7</TextBlock>
+                            <TextBlock>COM8</TextBlock>
+                            <TextBlock>COM9</TextBlock>
+                        </ComboBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Порт пирометра</TextBlock>
+                        <ComboBox x:Name="CbPyroPort" Grid.Row="1" Grid.Column="1" Margin="10,2,5,2">
+                            <TextBlock>COM1</TextBlock>
+                            <TextBlock>COM2</TextBlock>
+                            <TextBlock>COM3</TextBlock>
+                            <TextBlock>COM4</TextBlock>
+                            <TextBlock>COM5</TextBlock>
+                            <TextBlock>COM6</TextBlock>
+                            <TextBlock>COM7</TextBlock>
+                            <TextBlock>COM8</TextBlock>
+                            <TextBlock>COM9</TextBlock>
+                        </ComboBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Тип Лазера</TextBlock>
+                        <ComboBox x:Name="CbLaserType" Grid.Row="2" Grid.Column="1" Margin="10,2,5,2" SelectionChanged="CbLaserType_SelectionChanged">
+                            <TextBlock>Omicron</TextBlock>
+                            <TextBlock>MRL-III-660D</TextBlock>
+                        </ComboBox>
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -142,675 +219,452 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="4*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
-                                       VerticalAlignment="Center">Подключиться к порту</TextBlock>
-                            <ToggleButton Grid.Row="0" Grid.Column="3" x:Name="ChbLaserPort" 
-                                          Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"
-                                          Checked="LaserPortOn" Unchecked="LaserPortOff"/>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
-                                       VerticalAlignment="Center">Излучение!</TextBlock>
-                            <ToggleButton Grid.Row="1" Grid.Column="3" x:Name="ChbLaserOn" 
-                                          Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"
-                                          Checked="SetLaserOn" Unchecked="SetLaserOff"></ToggleButton>
-                            <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Мощность</TextBlock>
-                            <TextBlock x:Name="TbCurrentLPwr" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
-                            <TextBox Grid.Row="2" x:Name="TbLaserPwr" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=LaserPower, Mode=TwoWay}"/>
-                            <Button Grid.Row="2" Grid.Column="3" Margin="3" Click="SetLaserPwr">Применить</Button>
-                            <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
-                                       VerticalAlignment="Center">Автоматически</TextBlock>
-                            <ToggleButton Grid.Row="3" Grid.Column="3" 
-                                           Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"/>
-                            <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Температура</TextBlock>
-                            <TextBlock Grid.Row="4" x:Name ="PyroTemp" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
-                            <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PyroTemp, Mode=TwoWay}"></TextBox>
-                            <Button Grid.Row="4" Grid.Column="3"  Margin="3,3,3,3">Старт</Button>
-                        </Grid>
-                        <Grid Margin="20,5,5,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Порт лазера</TextBlock>
-                            <ComboBox x:Name="CbLaserPort" Grid.Row="0" Grid.Column="1" Margin="10,2,5,2">
-                                <TextBlock>COM1</TextBlock>
-                                <TextBlock>COM2</TextBlock>
-                                <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
-                            </ComboBox>
-                            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Порт пирометра</TextBlock>
-                            <ComboBox x:Name="CbPyroPort" Grid.Row="1" Grid.Column="1" Margin="10,2,5,2">
-                                <TextBlock>COM1</TextBlock>
-                                <TextBlock>COM2</TextBlock>
-                                <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
-                            </ComboBox>
-                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Тип Лазера</TextBlock>
-                        <ComboBox x:Name="CbLaserType" Grid.Row="2" Grid.Column="1" Margin="10,2,5,2" SelectionChanged="CbLaserType_SelectionChanged">
-                            <TextBlock>Omicron</TextBlock>
-                            <TextBlock>MRL-III-660D</TextBlock>
-                        </ComboBox>
-                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="5">Название</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="5">Разн. темп.</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Margin="5">Изм. мощ.</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Граница MAX</TextBlock>
+                            <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" x:Name="PowMax" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMax, Mode=TwoWay}"></TextBox>
+                            <TextBox Grid.Row="1" Grid.Column="2" TextAlignment="Center"  x:Name="TempMax" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMax, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Граница средн</TextBlock>
+                            <TextBox Grid.Row="2" Grid.Column="1" TextAlignment="Center"  x:Name="PowMid" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMid, Mode=TwoWay}"></TextBox>
+                            <TextBox Grid.Row="2" Grid.Column="2" TextAlignment="Center"  x:Name="TempMid" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMid, Mode=TwoWay}"></TextBox>
+                            <TextBlock Grid.Row="3" Grid.Column="0">Граница MIN</TextBlock>
+                            <TextBox Grid.Row="3" Grid.Column="1" TextAlignment="Center"  x:Name="PowMin" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMin, Mode=TwoWay}"></TextBox>
+                            <TextBox Grid.Row="3" Grid.Column="2" TextAlignment="Center"  x:Name="TempMin" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMin, Mode=TwoWay}"></TextBox>
+                        </Grid>
+                    </Grid>
+
+                </StackPanel>
+            </TabItem>
+            <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TabItem.Header>
+                    <StackPanel>
+                        <ContentControl Content="{StaticResource PowerIcon}"  Margin="5"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock TextAlignment="Center">Управление блоком питания</TextBlock>
+                    <Grid Margin="25,5,5,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="1" Margin="5,5,5,5">Соединиться с портом</TextBlock>
+                            <ToggleButton Grid.Column="0" x:Name="CbConnectPwrPort" Style="{StaticResource AnimatedSwitch}" Checked="PwrPortOn" Unchecked="PwrPortOff" Width="40" Height="20"  Margin="1,6,1,6"/>
+                        </Grid>
+
+                        <GroupBox Grid.Row="2" Header="Включение каналов:">
+                            <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5">Название</TextBlock>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="5">Разн. темп.</TextBlock>
-                                <TextBlock Grid.Row="0" Grid.Column="2" Margin="5">Изм. мощ.</TextBlock>
-                                <TextBlock Grid.Row="1" Grid.Column="0">Граница MAX</TextBlock>
-                                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" x:Name="PowMax" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMax, Mode=TwoWay}"></TextBox>
-                                <TextBox Grid.Row="1" Grid.Column="2" TextAlignment="Center"  x:Name="TempMax" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMax, Mode=TwoWay}"></TextBox>
-                                <TextBlock Grid.Row="2" Grid.Column="0">Граница средн</TextBlock>
-                                <TextBox Grid.Row="2" Grid.Column="1" TextAlignment="Center"  x:Name="PowMid" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMid, Mode=TwoWay}"></TextBox>
-                                <TextBox Grid.Row="2" Grid.Column="2" TextAlignment="Center"  x:Name="TempMid" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMid, Mode=TwoWay}"></TextBox>
-                                <TextBlock Grid.Row="3" Grid.Column="0">Граница MIN</TextBlock>
-                                <TextBox Grid.Row="3" Grid.Column="1" TextAlignment="Center"  x:Name="PowMin" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMin, Mode=TwoWay}"></TextBox>
-                                <TextBox Grid.Row="3" Grid.Column="2" TextAlignment="Center"  x:Name="TempMin" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMin, Mode=TwoWay}"></TextBox>
-                            </Grid>
-                        </Grid>
-                        
-                    </StackPanel>
-                </TabItem>
-                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TabItem.Header>
-                        <StackPanel>
-                            <ContentControl Content="{StaticResource PowerIcon}"  Margin="5"/>
-                        </StackPanel>
-                    </TabItem.Header>
-                    <StackPanel>
-                        <TextBlock TextAlignment="Center">Управление блоком питания</TextBlock>
-                        <Grid Margin="25,5,5,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="1" Margin="5,5,5,5">Соединиться с портом</TextBlock>
-                                <ToggleButton Grid.Column="0" x:Name="CbConnectPwrPort" Style="{StaticResource AnimatedSwitch}" Checked="PwrPortOn" Unchecked="PwrPortOff" Width="40" Height="20"  Margin="1,6,1,6"/>
-                            </Grid>
-
-                            <GroupBox Grid.Row="2" Header="Включение каналов:">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="1"  Margin="5,5,5,5" >УФ Диод 1</TextBlock>
-                                    <ToggleButton x:Name="PwrCh0Check" Grid.Row="0" Grid.Column="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" 
+                                <TextBlock Grid.Row="0" Grid.Column="1"  Margin="5,5,5,5" >УФ Диод 1</TextBlock>
+                                <ToggleButton x:Name="PwrCh0Check" Grid.Row="0" Grid.Column="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" 
                                                   IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel0On, Mode=TwoWay}" 
                                                   Checked="PwrCanelOn" Unchecked="PwrChannelOff" Margin="2,2,2,2"/>
-                                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,5,5,5">УФ Диод 2</TextBlock>
-                                    <ToggleButton x:Name="PwrCh1Check" Grid.Row="0" Grid.Column="3" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"
+                                <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,5,5,5">УФ Диод 2</TextBlock>
+                                <ToggleButton x:Name="PwrCh1Check" Grid.Row="0" Grid.Column="3" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"
                                                   IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel1On, Mode=TwoWay}" 
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1"  Margin="5,5,5,5">Ик Источник 1</TextBlock>
-                                    <ToggleButton x:Name="PwrCh2Check" Grid.Row="1" Grid.Column="0" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}"
+                                <TextBlock Grid.Row="1" Grid.Column="1"  Margin="5,5,5,5">Ик Источник 1</TextBlock>
+                                <ToggleButton x:Name="PwrCh2Check" Grid.Row="1" Grid.Column="0" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}"
                                                   IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel2On, Mode=TwoWay}" 
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="2"  Margin="5,5,5,5">Ик Источник 2</TextBlock>
-                                    <ToggleButton x:Name="PwrCh3Check" Grid.Row="1" Grid.Column="3" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}" 
+                                <TextBlock Grid.Row="1" Grid.Column="2"  Margin="5,5,5,5">Ик Источник 2</TextBlock>
+                                <ToggleButton x:Name="PwrCh3Check" Grid.Row="1" Grid.Column="3" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}" 
                                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}"
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Margin="5,5,5,5">Микрокомпрессор</TextBlock>
-                                    <ToggleButton x:Name="PwrCh4Check" Grid.Row="2" Grid.Column="0" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}"
+                                <TextBlock Grid.Row="2" Grid.Column="1" Margin="5,5,5,5">Микрокомпрессор</TextBlock>
+                                <ToggleButton x:Name="PwrCh4Check" Grid.Row="2" Grid.Column="0" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}"
                                                    IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel4On, Mode=TwoWay}" 
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="5,5,5,5">Нагрев стекла</TextBlock>
-                                    <ToggleButton x:Name="PwrCh5Check" Grid.Row="2" Grid.Column="3" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}"
+                                <TextBlock Grid.Row="2" Grid.Column="2" Margin="5,5,5,5">Нагрев стекла</TextBlock>
+                                <ToggleButton x:Name="PwrCh5Check" Grid.Row="2" Grid.Column="3" Width="40" Height="20" Style="{StaticResource AnimatedSwitch}"
                                                   IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel5On, Mode=TwoWay}" 
                                               Checked="PwrCanelOn" Unchecked="PwrChannelOff"/>
-                                </Grid>
-                            </GroupBox>
+                            </Grid>
+                        </GroupBox>
 
-                        </Grid>
-                        <TabControl  TabStripPlacement="Left" Margin="0,0,5,5">
-                            <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TabItem.Header>
-                                    <TextBlock>0</TextBlock>
-                                </TabItem.Header>
-                                <Grid Margin="10,10,10,10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="31*"></ColumnDefinition>
-                                        <ColumnDefinition Width="29*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 0: (УФ диод 1)</TextBlock>
-                                    <CheckBox Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
+                    </Grid>
+                    <TabControl  TabStripPlacement="Left" Margin="0,0,5,5">
+                        <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TabItem.Header>
+                                <TextBlock>0</TextBlock>
+                            </TabItem.Header>
+                            <Grid Margin="10,10,10,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="31*"></ColumnDefinition>
+                                    <ColumnDefinition Width="29*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 0: (УФ диод 1)</TextBlock>
+                                <CheckBox Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel0On, Mode=TwoWay}" >Включить</CheckBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
-                                    <ComboBox x:Name="CbModeCh0"  Grid.Column="2" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
-                                        <TextBlock>Регулирование по напряжению</TextBlock>
-                                        <TextBlock>Регулирование по току</TextBlock>
-                                        <TextBlock>Синусоидальный сигнал</TextBlock>
-                                        <TextBlock>ШИМ сигнал</TextBlock>
-                                    </ComboBox>
-                                    <TextBlock x:Name="TbChannel0Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                    <TextBox x:Name="TbCh0Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
+                                <ComboBox x:Name="CbModeCh0"  Grid.Column="2" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                    <TextBlock>Регулирование по напряжению</TextBlock>
+                                    <TextBlock>Регулирование по току</TextBlock>
+                                    <TextBlock>Синусоидальный сигнал</TextBlock>
+                                    <TextBlock>ШИМ сигнал</TextBlock>
+                                </ComboBox>
+                                <TextBlock x:Name="TbChannel0Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                                <TextBox x:Name="TbCh0Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0Bias, Mode=TwoWay}"
                                      ></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                    <TextBox x:Name="TbCh0Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                                <TextBox x:Name="TbCh0Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0Amplitude, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox x:Name="TbCh0Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                                <TextBox x:Name="TbCh0Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0Frequency, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                    <TextBox x:Name="TbCh0Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                                <TextBox x:Name="TbCh0Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0Duty, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                    <TextBox x:Name="TbCh0Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                                <TextBox x:Name="TbCh0Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0Phase, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox x:Name="TbCh0MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5" 
+                                <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                                <TextBox x:Name="TbCh0MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5" 
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0MaxVolts, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
-                                    <TextBox Grid.Column="1" x:Name="TbCh0MaxAmps" Grid.Row="9" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                                <TextBox Grid.Column="1" x:Name="TbCh0MaxAmps" Grid.Row="9" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh0MaxAmps, Mode=TwoWay}"></TextBox>
-                                    <Button x:Name="PwrCh0Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
-                                    <Button x:Name="PwrCh0Write"  Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh0Write_Click">Записать</Button>
-                                </Grid>
-                            </TabItem>
-                            <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TabItem.Header>
-                                    <TextBlock>1</TextBlock>
-                                </TabItem.Header>
-                                <Grid Margin="10,10,10,10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="31*"></ColumnDefinition>
-                                        <ColumnDefinition Width="29*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 1: (УФ диод 2)</TextBlock>
-                                    <CheckBox   Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
+                                <Button x:Name="PwrCh0Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                                <Button x:Name="PwrCh0Write"  Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh0Write_Click">Записать</Button>
+                            </Grid>
+                        </TabItem>
+                        <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TabItem.Header>
+                                <TextBlock>1</TextBlock>
+                            </TabItem.Header>
+                            <Grid Margin="10,10,10,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="31*"></ColumnDefinition>
+                                    <ColumnDefinition Width="29*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 1: (УФ диод 2)</TextBlock>
+                                <CheckBox   Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel1On, Mode=TwoWay}" >Включить</CheckBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
-                                    <ComboBox x:Name="CbModeCh1"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
-                                        <TextBlock>Регулирование по напряжению</TextBlock>
-                                        <TextBlock>Регулирование по току</TextBlock>
-                                        <TextBlock>Синусоидальный сигнал</TextBlock>
-                                        <TextBlock>ШИМ сигнал</TextBlock>
-                                    </ComboBox>
-                                    <TextBlock x:Name="TbChannel1Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                    <TextBox x:Name="TbCh1Bias"  Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
+                                <ComboBox x:Name="CbModeCh1"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                    <TextBlock>Регулирование по напряжению</TextBlock>
+                                    <TextBlock>Регулирование по току</TextBlock>
+                                    <TextBlock>Синусоидальный сигнал</TextBlock>
+                                    <TextBlock>ШИМ сигнал</TextBlock>
+                                </ComboBox>
+                                <TextBlock x:Name="TbChannel1Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                                <TextBox x:Name="TbCh1Bias"  Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1Bias, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                    <TextBox x:Name="TbCh1Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                                <TextBox x:Name="TbCh1Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1Bias, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox x:Name="TbCh1Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                                <TextBox x:Name="TbCh1Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1Frequency, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                    <TextBox x:Name="TbCh1Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                                <TextBox x:Name="TbCh1Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1Duty, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                    <TextBox x:Name="TbCh1Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                                <TextBox x:Name="TbCh1Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1Phase, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox x:Name="TbCh1MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                                <TextBox x:Name="TbCh1MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1MaxVolts, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
-                                    <TextBox x:Name="TbCh1MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                                <TextBox x:Name="TbCh1MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh1MaxAmps, Mode=TwoWay}"></TextBox>
-                                    <Button x:Name="PwrCh1Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
-                                    <Button x:Name="PwrCh1Write" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh1Write_Click">Записать</Button>
-                                </Grid>
-                            </TabItem >
-                            <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TabItem.Header>
-                                    <TextBlock>2</TextBlock>
-                                </TabItem.Header>
-                                <Grid Margin="10,10,10,10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="31*"></ColumnDefinition>
-                                        <ColumnDefinition Width="29*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 2: (ИК источник 1)</TextBlock>
-                                    <CheckBox Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
+                                <Button x:Name="PwrCh1Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                                <Button x:Name="PwrCh1Write" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh1Write_Click">Записать</Button>
+                            </Grid>
+                        </TabItem >
+                        <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TabItem.Header>
+                                <TextBlock>2</TextBlock>
+                            </TabItem.Header>
+                            <Grid Margin="10,10,10,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="31*"></ColumnDefinition>
+                                    <ColumnDefinition Width="29*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 2: (ИК источник 1)</TextBlock>
+                                <CheckBox Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel2On, Mode=TwoWay}" 
                                       >Включить</CheckBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
-                                    <ComboBox x:Name="CbModeCh2"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
-                                        <TextBlock>Регулирование по напряжению</TextBlock>
-                                        <TextBlock>Регулирование по току</TextBlock>
-                                        <TextBlock>Синусоидальный сигнал</TextBlock>
-                                        <TextBlock>ШИМ сигнал</TextBlock>
-                                    </ComboBox>
-                                    <TextBlock x:Name="TbChannel2Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,1,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                    <TextBox x:Name="TbCh2Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
+                                <ComboBox x:Name="CbModeCh2"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                    <TextBlock>Регулирование по напряжению</TextBlock>
+                                    <TextBlock>Регулирование по току</TextBlock>
+                                    <TextBlock>Синусоидальный сигнал</TextBlock>
+                                    <TextBlock>ШИМ сигнал</TextBlock>
+                                </ComboBox>
+                                <TextBlock x:Name="TbChannel2Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,1,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                                <TextBox x:Name="TbCh2Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2Bias, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                    <TextBox x:Name="TbCh2Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                                <TextBox x:Name="TbCh2Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2Amplitude, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox x:Name="TbCh2Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                                <TextBox x:Name="TbCh2Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2Frequency, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                    <TextBox x:Name="TbCh2Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                                <TextBox x:Name="TbCh2Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2Duty, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                    <TextBox x:Name="TbCh2Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                                <TextBox x:Name="TbCh2Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2Phase, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox x:Name="TbCh2MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                                <TextBox x:Name="TbCh2MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2MaxVolts, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
-                                    <TextBox x:Name="TbCh2MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                                <TextBox x:Name="TbCh2MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh2MaxAmps, Mode=TwoWay}"></TextBox>
-                                    <Button x:Name="PwrCh2Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
-                                    <Button x:Name="PwrCh2Write" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh2Write_Click">Записать</Button>
-                                </Grid>
-                            </TabItem>
-                            <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TabItem.Header>
-                                    <TextBlock>3</TextBlock>
-                                </TabItem.Header>
-                                <Grid Margin="10,10,10,10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="31*"></ColumnDefinition>
-                                        <ColumnDefinition Width="29*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 3: (ИК источник 2)</TextBlock>
-                                    <CheckBox   Grid.Column="0" Grid.Row="1" Margin="5,5,1,5" 
+                                <Button x:Name="PwrCh2Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                                <Button x:Name="PwrCh2Write" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh2Write_Click">Записать</Button>
+                            </Grid>
+                        </TabItem>
+                        <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TabItem.Header>
+                                <TextBlock>3</TextBlock>
+                            </TabItem.Header>
+                            <Grid Margin="10,10,10,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="31*"></ColumnDefinition>
+                                    <ColumnDefinition Width="29*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 3: (ИК источник 2)</TextBlock>
+                                <CheckBox   Grid.Column="0" Grid.Row="1" Margin="5,5,1,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel3On, Mode=TwoWay}" 
                                       >Включить</CheckBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,1,5" >Режим работы</TextBlock>
-                                    <ComboBox x:Name="CbModeCh3"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
-                                        <TextBlock>Регулирование по напряжению</TextBlock>
-                                        <TextBlock>Регулирование по току</TextBlock>
-                                        <TextBlock>Синусоидальный сигнал</TextBlock>
-                                        <TextBlock>ШИМ сигнал</TextBlock>
-                                    </ComboBox>
-                                    <TextBlock x:Name="TbChannel3Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                    <TextBox x:Name="TbCh3Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,1,5" >Режим работы</TextBlock>
+                                <ComboBox x:Name="CbModeCh3"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                    <TextBlock>Регулирование по напряжению</TextBlock>
+                                    <TextBlock>Регулирование по току</TextBlock>
+                                    <TextBlock>Синусоидальный сигнал</TextBlock>
+                                    <TextBlock>ШИМ сигнал</TextBlock>
+                                </ComboBox>
+                                <TextBlock x:Name="TbChannel3Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                                <TextBox x:Name="TbCh3Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3Bias, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                    <TextBox x:Name="TbCh3Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                                <TextBox x:Name="TbCh3Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3Amplitude, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox x:Name="TbCh3Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                                <TextBox x:Name="TbCh3Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3Frequency, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                    <TextBox x:Name="TbCh3Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                                <TextBox x:Name="TbCh3Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3Duty, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                    <TextBox x:Name="TbCh3Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                                <TextBox x:Name="TbCh3Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3Phase, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox x:Name="TbCh3MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                                <TextBox x:Name="TbCh3MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3MaxVolts, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
-                                    <TextBox x:Name="TbCh3MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                                <TextBox x:Name="TbCh3MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh3MaxAmps, Mode=TwoWay}"></TextBox>
-                                    <Button x:Name="PwrCh3Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
-                                    <Button x:Name="PwrCh3Write" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh3Write_Click">Записать</Button>
-                                </Grid>
-                            </TabItem>
-                            <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TabItem.Header>
-                                    <TextBlock>4</TextBlock>
-                                </TabItem.Header>
-                                <Grid Margin="10,10,10,10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="31*"></ColumnDefinition>
-                                        <ColumnDefinition Width="29*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 4: (Микрокомпрессор)</TextBlock>
-                                    <CheckBox  Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
+                                <Button x:Name="PwrCh3Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                                <Button x:Name="PwrCh3Write" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh3Write_Click">Записать</Button>
+                            </Grid>
+                        </TabItem>
+                        <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TabItem.Header>
+                                <TextBlock>4</TextBlock>
+                            </TabItem.Header>
+                            <Grid Margin="10,10,10,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="31*"></ColumnDefinition>
+                                    <ColumnDefinition Width="29*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 4: (Микрокомпрессор)</TextBlock>
+                                <CheckBox  Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel4On, Mode=TwoWay}" 
                                       Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
-                                    <ComboBox x:Name="CbModeCh4"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
-                                        <TextBlock>Регулирование по напряжению</TextBlock>
-                                        <TextBlock>Регулирование по току</TextBlock>
-                                        <TextBlock>Синусоидальный сигнал</TextBlock>
-                                        <TextBlock>ШИМ сигнал</TextBlock>
-                                    </ComboBox>
-                                    <TextBlock x:Name="TbChannel4Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                    <TextBox x:Name="TbCh4Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
+                                <ComboBox x:Name="CbModeCh4"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                    <TextBlock>Регулирование по напряжению</TextBlock>
+                                    <TextBlock>Регулирование по току</TextBlock>
+                                    <TextBlock>Синусоидальный сигнал</TextBlock>
+                                    <TextBlock>ШИМ сигнал</TextBlock>
+                                </ComboBox>
+                                <TextBlock x:Name="TbChannel4Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                                <TextBox x:Name="TbCh4Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Bias, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                    <TextBox x:Name="TbCh4Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                                <TextBox x:Name="TbCh4Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Amplitude, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox x:Name="TbCh4Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                                <TextBox x:Name="TbCh4Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Frequency, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                    <TextBox x:Name="TbCh4Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                                <TextBox x:Name="TbCh4Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Duty, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                    <TextBox x:Name="TbCh4Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                                <TextBox x:Name="TbCh4Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4Phase, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox x:Name="TbCh4MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                                <TextBox x:Name="TbCh4MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
                                              Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4MaxVolts, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
-                                    <TextBox x:Name="TbCh4MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
+                                <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                                <TextBox x:Name="TbCh4MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh4MaxAmps, Mode=TwoWay}"></TextBox>
-                                    <Button x:Name="PwrCh4Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
-                                    <Button Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh4Write_Click">Записать</Button>
-                                </Grid>
-                            </TabItem>
-                            <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <TabItem.Header>
-                                    <TextBlock>5</TextBlock>
-                                </TabItem.Header>
-                                <Grid Margin="10,10,10,10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="31*"></ColumnDefinition>
-                                        <ColumnDefinition Width="29*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 5: (Нагрев стекла)</TextBlock>
-                                    <CheckBox   Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
+                                <Button x:Name="PwrCh4Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                                <Button Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh4Write_Click">Записать</Button>
+                            </Grid>
+                        </TabItem>
+                        <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TabItem.Header>
+                                <TextBlock>5</TextBlock>
+                            </TabItem.Header>
+                            <Grid Margin="10,10,10,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="31*"></ColumnDefinition>
+                                    <ColumnDefinition Width="29*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 5: (Нагрев стекла)</TextBlock>
+                                <CheckBox   Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" 
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CbChannel5On, Mode=TwoWay}" 
                                       Checked="PwrCanelOn" Unchecked="PwrChannelOff">Включить</CheckBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
-                                    <ComboBox x:Name="CbModeCh5"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
-                                        <TextBlock>Регулирование по напряжению</TextBlock>
-                                        <TextBlock>Регулирование по току</TextBlock>
-                                        <TextBlock>Синусоидальный сигнал</TextBlock>
-                                        <TextBlock>ШИМ сигнал</TextBlock>
-                                    </ComboBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                    <TextBox x:Name="TbCh5Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
-                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Bias, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                    <TextBox x:Name="TbCh5Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
-                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Amplitude, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                    <TextBox x:Name="TbCh5Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
-                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Frequency, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                    <TextBox x:Name="TbCh5Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
-                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Duty, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                    <TextBox x:Name="TbCh5Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
-                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Phase, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                    <TextBox x:Name="TbCh5MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
-                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5MaxVolts, Mode=TwoWay}"></TextBox>
-                                    <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
-                                    <TextBox x:Name="TbCh5MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
-                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5MaxAmps, Mode=TwoWay}"></TextBox>
-                                    <Button x:Name="PwrCh5Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
-                                    <Button Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh5Write_Click">Записать</Button>
-                                </Grid>
-                            </TabItem>
-                        </TabControl>
-                        
-                        <Expander Grid.Row="8" Header="Настройки" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PowerManaging, Mode=TwoWay}">
-                            <Grid Margin="20,5,1,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0">Порт блока питания</TextBlock>
-                                <ComboBox x:Name="CbPowerPort" Grid.Column="1">
-                                    <TextBlock>COM1</TextBlock>
-                                    <TextBlock>COM2</TextBlock>
-                                    <TextBlock>COM3</TextBlock>
-                                    <TextBlock>COM4</TextBlock>
-                                    <TextBlock>COM5</TextBlock>
-                                    <TextBlock>COM6</TextBlock>
-                                    <TextBlock>COM7</TextBlock>
-                                    <TextBlock>COM8</TextBlock>
-                                    <TextBlock>COM9</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
+                                <ComboBox x:Name="CbModeCh5"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" SelectionChanged="ChanelModeChanged">
+                                    <TextBlock>Регулирование по напряжению</TextBlock>
+                                    <TextBlock>Регулирование по току</TextBlock>
+                                    <TextBlock>Синусоидальный сигнал</TextBlock>
+                                    <TextBlock>ШИМ сигнал</TextBlock>
                                 </ComboBox>
+                                <TextBlock Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
+                                <TextBox x:Name="TbCh5Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Bias, Mode=TwoWay}"></TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
+                                <TextBox x:Name="TbCh5Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Amplitude, Mode=TwoWay}"></TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
+                                <TextBox x:Name="TbCh5Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Frequency, Mode=TwoWay}"></TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
+                                <TextBox x:Name="TbCh5Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Duty, Mode=TwoWay}"></TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
+                                <TextBox x:Name="TbCh5Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5Phase, Mode=TwoWay}"></TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                                <TextBox x:Name="TbCh5MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5MaxVolts, Mode=TwoWay}"></TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
+                                <TextBox x:Name="TbCh5MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"
+                                             Text="{Binding Source={x:Static properties:Settings.Default}, Path=PwrCh5MaxAmps, Mode=TwoWay}"></TextBox>
+                                <Button x:Name="PwrCh5Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" Click="ReadPwrParam">Прочитать</Button>
+                                <Button Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" Click="PwrCh5Write_Click">Записать</Button>
                             </Grid>
-                        </Expander>
-                    </StackPanel>
-                </TabItem>
-                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TabItem.Header>
-                        <StackPanel>
-                            <ContentControl Content="{StaticResource CameraIcon}"  Margin="5"/>
-                        </StackPanel>
-                    </TabItem.Header>
-                    <StackPanel>
-                        <TextBlock TextAlignment="Center">Управление камерой</TextBlock>
-                        <Grid  Margin="10,5,1,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <CheckBox Grid.Row="0" x:Name="cbOpenCamera" Checked="ConnectToCamera">Соединится с камерой</CheckBox>
-                            <CheckBox Grid.Row="1" x:Name="cbGetDescription" IsEnabled="False" Checked="OnGetDescription">Прочитать состояние</CheckBox>
-                            <CheckBox Grid.Row="2" x:Name="cbStartCamera" IsEnabled="False" Checked="OnStartRecord">Start</CheckBox>
-                            <CheckBox Grid.Row="3" x:Name="cbGrabCamera" IsEnabled="False" Checked="OnGrabImage">Grab</CheckBox>
-                            <CheckBox Grid.Row="4" x:Name="cbStopCamera" IsEnabled="False" Checked="OnStopRecord">Stop</CheckBox>
-                            <CheckBox Grid.Row="5" x:Name="cbCloseCamera">Close</CheckBox>
-                        </Grid>
-                        <Grid  Margin="10,5,1,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0">Частота опроса</TextBlock>
-                            <TextBox Grid.Row="0" Grid.Column="1" 
-                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=FreqCam, Mode=TwoWay}"></TextBox>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="1">Сохранять кадры</TextBlock>
-                            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage" Checked="OnChangeCameraInterval" Margin="20,3,1,1"></CheckBox>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="1">Путь сохранения</TextBlock>
-                            <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbSaveCamPath" Margin="1" PreviewMouseDown="OnChangeCameraPath"></TextBox>
-                            <TextBlock Grid.Row="3" Grid.Column="0" Margin="1">Префикс имени файла</TextBlock>
-                            <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSaveCamPrefix"  Margin="1"></TextBox>
-                            <TextBlock Grid.Row="4" Grid.Column="0">Ограничение по кадрам</TextBlock>
-                            <CheckBox Grid.Row="4" Grid.Column="1" Margin="20,3,1,1" x:Name="cbCameraMaxFrameOn"
-                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CameraMaxFrameOn, Mode=TwoWay}"></CheckBox>
-                            <TextBlock Grid.Row="5" Grid.Column="0" Margin="1">Max. число кадров</TextBlock>
-                            <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbFrameCount" Margin="1"></TextBox>
-                            <TextBlock Grid.Row="6" Grid.Column="0">Текущее значение</TextBlock>
-                            <TextBlock Grid.Row="6" Grid.Column="1" TextAlignment="Center" x:Name="tbCurrentFrame"></TextBlock>
-                            <TextBlock Grid.Row="7" Grid.Column="0">Способ конвертации</TextBlock>
-                            <ComboBox Grid.Row="7" Grid.Column="1" x:Name="CbPixelFormatConv"></ComboBox>
-                        </Grid>
-                    </StackPanel>
-                </TabItem>
-                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TabItem.Header>
-                        <StackPanel>
-                            <ContentControl Content="{StaticResource MirrorIcon}"  Margin="5"/>
-                        </StackPanel>
-                    </TabItem.Header>
-                    <StackPanel>
-                        <TextBlock TextAlignment="Center">Управление зеркалом</TextBlock>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Button Grid.Row="0" Grid.Column="0" Margin="5,2,5,2">Налево</Button>
-                            <Button Grid.Row="0" Grid.Column="1" Margin="5,2,5,2">Направо</Button>
-                            <Button Grid.Row="0" Grid.Column="2" Margin="5,2,5,2">Произвольно</Button>
-                            <Button Grid.Row="1" Grid.Column="0" Margin="5,2,5,2">Шагать налево</Button>
-                            <Button Grid.Row="1" Grid.Column="2" Margin="5,2,5,2">Шагать направо</Button>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Margin="10,2,5,2">Порт зеркала</TextBlock>
-                            <ComboBox x:Name ="CbMirrorPort"  Grid.Column="1" Grid.Row="0" Margin="10,2,5,2">
-                                <TextBlock>COM1</TextBlock>
-                                <TextBlock>COM2</TextBlock>
-                                <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
-                            </ComboBox>
-                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="10,2,5,2">Левая точка</TextBlock>
-                            <TextBox Grid.Column="1" Grid.Row="1" Margin="10,2,5,2" Text=""></TextBox>
-                            <TextBlock Grid.Column="0" Grid.Row="2" Margin="10,2,5,2">Правая точка</TextBlock>
-                            <TextBox Grid.Column="1" Grid.Row="2" Margin="10,2,5,2" Text=""></TextBox>
-                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="10,2,5,2">Шаг</TextBlock>
-                            <TextBox Grid.Column="1" Grid.Row="3" Margin="10,2,5,2" Text=""></TextBox>
-                        </Grid>
-                    </StackPanel>
-                </TabItem>
-                <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TabItem.Header>
-                        <StackPanel>
-                            <ContentControl Content="{StaticResource LightIcon}"  Margin="5"/>
-                        </StackPanel>
-                    </TabItem.Header>
-                    <StackPanel>
-                        <TextBlock TextAlignment="Center">Управление  освещением</TextBlock>
+                        </TabItem>
+                    </TabControl>
+
+                    <Expander Grid.Row="8" Header="Настройки" IsExpanded="{Binding Source={x:Static properties:Settings.Default}, Path=PowerManaging, Mode=TwoWay}">
                         <Grid Margin="20,5,1,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0">Порт управления освещением</TextBlock>
-                            <ComboBox x:Name="CbArduinoPort" Grid.Column="1">
+                            <TextBlock Grid.Column="0">Порт блока питания</TextBlock>
+                            <ComboBox x:Name="CbPowerPort" Grid.Column="1">
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
                                 <TextBlock>COM3</TextBlock>
@@ -822,11 +676,158 @@
                                 <TextBlock>COM9</TextBlock>
                             </ComboBox>
                         </Grid>
+                    </Expander>
+                </StackPanel>
+            </TabItem>
+            <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TabItem.Header>
+                    <StackPanel>
+                        <ContentControl Content="{StaticResource CameraIcon}"  Margin="5"/>
                     </StackPanel>
-                </TabItem>
-            </TabControl>
-            
-        
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock TextAlignment="Center">Управление камерой</TextBlock>
+                    <Grid  Margin="10,5,1,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <CheckBox Grid.Row="0" x:Name="cbOpenCamera" Checked="ConnectToCamera">Соединится с камерой</CheckBox>
+                        <CheckBox Grid.Row="1" x:Name="cbGetDescription" IsEnabled="False" Checked="OnGetDescription">Прочитать состояние</CheckBox>
+                        <CheckBox Grid.Row="2" x:Name="cbStartCamera" IsEnabled="False" Checked="OnStartRecord">Start</CheckBox>
+                        <CheckBox Grid.Row="3" x:Name="cbGrabCamera" IsEnabled="False" Checked="OnGrabImage">Grab</CheckBox>
+                        <CheckBox Grid.Row="4" x:Name="cbStopCamera" IsEnabled="False" Checked="OnStopRecord">Stop</CheckBox>
+                        <CheckBox Grid.Row="5" x:Name="cbCloseCamera">Close</CheckBox>
+                    </Grid>
+                    <Grid  Margin="10,5,1,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Частота опроса</TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" 
+                                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=FreqCam, Mode=TwoWay}"></TextBox>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Margin="1">Сохранять кадры</TextBlock>
+                        <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage" Checked="OnChangeCameraInterval" Margin="20,3,1,1"></CheckBox>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Margin="1">Путь сохранения</TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbSaveCamPath" Margin="1" PreviewMouseDown="OnChangeCameraPath"></TextBox>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Margin="1">Префикс имени файла</TextBlock>
+                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSaveCamPrefix"  Margin="1"></TextBox>
+                        <TextBlock Grid.Row="4" Grid.Column="0">Ограничение по кадрам</TextBlock>
+                        <CheckBox Grid.Row="4" Grid.Column="1" Margin="20,3,1,1" x:Name="cbCameraMaxFrameOn"
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CameraMaxFrameOn, Mode=TwoWay}"></CheckBox>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Margin="1">Max. число кадров</TextBlock>
+                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbFrameCount" Margin="1"></TextBox>
+                        <TextBlock Grid.Row="6" Grid.Column="0">Текущее значение</TextBlock>
+                        <TextBlock Grid.Row="6" Grid.Column="1" TextAlignment="Center" x:Name="tbCurrentFrame"></TextBlock>
+                        <TextBlock Grid.Row="7" Grid.Column="0">Способ конвертации</TextBlock>
+                        <ComboBox Grid.Row="7" Grid.Column="1" x:Name="CbPixelFormatConv"></ComboBox>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TabItem.Header>
+                    <StackPanel>
+                        <ContentControl Content="{StaticResource MirrorIcon}"  Margin="5"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock TextAlignment="Center">Управление зеркалом</TextBlock>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Grid.Column="0" Margin="5,2,5,2">Налево</Button>
+                        <Button Grid.Row="0" Grid.Column="1" Margin="5,2,5,2">Направо</Button>
+                        <Button Grid.Row="0" Grid.Column="2" Margin="5,2,5,2">Произвольно</Button>
+                        <Button Grid.Row="1" Grid.Column="0" Margin="5,2,5,2">Шагать налево</Button>
+                        <Button Grid.Row="1" Grid.Column="2" Margin="5,2,5,2">Шагать направо</Button>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="10,2,5,2">Порт зеркала</TextBlock>
+                        <ComboBox x:Name ="CbMirrorPort"  Grid.Column="1" Grid.Row="0" Margin="10,2,5,2">
+                            <TextBlock>COM1</TextBlock>
+                            <TextBlock>COM2</TextBlock>
+                            <TextBlock>COM3</TextBlock>
+                            <TextBlock>COM4</TextBlock>
+                            <TextBlock>COM5</TextBlock>
+                            <TextBlock>COM6</TextBlock>
+                            <TextBlock>COM7</TextBlock>
+                            <TextBlock>COM8</TextBlock>
+                            <TextBlock>COM9</TextBlock>
+                        </ComboBox>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="10,2,5,2">Левая точка</TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="1" Margin="10,2,5,2" Text=""></TextBox>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Margin="10,2,5,2">Правая точка</TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="2" Margin="10,2,5,2" Text=""></TextBox>
+                        <TextBlock Grid.Column="0" Grid.Row="3" Margin="10,2,5,2">Шаг</TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="3" Margin="10,2,5,2" Text=""></TextBox>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TabItem.Header>
+                    <StackPanel>
+                        <ContentControl Content="{StaticResource LightIcon}"  Margin="5"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock TextAlignment="Center">Управление  освещением</TextBlock>
+                    <Grid Margin="20,5,1,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0">Порт управления освещением</TextBlock>
+                        <ComboBox x:Name="CbArduinoPort" Grid.Column="1">
+                            <TextBlock>COM1</TextBlock>
+                            <TextBlock>COM2</TextBlock>
+                            <TextBlock>COM3</TextBlock>
+                            <TextBlock>COM4</TextBlock>
+                            <TextBlock>COM5</TextBlock>
+                            <TextBlock>COM6</TextBlock>
+                            <TextBlock>COM7</TextBlock>
+                            <TextBlock>COM8</TextBlock>
+                            <TextBlock>COM9</TextBlock>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+
         <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0">
             <ListView.View>
                 <GridView>
@@ -835,7 +836,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
         <Image x:Name="PictureBox1"  Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Cursor="IBeam" MinWidth="604" MinHeight="600" Stretch="Fill"/>
     </Grid>
 </Window>

@@ -117,6 +117,7 @@
     <Compile Include="PyroSerial.cs" />
     <Compile Include="ReleSerial.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
