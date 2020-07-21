@@ -78,12 +78,19 @@
                             <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0"
+                                   x:Name="TbTwoPump"
                                    VerticalAlignment="Center"
                                        Grid.Row="0"
                                    Margin="10,4,4,4"
-                                       Text="Два насоса"/>
-                        <ToggleButton Grid.Column="1" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
-                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}"/>
+                                       Text="Один насос"/>
+                        <ToggleButton Grid.Column="1" 
+                                      Grid.Row="0" 
+                                      Style="{StaticResource AnimatedSwitch}" 
+                                      Width="40" Height="20"  
+                                      Margin="1,6,1,6"
+                                      Checked="TbTwoPump_Checked"
+                                      Unchecked="TbTwoPump_UnChecked"
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=IsTwoPump, Mode=TwoWay}"/>
                         <TextBlock Grid.Row="1" 
                                    Grid.Column="0" 
                                    Margin="10,4,10,4" Text="Показания датчика:"/>

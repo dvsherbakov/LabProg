@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace LabProg
 {
@@ -59,6 +60,16 @@ namespace LabProg
                 PcoCommands.Visibility = Visibility.Collapsed;
                 AndorCommands.Visibility = Visibility.Visible;
             }
+        }
+
+        private void TbTwoPump_Checked(object sender, RoutedEventArgs e)
+        {
+                TbTwoPump.Text = "Два насоса";
+        }
+
+        private void TbTwoPump_UnChecked(object sender, RoutedEventArgs e)
+        {
+                TbTwoPump.Text = "Один насос";
         }
     }
 }

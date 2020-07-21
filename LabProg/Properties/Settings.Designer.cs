@@ -1090,5 +1090,17 @@ namespace LabProg.Properties {
                 this["AndorMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsTwoPump {
+            get {
+                return ((bool)(this["IsTwoPump"]));
+            }
+            set {
+                this["IsTwoPump"] = value;
+            }
+        }
     }
 }
