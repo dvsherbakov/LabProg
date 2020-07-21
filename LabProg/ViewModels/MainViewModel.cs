@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace LabProg.ViewModels
 {
-    internal class MainViewModel:ViewModel
+    class MainViewModel : ViewModel
     {
+        private List<Cams.CamType> CamList;
 
+        public MainViewModel()
+        {
+            CamList = new List<Cams.CamType> { new Cams.CamType(0, "PCO"), new Cams.CamType(1, "Andor") };
+        }
     }
 }
