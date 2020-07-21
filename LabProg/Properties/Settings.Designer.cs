@@ -1066,5 +1066,17 @@ namespace LabProg.Properties {
                 this["LaserType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CameraType {
+            get {
+                return ((int)(this["CameraType"]));
+            }
+            set {
+                this["CameraType"] = value;
+            }
+        }
     }
 }

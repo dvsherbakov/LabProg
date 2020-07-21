@@ -23,6 +23,7 @@ namespace LabProg
             _pyroSerial = new PyroSerial(CbPyroPort.Text);
             _laserSerial = new LaserSerial(CbLaserPort.Text);
             _laserSerial.SetLaserType(Properties.Settings.Default.LaserType);
+            DataContext = this;
         }
 
         private void CloseApp(object sender, RoutedEventArgs e)
@@ -40,7 +41,24 @@ namespace LabProg
         private void CbLaserType_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (_laserSerial != null)
+            {
                 _laserSerial.SetLaserType(((ComboBox)sender).SelectedIndex);
+            }
+        }
+
+        private void CbCamType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var index = ((ComboBox)sender).SelectedIndex;
+            if (index == 0)
+            {
+                PcoCommands.Visibility = Visibility.Visible;
+                AndorCommands.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                PcoCommands.Visibility = Visibility.Collapsed;
+                AndorCommands.Visibility = Visibility.Visible;
+            }
         }
     }
 }

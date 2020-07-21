@@ -11,7 +11,7 @@
     <Window.Resources>
         <ResourceDictionary Source="Styles.xaml" />
     </Window.Resources>
-    <Grid >
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -684,24 +684,42 @@
                             <ContentControl Content="{StaticResource CameraIcon}"  Margin="5"/>
                         </StackPanel>
                     </TabItem.Header>
-                    <StackPanel>
-                        <TextBlock TextAlignment="Center">Управление камерой</TextBlock>
-                        <Grid  Margin="10,5,1,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <CheckBox Grid.Row="0" x:Name="cbOpenCamera" Checked="ConnectToCamera">Соединится с камерой</CheckBox>
-                            <CheckBox Grid.Row="1" x:Name="cbGetDescription" IsEnabled="False" Checked="OnGetDescription">Прочитать состояние</CheckBox>
-                            <CheckBox Grid.Row="2" x:Name="cbStartCamera" IsEnabled="False" Checked="OnStartRecord">Start</CheckBox>
-                            <CheckBox Grid.Row="3" x:Name="cbGrabCamera" IsEnabled="False" Checked="OnGrabImage">Grab</CheckBox>
-                            <CheckBox Grid.Row="4" x:Name="cbStopCamera" IsEnabled="False" Checked="OnStopRecord">Stop</CheckBox>
-                            <CheckBox Grid.Row="5" x:Name="cbCloseCamera">Close</CheckBox>
+                <StackPanel>
+                    <TextBlock TextAlignment="Center">Управление камерой</TextBlock>
+                    <Grid 
+                        Margin="5,2" 
+                        VerticalAlignment="Center" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Тип камеры" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="CbCamType" Grid.Column="1" SelectionChanged="CbCamType_SelectionChanged">
+                            <TextBlock>PCO Camera</TextBlock>
+                            <TextBlock>Andor Solis</TextBlock>
+                        </ComboBox>
+                    </Grid>
+                    <StackPanel x:Name="PcoCommands" Margin="10,5,1,5">
+                            <CheckBox x:Name="cbOpenCamera" Checked="ConnectToCamera">Соединится с камерой</CheckBox>
+                            <CheckBox  x:Name="cbGetDescription" IsEnabled="False" Checked="OnGetDescription">Прочитать состояние</CheckBox>
+                            <CheckBox  x:Name="cbStartCamera" IsEnabled="False" Checked="OnStartRecord">Start</CheckBox>
+                            <CheckBox x:Name="cbGrabCamera" IsEnabled="False" Checked="OnGrabImage">Grab</CheckBox>
+                            <CheckBox x:Name="cbStopCamera" IsEnabled="False" Checked="OnStopRecord">Stop</CheckBox>
+                            <CheckBox x:Name="cbCloseCamera">Close</CheckBox>
+                        </StackPanel>
+                    <StackPanel x:Name="AndorCommands">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Режим работы камеры"/>
+                            <ComboBox Grid.Column="1">
+                                <TextBlock Text="Покадровый"/>
+                                <TextBlock Text="Непрерывный"/>
+                            </ComboBox>
                         </Grid>
+                    </StackPanel>
                         <Grid  Margin="10,5,1,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -736,8 +754,8 @@
                             <TextBlock Grid.Row="7" Grid.Column="0">Способ конвертации</TextBlock>
                             <ComboBox Grid.Row="7" Grid.Column="1" x:Name="CbPixelFormatConv"></ComboBox>
                         </Grid>
-                    </StackPanel>
-                </TabItem>
+                </StackPanel>
+            </TabItem>
                 <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TabItem.Header>
                         <StackPanel>
