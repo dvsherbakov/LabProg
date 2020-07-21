@@ -1078,5 +1078,17 @@ namespace LabProg.Properties {
                 this["CameraType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AndorMode {
+            get {
+                return ((int)(this["AndorMode"]));
+            }
+            set {
+                this["AndorMode"] = value;
+            }
+        }
     }
 }

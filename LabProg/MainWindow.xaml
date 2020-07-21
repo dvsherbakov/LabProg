@@ -67,21 +67,36 @@
                         <TextBlock TextAlignment="Center">Операции с насосом</TextBlock>
                         <Grid >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,4,10,4">Показания датчика:</TextBlock>
-                            <TextBlock x:Name="ConfocalLb" Grid.Row="0" Grid.Column="1" Width="80"  Margin="10,4,4,4" HorizontalAlignment="Center">0.0</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="4">Установите уровень:</TextBlock>
-                            <TextBox x:Name="CbConfocalLevel" Grid.Row="1" Grid.Column="1" Margin="4" Width="80"
+                        <TextBlock Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                       Grid.Row="0"
+                                   Margin="10,4,4,4"
+                                       Text="Два насоса"/>
+                        <ToggleButton Grid.Column="1" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="1" 
+                                   Grid.Column="0" 
+                                   Margin="10,4,10,4" Text="Показания датчика:"/>
+                        <TextBlock x:Name="ConfocalLb" 
+                                       Grid.Row="1" 
+                                       Grid.Column="1" 
+                                       Width="80"  
+                                       Margin="10,4,4,4" HorizontalAlignment="Center" Text="0.0"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Margin="4">Установите уровень:</TextBlock>
+                            <TextBox x:Name="CbConfocalLevel" 
+                                     Grid.Row="2" Grid.Column="1" Margin="4" Width="80"
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" HorizontalAlignment="Center"/>
-                            <Grid Row="2" Column="0" Grid.ColumnSpan="2">
+                            <Grid Row="3" Column="0" Grid.ColumnSpan="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="3*"/>
@@ -89,7 +104,7 @@
                                 <Button Grid.Column="0" Margin="10,4,4,4" Width="80" Click="PumpStartButton">Пуск</Button>
                                 <Button Grid.Column="1" Margin="10,4,4,4" Width="80" Click="Button_Click">Текущий</Button>
                             </Grid>
-                            <Grid Row="3" Column="0" Grid.ColumnSpan="2">
+                            <Grid Row="4" Column="0" Grid.ColumnSpan="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="4*"/>
@@ -98,8 +113,10 @@
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton Grid.Column="0" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
                                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}"/>
-                                <TextBlock Grid.Column="1" Grid.Row="0" Margin="5">Реверс</TextBlock>
-                                <ToggleButton x:Name="CbPumpActive" Grid.Column="2" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
+                            <TextBlock Grid.Column="1" 
+                                           Grid.Row="0" 
+                                           Margin="5" Text="Реверс"/>
+                            <ToggleButton x:Name="CbPumpActive" Grid.Column="2" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
                                               Checked="PumpPortOn" Unchecked="PumpPortOff"/>
                                 <TextBlock Grid.Column="3" Grid.Row="0"  Margin="5">Активно</TextBlock>
                             </Grid>
@@ -708,19 +725,30 @@
                             <CheckBox x:Name="cbCloseCamera">Close</CheckBox>
                         </StackPanel>
                     <StackPanel x:Name="AndorCommands">
-                        <Grid>
+                        <Grid  Margin="5,2" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Режим работы камеры"/>
-                            <ComboBox Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" 
+                                       Grid.Column="0" 
+                                       Text="Режим работы камеры"/>
+                            <ComboBox x:Name="CbAndorMode"  
+                                      Grid.Column="1" 
+                                      Grid.Row="0">
                                 <TextBlock Text="Покадровый"/>
                                 <TextBlock Text="Непрерывный"/>
                             </ComboBox>
+                            <CheckBox Grid.Row="1" 
+                                      Grid.ColumnSpan="2"
+                                      Content="Соединиться с камерой"/>
                         </Grid>
                     </StackPanel>
-                        <Grid  Margin="10,5,1,5">
+                        <Grid  Margin="10,5,5,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -739,17 +767,17 @@
                             <TextBox Grid.Row="0" Grid.Column="1" 
                                      Text="{Binding Source={x:Static properties:Settings.Default}, Path=FreqCam, Mode=TwoWay}"></TextBox>
                             <TextBlock Grid.Row="1" Grid.Column="0" Margin="1">Сохранять кадры</TextBlock>
-                            <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage" Checked="OnChangeCameraInterval" Margin="20,3,1,1"></CheckBox>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="1">Путь сохранения</TextBlock>
-                            <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbSaveCamPath" Margin="1" PreviewMouseDown="OnChangeCameraPath"></TextBox>
-                            <TextBlock Grid.Row="3" Grid.Column="0" Margin="1">Префикс имени файла</TextBlock>
-                            <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSaveCamPrefix"  Margin="1"></TextBox>
-                            <TextBlock Grid.Row="4" Grid.Column="0">Ограничение по кадрам</TextBlock>
-                            <CheckBox Grid.Row="4" Grid.Column="1" Margin="20,3,1,1" x:Name="cbCameraMaxFrameOn"
-                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CameraMaxFrameOn, Mode=TwoWay}"></CheckBox>
-                            <TextBlock Grid.Row="5" Grid.Column="0" Margin="1">Max. число кадров</TextBlock>
-                            <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbFrameCount" Margin="1"></TextBox>
-                            <TextBlock Grid.Row="6" Grid.Column="0">Текущее значение</TextBlock>
+                        <CheckBox Grid.Row="1" Grid.Column="1" x:Name="cbSaveCameraImage" Checked="OnChangeCameraInterval" Margin="20,3,1,1"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Margin="1">Путь сохранения</TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbSaveCamPath" Margin="1" PreviewMouseDown="OnChangeCameraPath"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Margin="1" Text="Префикс имени файла" />
+                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSaveCamPrefix"  Margin="1"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Ограничение по кадрам" />
+                        <CheckBox Grid.Row="4" Grid.Column="1" Margin="20,3,1,1" x:Name="cbCameraMaxFrameOn"
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CameraMaxFrameOn, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Margin="1">Max. число кадров</TextBlock>
+                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbFrameCount" Margin="1"/>
+                        <TextBlock Grid.Row="6" Grid.Column="0">Текущее значение</TextBlock>
                             <TextBlock Grid.Row="6" Grid.Column="1" TextAlignment="Center" x:Name="tbCurrentFrame"></TextBlock>
                             <TextBlock Grid.Row="7" Grid.Column="0">Способ конвертации</TextBlock>
                             <ComboBox Grid.Row="7" Grid.Column="1" x:Name="CbPixelFormatConv"></ComboBox>
