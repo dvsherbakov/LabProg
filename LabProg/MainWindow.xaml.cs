@@ -10,6 +10,7 @@ namespace LabProg
     {
         readonly PwrSerial _pwrSerial;
         readonly PumpSerial _pumpSerial;
+        private PumpSerial _pumpSecondSerial;
         private PyroSerial _pyroSerial;
         private LaserSerial _laserSerial;
 
@@ -64,12 +65,19 @@ namespace LabProg
 
         private void TbTwoPump_Checked(object sender, RoutedEventArgs e)
         {
-                TbTwoPump.Text = "Два насоса";
+            TbTwoPump.Text = "Два насоса";
+            if (TbFirstPump!=null) TbFirstPump.Text = "Порт притока";
+            if (TbSecondPump != null) TbSecondPump.Visibility = Visibility.Visible;
+            if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Visible;
+            if (_pumpSecondSerial == null) _pumpSecondSerial = new PumpSerial(CbPumpSecondPort.Text);
         }
 
         private void TbTwoPump_UnChecked(object sender, RoutedEventArgs e)
         {
-                TbTwoPump.Text = "Один насос";
+            TbTwoPump.Text = "Один насос";
+            if (TbFirstPump != null) TbFirstPump.Text = "Порт насоса";
+            if (TbSecondPump != null) TbSecondPump.Visibility = Visibility.Collapsed;
+            if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Collapsed;
         }
     }
 }

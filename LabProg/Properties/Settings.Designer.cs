@@ -1102,5 +1102,17 @@ namespace LabProg.Properties {
                 this["IsTwoPump"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LvlSecondPortIndex {
+            get {
+                return ((int)(this["LvlSecondPortIndex"]));
+            }
+            set {
+                this["LvlSecondPortIndex"] = value;
+            }
+        }
     }
 }

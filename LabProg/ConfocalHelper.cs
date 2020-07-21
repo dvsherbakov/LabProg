@@ -132,7 +132,6 @@ namespace LabProg
 
                 _pumpSerial.SetSpeed(speed);
 
-
                 _prevSpeed = speed;
             }
             else
@@ -185,7 +184,6 @@ namespace LabProg
                     LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
                     CbPumpActive.IsChecked = false;
                 }
-
             }
             _pumpSerial.StartPump();
         }

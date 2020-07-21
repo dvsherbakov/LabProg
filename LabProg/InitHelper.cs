@@ -48,6 +48,7 @@ namespace LabProg
             CbModeCh5.SelectedIndex = Properties.Settings.Default.PwrModeCh5;
             CbPowerPort.SelectedIndex = Properties.Settings.Default.PwrPortIndex;
             CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
+            CbPumpSecondPort.SelectedIndex = Properties.Settings.Default.LvlSecondPortIndex;
             CbLaserPort.SelectedIndex = Properties.Settings.Default.LaserPortIndex;
             CbLaserType.SelectedIndex = Properties.Settings.Default.LaserType;
             CbCamType.SelectedIndex = Properties.Settings.Default.CameraType;
@@ -72,6 +73,7 @@ namespace LabProg
             Properties.Settings.Default.PwrPortIndex = CbPowerPort.SelectedIndex;
             Properties.Settings.Default.ArduinoPortIndex = CbArduinoPort.SelectedIndex;
             Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
+            Properties.Settings.Default.LvlSecondPortIndex = CbPumpSecondPort.SelectedIndex;
             Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
             Properties.Settings.Default.LaserType = CbLaserType.SelectedIndex;
             Properties.Settings.Default.CameraType = CbCamType.SelectedIndex;

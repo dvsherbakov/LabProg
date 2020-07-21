@@ -39,10 +39,12 @@ namespace LabProg
             _active = false;
             StopPump();
         }
+
         public bool Active()
         {
             return _active;
         }
+
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             var cnt = _mPort.ReadBufferSize;
@@ -55,7 +57,6 @@ namespace LabProg
             {
                 // ignored
             }
-
             var ascii = Encoding.ASCII;
             RecievedData.Add(ascii.GetString(mRxdata));
         }
@@ -72,7 +73,6 @@ namespace LabProg
             {
                 // ignored
             }
-
             var ascii = Encoding.ASCII;
             return ascii.GetString(mRxdata);
         }

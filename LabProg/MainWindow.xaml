@@ -133,8 +133,18 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Margin="10,2,5,2">Порт насоса</TextBlock>
-                            <ComboBox x:Name = "CbPumpPort" Grid.Column="1" Margin="10,2,5,2" Width="80">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" 
+                                   Grid.Row="0"
+                                   x:Name="TbFirstPump"
+                                   Margin="10,2,5,2" 
+                                   Text="Порт насоса"/>
+                        <ComboBox x:Name = "CbPumpPort" 
+                                  Grid.Column="1" 
+                                  Margin="10,2,5,2" >
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
                                 <TextBlock>COM3</TextBlock>
@@ -145,7 +155,26 @@
                                 <TextBlock>COM8</TextBlock>
                                 <TextBlock>COM9</TextBlock>
                             </ComboBox>
-                        </Grid>
+                        <TextBlock Grid.Column="0" 
+                                   Grid.Row="1"
+                                   x:Name="TbSecondPump"
+                                   Margin="10,2,5,2" 
+                                   Text="Порт откачки"/>
+                        <ComboBox x:Name = "CbPumpSecondPort" 
+                                  Grid.Column="1" 
+                                  Grid.Row="1"
+                                  Margin="10,2,5,2" >
+                            <TextBlock>COM1</TextBlock>
+                            <TextBlock>COM2</TextBlock>
+                            <TextBlock>COM3</TextBlock>
+                            <TextBlock>COM4</TextBlock>
+                            <TextBlock>COM5</TextBlock>
+                            <TextBlock>COM6</TextBlock>
+                            <TextBlock>COM7</TextBlock>
+                            <TextBlock>COM8</TextBlock>
+                            <TextBlock>COM9</TextBlock>
+                        </ComboBox>
+                    </Grid>
                     </StackPanel>
                 </TabItem>
                 <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
