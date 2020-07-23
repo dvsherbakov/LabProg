@@ -2,6 +2,9 @@
 using System.IO.Ports;
 using Timer = System.Timers.Timer;
 using System.Threading;
+using System.Text.RegularExpressions;
+using System.Linq;
+using System.Windows.Controls;
 
 namespace LabProg
 {
@@ -11,16 +14,26 @@ namespace LabProg
         private Timer _pyroTimer;
         private Timer _cameraTimer;
 
-        System.Windows.Threading.Dispatcher _dispatcher;
+        //System.Windows.Threading.Dispatcher _dispatcher;
         private void InitInternalComponents()
         {
-            //CbPumpPort.Items.Clear();
-            //CbMirrorPort.Items.Clear();
+            // ToDo придумать механизхм хранения и отображения существующих имен портов
+            CbPumpPort.Items.Clear();
+            CbMirrorPort.Items.Clear();
+            CbPowerPort.Items.Clear();
+            CbPumpSecondPort.Items.Clear();
+            CbLaserPort.Items.Clear();
+            CbPyroPort.Items.Clear();
+            CbArduinoPort.Items.Clear();
             foreach (var s in SerialPort.GetPortNames())
             {
-                CbPumpPort.Items.Add(s);
-                CbMirrorPort.Items.Add(s);
-                CbPowerPort.Items.Add(s);
+                CbPumpPort.Items.Add(new TextBlock() { Text = s });
+                CbMirrorPort.Items.Add(new TextBlock() { Text = s });
+                CbPowerPort.Items.Add(new TextBlock() { Text = s });
+                CbPumpSecondPort.Items.Add(new TextBlock() { Text = s });
+                CbLaserPort.Items.Add(new TextBlock() { Text = s });
+                CbPyroPort.Items.Add(new TextBlock() { Text = s });
+                CbArduinoPort.Items.Add(new TextBlock() { Text = s });
             }
             CbPixelFormatConv.ItemsSource = PixelFormatsItems.GetList();
             CbPixelFormatConv.SelectedValuePath = "Value";
@@ -30,7 +43,7 @@ namespace LabProg
             InitPumpItems();
             InitPyroTimer();
             InitCameraTimer();
-            _dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
+            //_dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
         }
 
         private void InitPwrItems()
@@ -46,20 +59,22 @@ namespace LabProg
             CbModeCh3.SelectedIndex = Properties.Settings.Default.PwrModeCh3;
             CbModeCh4.SelectedIndex = Properties.Settings.Default.PwrModeCh4;
             CbModeCh5.SelectedIndex = Properties.Settings.Default.PwrModeCh5;
-            CbPowerPort.SelectedIndex = Properties.Settings.Default.PwrPortIndex;
-            CbPumpPort.SelectedIndex = Properties.Settings.Default.LvlPortIndex;
-            CbPumpSecondPort.SelectedIndex = Properties.Settings.Default.LvlSecondPortIndex;
-            CbLaserPort.SelectedIndex = Properties.Settings.Default.LaserPortIndex;
+            SetPortSelection(CbPowerPort, Properties.Settings.Default.PwrPortIndex);
+            SetPortSelection(CbPumpPort, Properties.Settings.Default.LvlPortIndex);
+            SetPortSelection(CbPumpSecondPort, Properties.Settings.Default.LvlSecondPortIndex);
+            SetPortSelection(CbLaserPort, Properties.Settings.Default.LaserPortIndex);
             CbLaserType.SelectedIndex = Properties.Settings.Default.LaserType;
             CbCamType.SelectedIndex = Properties.Settings.Default.CameraType;
             CbAndorMode.SelectedIndex = Properties.Settings.Default.AndorMode;
-            CbPyroPort.SelectedIndex = Properties.Settings.Default.PyroPortIndex;
-            CbArduinoPort.SelectedIndex = Properties.Settings.Default.ArduinoPortIndex;
+            SetPortSelection(CbPyroPort,Properties.Settings.Default.PyroPortIndex);
+            SetPortSelection(CbArduinoPort, Properties.Settings.Default.ArduinoPortIndex);
+            SetPortSelection(CbMirrorPort, Properties.Settings.Default.MirrorPortIndex);
             tbSaveCamPath.Text = Properties.Settings.Default.CameraSavePath;
             tbSaveCamPrefix.Text = Properties.Settings.Default.CameraSavePrefix;
             tbFrameCount.Text = Properties.Settings.Default.CameraFrameMaxCount;
             SetChanellBiasTitle(1);
             OnChangeFrameMaxCount(this, null);
+            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -70,15 +85,17 @@ namespace LabProg
             Properties.Settings.Default.PwrModeCh3 = CbModeCh3.SelectedIndex;
             Properties.Settings.Default.PwrModeCh4 = CbModeCh4.SelectedIndex;
             Properties.Settings.Default.PwrModeCh5 = CbModeCh5.SelectedIndex;
-            Properties.Settings.Default.PwrPortIndex = CbPowerPort.SelectedIndex;
-            Properties.Settings.Default.ArduinoPortIndex = CbArduinoPort.SelectedIndex;
-            Properties.Settings.Default.LvlPortIndex = CbPumpPort.SelectedIndex;
-            Properties.Settings.Default.LvlSecondPortIndex = CbPumpSecondPort.SelectedIndex;
-            Properties.Settings.Default.LaserPortIndex = CbLaserPort.SelectedIndex;
+            Properties.Settings.Default.PwrPortIndex = GetPortSelection(CbPowerPort);
+            Properties.Settings.Default.ArduinoPortIndex = GetPortSelection(CbArduinoPort);
+            Properties.Settings.Default.MirrorPortIndex = GetPortSelection(CbMirrorPort);
+            Properties.Settings.Default.LvlPortIndex = GetPortSelection(CbPumpPort);
+            Properties.Settings.Default.LvlSecondPortIndex = GetPortSelection(CbPumpSecondPort);
+            Properties.Settings.Default.LaserPortIndex = GetPortSelection(CbLaserPort);
             Properties.Settings.Default.LaserType = CbLaserType.SelectedIndex;
             Properties.Settings.Default.CameraType = CbCamType.SelectedIndex;
             Properties.Settings.Default.AndorMode = CbAndorMode.SelectedIndex;
-            Properties.Settings.Default.PyroPortIndex = CbPyroPort.SelectedIndex;
+            //Properties.Settings.Default.PyroPortIndex = 8;
+            Properties.Settings.Default.PyroPortIndex = GetPortSelection(CbPyroPort);
             Properties.Settings.Default.CameraSavePath = tbSaveCamPath.Text;
             Properties.Settings.Default.CameraSavePrefix = tbSaveCamPrefix.Text;
             Properties.Settings.Default.CameraFrameMaxCount = tbFrameCount.Text;
@@ -126,6 +143,41 @@ namespace LabProg
                 Interval = GetCameraTimerInterval()
             };
             _cameraTimer.Elapsed += OnTimerTeak;
+        }
+
+        private int GetPortNumber(string portName)
+        {
+            string resultString = string.Join(string.Empty, Regex.Matches(portName, @"\d+").OfType<Match>().Select(m => m.Value));
+            int.TryParse(resultString, out int result);
+            return result;
+        }
+
+        private void SetPortSelection(ComboBox cb, int port)
+        {
+            var items = cb.Items;
+            var index = -1;
+            var foundIndex=-1;
+            foreach (var item in items)
+            {
+                index++;
+                var it = (TextBlock)item;
+                if (port == GetPortNumber(it.Text))
+                    foundIndex = index;
+            }
+            if (foundIndex > 0) cb.SelectedIndex = foundIndex;
+            else
+            {
+                var NewItem = new TextBlock() { Text = $"COM{port}", Opacity = 0.2 };
+                var newIndex = cb.Items.Add(NewItem);
+                cb.SelectedIndex = newIndex;
+            }
+        }
+
+        private int GetPortSelection(ComboBox cb)
+        {
+            if (cb == null) return 0;
+            var sItem = (TextBlock)cb.SelectedItem;
+            return sItem==null ? 0 : GetPortNumber(sItem.Text);
         }
     }
 }

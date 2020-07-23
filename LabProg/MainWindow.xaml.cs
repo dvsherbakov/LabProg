@@ -69,7 +69,7 @@ namespace LabProg
             if (TbFirstPump!=null) TbFirstPump.Text = "Порт притока";
             if (TbSecondPump != null) TbSecondPump.Visibility = Visibility.Visible;
             if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Visible;
-            if (_pumpSecondSerial == null) _pumpSecondSerial = new PumpSerial(CbPumpSecondPort.Text);
+            if (_pumpSecondSerial == null && CbPumpSecondPort!=null) _pumpSecondSerial = new PumpSerial(CbPumpSecondPort.Text);
         }
 
         private void TbTwoPump_UnChecked(object sender, RoutedEventArgs e)

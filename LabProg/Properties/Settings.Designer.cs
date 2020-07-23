@@ -1114,5 +1114,17 @@ namespace LabProg.Properties {
                 this["LvlSecondPortIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MirrorPortIndex {
+            get {
+                return ((int)(this["MirrorPortIndex"]));
+            }
+            set {
+                this["MirrorPortIndex"] = value;
+            }
+        }
     }
 }
