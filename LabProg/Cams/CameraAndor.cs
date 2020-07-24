@@ -57,11 +57,14 @@ namespace LabProg.Cams
             f_buffSize = f_X * f_Y;
         }
 
-        public float GetTempereture()
+        public float Tempereture
         {
-            float temperature = -99.0f;
-            errorValue = Api.GetTemperatureF(ref temperature);
-            return temperature;
+            get
+            {
+                float temperature = -99.0f;
+                errorValue = Api.GetTemperatureF(ref temperature);
+                return temperature;
+            }
         }
 
         public void SetImageMode()
