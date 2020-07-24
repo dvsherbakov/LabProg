@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using ATMCD32CS;
 
 namespace LabProg.Cams
@@ -105,15 +101,18 @@ namespace LabProg.Cams
         public void SetInternalTriggerMode() => Api.SetTriggerMode(0);
         public void SetSoftwareTriggerMode() => Api.SetTriggerMode(10);
 
-        public ImgBufferItem GetOnceBuffer()
+        public ImgBufferItem OnceBuffer
         {
-            errorValue = Api.SetAcquisitionMode(1); //Тип серии 1 - одиночных снимок, 5 - снимать до остановки
-            errorValue = Api.StartAcquisition();
-            errorValue = Api.WaitForAcquisition();
-            uint size = (uint)f_buffSize;
-            int[] imageArray = new int[size];
-            errorValue = Api.GetMostRecentImage(imageArray, size);
-            return new ImgBufferItem(imageArray);
+            get
+            {
+                errorValue = Api.SetAcquisitionMode(1); //Тип серии 1 - одиночных снимок, 5 - снимать до остановки
+                errorValue = Api.StartAcquisition();
+                errorValue = Api.WaitForAcquisition();
+                uint size = (uint)f_buffSize;
+                int[] imageArray = new int[size];
+                errorValue = Api.GetMostRecentImage(imageArray, size);
+                return new ImgBufferItem(imageArray);
+            }
         }
     }
 }
