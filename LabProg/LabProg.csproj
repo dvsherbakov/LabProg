@@ -94,8 +94,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cams\CameraAndor.cs" />
     <Compile Include="Cams\CameraPCO.cs" />
     <Compile Include="Cams\CamType.cs" />
+    <Compile Include="ImgBufferItem.cs" />
     <Compile Include="Lasers\LaserHelper.cs" />
     <Compile Include="Confocal.cs" />
     <Compile Include="ConfocalHelper.cs" />

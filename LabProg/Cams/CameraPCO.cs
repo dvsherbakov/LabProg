@@ -283,7 +283,7 @@ namespace LabProg
 
             unsafe
             {
-                Int16* bufi = (Int16*)buf.ToPointer();
+                short* bufi = (short*)buf.ToPointer();
                 max = 0;
                 min = 65535;
                 for (int i = 20 * width; i < height * width; i++)
