@@ -17,7 +17,7 @@ namespace LabProg
         //System.Windows.Threading.Dispatcher _dispatcher;
         private void InitInternalComponents()
         {
-            // ToDo придумать механизхм хранения и отображения существующих имен портов
+            StartAndorCameraCommand = new LambdaCommand(OnStartAndorCameraCommandExecute);
             CbPumpPort.Items.Clear();
             CbMirrorPort.Items.Clear();
             CbPowerPort.Items.Clear();

@@ -781,6 +781,7 @@
                             </ComboBox>
                             <CheckBox Grid.Row="1" 
                                       Grid.ColumnSpan="2"
+                                      Checked="ExecuteFromCb"
                                       Content="Соединиться с камерой"/>
                         </Grid>
                     </StackPanel>

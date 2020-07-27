@@ -68,9 +68,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ATMCD32CS, Version=2.103.30022.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ATMCD64CS, Version=2.103.30022.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ATMCD32CS.dll</HintPath>
+      <HintPath>C:\Program Files\Andor SDK\ATMCD64CS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -94,10 +94,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cams\AndorStatusMessages.cs" />
     <Compile Include="Cams\CameraAndor.cs" />
     <Compile Include="Cams\CameraPCO.cs" />
+    <Compile Include="Cams\CamHelper.cs" />
     <Compile Include="Cams\CamType.cs" />
     <Compile Include="ImgBufferItem.cs" />
+    <Compile Include="LambdaCommand.cs" />
     <Compile Include="Lasers\LaserHelper.cs" />
     <Compile Include="Confocal.cs" />
     <Compile Include="ConfocalHelper.cs" />

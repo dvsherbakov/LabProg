@@ -1,14 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using ATMCD32CS;
+using ATMCD64CS;
 
 namespace LabProg.Cams
 {
-    class CameraAndor
+    public class CameraAndor
     {
         private readonly AndorSDK Api;
+        private uint f_error =0;
+        private readonly List<string> ErrorList = new List<string>();
+        private uint ErrorValue { get => f_error;
+        set {
+                f_error = value;
+                if (f_error != 20002)
+                {
+                    ErrorList.Add(AndorStatusMessages.Messages[f_error]);
 
-        private uint errorValue = 0;
+                }
+            }
+        }
         private readonly int f_X = 0;
         private readonly int f_Y = 0;
         public int XResolution { get => f_X; }
@@ -40,20 +51,20 @@ namespace LabProg.Cams
             Capabilities.ulSize = (uint)CapabilitiesSize;
             var curDir = Environment.CurrentDirectory;
 
-            errorValue = Api.Initialize(curDir);
-            errorValue = Api.GetCapabilities(ref Capabilities);
-            errorValue = Api.GetHeadModel(ref f_headModel);
-            errorValue = Api.GetDetector(ref f_X, ref f_Y);
+            ErrorValue = Api.Initialize(curDir);
+            ErrorValue = Api.GetCapabilities(ref Capabilities);
+            ErrorValue = Api.GetHeadModel(ref f_headModel);
+            ErrorValue = Api.GetDetector(ref f_X, ref f_Y);
             SetImageMode();
             SetFasterSpeed();
             if ((Capabilities.ulSetFunctions & AndorSDK.AC_SETFUNCTION_BASELINECLAMP) == AndorSDK.AC_SETFUNCTION_BASELINECLAMP)
             {
-                errorValue = Api.SetBaselineClamp(1);
+                ErrorValue = Api.SetBaselineClamp(1);
             }
-            errorValue = Api.GetAcquisitionTimings(ref f_exposure, ref f_AccumTime, ref f_KineticTime);
+            ErrorValue = Api.GetAcquisitionTimings(ref f_exposure, ref f_AccumTime, ref f_KineticTime);
             SetExposure(0.01f);
-            errorValue = Api.SetImage(1, 1, 1, f_X, 1, f_Y);
-            errorValue = Api.SetShutter(1, 1, 0, 0);
+            ErrorValue = Api.SetImage(1, 1, 1, f_X, 1, f_Y);
+            ErrorValue = Api.SetShutter(1, 1, 0, 0);
             f_buffSize = f_X * f_Y;
         }
 
@@ -62,22 +73,22 @@ namespace LabProg.Cams
             get
             {
                 float temperature = -99.0f;
-                errorValue = Api.GetTemperatureF(ref temperature);
+                ErrorValue = Api.GetTemperatureF(ref temperature);
                 return temperature;
             }
         }
 
         public void SetImageMode()
         {
-            errorValue = Api.SetReadMode(4);
+            ErrorValue = Api.SetReadMode(4);
         }
 
         public void SetFasterSpeed()
         {
             int vsNumber = 0; float speed = 0.0f;
-            errorValue = Api.GetFastestRecommendedVSSpeed(ref vsNumber, ref speed);
+            ErrorValue = Api.GetFastestRecommendedVSSpeed(ref vsNumber, ref speed);
             int nAD = 0;
-            errorValue = Api.GetNumberADChannels(ref nAD);
+            ErrorValue = Api.GetNumberADChannels(ref nAD);
             float sTemp = 0.0f;
             int hNumber = 0, ADnumber = 0;
 
@@ -96,8 +107,8 @@ namespace LabProg.Cams
                     }
                 }
             }
-            errorValue = Api.SetADChannel(ADnumber);
-            errorValue = Api.SetHSSpeed(0, hNumber);
+            ErrorValue = Api.SetADChannel(ADnumber);
+            ErrorValue = Api.SetHSSpeed(0, hNumber);
         }
         private void SetExposure(float exposure) => Api.SetExposureTime(exposure);
 
@@ -108,12 +119,12 @@ namespace LabProg.Cams
         {
             get
             {
-                errorValue = Api.SetAcquisitionMode(1); //Тип серии 1 - одиночных снимок, 5 - снимать до остановки
-                errorValue = Api.StartAcquisition();
-                errorValue = Api.WaitForAcquisition();
+                ErrorValue = Api.SetAcquisitionMode(1); //Тип серии 1 - одиночных снимок, 5 - снимать до остановки
+                ErrorValue = Api.StartAcquisition();
+                ErrorValue = Api.WaitForAcquisition();
                 uint size = (uint)f_buffSize;
                 int[] imageArray = new int[size];
-                errorValue = Api.GetMostRecentImage(imageArray, size);
+                ErrorValue = Api.GetMostRecentImage(imageArray, size);
                 return new ImgBufferItem(imageArray);
             }
         }

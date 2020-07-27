@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 
 namespace LabProg
 {
-    class ImgBufferItem
+    public class ImgBufferItem
     {
         public int[] Buffer { get; set; }
         public Stopwatch Mark { get; set; }
