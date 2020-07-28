@@ -39,30 +39,7 @@ namespace LabProg
         {
             CbConfocalLevel.Text = ConfocalLb.Text;
         }
-
-        private void CbLaserType_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (_laserSerial != null)
-            {
-                _laserSerial.SetLaserType(((ComboBox)sender).SelectedIndex);
-            }
-        }
-
-        private void CbCamType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var index = ((ComboBox)sender).SelectedIndex;
-            if (index == 0)
-            {
-                PcoCommands.Visibility = Visibility.Visible;
-                AndorCommands.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                PcoCommands.Visibility = Visibility.Collapsed;
-                AndorCommands.Visibility = Visibility.Visible;
-            }
-        }
-
+        
         private void TbTwoPump_Checked(object sender, RoutedEventArgs e)
         {
             TbTwoPump.Text = "Два насоса";

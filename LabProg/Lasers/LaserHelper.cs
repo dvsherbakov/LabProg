@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace LabProg
 {
@@ -62,6 +63,14 @@ namespace LabProg
             _laserSerial.SetOff();
             //_laserSerial.Stop();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка выключения лазера" });
+        }
+
+        private void CbLaserType_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_laserSerial != null)
+            {
+                _laserSerial.SetLaserType(((ComboBox)sender).SelectedIndex);
+            }
         }
     }
 }

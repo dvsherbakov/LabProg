@@ -129,7 +129,7 @@ namespace LabProg
                 if (Math.Abs(subLevel) > 0.1) speed = "125 "; //ToFourStr(75);
                 if (Math.Abs(subLevel) > 1) speed = "280 "; //ToFourStr(333);
                 if (_prevSpeed == speed) return;
-
+                
                 _pumpSerial.SetSpeed(speed);
 
                 _prevSpeed = speed;
