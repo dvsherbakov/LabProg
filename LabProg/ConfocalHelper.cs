@@ -18,12 +18,22 @@ namespace LabProg
         private bool FDirection { get; set; }
         private int PrevRev { get; set; }
         private string _prevSpeed;
-        public delegate void NextPrimeDelegate();
+        //public delegate void NextPrimeDelegate();
+
+        private static List<SpeedGradeItem> SpeedGrades = new List<SpeedGradeItem> {
+                new SpeedGradeItem{different=1.00, speed="280 "},
+                new SpeedGradeItem{different=0.10, speed="125 "},
+                new SpeedGradeItem{different=0.50, speed="35.5"},
+                new SpeedGradeItem{different=0.10, speed="15.0"},
+                new SpeedGradeItem{different=0.05, speed="5   "},
+                new SpeedGradeItem{different=0.01, speed="0.5 "},
+                new SpeedGradeItem{different=0.00, speed="0   "}
+        };
 
         private void PeackInfo(object source, System.Timers.ElapsedEventArgs e)
         {
             var timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            DistMeasureRes x = new DistMeasureRes {Dist=0};
+            DistMeasureRes x = new DistMeasureRes { Dist = 0 };
             timestamp++;
             while (Math.Abs(x.Dist) < 0.00000001)
             {
@@ -39,21 +49,11 @@ namespace LabProg
                     catch (Exception ex)
                     {
                         Dispatcher.Invoke(() =>
-                            LogBox.Items.Insert(0, new LogBoxItem {Dt = DateTime.Now, LogText = ex.Message}));
+                            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message }));
                     }
-
-                    ShowRes(x);
-                    
+                    OperatePump(x);
                 }
             }
-        }
-
-        private static string ToFourStr(double src)
-        {
-            var res = src.ToString(src < 10.0 ? "#.##" : "##.#").Replace(',', '.');
-            if (res.Length == 3)
-                res = "0" + res;
-            return res;
         }
 
         private static DistMeasureRes GetTemp(string reqwest)
@@ -69,76 +69,70 @@ namespace LabProg
                 if (double.TryParse(tmp[1], out var outD)) res1.Add(outD / 1000000);
                 if (double.TryParse(tmp[2], out var outE)) res2.Add(outE / 1000000);
             }
-            DistMeasureRes res = new DistMeasureRes { Dist=0, IsSingle=true};
+            DistMeasureRes res = new DistMeasureRes { Dist = 0, IsSingle = true };
 
             if (res2.Average() > res1.Average())
             {
                 res.Dist = res2.Average() - res1.Average();
                 res.IsSingle = false;
-            }
-
-            else
+            } else
                 res.Dist = res1.Average();
 
             return res;
         }
 
-        //private delegate void AddMessageDelegate(string message);
-
-        private void ShowRes(DistMeasureRes MeasureRes)
+        private double SetupLevel
         {
-            var reverce = Properties.Settings.Default.PumpReverse;
+            get
+            {
+                string txt = null;
+                Dispatcher.Invoke(() => txt = CbConfocalLevel.Text);
+                double.TryParse(txt, out double res);
+                return res;
+            }
+        }
+
+        private  bool IsReverce { get => Properties.Settings.Default.PumpReverse; }
+
+        private void OperatePump(DistMeasureRes MeasureRes)
+        {
             Dispatcher.Invoke(() => ConfocalLb.Text = MeasureRes.Dist.ToString("N5"));
-            string txt = null;
-            Dispatcher.Invoke(() => txt = CbConfocalLevel.Text);
-            if (txt.Length == 0) txt = @"0.0";
 
-            var subLevel =
-                MeasureRes.Dist - double.Parse(txt.Replace('.', ','));
-            
-            if ((Math.Abs(subLevel) > 0.001) && AutoStop)
-            {
-                _pumpSerial.StartPump();
-                AutoStop = false;
-                return;
-            }
+            var direction = GetDirection(MeasureRes);
+            var speed = GetPumpSpeed(MeasureRes);
 
-            int rvs;
-            if (subLevel < 0) rvs = 1; else rvs = -1;
-            if (reverce) rvs = rvs * (-1);
-            if (!MeasureRes.IsSingle) rvs = rvs * (-1);
+            if ((speed == _prevSpeed) || !PumpActive) return;
 
-            if (rvs != PrevRev)
-            {
-                if (rvs < 0)
-                    _pumpSerial.SetCounterClockwiseDirection();
-                if (rvs > 0)
-                    _pumpSerial.SetClockwiseDirection();
-                if (rvs == 0)
+            switch (direction) {
+                case Direction.Stop:
                     _pumpSerial.StopPump();
-                PrevRev = rvs;
+                    break;
+                case Direction.Clockwise:
+                    _pumpSerial.SetClockwiseDirection();
+                    break;
+                case Direction.CounterClockwise:
+                    _pumpSerial.SetCounterClockwiseDirection();
+                    break;
             }
-            else if (Math.Abs(subLevel) > 0.001 && PumpActive)
-            {
-                var speed = "11.9";
 
-                if (Math.Abs(subLevel) > 0.001) speed = "0.5 "; //ToFourStr(0.5);
-                if (Math.Abs(subLevel) > 0.005) speed = "5   ";
-                if (Math.Abs(subLevel) > 0.01) speed = "15.0"; //ToFourStr(15);
-                if (Math.Abs(subLevel) > 0.05) speed = "35.5";
-                if (Math.Abs(subLevel) > 0.1) speed = "125 "; //ToFourStr(75);
-                if (Math.Abs(subLevel) > 1) speed = "280 "; //ToFourStr(333);
-                if (_prevSpeed == speed) return;
-                
-                _pumpSerial.SetSpeed(speed);
+            if (!speed.Equals("0   ")) _pumpSerial.StartPumpAsync();
+            _prevSpeed = speed;
 
-                _prevSpeed = speed;
-            }
-            else
-            {
-                _pumpSerial.StopPump();
-                AutoStop = true;
-            }
+        }
+
+        private Direction GetDirection(DistMeasureRes currentLevel)
+        {
+            var currentDifferent = SetupLevel - currentLevel.Dist;
+            if (Math.Abs(currentDifferent) < 0.001) return Direction.Stop;
+            var tmpDirection = ((currentDifferent > 0) == IsReverce) != currentLevel.IsSingle;
+
+            return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
+        }
+
+        private string GetPumpSpeed(DistMeasureRes currentLevel)
+        {
+            var subLevel = Math.Abs(currentLevel.Dist - SetupLevel);
+            return SpeedGrades.Where(x => x.different < subLevel).OrderByDescending(x => x.different).FirstOrDefault().speed;
         }
 
         private void PumpPortOn(object sender, RoutedEventArgs e)
@@ -149,7 +143,8 @@ namespace LabProg
                 {
                     Interval = 1000
                 };
-                _confocalTimer.Elapsed += PeackInfo;
+                //_confocalTimer.Elapsed += PeackInfo;
+                //Временно закомментировано, во избежание многоразовой подписки на событие
             }
             _confocalTimer.Start();
             if (!_pumpSerial.Active())
@@ -169,6 +164,7 @@ namespace LabProg
         private void PumpPortOff(object sender, RoutedEventArgs e)
         {
             PumpActive = false;
+            _pumpSerial.StopPump();
             _confocalTimer.Stop();
         }
 
@@ -185,7 +181,7 @@ namespace LabProg
                     CbPumpActive.IsChecked = false;
                 }
             }
-            _pumpSerial.StartPump();
+            _pumpSerial.StartPumpAsync();
         }
     }
 
@@ -193,6 +189,17 @@ namespace LabProg
     {
         public double Dist { get; set; }
         public bool IsSingle { get; set; }
+    }
+
+    internal enum Direction
+    {
+        Clockwise, CounterClockwise, Stop
+    }
+
+    class SpeedGradeItem
+    {
+        public double different;
+        public string speed;
     }
 }
 

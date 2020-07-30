@@ -41,7 +41,7 @@ namespace LabProg
                    // Dispatcher.Invoke(() =>  LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт пирометра" }); anw));
                 }
             }
-            catch (Exception ex)
+            catch
             {
                // Dispatcher.Invoke(() => lbText.Items.Add(ex.Message));
             }

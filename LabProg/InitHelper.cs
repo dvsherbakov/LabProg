@@ -74,7 +74,7 @@ namespace LabProg
             tbFrameCount.Text = Properties.Settings.Default.CameraFrameMaxCount;
             SetChanellBiasTitle(1);
             OnChangeFrameMaxCount(this, null);
-            
+            TbTwoPumpToggle();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
