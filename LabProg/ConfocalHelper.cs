@@ -115,7 +115,7 @@ namespace LabProg
                     break;
             }
 
-            if (!speed.Equals("0   ")) _pumpSerial.StartPumpAsync();
+            if (!speed.Equals("0   ")) _pumpSerial.StartPump();
             _prevSpeed = speed;
 
         }
@@ -181,7 +181,7 @@ namespace LabProg
                     CbPumpActive.IsChecked = false;
                 }
             }
-            _pumpSerial.StartPumpAsync();
+            _pumpSerial.StartPump();
         }
     }
 

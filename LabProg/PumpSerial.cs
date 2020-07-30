@@ -84,7 +84,7 @@ namespace LabProg
         }
 
         
-        public void StartPumpAsync()
+        public void StartPump()
         {
             if (!IsDriven) _mPort.Write("s");
             System.Threading.Thread.Sleep(20);
