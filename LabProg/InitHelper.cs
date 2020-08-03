@@ -43,6 +43,7 @@ namespace LabProg
             InitPumpItems();
             InitPyroTimer();
             InitCameraTimer();
+            lvLaserPowerItems.Items.Clear();
             //_dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
         }
 

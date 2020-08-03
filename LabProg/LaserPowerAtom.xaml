@@ -1,0 +1,124 @@
+﻿<Window x:Class="LabProg.LaserPowerAtom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LabProg"
+        mc:Ignorable="d"
+        Title="Добавить серию" Height="250" Width="320">
+    <Grid Margin="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+           
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">Тип серии</TextBlock>
+        <ComboBox Grid.Row="0"
+                  Grid.Column="1" Margin="3">
+            <ComboBoxItem>Линейная</ComboBoxItem>
+            <ComboBoxItem>Гармоническая</ComboBoxItem>
+        </ComboBox>
+        <StackPanel Grid.Row="1" 
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
+            <TextBlock HorizontalAlignment="Center">Линейная</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition  Width="4*"/>
+                    <ColumnDefinition  Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           HorizontalAlignment="Center">Уровень</TextBlock>
+                <TextBlock Grid.Row="0" 
+                           Grid.Column="1"
+                            HorizontalAlignment="Center">Мощность (Вт)</TextBlock>
+                <TextBlock Grid.Row="0" 
+                           Grid.Column="2"
+                            HorizontalAlignment="Center">Длительность (мс)</TextBlock>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                            HorizontalAlignment="Center">Верхний</TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="3"></TextBox>
+                <TextBox Grid.Row="1" Grid.Column="2" Margin="3"></TextBox>
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                            HorizontalAlignment="Center">Нижний</TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="3"></TextBox>
+                <TextBox Grid.Row="2" Grid.Column="2" Margin="3"></TextBox>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Grid.ColumnSpan="2"
+                           HorizontalAlignment="Center">Количество циклов</TextBlock>
+                <TextBox Grid.Row="3"
+                         Grid.Column="2"
+                         Margin="3"></TextBox>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+            <TextBlock HorizontalAlignment="Center">Гармоническая</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0"
+                           Grid.Row="0"
+                           HorizontalAlignment="Center">Амплитуда (Вт)</TextBlock>
+                <TextBlock Grid.Column="1"
+                           Grid.Row="0"
+                           HorizontalAlignment="Center">Частота (Hz)"</TextBlock>
+                <TextBlock Grid.Column="2"
+                           Grid.Row="0"
+                           HorizontalAlignment="Center">Длительность (сек)</TextBlock>
+                <TextBox Grid.Column="0"
+                         Grid.Row="1"
+                         Margin="3"/>
+                <TextBox Grid.Column="1"
+                         Grid.Row="1"
+                         Margin="3"/>
+                <TextBox Grid.Column="2"
+                         Grid.Row="1"
+                         Margin="3"/>
+
+            </Grid>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    Grid.ColumnSpan="2">
+            <Button Width="100"
+                    IsDefault="True"
+                    Margin="5">Добавить</Button>
+            <Button Width="100"
+                    Margin="5">Удалить</Button>
+        </StackPanel>
+    </Grid>
+    
+</Window>

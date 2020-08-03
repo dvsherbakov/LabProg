@@ -148,12 +148,7 @@
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
                                 <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
+                               
                             </ComboBox>
                         <TextBlock Grid.Column="0" 
                                    Grid.Row="1"
@@ -167,12 +162,6 @@
                             <TextBlock>COM1</TextBlock>
                             <TextBlock>COM2</TextBlock>
                             <TextBlock>COM3</TextBlock>
-                            <TextBlock>COM4</TextBlock>
-                            <TextBlock>COM5</TextBlock>
-                            <TextBlock>COM6</TextBlock>
-                            <TextBlock>COM7</TextBlock>
-                            <TextBlock>COM8</TextBlock>
-                            <TextBlock>COM9</TextBlock>
                         </ComboBox>
                     </Grid>
                     </StackPanel>
@@ -237,58 +226,51 @@
                             <ComboBox x:Name="CbLaserPort" Grid.Row="0" Grid.Column="1" Margin="10,2,5,2">
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
-                                <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
-                            </ComboBox>
+                            <TextBlock>COM3</TextBlock>
+                        </ComboBox>
                             <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Порт пирометра</TextBlock>
                             <ComboBox x:Name="CbPyroPort" Grid.Row="1" Grid.Column="1" Margin="10,2,5,2">
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
-                                <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
-                            </ComboBox>
+                            <TextBlock>COM3</TextBlock>
+                        </ComboBox>
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Тип Лазера</TextBlock>
                         <ComboBox x:Name="CbLaserType" Grid.Row="2" Grid.Column="1" Margin="10,2,5,2" SelectionChanged="CbLaserType_SelectionChanged">
                             <TextBlock>Omicron</TextBlock>
                             <TextBlock>MRL-III-660D</TextBlock>
                         </ComboBox>
-                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                    </Grid>
+                    <Expander Header="Параметры">
+                        <StackPanel>
+                            <ListView Height="80" x:Name="lvLaserPowerItems">          
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}">№</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="100">Описание</GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Duration}">Длительность</GridViewColumn>
+                                </GridView>
+                               
+                            </ListView>
+                            <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5">Название</TextBlock>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="5">Разн. темп.</TextBlock>
-                                <TextBlock Grid.Row="0" Grid.Column="2" Margin="5">Изм. мощ.</TextBlock>
-                                <TextBlock Grid.Row="1" Grid.Column="0">Граница MAX</TextBlock>
-                                <TextBox Grid.Row="1" Grid.Column="1" TextAlignment="Center" x:Name="PowMax" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMax, Mode=TwoWay}"></TextBox>
-                                <TextBox Grid.Row="1" Grid.Column="2" TextAlignment="Center"  x:Name="TempMax" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMax, Mode=TwoWay}"></TextBox>
-                                <TextBlock Grid.Row="2" Grid.Column="0">Граница средн</TextBlock>
-                                <TextBox Grid.Row="2" Grid.Column="1" TextAlignment="Center"  x:Name="PowMid" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMid, Mode=TwoWay}"></TextBox>
-                                <TextBox Grid.Row="2" Grid.Column="2" TextAlignment="Center"  x:Name="TempMid" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMid, Mode=TwoWay}"></TextBox>
-                                <TextBlock Grid.Row="3" Grid.Column="0">Граница MIN</TextBlock>
-                                <TextBox Grid.Row="3" Grid.Column="1" TextAlignment="Center"  x:Name="PowMin" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PowMin, Mode=TwoWay}"></TextBox>
-                                <TextBox Grid.Row="3" Grid.Column="2" TextAlignment="Center"  x:Name="TempMin" Text="{Binding Source={x:Static properties:Settings.Default}, Path=TempMin, Mode=TwoWay}"></TextBox>
+                                <Button Grid.Column="0"
+                                        Height="50"
+                                        Margin="3"
+                                        Click="btLaserAddPowerCycle">
+                                    <TextBlock TextWrapping="Wrap"> Добавить линейный</TextBlock>
+                                </Button>
+                                <Button Grid.Column="1"
+                                        Margin="3">
+                                    <TextBlock TextWrapping="Wrap">Добавить гармоничный</TextBlock>
+                                </Button>
+                                <Button Grid.Column="2"
+                                        Margin="3" Click="Button_Click_1">Удалить</Button>
                             </Grid>
-                        </Grid>
-                        
+                        </StackPanel>
+                    </Expander>
                     </StackPanel>
                 </TabItem>
                 <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -863,12 +845,7 @@
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
                                 <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
+                               
                             </ComboBox>
                             <TextBlock Grid.Column="0" Grid.Row="1" Margin="10,2,5,2">Левая точка</TextBlock>
                             <TextBox Grid.Column="1" Grid.Row="1" Margin="10,2,5,2" Text=""></TextBox>
@@ -896,14 +873,8 @@
                             <ComboBox x:Name="CbArduinoPort" Grid.Column="1">
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
-                                <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
-                            </ComboBox>
+                            <TextBlock>COM3</TextBlock>
+                        </ComboBox>
                         </Grid>
                     </StackPanel>
                 </TabItem>

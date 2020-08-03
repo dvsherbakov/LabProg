@@ -101,6 +101,9 @@
     <Compile Include="Cams\CamType.cs" />
     <Compile Include="ImgBufferItem.cs" />
     <Compile Include="LambdaCommand.cs" />
+    <Compile Include="LaserPowerAtom.xaml.cs">
+      <DependentUpon>LaserPowerAtom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lasers\LaserHelper.cs" />
     <Compile Include="Confocal.cs" />
     <Compile Include="ConfocalHelper.cs" />
@@ -124,6 +127,10 @@
     <Compile Include="ReleSerial.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Page Include="LaserPowerAtom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

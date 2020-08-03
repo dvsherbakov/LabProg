@@ -68,5 +68,16 @@ namespace LabProg
                 if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var s = sender;
+        }
+
+        private void btLaserAddPowerCycle(object sender, RoutedEventArgs e)
+        {
+            LaserPowerAtom wa = new LaserPowerAtom();
+            wa.Show();
+        }
     }
 }
