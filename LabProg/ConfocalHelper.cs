@@ -94,31 +94,46 @@ namespace LabProg
 
         private  bool IsReverce { get => Properties.Settings.Default.PumpReverse; }
 
+        private bool IsTwoPump { get => Properties.Settings.Default.IsTwoPump; }
+
         private void OperatePump(DistMeasureRes MeasureRes)
         {
             Dispatcher.Invoke(() => ConfocalLb.Text = MeasureRes.Dist.ToString("N5"));
 
-            var direction = GetDirection(MeasureRes);
             var speed = GetPumpSpeed(MeasureRes);
 
             if ((speed == _prevSpeed) || !PumpActive) return;
-
-            switch (direction) {
+            var direction = GetDirection(MeasureRes);
+            switch (direction)
+            {
                 case Direction.Stop:
+                    if (IsTwoPump)
+                        _pumpSecondSerial.StopPump();
                     _pumpSerial.StopPump();
                     break;
                 case Direction.Clockwise:
-                    _pumpSerial.SetClockwiseDirection();
+                    if (!IsTwoPump)
+                        _pumpSerial.SetClockwiseDirection();
+                    else if (!speed.Equals("0   "))
+                        _pumpSerial.StartPump();
                     break;
                 case Direction.CounterClockwise:
-                    _pumpSerial.SetCounterClockwiseDirection();
+                    if (!IsTwoPump)
+                        _pumpSerial.SetCounterClockwiseDirection();
+                    else if (!speed.Equals("0   "))
+                        _pumpSecondSerial.StartPump();
                     break;
             }
 
-            if (!speed.Equals("0   ")) _pumpSerial.StartPump();
-            _prevSpeed = speed;
+            if (!speed.Equals("0   ")&&!IsTwoPump)
+            {
+                _pumpSerial.StartPump();
+            }
 
+            _prevSpeed = speed;
         }
+
+       
 
         private Direction GetDirection(DistMeasureRes currentLevel)
         {
@@ -158,7 +173,11 @@ namespace LabProg
                     LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
                     CbPumpActive.IsChecked = false;
                 }
-
+            }
+            if (IsTwoPump)
+            {
+                _pumpSerial.SetClockwiseDirection();
+                _pumpSecondSerial.SetClockwiseDirection();
             }
         }
         private void PumpPortOff(object sender, RoutedEventArgs e)

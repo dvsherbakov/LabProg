@@ -209,6 +209,7 @@
                                            Style="{StaticResource AnimatedSwitch}" 
                                           Width="40" 
                                           Height="20"
+                                          x:Name="tbAutoSeries"
                                           Checked="SetLaserAutoAsync" 
                                           Unchecked="SetLaserOff"
                                           Margin="3"/>
