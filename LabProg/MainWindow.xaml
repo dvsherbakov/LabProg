@@ -242,33 +242,30 @@
                     </Grid>
                     <Expander Header="Параметры">
                         <StackPanel>
-                            <ListView Height="80" x:Name="lvLaserPowerItems">          
-                                <GridView>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Id}">№</GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}" Width="100">Описание</GridViewColumn>
-                                    <GridViewColumn DisplayMemberBinding="{Binding Path=Duration}">Длительность</GridViewColumn>
-                                </GridView>
-                               
+                            <ListView Height="80" x:Name="lvLaserPowerItems">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding AtomType}"/>
+                                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}"/>
+                                        <GridViewColumn Header="Длительность" DisplayMemberBinding="{Binding Duration}"/>
+                                    </GridView>
+                                </ListView.View>
+
                             </ListView>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0"
-                                        Height="50"
-                                        Margin="3"
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Center">
+                                <Button Margin="3"
+                                        Padding="3"
                                         Click="btLaserAddPowerCycle">
-                                    <TextBlock TextWrapping="Wrap"> Добавить линейный</TextBlock>
+                                    <TextBlock HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextWrapping="Wrap"> Добавить серию</TextBlock>
                                 </Button>
-                                <Button Grid.Column="1"
-                                        Margin="3">
-                                    <TextBlock TextWrapping="Wrap">Добавить гармоничный</TextBlock>
-                                </Button>
-                                <Button Grid.Column="2"
-                                        Margin="3" Click="Button_Click_1">Удалить</Button>
-                            </Grid>
+
+                                <Button Margin="3"
+                                        Padding="3"
+                                        Click="Button_Click_1">Удалить</Button>
+                            </StackPanel>
                         </StackPanel>
                     </Expander>
                     </StackPanel>

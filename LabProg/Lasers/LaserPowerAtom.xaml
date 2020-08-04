@@ -22,12 +22,16 @@
                    Grid.Column="0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center">Тип серии</TextBlock>
-        <ComboBox Grid.Row="0"
-                  Grid.Column="1" Margin="3">
+        <ComboBox x:Name="cbLaserSeriesType"  
+                  Grid.Row="0"
+                  Grid.Column="1" 
+                  SelectionChanged="cbLaserSeriesType_SelectionChanged"
+                  Margin="3">
             <ComboBoxItem>Линейная</ComboBoxItem>
             <ComboBoxItem>Гармоническая</ComboBoxItem>
         </ComboBox>
-        <StackPanel Grid.Row="1" 
+        <StackPanel x:Name="spLineralSeries"
+                    Grid.Row="1" 
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
             <TextBlock HorizontalAlignment="Center">Линейная</TextBlock>
@@ -56,14 +60,30 @@
                            Grid.Column="0"
                            VerticalAlignment="Center"
                             HorizontalAlignment="Center">Верхний</TextBlock>
-                <TextBox Grid.Row="1" Grid.Column="1" Margin="3"></TextBox>
-                <TextBox Grid.Row="1" Grid.Column="2" Margin="3"></TextBox>
+                <TextBox Grid.Row="1" 
+                         Grid.Column="1" 
+                         Margin="3"
+                         Text="{Binding HiPower}"
+                         Width="55"/>
+                <TextBox Grid.Row="1" 
+                         Grid.Column="2" 
+                         Margin="3"
+                         Text="{Binding HiDuration}"
+                         Width="55"/>
                 <TextBlock Grid.Row="2"
                            Grid.Column="0"
                            VerticalAlignment="Center"
                             HorizontalAlignment="Center">Нижний</TextBlock>
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="3"></TextBox>
-                <TextBox Grid.Row="2" Grid.Column="2" Margin="3"></TextBox>
+                <TextBox Grid.Row="2" 
+                         Grid.Column="1" 
+                         Margin="3"
+                         Text="{Binding LowPower}"
+                         Width="55"/>
+                <TextBox Grid.Row="2" 
+                         Grid.Column="2" 
+                         Margin="3"
+                         Text="{Binding LowDuration}"
+                         Width="55"/>
                 <TextBlock Grid.Row="3"
                            Grid.Column="0"
                            VerticalAlignment="Center"
@@ -72,10 +92,14 @@
                            HorizontalAlignment="Center">Количество циклов</TextBlock>
                 <TextBox Grid.Row="3"
                          Grid.Column="2"
-                         Margin="3"></TextBox>
+                         Text="{Binding CyclesCount}"
+                         Margin="3"
+                         Width="55"/>
             </Grid>
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+        <StackPanel x:Name="spHarmonicalSeries"
+            Grid.Row="2" 
+            Grid.ColumnSpan="2">
             <TextBlock HorizontalAlignment="Center">Гармоническая</TextBlock>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -98,13 +122,19 @@
                            HorizontalAlignment="Center">Длительность (сек)</TextBlock>
                 <TextBox Grid.Column="0"
                          Grid.Row="1"
-                         Margin="3"/>
+                         Margin="3"
+                         Text="{Binding Amplitude}"
+                         Width="55"/>
                 <TextBox Grid.Column="1"
                          Grid.Row="1"
-                         Margin="3"/>
+                         Margin="3"
+                         Text="{Binding Freq}"
+                         Width="55"/>
                 <TextBox Grid.Column="2"
                          Grid.Row="1"
-                         Margin="3"/>
+                         Margin="3"
+                         Text="{Binding HarmonicalDuration}"
+                         Width="55"/>
 
             </Grid>
         </StackPanel>
@@ -113,10 +143,13 @@
                     Grid.Column="0"
                     HorizontalAlignment="Center"
                     Grid.ColumnSpan="2">
-            <Button Width="100"
+            <Button Width="80"
+                    x:Name="btAdd"
                     IsDefault="True"
+                    Click="btAdd_Click"
                     Margin="5">Добавить</Button>
-            <Button Width="100"
+            <Button Width="80"
+                    IsCancel="True"
                     Margin="5">Удалить</Button>
         </StackPanel>
     </Grid>

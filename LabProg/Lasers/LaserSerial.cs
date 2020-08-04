@@ -174,7 +174,7 @@ namespace LabProg
             else Stop();
         }
 
-        public void Start()
+        private void Start()
         {
             if (LaserType == 1) SetPowerStart();
             else
@@ -184,7 +184,7 @@ namespace LabProg
             }
         }
 
-        public void Stop()
+        private void Stop()
         {
             var cmd =  new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
             _mPort.Write(cmd, 0, 8);

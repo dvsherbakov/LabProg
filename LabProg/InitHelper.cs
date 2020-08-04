@@ -101,12 +101,12 @@ namespace LabProg
             Properties.Settings.Default.CameraSavePrefix = tbSaveCamPrefix.Text;
             Properties.Settings.Default.CameraFrameMaxCount = tbFrameCount.Text;
             Properties.Settings.Default.Save();
-            PwrSerial.SetChannelOff(0); Thread.Sleep(300);
-            PwrSerial.SetChannelOff(1); Thread.Sleep(300);
-            PwrSerial.SetChannelOff(2); Thread.Sleep(300);
-            PwrSerial.SetChannelOff(3); Thread.Sleep(300);
-            PwrSerial.SetChannelOff(4); Thread.Sleep(300);
-            PwrSerial.SetChannelOff(5); Thread.Sleep(300);
+            PwrSerial.SetChannelOff(0); Thread.Sleep(100);
+            PwrSerial.SetChannelOff(1); Thread.Sleep(100);
+            PwrSerial.SetChannelOff(2); Thread.Sleep(100);
+            PwrSerial.SetChannelOff(3); Thread.Sleep(100);
+            PwrSerial.SetChannelOff(4); Thread.Sleep(100);
+            PwrSerial.SetChannelOff(5); Thread.Sleep(100);
         }
 
         private void InitPumpItems()

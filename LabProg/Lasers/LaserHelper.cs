@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LabProg.Lasers;
+using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -71,6 +73,35 @@ namespace LabProg
             {
                 _laserSerial.SetLaserType(((ComboBox)sender).SelectedIndex);
             }
+        }
+
+        private async System.Threading.Tasks.Task AutomaticLaserPowerAsync()
+        {
+            foreach (var item in lvLaserPowerItems.Items)
+            {
+                var lItem = (LaserPowerAtomResult)item;
+                if (lItem.Type == LaserPowerAtomType.Linear)
+                {
+                    for (int i = 0; i < lItem.CyclesCount; i++)
+                    {
+                        _laserSerial.SetPower(lItem.HiPower);
+                        await Task.Delay(lItem.HiDuration);
+                        _laserSerial.SetPower(lItem.LowPower);
+                        await Task.Delay(lItem.LowDuration);
+                    }
+                } else
+                {
+                    var pf = new PowerFlow(true);
+                    pf.GenerateHarmonicCycle(lItem.Amplitude, lItem.Freq, lItem.HarmonicalDuration);
+                    var series = pf.GetSeries;
+                    for (int i = 0; i < series.Length; i++)
+                    {
+                        _laserSerial.SetPower(series[i].Power);
+                        await Task.Delay(series[i].Interval);
+                    }
+                }
+            }
+            _laserSerial.SetOff();
         }
     }
 }
