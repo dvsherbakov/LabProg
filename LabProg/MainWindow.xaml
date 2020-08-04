@@ -204,8 +204,14 @@
                             <Button Grid.Row="2" Grid.Column="3" Margin="3" Click="SetLaserPwr">Применить</Button>
                             <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
                                        VerticalAlignment="Center">Автоматически</TextBlock>
-                            <ToggleButton Grid.Row="3" Grid.Column="3" 
-                                           Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="3"/>
+                            <ToggleButton Grid.Row="3" 
+                                          Grid.Column="3" 
+                                           Style="{StaticResource AnimatedSwitch}" 
+                                          Width="40" 
+                                          Height="20"
+                                          Checked="SetLaserAutoAsync" 
+                                          Unchecked="SetLaserOff"
+                                          Margin="3"/>
                             <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Температура</TextBlock>
                             <TextBlock Grid.Row="4" x:Name ="PyroTemp" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">0</TextBlock>
                             <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PyroTemp, Mode=TwoWay}"></TextBox>

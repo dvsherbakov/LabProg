@@ -54,7 +54,7 @@ namespace LabProg
 
         public void ClosePort()
         {
-            _mPort.Close();
+            if (_mPort.IsOpen) _mPort.Close();
         }
 
         public int GetDPower()
@@ -186,8 +186,11 @@ namespace LabProg
 
         private void Stop()
         {
-            var cmd =  new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
-            _mPort.Write(cmd, 0, 8);
+            if (_mPort.IsOpen)
+            {
+                var cmd = new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
+                _mPort.Write(cmd, 0, 8);
+            }
         }
         
         public void SetPowerLevel(int level)

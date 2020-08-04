@@ -101,6 +101,9 @@ namespace LabProg
             Properties.Settings.Default.CameraSavePrefix = tbSaveCamPrefix.Text;
             Properties.Settings.Default.CameraFrameMaxCount = tbFrameCount.Text;
             Properties.Settings.Default.Save();
+            if (!(_laserSerial is null)) {
+                _laserSerial.SetOff();
+                _laserSerial.ClosePort(); }
             PwrSerial.SetChannelOff(0); Thread.Sleep(100);
             PwrSerial.SetChannelOff(1); Thread.Sleep(100);
             PwrSerial.SetChannelOff(2); Thread.Sleep(100);

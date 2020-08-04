@@ -56,14 +56,20 @@ namespace LabProg
         private void SetLaserOn(object sender, RoutedEventArgs e)
         {
             _laserSerial.SetOn();
-            //_laserSerial.Start();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка включения лазера" });
+        }
+
+
+        private async void SetLaserAutoAsync(object sender, RoutedEventArgs e)
+        {
+            _laserSerial.SetOn();
+            await AutomaticLaserPowerAsync();
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка запуска серии" });
         }
 
         private void SetLaserOff(object sender, RoutedEventArgs e)
         {
             _laserSerial.SetOff();
-            //_laserSerial.Stop();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка выключения лазера" });
         }
 
@@ -77,6 +83,7 @@ namespace LabProg
 
         private async System.Threading.Tasks.Task AutomaticLaserPowerAsync()
         {
+            _laserSerial.SetOn();
             foreach (var item in lvLaserPowerItems.Items)
             {
                 var lItem = (LaserPowerAtomResult)item;
