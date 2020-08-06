@@ -21,7 +21,7 @@ namespace LabProg
             InitInternalComponents();
 
             _pwrSerial = new PwrSerial(CbPowerPort.Text);
-            _pumpSerial = new PumpSerial(CbPumpPort.Text, Properties.Settings.Default.PumpReverse);
+            _pumpSerial = new PumpSerial(CbPumpPort.Text, Properties.Settings.Default.PumpReverse, AddLogBoxMessage);
             _pyroSerial = new PyroSerial(CbPyroPort.Text);
             _laserSerial = new LaserSerial(CbLaserPort.Text);
             _laserSerial.SetLaserType(Properties.Settings.Default.LaserType);

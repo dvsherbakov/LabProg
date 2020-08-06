@@ -13,11 +13,15 @@ namespace LabProg
         private readonly List<string> RecievedData;
         private bool f_direction;
         public bool IsDriven { get; set; }
+        private string comId;
+        private readonly bool pumpReverse;
+        private Action<string> addLogBoxMessage;
 
-        public PumpSerial(string portStr, bool startDirection)
+        public PumpSerial(string portStr, bool startDirection, Action<string> addLogBoxMessage)
         {
             RecievedData = new List<string>();
             if (portStr == "") portStr = "COM7";
+            comId = portStr;
             _mPort = new SerialPort(portStr)
             {
                 BaudRate = int.Parse("9600"),
@@ -28,8 +32,10 @@ namespace LabProg
                 RtsEnable = true
             };
             _mPort.DataReceived += DataReceivedHandler;
+            this.addLogBoxMessage = addLogBoxMessage;
         }
 
+       
         public void OpenPort()
         {
             _mPort.Open();
@@ -37,6 +43,8 @@ namespace LabProg
             IsDriven = false;
             if (f_direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();  
         }
+
+        public bool IsOpen => _mPort.IsOpen;
 
         public void ClosePort()
         {
@@ -59,9 +67,9 @@ namespace LabProg
             {
                 _mPort.Read(mRxdata, 0, cnt);
             }
-            catch
+            catch (Exception ex)
             {
-                // ignored
+                addLogBoxMessage(ex.Message);
             }
             var ascii = Encoding.ASCII;
             RecievedData.Add(ascii.GetString(mRxdata));
@@ -75,9 +83,9 @@ namespace LabProg
             {
                 _mPort.Read(mRxdata, 0, cnt);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // ignored
+                addLogBoxMessage(ex.Message);
             }
             var ascii = Encoding.ASCII;
             return ascii.GetString(mRxdata);
@@ -100,14 +108,28 @@ namespace LabProg
 
         public void SetClockwiseDirection()
         {
-            _mPort.Write("r");
-            System.Threading.Thread.Sleep(20);
+            if (_mPort.IsOpen)
+            {
+                _mPort.Write("r");
+                System.Threading.Thread.Sleep(20);
+            }
+            else
+            {
+                addLogBoxMessage("Pump port is closed");
+            }
         }
 
         public void SetCounterClockwiseDirection()
         {
-            _mPort.Write("l");
-            System.Threading.Thread.Sleep(20);
+            if (_mPort.IsOpen)
+            {
+                _mPort.Write("l");
+                System.Threading.Thread.Sleep(20);
+            }
+            else
+            {
+                addLogBoxMessage("Pump port is closed");
+            }
         }
 
         public void Reverce()
@@ -121,6 +143,7 @@ namespace LabProg
         {
             _mPort.Write(speed);
             System.Threading.Thread.Sleep(20);
+            addLogBoxMessage($"Порт насоса {comId}, меняем скорость: '{speed}'");
         }
     }
 }

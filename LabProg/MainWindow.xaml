@@ -884,7 +884,6 @@
                 </TabItem>
             </TabControl>
             
-        
         <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0">
             <ListView.View>
                 <GridView>

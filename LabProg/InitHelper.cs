@@ -5,6 +5,7 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Windows.Controls;
+using System;
 
 namespace LabProg
 {
@@ -49,7 +50,7 @@ namespace LabProg
 
         private void InitPwrItems()
         { //LoadSettings
-            var dl= new PwrModes();
+            var dl = new PwrModes();
             CbModeCh1.Items.Clear();
             CbModeCh1.ItemsSource = dl.GetValues();
             CbModeCh1.SelectedValuePath = "Key";
@@ -67,7 +68,7 @@ namespace LabProg
             CbLaserType.SelectedIndex = Properties.Settings.Default.LaserType;
             CbCamType.SelectedIndex = Properties.Settings.Default.CameraType;
             CbAndorMode.SelectedIndex = Properties.Settings.Default.AndorMode;
-            SetPortSelection(CbPyroPort,Properties.Settings.Default.PyroPortIndex);
+            SetPortSelection(CbPyroPort, Properties.Settings.Default.PyroPortIndex);
             SetPortSelection(CbArduinoPort, Properties.Settings.Default.ArduinoPortIndex);
             SetPortSelection(CbMirrorPort, Properties.Settings.Default.MirrorPortIndex);
             tbSaveCamPath.Text = Properties.Settings.Default.CameraSavePath;
@@ -101,9 +102,11 @@ namespace LabProg
             Properties.Settings.Default.CameraSavePrefix = tbSaveCamPrefix.Text;
             Properties.Settings.Default.CameraFrameMaxCount = tbFrameCount.Text;
             Properties.Settings.Default.Save();
-            if (!(_laserSerial is null)) {
+            if (!(_laserSerial is null))
+            {
                 _laserSerial.SetOff();
-                _laserSerial.ClosePort(); }
+                _laserSerial.ClosePort();
+            }
             PwrSerial.SetChannelOff(0); Thread.Sleep(100);
             PwrSerial.SetChannelOff(1); Thread.Sleep(100);
             PwrSerial.SetChannelOff(2); Thread.Sleep(100);
@@ -160,7 +163,7 @@ namespace LabProg
         {
             var items = cb.Items;
             var index = -1;
-            var foundIndex=-1;
+            var foundIndex = -1;
             foreach (var item in items)
             {
                 index++;
@@ -181,7 +184,14 @@ namespace LabProg
         {
             if (cb == null) return 0;
             var sItem = (TextBlock)cb.SelectedItem;
-            return sItem==null ? 0 : GetPortNumber(sItem.Text);
+            return sItem == null ? 0 : GetPortNumber(sItem.Text);
         }
+
+        public void AddLogBoxMessage(string message)
+        {
+            Dispatcher.Invoke(() => LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = message }));
+        }
+
+
     }
 }
