@@ -165,7 +165,7 @@ namespace LabProg
 
                 return;
             }
-
+            
 
             if (direction == Direction.Clockwise)
             {

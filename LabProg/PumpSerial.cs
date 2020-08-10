@@ -16,7 +16,7 @@ namespace LabProg
         private readonly string comId;
         public bool PumpReverse { get; set; }
         private readonly Action<string> addLogBoxMessage;
-        private string prevSpeed = "";
+        //private string prevSpeed = "";
 
         public PumpSerial(string portStr, bool startDirection, Action<string> addLogBoxMessage)
         {
@@ -99,7 +99,7 @@ namespace LabProg
             if (_mPort.IsOpen)
             {
                 if (!IsDriven) _mPort.Write("s");
-                System.Threading.Thread.Sleep(30);
+                System.Threading.Thread.Sleep(130);
                 IsDriven = true;
             }
             else
@@ -113,7 +113,7 @@ namespace LabProg
             if (_mPort.IsOpen)
             {
                 if (IsDriven) _mPort.Write("t");
-                System.Threading.Thread.Sleep(30);
+                System.Threading.Thread.Sleep(130);
                 IsDriven = false;
             }
             else
@@ -128,7 +128,7 @@ namespace LabProg
             {
                 if (PumpReverse) _mPort.Write("l");
                 else _mPort.Write("r");
-                System.Threading.Thread.Sleep(30);
+                System.Threading.Thread.Sleep(130);
             }
             else
             {
@@ -142,7 +142,7 @@ namespace LabProg
             {
                 if (PumpReverse) _mPort.Write("r");
                 else _mPort.Write("l");
-                System.Threading.Thread.Sleep(30);
+                System.Threading.Thread.Sleep(130);
             }
             else
             {
@@ -161,17 +161,17 @@ namespace LabProg
         {
             if (_mPort.IsOpen)
             {
-                if (speed != prevSpeed)
-                {
+                //if (speed != prevSpeed)
+                //{
                     _mPort.Write(speed);
-                    System.Threading.Thread.Sleep(30);
+                    System.Threading.Thread.Sleep(130);
                     addLogBoxMessage($"Порт насоса {comId}, меняем скорость: '{speed}'");
-                } else addLogBoxMessage($"Порт насоса {comId}, скорость та же");
-                prevSpeed = speed;
+                //} else addLogBoxMessage($"Порт насоса {comId}, скорость та же");
+                //prevSpeed = speed;
             }
             else
             {
-                addLogBoxMessage("Pump port is closed");
+                addLogBoxMessage($"Pump port {comId} is closed");
             }
         }
     }
