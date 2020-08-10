@@ -118,11 +118,7 @@
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="4*"/>
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton Grid.Column="0" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
-                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}"/>
-                            <TextBlock Grid.Column="1" 
-                                           Grid.Row="0" 
-                                           Margin="5" Text="Реверс"/>
+                                
                             <ToggleButton x:Name="CbPumpActive" Grid.Column="2" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
                                               Checked="PumpPortOn" Unchecked="PumpPortOff"/>
                                 <TextBlock Grid.Column="3" Grid.Row="0"  Margin="5">Активно</TextBlock>
@@ -164,7 +160,34 @@
                             <TextBlock>COM3</TextBlock>
                         </ComboBox>
                     </Grid>
-                    </StackPanel>
+                    <Expander Header="Параметры" Padding="5">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                           Margin="5" Text="Докачка"/>
+                                <ToggleButton  Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}"
+                                               Checked="TbFirstReverceOn"
+                                               Unchecked="TbFirstReverceOff"/>
+                                <TextBlock
+                                           Margin="5 5 5 5" 
+                                    Text="Реверс"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                           Margin="5" Text="Откачка"/>
+                                <ToggleButton  Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
+                                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpSecondReverse, Mode=TwoWay}"
+                                               Checked="TbSecondReverceOn"
+                                               Unchecked="TbSecondReverceOff"/>
+                                <TextBlock
+                                           Margin="5" 
+                                    Text="Реверс"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+                
                 </TabItem>
                 <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TabItem.Header>

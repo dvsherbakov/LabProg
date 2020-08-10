@@ -13,14 +13,16 @@ namespace LabProg
         private readonly List<string> RecievedData;
         private bool f_direction;
         public bool IsDriven { get; set; }
-        private string comId;
-        private readonly bool pumpReverse;
-        private Action<string> addLogBoxMessage;
+        private readonly string comId;
+        public bool PumpReverse { get; set; }
+        private readonly Action<string> addLogBoxMessage;
+        private string prevSpeed = "";
 
         public PumpSerial(string portStr, bool startDirection, Action<string> addLogBoxMessage)
         {
             RecievedData = new List<string>();
             if (portStr == "") portStr = "COM7";
+            PumpReverse = startDirection;
             comId = portStr;
             _mPort = new SerialPort(portStr)
             {
@@ -41,7 +43,7 @@ namespace LabProg
             _mPort.Open();
             _active = true;
             IsDriven = false;
-            if (f_direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();  
+            //if (f_direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();  
         }
 
         public bool IsOpen => _mPort.IsOpen;
@@ -60,7 +62,7 @@ namespace LabProg
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            System.Threading.Thread.Sleep(20);
+            System.Threading.Thread.Sleep(30);
             var cnt = _mPort.ReadBufferSize;
             var mRxdata = new byte[cnt + 1];
             try
@@ -94,28 +96,43 @@ namespace LabProg
         
         public void StartPump()
         {
-            if (!IsDriven) _mPort.Write("s");
-            System.Threading.Thread.Sleep(20);
-            IsDriven = true;
+            if (_mPort.IsOpen)
+            {
+                if (!IsDriven) _mPort.Write("s");
+                System.Threading.Thread.Sleep(30);
+                IsDriven = true;
+            }
+            else
+            {
+                addLogBoxMessage($"Pump port {comId} is closed");
+            }
         }
 
         public void StopPump()
         {
-            if (IsDriven) _mPort.Write("t");
-            System.Threading.Thread.Sleep(20);
-            IsDriven = false;
+            if (_mPort.IsOpen)
+            {
+                if (IsDriven) _mPort.Write("t");
+                System.Threading.Thread.Sleep(30);
+                IsDriven = false;
+            }
+            else
+            {
+                addLogBoxMessage($"Pump port {comId} is closed");
+            }
         }
 
         public void SetClockwiseDirection()
         {
             if (_mPort.IsOpen)
             {
-                _mPort.Write("r");
-                System.Threading.Thread.Sleep(20);
+                if (PumpReverse) _mPort.Write("l");
+                else _mPort.Write("r");
+                System.Threading.Thread.Sleep(30);
             }
             else
             {
-                addLogBoxMessage("Pump port is closed");
+                addLogBoxMessage($"Pump port {comId} is closed");
             }
         }
 
@@ -123,12 +140,13 @@ namespace LabProg
         {
             if (_mPort.IsOpen)
             {
-                _mPort.Write("l");
-                System.Threading.Thread.Sleep(20);
+                if (PumpReverse) _mPort.Write("r");
+                else _mPort.Write("l");
+                System.Threading.Thread.Sleep(30);
             }
             else
             {
-                addLogBoxMessage("Pump port is closed");
+                addLogBoxMessage($"Pump port {comId} is closed");
             }
         }
 
@@ -136,14 +154,25 @@ namespace LabProg
         {
             f_direction = !f_direction;
             if (f_direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();
-            System.Threading.Thread.Sleep(20);
+            System.Threading.Thread.Sleep(30);
         }
 
         public void SetSpeed(string speed)
         {
-            _mPort.Write(speed);
-            System.Threading.Thread.Sleep(20);
-            addLogBoxMessage($"Порт насоса {comId}, меняем скорость: '{speed}'");
+            if (_mPort.IsOpen)
+            {
+                if (speed != prevSpeed)
+                {
+                    _mPort.Write(speed);
+                    System.Threading.Thread.Sleep(30);
+                    addLogBoxMessage($"Порт насоса {comId}, меняем скорость: '{speed}'");
+                } else addLogBoxMessage($"Порт насоса {comId}, скорость та же");
+                prevSpeed = speed;
+            }
+            else
+            {
+                addLogBoxMessage("Pump port is closed");
+            }
         }
     }
 }
