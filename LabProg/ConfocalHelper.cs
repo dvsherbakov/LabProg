@@ -113,39 +113,39 @@ namespace LabProg
 
             if (!PumpActive)
             {
-                _pumpSerial.StopPump();
+                _pumpSerial.AddStopPump();
                 return;
             }
             if (speed == _prevSpeed)
             {
                 if (double.Parse(speed.Trim(), CultureInfo.InvariantCulture) == 0)
                 {
-                    _pumpSerial.StopPump();
+                    _pumpSerial.AddStopPump();
                 }
             }
             else
             {
-                _pumpSerial.SetSpeed(speed);
+                _pumpSerial.AddSpeed(speed);
 
             }
             var direction = GetDirection(MeasureRes);
             switch (direction)
             {
                 case Direction.Stop:
-                    _pumpSerial.StopPump();
+                    _pumpSerial.AddStopPump();
                     break;
                 case Direction.Clockwise:
-                    _pumpSerial.SetClockwiseDirection();
+                    _pumpSerial.AddClockwiseDirection();
                     break;
                 case Direction.CounterClockwise:
 
-                    _pumpSerial.SetCounterClockwiseDirection();
+                    _pumpSerial.AddCounterClockwiseDirection();
                     break;
             }
 
             if (!speed.Equals("0.0 "))
             {
-                _pumpSerial.StartPump();
+                _pumpSerial.AddStartPump();
             }
 
             _prevSpeed = speed;
@@ -159,8 +159,8 @@ namespace LabProg
 
             if (!PumpActive || speed.Equals("0.0 ") || (direction == Direction.Stop))
             {
-                _pumpSerial.StopPump();
-                _pumpSecondSerial.StopPump();
+                _pumpSerial.AddStopPump();
+                _pumpSecondSerial.AddStopPump();
 
 
                 return;
@@ -169,18 +169,18 @@ namespace LabProg
 
             if (direction == Direction.Clockwise)
             {
-                _pumpSerial.SetSpeed(speed);
-                _pumpSerial.StartPump();
-                _pumpSecondSerial.SetSpeed("0.5 ");
-                _pumpSecondSerial.StopPump();
+                _pumpSerial.AddSpeed(speed);
+                _pumpSerial.AddStartPump();
+                _pumpSecondSerial.AddSpeed("0.5 ");
+                _pumpSecondSerial.AddStopPump();
 
             }
             if (direction == Direction.CounterClockwise)
             {
-                _pumpSecondSerial.SetSpeed(speed);
-                _pumpSecondSerial.StartPump();
-                _pumpSerial.SetSpeed("0.5 ");
-                _pumpSerial.StopPump();
+                _pumpSecondSerial.AddSpeed(speed);
+                _pumpSecondSerial.AddStartPump();
+                _pumpSerial.AddSpeed("0.5 ");
+                _pumpSerial.AddStopPump();
 
             }
 
@@ -247,15 +247,15 @@ namespace LabProg
             if (IsTwoPump)
             {
                 //Тут указываются начальные направления насосов
-                _pumpSerial.SetCounterClockwiseDirection();
-                _pumpSecondSerial.SetClockwiseDirection();
+                _pumpSerial.AddCounterClockwiseDirection();
+                _pumpSecondSerial.AddClockwiseDirection();
             }
         }
         private void PumpPortOff(object sender, RoutedEventArgs e)
         {
             PumpActive = false;
-            if (_pumpSerial != null) _pumpSerial.StopPump();
-            if (_pumpSecondSerial != null) _pumpSecondSerial.StopPump();
+            if (_pumpSerial != null) _pumpSerial.AddStopPump();
+            if (_pumpSecondSerial != null) _pumpSecondSerial.AddStopPump();
             _confocalTimer.Stop();
         }
 
@@ -273,7 +273,7 @@ namespace LabProg
                     CbPumpActive.IsChecked = false;
                 }
             }
-            _pumpSerial.StartPump();
+            _pumpSerial.AddStartPump();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
