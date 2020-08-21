@@ -175,11 +175,18 @@
                                            Margin="5 5 5 5" 
                                     Text="Реверс"/>
                             </StackPanel>
-                            <StackPanel>
-                                <Button  Width="30" Height="30">
+                            <StackPanel Orientation="Horizontal">
+                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent">
                                     <Button.Content>
                                         <StackPanel>
-                                            <ContentControl   Content="{StaticResource StartIcon}"  Margin="5"/>
+                                            <ContentControl   Content="{StaticResource StartIcon}" />
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent">
+                                    <Button.Content>
+                                        <StackPanel>
+                                            <ContentControl   Content="{StaticResource StopIcon}" />
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
