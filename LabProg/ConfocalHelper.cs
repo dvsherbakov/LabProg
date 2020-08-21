@@ -32,8 +32,8 @@ namespace LabProg
                 new SpeedGradeItem{different=0.10, speed="45.0"},
                 new SpeedGradeItem{different=0.08, speed="20.0"},
                 new SpeedGradeItem{different=0.04, speed="11.0"},
-                new SpeedGradeItem{different=0.02, speed="2.5 "},
-                new SpeedGradeItem{different=0.01, speed="0.5 "},
+                new SpeedGradeItem{different=0.01, speed="2.5 "},
+                new SpeedGradeItem{different=0.005, speed="0.5 "},
                 new SpeedGradeItem{different=0.00, speed="0.0 "}
         };
 
