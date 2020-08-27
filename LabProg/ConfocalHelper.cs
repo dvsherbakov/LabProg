@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Threading;
 using Timer = System.Timers.Timer;
+using System.Globalization;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace LabProg
 {
@@ -20,14 +23,18 @@ namespace LabProg
         private string _prevSpeed;
         //public delegate void NextPrimeDelegate();
 
-        private static List<SpeedGradeItem> SpeedGrades = new List<SpeedGradeItem> {
-                new SpeedGradeItem{different=1.00, speed="280 "},
-                new SpeedGradeItem{different=0.10, speed="125 "},
-                new SpeedGradeItem{different=0.50, speed="35.5"},
-                new SpeedGradeItem{different=0.10, speed="15.0"},
-                new SpeedGradeItem{different=0.05, speed="5   "},
-                new SpeedGradeItem{different=0.01, speed="0.5 "},
-                new SpeedGradeItem{different=0.00, speed="0   "}
+        private List<SpeedGradeItem> SpeedGrades = new List<SpeedGradeItem> {
+            new SpeedGradeItem{different=3.00, speed="250 "},
+            new SpeedGradeItem{different=2.00, speed="150"},
+                new SpeedGradeItem{different=1.00, speed="75.0"},
+                new SpeedGradeItem{different=0.50, speed="65.0"},
+                new SpeedGradeItem{different=0.30, speed="55.0"},
+                new SpeedGradeItem{different=0.10, speed="45.0"},
+                new SpeedGradeItem{different=0.08, speed="20.0"},
+                new SpeedGradeItem{different=0.04, speed="11.0"},
+                new SpeedGradeItem{different=0.01, speed="2.5 "},
+                new SpeedGradeItem{different=0.005, speed="0.5 "},
+                new SpeedGradeItem{different=0.00, speed="0.0 "}
         };
 
         private void PeackInfo(object source, System.Timers.ElapsedEventArgs e)
@@ -35,7 +42,7 @@ namespace LabProg
             var timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
             DistMeasureRes x = new DistMeasureRes { Dist = 0 };
             timestamp++;
-            while (Math.Abs(x.Dist) < 0.00000001)
+            while (Math.Abs(x.Dist) < 0.000001)
             {
                 using (var wc = new WebClient())
                 {
@@ -51,7 +58,7 @@ namespace LabProg
                         Dispatcher.Invoke(() =>
                             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message }));
                     }
-                    OperatePump(x);
+                    if (!IsTwoPump) OperatePump(x); else OperateTwoPump(x);
                 }
             }
         }
@@ -70,29 +77,31 @@ namespace LabProg
                 if (double.TryParse(tmp[2], out var outE)) res2.Add(outE / 1000000);
             }
             DistMeasureRes res = new DistMeasureRes { Dist = 0, IsSingle = true };
+            if (res1.Count == 0 || res2.Count == 0) return res;
 
             if (res2.Average() > res1.Average())
             {
                 res.Dist = res2.Average() - res1.Average();
                 res.IsSingle = false;
-            } else
+            }
+            else
                 res.Dist = res1.Average();
 
             return res;
         }
 
-        private double SetupLevel
+        private double SelectedLevel
         {
             get
             {
                 string txt = null;
-                Dispatcher.Invoke(() => txt = CbConfocalLevel.Text);
-                double.TryParse(txt, out double res);
-                return res;
+                Dispatcher.Invoke(() => txt = CbConfocalLevel.Text.Trim().Replace('.', ','));
+                double.TryParse(txt, out double lvl);
+                return lvl;
             }
         }
 
-        private  bool IsReverce { get => Properties.Settings.Default.PumpReverse; }
+        // private  bool IsReverce { get => Properties.Settings.Default.PumpReverse; }
 
         private bool IsTwoPump { get => Properties.Settings.Default.IsTwoPump; }
 
@@ -102,60 +111,108 @@ namespace LabProg
 
             var speed = GetPumpSpeed(MeasureRes);
 
-            if ((speed == _prevSpeed) || !PumpActive) return;
+            if (!PumpActive)
+            {
+                _pumpSerial.AddStopPump();
+                return;
+            }
+            if (speed == _prevSpeed)
+            {
+                if (double.Parse(speed.Trim(), CultureInfo.InvariantCulture) == 0)
+                {
+                    _pumpSerial.AddStopPump();
+                }
+            }
+            else
+            {
+                _pumpSerial.AddSpeed(speed);
+
+            }
             var direction = GetDirection(MeasureRes);
             switch (direction)
             {
                 case Direction.Stop:
-                    if (IsTwoPump)
-                        _pumpSecondSerial.StopPump();
-                    _pumpSerial.StopPump();
+                    _pumpSerial.AddStopPump();
                     break;
                 case Direction.Clockwise:
-                    if (!IsTwoPump)
-                        _pumpSerial.SetClockwiseDirection();
-                    else if (!speed.Equals("0   "))
-                        _pumpSerial.StartPump();
+                    _pumpSerial.AddClockwiseDirection();
                     break;
                 case Direction.CounterClockwise:
-                    if (!IsTwoPump)
-                        _pumpSerial.SetCounterClockwiseDirection();
-                    else if (!speed.Equals("0   "))
-                        _pumpSecondSerial.StartPump();
+
+                    _pumpSerial.AddCounterClockwiseDirection();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (!speed.Equals("0   ")&&!IsTwoPump)
+            if (!speed.Equals("0.0 "))
             {
-                _pumpSerial.StartPump();
+                _pumpSerial.AddStartPump();
             }
 
             _prevSpeed = speed;
         }
 
-       
+        private void OperateTwoPump(DistMeasureRes measureRes)
+        {
+            var speed = GetPumpSpeed(measureRes);
+            Dispatcher.Invoke(() => ConfocalLb.Text = measureRes.Dist.ToString("N5"));
+            var direction = GetDirection(measureRes);
+
+            if (!PumpActive || speed.Equals("0.0 ") || (direction == Direction.Stop))
+            {
+                _pumpSerial.AddStopPump();
+                _pumpSecondSerial.AddStopPump();
+
+
+                return;
+            }
+            
+
+            if (direction == Direction.Clockwise)
+            {
+                _pumpSerial.AddSpeed(speed);
+                _pumpSerial.AddStartPump();
+                _pumpSecondSerial.AddSpeed("0.5 ");
+                _pumpSecondSerial.AddStopPump();
+
+            }
+            if (direction == Direction.CounterClockwise)
+            {
+                _pumpSecondSerial.AddSpeed(speed);
+                _pumpSecondSerial.AddStartPump();
+                _pumpSerial.AddSpeed("0.5 ");
+                _pumpSerial.AddStopPump();
+
+            }
+
+        }
 
         private Direction GetDirection(DistMeasureRes currentLevel)
         {
-            var currentDifferent = SetupLevel - currentLevel.Dist;
+            var currentDifferent = SelectedLevel - currentLevel.Dist;
             if (Math.Abs(currentDifferent) < 0.001) return Direction.Stop;
-            var tmpDirection = ((currentDifferent > 0) == IsReverce) != currentLevel.IsSingle;
+            var tmpDirection = (currentDifferent > 0);
+            if (currentLevel.IsSingle) tmpDirection = !tmpDirection;
 
+            Debug.WriteLine($"direction diff={currentDifferent}, issingle={currentLevel.IsSingle}");
             return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
         }
 
         private string GetPumpSpeed(DistMeasureRes currentLevel)
         {
-            var subLevel = Math.Abs(currentLevel.Dist - SetupLevel);
+            var subLevel = Math.Abs(currentLevel.Dist - SelectedLevel);
+            Debug.WriteLine($"Speed setup diff = {subLevel}");
+            var ss = SpeedGrades.Where(x => x.different < subLevel).OrderByDescending(x => x.different).FirstOrDefault().speed;
+            Debug.WriteLine($"Speed  = {ss}");
             return SpeedGrades.Where(x => x.different < subLevel).OrderByDescending(x => x.different).FirstOrDefault().speed;
         }
 
         private void PumpPortOn(object sender, RoutedEventArgs e)
         {
             PumpActive = true;
-           if (_confocalTimer==null){
+            if (_confocalTimer == null)
+            {
                 _confocalTimer = new Timer
                 {
                     Interval = 1000
@@ -175,23 +232,39 @@ namespace LabProg
                     LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
                     CbPumpActive.IsChecked = false;
                 }
+                try
+                {
+                    if (IsTwoPump)
+                    {
+                        if (_pumpSecondSerial == null) _pumpSecondSerial = new PumpSerial(CbPumpSecondPort.Text, Properties.Settings.Default.PumpSecondReverse, AddLogBoxMessage);
+                        _pumpSecondSerial.OpenPort();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
+                    CbPumpActive.IsChecked = false;
+                }
             }
             if (IsTwoPump)
             {
-                _pumpSerial.SetClockwiseDirection();
-                _pumpSecondSerial.SetClockwiseDirection();
+                //Тут указываются начальные направления насосов
+                _pumpSerial.AddCounterClockwiseDirection();
+                _pumpSecondSerial.AddClockwiseDirection();
             }
         }
         private void PumpPortOff(object sender, RoutedEventArgs e)
         {
             PumpActive = false;
-            _pumpSerial.StopPump();
+            if (_pumpSerial != null) _pumpSerial.AddStopPump();
+            if (_pumpSecondSerial != null) _pumpSecondSerial.AddStopPump();
             _confocalTimer.Stop();
         }
 
         private void PumpStartButton(object sender, RoutedEventArgs e)
         {
-            if (!_pumpSerial.Active()) {
+            if (!_pumpSerial.Active())
+            {
                 try
                 {
                     _pumpSerial.OpenPort();
@@ -202,7 +275,7 @@ namespace LabProg
                     CbPumpActive.IsChecked = false;
                 }
             }
-            _pumpSerial.StartPump();
+            _pumpSerial.AddStartPump();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -220,6 +293,24 @@ namespace LabProg
             TbTwoPumpToggle();
         }
 
+        private void TbFirstReverceOn(object sender, RoutedEventArgs e)
+        {
+            if (_pumpSerial != null) _pumpSerial.PumpReverse = true;
+        }
+        private void TbFirstReverceOff(object sender, RoutedEventArgs e)
+        {
+            if (_pumpSerial != null) _pumpSerial.PumpReverse = false;
+        }
+
+        private void TbSecondReverceOn(object sender, RoutedEventArgs e)
+        {
+            if (_pumpSecondSerial != null) _pumpSecondSerial.PumpReverse = true;
+        }
+        private void TbSecondReverceOff(object sender, RoutedEventArgs e)
+        {
+            if (_pumpSecondSerial != null) _pumpSecondSerial.PumpReverse = false;
+        }
+
         private void TbTwoPumpToggle()
         {
             if (Properties.Settings.Default.IsTwoPump)
@@ -228,7 +319,7 @@ namespace LabProg
                 if (TbFirstPump != null) TbFirstPump.Text = "Порт притока";
                 if (TbSecondPump != null) TbSecondPump.Visibility = Visibility.Visible;
                 if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Visible;
-                if (_pumpSecondSerial == null && CbPumpSecondPort != null) _pumpSecondSerial = new PumpSerial(CbPumpSecondPort.Text, Properties.Settings.Default.PumpReverse);
+                if (_pumpSecondSerial == null && CbPumpSecondPort != null) _pumpSecondSerial = new PumpSerial(CbPumpSecondPort.Text, Properties.Settings.Default.PumpSecondReverse, AddLogBoxMessage);
             }
             else
             {
@@ -238,6 +329,7 @@ namespace LabProg
                 if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Collapsed;
             }
         }
+
     }
 
     class DistMeasureRes

@@ -118,6 +118,23 @@
         <Path Data="M23.667969,8.886719C23.9375,8.886719,24.207031,8.785156,24.410156,8.582031L26.964844,6.023438C27.375,5.613281 27.375,4.953125 26.964844,4.542969 26.554688,4.132812 25.894531,4.132812 25.484375,4.542969L22.929688,7.097656C22.519531,7.507812 22.519531,8.171875 22.929688,8.582031 23.132812,8.785156 23.402344,8.886719 23.667969,8.886719z M23.667969,8.886719" Fill="#FF000000" Opacity="1" />
     </Grid>
 
+    <Grid x:Key="StartIcon" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Path  Stroke="#FF000000">
+            <Path.Data>
+                <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+            </Path.Data>
+        </Path>
+        <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+    </Grid>
+    <Grid x:Key="StopIcon" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Path  Stroke="#FF000000">
+            <Path.Data>
+                <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+            </Path.Data>
+        </Path>
+        <Path Data="M6,6L6,18 18,18 18,6z" Stroke="#FF000000" />
+    </Grid>
+
     <Color x:Key="DefaultColor" A="255" R="240" G ="240" B="240"/>
     <Color x:Key="HighlightColor" A="255" R="229" G ="229" B="229"/>
     <Color x:Key="PressedColor" A="255" R="215" G ="215" B="215"/>

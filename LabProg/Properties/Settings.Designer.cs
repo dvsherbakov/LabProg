@@ -1126,5 +1126,17 @@ namespace LabProg.Properties {
                 this["MirrorPortIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PumpSecondReverse {
+            get {
+                return ((bool)(this["PumpSecondReverse"]));
+            }
+            set {
+                this["PumpSecondReverse"] = value;
+            }
+        }
     }
 }
