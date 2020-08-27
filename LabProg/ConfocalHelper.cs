@@ -123,6 +123,8 @@ namespace LabProg
                     else if (!speed.Equals("0   "))
                         _pumpSecondSerial.StartPump();
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             if (!speed.Equals("0   ")&&!IsTwoPump)

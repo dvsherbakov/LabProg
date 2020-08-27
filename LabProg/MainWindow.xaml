@@ -141,7 +141,7 @@
                                    Grid.Row="0"
                                    x:Name="TbFirstPump"
                                    Margin="10,2,5,2" 
-                                   Text="Порт насоса"/>
+                                   Text="Порт докачки"/>
                         <ComboBox x:Name = "CbPumpPort" 
                                   Grid.Column="1" 
                                   Margin="10,2,5,2" >

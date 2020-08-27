@@ -54,33 +54,33 @@ namespace LabProg
         {
             System.Threading.Thread.Sleep(20);
             var cnt = _mPort.ReadBufferSize;
-            var mRxdata = new byte[cnt + 1];
+            var mRxData = new byte[cnt + 1];
             try
             {
-                _mPort.Read(mRxdata, 0, cnt);
+                _mPort.Read(mRxData, 0, cnt);
             }
             catch
             {
                 // ignored
             }
             var ascii = Encoding.ASCII;
-            RecievedData.Add(ascii.GetString(mRxdata));
+            RecievedData.Add(ascii.GetString(mRxData));
         }
 
         public string ReadPortData()
         {
             var cnt = _mPort.ReadBufferSize;
-            var mRxdata = new byte[cnt + 1];
+            var mRxData = new byte[cnt + 1];
             try
             {
-                _mPort.Read(mRxdata, 0, cnt);
+                _mPort.Read(mRxData, 0, cnt);
             }
             catch (Exception)
             {
                 // ignored
             }
             var ascii = Encoding.ASCII;
-            return ascii.GetString(mRxdata);
+            return ascii.GetString(mRxData);
         }
 
         
@@ -93,6 +93,7 @@ namespace LabProg
 
         public void StopPump()
         {
+            if (!_mPort.IsOpen) return;
             if (IsDriven) _mPort.Write("t");
             System.Threading.Thread.Sleep(20);
             IsDriven = false;
