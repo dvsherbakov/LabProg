@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*"></ColumnDefinition>
-            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="150*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Menu Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" FontSize="16" Grid.ColumnSpan="3">
@@ -89,42 +89,14 @@
                                  Width="80"
                                  Margin="0 0 10 0"
                                  Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" />
-                        <Button Grid.Column="1" Margin="4" Click="Button_Click" Content="(*)"/>
+                        <Button Margin="4" Click="Button_Click" Content="(*)"/>
                     </StackPanel>
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="3*"/>
-                        </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Margin="10 10 0 0 ">
+                            <ToggleButton x:Name="CbPumpActive" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
+                                          Checked="PumpPortOn" Unchecked="PumpPortOff"/>
+                            <TextBlock Margin="5">Активно</TextBlock>
+                    </StackPanel>
                         
-                            <Grid Row="3" Column="0" Grid.ColumnSpan="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Margin="10,4,4,4" Width="80" Click="PumpStartButton">Пуск</Button>
-                               
-                            </Grid>
-                            <Grid Row="4" Column="0" Grid.ColumnSpan="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                            <ToggleButton x:Name="CbPumpActive" Grid.Column="2" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
-                                              Checked="PumpPortOn" Unchecked="PumpPortOff"/>
-                                <TextBlock Grid.Column="3" Grid.Row="0"  Margin="5">Активно</TextBlock>
-                            </Grid>
-                        </Grid>
 
                     <Expander Header="Параметры" Padding="5">
                         <StackPanel>
@@ -176,10 +148,10 @@
                                     Text="Реверс"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent">
+                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent" Click="PumpStartButton">
                                     <Button.Content>
                                         <StackPanel>
-                                            <ContentControl   Content="{StaticResource StartIcon}" />
+                                            <ContentControl Content="{StaticResource StartIcon}" />
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
@@ -201,6 +173,22 @@
                                 <TextBlock
                                            Margin="5" 
                                     Text="Реверс"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent" Click="PumpStartButton">
+                                    <Button.Content>
+                                        <StackPanel>
+                                            <ContentControl Content="{StaticResource StartIcon}" />
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent">
+                                    <Button.Content>
+                                        <StackPanel>
+                                            <ContentControl   Content="{StaticResource StopIcon}" />
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                         </StackPanel>
                     </Expander>
@@ -933,7 +921,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+        <GridSplitter ResizeDirection="Columns" Grid.Row="1" Grid.Column="1" Height="Auto" Width="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
         <Image x:Name="PictureBox1"  Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Cursor="IBeam" MinWidth="604" MinHeight="600" Stretch="Fill"/>
     </Grid>
 </Window>

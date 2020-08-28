@@ -18,10 +18,10 @@ namespace LabProg
     {
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern UInt32 WaitForSingleObject(IntPtr hHandle, UInt32 dwMilliseconds);
+        private static extern uint WaitForSingleObject(IntPtr hHandle, uint dwMilliseconds);
 
-        IntPtr cameraHandle = IntPtr.Zero;
-        IntPtr convertHandle = IntPtr.Zero;
+        private IntPtr f_CameraHandle = IntPtr.Zero;
+        private IntPtr f_ConvertHandle = IntPtr.Zero;
         IntPtr convertDialog = IntPtr.Zero;
         IntPtr camDialog = IntPtr.Zero;
         private const int WM_APPp100 = 0x8000 + 100;
@@ -41,11 +41,10 @@ namespace LabProg
 
         private void ConnectToCamera(object sender, RoutedEventArgs e)
         {
-            int err = 0;
-            ushort boardNum = 1;
+            const ushort boardNum = 1;
 
-            cameraHandle = IntPtr.Zero;
-            convertHandle = IntPtr.Zero;
+            f_CameraHandle = IntPtr.Zero;
+            f_ConvertHandle = IntPtr.Zero;
             convertDialog = IntPtr.Zero;
             camDialog = IntPtr.Zero;
             bufwidth = 0;
@@ -55,19 +54,19 @@ namespace LabProg
             // Open a handle to the camera
             try
             {
-                err = PCO_SDK_LibWrapper.PCO_OpenCamera(ref cameraHandle, boardNum);
+                var err = PCO_SDK_LibWrapper.PCO_OpenCamera(ref f_CameraHandle, boardNum);
                 if (err == 0)
                 {
-                    UInt16 wrecstate = 0;
+                    ushort wrecState = 0;
                     cbStartCamera.IsEnabled = false;
                     cbStopCamera.IsEnabled = false;
                     cbGetDescription.IsEnabled = true;
                     cbOpenCamera.IsEnabled = false;
                     cbCloseCamera.IsEnabled = true;
 
-                    PCO_SDK_LibWrapper.PCO_GetRecordingState(cameraHandle, ref wrecstate);
-                    if (wrecstate != 0)
-                        PCO_SDK_LibWrapper.PCO_SetRecordingState(cameraHandle, 0);
+                    PCO_SDK_LibWrapper.PCO_GetRecordingState(f_CameraHandle, ref wrecState);
+                    if (wrecState != 0)
+                        PCO_SDK_LibWrapper.PCO_SetRecordingState(f_CameraHandle, 0);
 
                     // buttonOpenCamDialog.Enabled = true;
                 }
@@ -92,12 +91,8 @@ namespace LabProg
             pcoDescr.wSize = (ushort)Marshal.SizeOf(pcoDescr);
             pcoStorage.wSize = (ushort)Marshal.SizeOf(pcoStorage);
             pcoImage.wSize = (ushort)Marshal.SizeOf(pcoImage);
-
-            int err = 0;
-
-            err = PCO_SDK_LibWrapper.PCO_GetCameraDescription(cameraHandle, ref pcoDescr);
-
-            err = PCO_SDK_LibWrapper.PCO_GetStorageStruct(cameraHandle, ref pcoStorage);
+            var err = PCO_SDK_LibWrapper.PCO_GetCameraDescription(f_CameraHandle, ref pcoDescr);
+            err = PCO_SDK_LibWrapper.PCO_GetStorageStruct(f_CameraHandle, ref pcoStorage);
 
             pcoImage.strSegment = new PCO_Segment[4];
 
@@ -106,42 +101,39 @@ namespace LabProg
             pcoImage.strSegment[2].wSize = (ushort)Marshal.SizeOf(typeof(PCO_Segment));
             pcoImage.strSegment[3].wSize = (ushort)Marshal.SizeOf(typeof(PCO_Segment));
 
-            err = PCO_SDK_LibWrapper.PCO_GetImageStruct(cameraHandle, ref pcoImage);
+            err = PCO_SDK_LibWrapper.PCO_GetImageStruct(f_CameraHandle, ref pcoImage);
 
-            ushort usfwsize = (ushort)Marshal.SizeOf(typeof(PCO_SC2_Firmware_DESC));
+            var usfwsize = (ushort)Marshal.SizeOf(typeof(PCO_SC2_Firmware_DESC));
 
             usfwsize = (ushort)Marshal.SizeOf(typeof(PCO_FW_Vers));
             pcoCameraType.strHardwareVersion.Board = new PCO_SC2_Hardware_DESC[10];
             pcoCameraType.strFirmwareVersion.Device = new PCO_SC2_Firmware_DESC[10];
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 pcoCameraType.strHardwareVersion.Board[i].szName = "123456789012345";
                 pcoCameraType.strFirmwareVersion.Device[i].szName = "123456789012345";
             }
             pcoCameraType.wSize = (ushort)Marshal.SizeOf(pcoCameraType);
 
-            err = PCO_SDK_LibWrapper.PCO_GetCameraType(cameraHandle, ref pcoCameraType);
+            err = PCO_SDK_LibWrapper.PCO_GetCameraType(f_CameraHandle, ref pcoCameraType);
 
-            byte[] szCameraName;
-            szCameraName = new byte[30];
-            string cameraname;
+            var szCameraName = new byte[30];
 
-            err = PCO_SDK_LibWrapper.PCO_GetCameraName(cameraHandle, szCameraName, 30);
-            cameraname = System.Text.Encoding.Default.GetString(szCameraName);
+            err = PCO_SDK_LibWrapper.PCO_GetCameraName(f_CameraHandle, szCameraName, 30);
 
-            Setupconvert();
+            SetupConvert();
 
            cbStartCamera.IsEnabled = true;
             cbStopCamera.IsEnabled = true;
         }
 
-        private void Setupconvert()
+        private void SetupConvert()
         {
             pcoDescr = new PCO_Description();
             pcoDescr.wSize = (ushort)Marshal.SizeOf(pcoDescr);
             int err = 0;
 
-            err = PCO_SDK_LibWrapper.PCO_GetCameraDescription(cameraHandle, ref pcoDescr);
+            err = PCO_SDK_LibWrapper.PCO_GetCameraDescription(f_CameraHandle, ref pcoDescr);
             PCO_ConvertStructures.PCO_SensorInfo strsensorinf = new PCO_ConvertStructures.PCO_SensorInfo();
             PCO_ConvertStructures.PCO_Display strDisplay = new PCO_ConvertStructures.PCO_Display();
             strsensorinf.wSize = (ushort)Marshal.SizeOf(strsensorinf);
@@ -162,19 +154,19 @@ namespace LabProg
             strsensorinf.strColorCoeff.da32 = 0.0;
             strsensorinf.strColorCoeff.da33 = 1.0;
             strsensorinf.iCamNum = 0;
-            strsensorinf.hCamera = cameraHandle;
+            strsensorinf.hCamera = f_CameraHandle;
 
             int errorCode;
             /* We created a pointer to a convert object here */
-            errorCode = PCO_Convert_LibWrapper.PCO_ConvertCreate(ref convertHandle, ref strsensorinf, PCO_Convert_LibWrapper.PCO_COLOR_CONVERT);
+            errorCode = PCO_Convert_LibWrapper.PCO_ConvertCreate(ref f_ConvertHandle, ref strsensorinf, PCO_Convert_LibWrapper.PCO_COLOR_CONVERT);
 
             PCO_ConvertStructures.PCO_Convert pcoConv = new PCO_ConvertStructures.PCO_Convert(); ;
 
             pcoConv.wSize = (ushort)Marshal.SizeOf(pcoConv);
-            errorCode = PCOConvertDll.PCO_Convert_LibWrapper.PCO_ConvertGet(convertHandle, ref pcoConv);
+            errorCode = PCOConvertDll.PCO_Convert_LibWrapper.PCO_ConvertGet(f_ConvertHandle, ref pcoConv);
             pcoConv.wSize = (ushort)Marshal.SizeOf(pcoConv);
 
-            IntPtr debugIntPtr = convertHandle;
+            IntPtr debugIntPtr = f_ConvertHandle;
             PCO_ConvertStructures.PCO_Convert pcoConvertlocal = (PCO_ConvertStructures.PCO_Convert)Marshal.PtrToStructure(debugIntPtr, typeof(PCO_ConvertStructures.PCO_Convert));
         }
 
@@ -188,32 +180,32 @@ namespace LabProg
             ushort heightmax = 0;
 
             // It is recommended to call this function in order to get information about the camera internal state
-            err = PCO_SDK_LibWrapper.PCO_GetCameraHealthStatus(cameraHandle, ref dwWarn, ref dwError, ref dwStatus);
-            PCO_SDK_LibWrapper.PCO_SetTriggerMode(cameraHandle, 0);
-            err = PCO_SDK_LibWrapper.PCO_ArmCamera(cameraHandle);
-            err = PCO_SDK_LibWrapper.PCO_GetSizes(cameraHandle, ref width, ref height, ref widthmax, ref heightmax);
-            err = PCO_SDK_LibWrapper.PCO_CamLinkSetImageParameters(cameraHandle, (UInt16)width, (UInt16)height);
+            err = PCO_SDK_LibWrapper.PCO_GetCameraHealthStatus(f_CameraHandle, ref dwWarn, ref dwError, ref dwStatus);
+            PCO_SDK_LibWrapper.PCO_SetTriggerMode(f_CameraHandle, 0);
+            err = PCO_SDK_LibWrapper.PCO_ArmCamera(f_CameraHandle);
+            err = PCO_SDK_LibWrapper.PCO_GetSizes(f_CameraHandle, ref width, ref height, ref widthmax, ref heightmax);
+            err = PCO_SDK_LibWrapper.PCO_CamLinkSetImageParameters(f_CameraHandle, (UInt16)width, (UInt16)height);
 
-            err = PCO_SDK_LibWrapper.PCO_SetRecordingState(cameraHandle, 1);
+            err = PCO_SDK_LibWrapper.PCO_SetRecordingState(f_CameraHandle, 1);
             cbGrabCamera.IsEnabled = true;
             if (camDialog != IntPtr.Zero)
             {
                 PCO_SDK_LibWrapper.PCO_EnableDialogCam(camDialog, false);
             }
-            _cameraTimer.Start();
+            f_CameraTimer.Start();
         }
 
         private void OnStopRecord(object sender, EventArgs e)
         {
             int err;
-            err = PCO_SDK_LibWrapper.PCO_SetRecordingState(cameraHandle, 0);
+            err = PCO_SDK_LibWrapper.PCO_SetRecordingState(f_CameraHandle, 0);
             cbGrabCamera.IsEnabled = false;
             if (camDialog != IntPtr.Zero)
             {
                 PCO_SDK_LibWrapper.PCO_EnableDialogCam(camDialog, true);
             }
-            err = PCO_SDK_LibWrapper.PCO_CancelImages(cameraHandle);
-            _cameraTimer.Stop();
+            err = PCO_SDK_LibWrapper.PCO_CancelImages(f_CameraHandle);
+            f_CameraTimer.Stop();
         }
 
         private void OnGrabImage(object sender, EventArgs evt)
@@ -237,7 +229,7 @@ namespace LabProg
             ipadd *= 4;
             ipadd = width - ipadd;
 
-            err = PCO_SDK_LibWrapper.PCO_GetSizes(cameraHandle, ref width, ref height, ref widthmax, ref heightmax);
+            err = PCO_SDK_LibWrapper.PCO_GetSizes(f_CameraHandle, ref width, ref height, ref widthmax, ref heightmax);
             size = width * height * 2;
 
             buf = UIntPtr.Zero;
@@ -246,12 +238,12 @@ namespace LabProg
             {
                 if (bufnr != -1)
                 {
-                    PCO_SDK_LibWrapper.PCO_FreeBuffer(cameraHandle, bufnr);
+                    PCO_SDK_LibWrapper.PCO_FreeBuffer(f_CameraHandle, bufnr);
                 }
                 bufnr = -1;
                 imagedata = new byte[(width + ipadd) * height * 3];
 
-                err = PCO_SDK_LibWrapper.PCO_AllocateBuffer(cameraHandle, ref bufnr, size, ref buf, ref evhandle);
+                err = PCO_SDK_LibWrapper.PCO_AllocateBuffer(f_CameraHandle, ref bufnr, size, ref buf, ref evhandle);
                 if (err == 0)
                 {
                     bufwidth = width;
@@ -259,17 +251,17 @@ namespace LabProg
                 }
             }
             else
-                err = PCO_SDK_LibWrapper.PCO_GetBuffer(cameraHandle, bufnr, ref buf, ref evhandle);
+                err = PCO_SDK_LibWrapper.PCO_GetBuffer(f_CameraHandle, bufnr, ref buf, ref evhandle);
 
-            if ((convertDialog == IntPtr.Zero) && (convertHandle != IntPtr.Zero))
+            if ((convertDialog == IntPtr.Zero) && (f_ConvertHandle != IntPtr.Zero))
             {
                 var hdl = new WindowInteropHelper(this).Handle;
-                PCO_Convert_LibWrapper.PCO_OpenConvertDialog(ref convertDialog, hdl, "Convert Dialog", WM_APPp100, convertHandle, 500, 100);
+                PCO_Convert_LibWrapper.PCO_OpenConvertDialog(ref convertDialog, hdl, "Convert Dialog", WM_APPp100, f_ConvertHandle, 500, 100);
             }
 
             //Mandatory for Cameralink and GigE. Don't care for all other interfaces, so leave it intact here.
 
-            err = PCO_SDK_LibWrapper.PCO_AddBufferEx(cameraHandle, 0, 0, bufnr, (UInt16)width, (UInt16)height, (UInt16)pcoDescr.wDynResDESC);
+            err = PCO_SDK_LibWrapper.PCO_AddBufferEx(f_CameraHandle, 0, 0, bufnr, (UInt16)width, (UInt16)height, (UInt16)pcoDescr.wDynResDESC);
 
             bool bImageIsOk = false;
             uint res = WaitForSingleObject(evhandle, 3000);
@@ -297,10 +289,10 @@ namespace LabProg
                 if (max <= min)
                     max = min + 1;
             }
-            PCO_Convert_LibWrapper.PCO_Convert16TOCOL(convertHandle, 0, iconvertcol, width, height,
+            PCO_Convert_LibWrapper.PCO_Convert16TOCOL(f_ConvertHandle, 0, iconvertcol, width, height,
                 buf, imagedata);
 
-            if ((convertDialog != IntPtr.Zero) && (convertHandle != IntPtr.Zero))
+            if ((convertDialog != IntPtr.Zero) && (f_ConvertHandle != IntPtr.Zero))
             {
                 PCO_Convert_LibWrapper.PCO_SetDataToDialog(convertDialog, width, height, buf, imagedata);
             }
@@ -312,12 +304,12 @@ namespace LabProg
                     wSize = (ushort)Marshal.SizeOf(typeof(PCO_ConvertStructures.PCO_Display))
                 };
 
-                err = PCO_Convert_LibWrapper.PCO_ConvertGetDisplay(convertHandle, ref strDisplay);
+                err = PCO_Convert_LibWrapper.PCO_ConvertGetDisplay(f_ConvertHandle, ref strDisplay);
                 strDisplay.iScale_min = min;
                 strDisplay.iScale_max = max;
 
-                err = PCO_Convert_LibWrapper.PCO_ConvertSetDisplay(convertHandle, ref strDisplay);
-                err = PCO_Convert_LibWrapper.PCO_SetConvertDialog(convertDialog, convertHandle);
+                err = PCO_Convert_LibWrapper.PCO_ConvertSetDisplay(f_ConvertHandle, ref strDisplay);
+                err = PCO_Convert_LibWrapper.PCO_SetConvertDialog(convertDialog, f_ConvertHandle);
             }
             Dispatcher.Invoke(() => Debug.WriteLine(CbPixelFormatConv.SelectedValue));
             imagebmp = new Bitmap(width, height, PixelFormat.Format24bppRgb);//Format24bppRgb
@@ -395,7 +387,7 @@ namespace LabProg
 
         private void OnChangeCameraInterval(object sender, EventArgs e)
         {
-            _cameraTimer.Interval = GetCameraTimerInterval();
+            f_CameraTimer.Interval = GetCameraTimerInterval();
         }
 
         private void OnTimerTeak(object sender, EventArgs e)

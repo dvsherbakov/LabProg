@@ -102,7 +102,6 @@
     </Compile>
     <Compile Include="Lasers\LaserPowerAtomResult.cs" />
     <Compile Include="Lasers\LaserHelper.cs" />
-    <Compile Include="Confocal.cs" />
     <Compile Include="ConfocalHelper.cs" />
     <Compile Include="InitHelper.cs" />
     <Compile Include="Lasers\LaserCommand.cs" />
