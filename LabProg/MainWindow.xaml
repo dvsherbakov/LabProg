@@ -200,7 +200,9 @@
                             </StackPanel>
                         </StackPanel>
                     </Expander>
-                    <Expander Padding="5" Header="Прокачка">
+                    <Expander 
+                        x:Name="ExPerforate"
+                        Padding="5" Header="Прокачка">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <TextBlock Text="Скорость прокачки: "/>
