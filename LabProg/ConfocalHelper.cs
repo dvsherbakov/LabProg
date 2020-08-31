@@ -7,6 +7,7 @@ using System.Linq;
 using Timer = System.Timers.Timer;
 using System.Globalization;
 using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace LabProg
 {
@@ -267,9 +268,14 @@ namespace LabProg
                 {
                     LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = ex.Message });
                     CbPumpActive.IsChecked = false;
+                    return;
                 }
             }
-            _pumpSerial.AddStartPump();
+
+            var senderName = ((Button) sender).Name;
+            if (senderName == "FirstPumpStart") _pumpSerial.AddStartPump();
+            else _pumpSecondSerial.AddStartPump();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -287,20 +293,20 @@ namespace LabProg
             TbTwoPumpToggle();
         }
 
-        private void TbFirstReverceOn(object sender, RoutedEventArgs e)
+        private void TbFirstReverseOn(object sender, RoutedEventArgs e)
         {
             if (_pumpSerial != null) _pumpSerial.PumpReverse = true;
         }
-        private void TbFirstReverceOff(object sender, RoutedEventArgs e)
+        private void TbFirstReverseOff(object sender, RoutedEventArgs e)
         {
             if (_pumpSerial != null) _pumpSerial.PumpReverse = false;
         }
 
-        private void TbSecondReverceOn(object sender, RoutedEventArgs e)
+        private void TbSecondReverseOn(object sender, RoutedEventArgs e)
         {
             if (_pumpSecondSerial != null) _pumpSecondSerial.PumpReverse = true;
         }
-        private void TbSecondReverceOff(object sender, RoutedEventArgs e)
+        private void TbSecondReverseOff(object sender, RoutedEventArgs e)
         {
             if (_pumpSecondSerial != null) _pumpSecondSerial.PumpReverse = false;
         }
