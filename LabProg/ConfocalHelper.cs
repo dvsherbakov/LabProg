@@ -320,7 +320,7 @@ namespace LabProg
                 if (TbSecondPump != null) TbSecondPump.Visibility = Visibility.Visible;
                 if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Visible;
                 if (_pumpSecondSerial == null && CbPumpSecondPort != null) _pumpSecondSerial = new PumpSerial(CbPumpSecondPort.Text, Properties.Settings.Default.PumpSecondReverse, AddLogBoxMessage);
-                ExPerforate.Visibility = Visibility.Visible;
+                if (ExPerforate!=null)  ExPerforate.Visibility = Visibility.Visible;
             }
             else
             {
@@ -328,7 +328,7 @@ namespace LabProg
                 if (TbFirstPump != null) TbFirstPump.Text = "Порт насоса";
                 if (TbSecondPump != null) TbSecondPump.Visibility = Visibility.Collapsed;
                 if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Collapsed;
-                ExPerforate.Visibility = Visibility.Collapsed;
+                if (ExPerforate != null) ExPerforate.Visibility = Visibility.Collapsed;
             }
         }
 
