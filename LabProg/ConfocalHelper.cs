@@ -8,6 +8,7 @@ using Timer = System.Timers.Timer;
 using System.Globalization;
 using System.Diagnostics;
 using System.Windows.Controls;
+using System.Xml.Serialization;
 
 namespace LabProg
 {
@@ -21,7 +22,7 @@ namespace LabProg
 
         private readonly List<SpeedGradeItem> f_SpeedGrades = new List<SpeedGradeItem> {
             new SpeedGradeItem{Different=3.00, Speed="250 "},
-            new SpeedGradeItem{Different=2.00, Speed="150"},
+            new SpeedGradeItem{Different=2.00, Speed="150 "},
                 new SpeedGradeItem{Different=1.00, Speed="75.0"},
                 new SpeedGradeItem{Different=0.50, Speed="65.0"},
                 new SpeedGradeItem{Different=0.30, Speed="55.0"},
@@ -275,6 +276,31 @@ namespace LabProg
             var senderName = ((Button) sender).Name;
             if (senderName == "FirstPumpStart") _pumpSerial.AddStartPump();
             else _pumpSecondSerial.AddStartPump();
+
+        }
+
+        private void PumpStopButton(object sender, RoutedEventArgs e)
+        {
+            var senderName = ((Button)sender).Name;
+            if (senderName == "FirstPumpStop") _pumpSerial.AddStopPump();
+            else _pumpSecondSerial.AddStopPump();
+        }
+
+        private void StartPerforation(object sender, RoutedEventArgs e)
+        {
+            if (_pumpSerial == null || _pumpSecondSerial == null) return;
+            double.TryParse(Properties.Settings.Default.PerforatingPumpingSpeed, out double dSpeed);
+            _pumpSerial.AddSpeed(FormatSpeed(dSpeed));
+            _pumpSecondSerial.AddSpeed(FormatSpeed(dSpeed));
+
+        }
+
+        private string FormatSpeed(double speed)
+        {
+            if (speed==0) return "0.5 ";
+            if (speed < 10.0) return speed.ToString("N1")+" ";
+            if (speed < 100) return speed.ToString("N1");
+            return speed.ToString("N0")+" ";
 
         }
 

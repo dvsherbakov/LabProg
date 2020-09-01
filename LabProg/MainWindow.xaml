@@ -83,12 +83,12 @@
                                        Width="80"  
                                        HorizontalAlignment="Center" Text="0.0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                        <TextBlock Width="180" Text="Установите уровень:" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10 0 10 0">
+                        <TextBlock Text="Установите уровень: " VerticalAlignment="Center"/>
                         <TextBox x:Name="CbConfocalLevel" 
-                                 Width="80"
-                                 Margin="0 0 10 0"
-                                 Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" />
+                                 MinWidth="40"
+                                
+                                 Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" Height="21" />
                         <Button Margin="4" Click="Button_Click" Content="(*)"/>
                     </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10 10 0 0 ">
@@ -154,20 +154,31 @@
                                          Background="Transparent" 
                                          Click="PumpStartButton">
                                     <Button.Content>
-                                        <StackPanel>
-                                            <ContentControl Content="{StaticResource StartIcon}" />
-                                        </StackPanel>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+                                        </Grid>
                                     </Button.Content>
                                 </Button>
                                 <Button  Width="30" Height="30" 
                                          BorderThickness="0" 
-                                         x:Name="SecondPumpStart"
+                                         x:Name="FirstPumpStop"
                                          Background="Transparent"
-                                         Click="PumpStartButton">
+                                         Click="PumpStopButton"
+                                         >
                                     <Button.Content>
-                                        <StackPanel>
-                                            <ContentControl   Content="{StaticResource StopIcon}" />
-                                        </StackPanel>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M6,6L6,18 18,18 18,6z" Stroke="#FF000000" />
+                                        </Grid>
                                     </Button.Content>
                                 </Button>
                             </StackPanel>
@@ -185,16 +196,30 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent" Click="PumpStartButton">
                                     <Button.Content>
-                                        <StackPanel>
-                                            <ContentControl Content="{StaticResource StartIcon}" />
-                                        </StackPanel>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+                                        </Grid>
                                     </Button.Content>
                                 </Button>
-                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent">
+                                <Button  Width="30" Height="30" 
+                                         BorderThickness="0" 
+                                         x:Name="SecondPumpStop"
+                                         Click="PumpStopButton"
+                                         Background="Transparent">
                                     <Button.Content>
-                                        <StackPanel>
-                                            <ContentControl   Content="{StaticResource StopIcon}" />
-                                        </StackPanel>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M6,6L6,18 18,18 18,6z" Stroke="#FF000000" />
+                                        </Grid>
                                     </Button.Content>
                                 </Button>
                             </StackPanel>
@@ -206,7 +231,8 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <TextBlock Text="Скорость прокачки: "/>
-                                <TextBox MinWidth="40" Text="{Binding Source={x:Static properties:Settings.Default}, Path=PerforatingPumpingSpeed, Mode=TwoWay}"></TextBox>
+                                <TextBox MinWidth="40" 
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=PerforatingPumpingSpeed, Mode=TwoWay}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent" Click="PumpStartButton">

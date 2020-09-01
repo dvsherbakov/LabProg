@@ -15,7 +15,7 @@ namespace LabProg
         private readonly SerialPort f_MPort;
         private readonly List<string> f_RecievedData;
         private bool f_Direction;
-        private bool IsDriven { get; set; }
+        //private bool IsDriven { get; set; }
         private readonly string f_ComId;
         public bool PumpReverse { private get; set; }
         private readonly Action<string> f_AddLogBoxMessage;
@@ -85,8 +85,8 @@ namespace LabProg
         {
             f_MPort.Open();
             Active = true;
-            IsDriven = false;
-            //if (f_direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();  
+            //IsDriven = false;
+            
         }
 
         public bool IsOpen => f_MPort.IsOpen;
@@ -139,9 +139,7 @@ namespace LabProg
         {
             if (f_MPort.IsOpen)
             {
-                if (!IsDriven) f_MPort.Write("s");
-                System.Threading.Thread.Sleep(130);
-                IsDriven = true;
+                f_MPort.Write("s");
             }
             else
             {
@@ -158,9 +156,7 @@ namespace LabProg
         {
             if (f_MPort.IsOpen)
             {
-                if (IsDriven) f_MPort.Write("t");
-                System.Threading.Thread.Sleep(130);
-                IsDriven = false;
+               f_MPort.Write("t");
             }
             else
             {
@@ -179,7 +175,6 @@ namespace LabProg
             {
                 if (PumpReverse) f_MPort.Write("l");
                 else f_MPort.Write("r");
-                System.Threading.Thread.Sleep(130);
             }
             else
             {
@@ -224,13 +219,9 @@ namespace LabProg
         {
             if (f_MPort.IsOpen)
             {
-                //if (speed != prevSpeed)
-                //{
                 f_MPort.Write(speed);
                 System.Threading.Thread.Sleep(130);
                 f_AddLogBoxMessage($"Порт насоса {f_ComId}, меняем скорость: '{speed}'");
-                //} else addLogBoxMessage($"Порт насоса {comId}, скорость та же");
-                //prevSpeed = speed;
             }
             else
             {
