@@ -13,7 +13,7 @@ namespace LabProg
 
         private void OnStartAndorCameraCommandExecute(object p)
         {
-            camAndor = new CameraAndor();
+            camAndor = new CameraAndor(AddLogBoxMessage);
         }
 
         private void ExecuteFromCb(object sender, RoutedEventArgs e)

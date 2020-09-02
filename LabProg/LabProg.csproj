@@ -15,7 +15,7 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -68,6 +68,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ATMCD64CS, Version=2.103.30022.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ATMCD64CS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -97,7 +101,7 @@
     <Compile Include="Cams\CamType.cs" />
     <Compile Include="ImgBufferItem.cs" />
     <Compile Include="LambdaCommand.cs" />
-    <Compile Include="LaserPowerAtom.xaml.cs">
+    <Compile Include="Lasers\LaserPowerAtom.xaml.cs">
       <DependentUpon>LaserPowerAtom.xaml</DependentUpon>
     </Compile>
     <Compile Include="Lasers\LaserPowerAtomResult.cs" />
@@ -125,7 +129,7 @@
     <Compile Include="ReleSerial.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
-    <Page Include="LaserPowerAtom.xaml">
+    <Page Include="Lasers\LaserPowerAtom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
