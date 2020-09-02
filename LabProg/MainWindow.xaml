@@ -235,14 +235,19 @@
                                          Text="{Binding Source={x:Static properties:Settings.Default}, Path=PerforatingPumpingSpeed, Mode=TwoWay}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent" Click="PumpStartButton">
+                                <Button  Width="30" Height="30" 
+                                         BorderThickness="0" 
+                                         Background="Transparent" 
+                                         Click="StartPerforation">
                                     <Button.Content>
                                         <StackPanel>
                                             <ContentControl Content="{StaticResource StartIcon}" />
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
-                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent">
+                                <Button  Width="30" Height="30" 
+                                         BorderThickness="0" 
+                                         Background="Transparent">
                                     <Button.Content>
                                         <StackPanel>
                                             <ContentControl   Content="{StaticResource StopIcon}" />

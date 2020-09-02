@@ -292,12 +292,14 @@ namespace LabProg
             double.TryParse(Properties.Settings.Default.PerforatingPumpingSpeed, out double dSpeed);
             _pumpSerial.AddSpeed(FormatSpeed(dSpeed));
             _pumpSecondSerial.AddSpeed(FormatSpeed(dSpeed));
+            _pumpSerial.AddStartPump();
+            _pumpSecondSerial.AddStartPump();
 
         }
 
-        private string FormatSpeed(double speed)
+        private static string FormatSpeed(double speed)
         {
-            if (speed==0) return "0.5 ";
+            if (Math.Abs(speed) < 0.01) return "0.5 ";
             if (speed < 10.0) return speed.ToString("N1")+" ";
             if (speed < 100) return speed.ToString("N1");
             return speed.ToString("N0")+" ";
