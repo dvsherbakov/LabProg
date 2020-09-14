@@ -91,7 +91,8 @@ namespace LabProg
                         _laserSerial.SetPower(lItem.LowPower);
                         await Task.Delay(lItem.LowDuration);
                     }
-                } else
+                }
+                else
                 {
                     var pf = new PowerFlow(true);
                     pf.GenerateHarmonicCycle(lItem.Amplitude, lItem.Freq, lItem.HarmonicalDuration);
@@ -104,6 +105,28 @@ namespace LabProg
                 }
             }
             _laserSerial.SetOff();
+        }
+        private void SendDiskretPower(object sender, SelectionChangedEventArgs e)
+        {
+            var name = ((TextBox)sender).Name;
+            var power = 0;
+            switch (name) {
+                case "btDiskertFirstButton":
+                    Int32.TryParse(tbFirstDiskret.Text, out power);
+                    break;
+                case "btDiskertSecondButton":
+                    Int32.TryParse(tbSecondDiskret.Text, out power);
+                    break;
+                case "btDiskertThirdButton":
+                    Int32.TryParse(tbThirdDiskret.Text, out power);
+                    break;
+                default:
+                    power = 0;
+                    break;
+            }
+            _laserSerial.SetPower(power);
+            //_laserSerial.SetPowerLevel(outPwr);
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка установить мощность лазера в {power}" });
         }
     }
 }

@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
         <Menu Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" FontSize="16" Grid.ColumnSpan="3">
             <MenuItem Header="Файл">
-                <MenuItem Header="Выход" Click="CloseApp"></MenuItem>
+                <MenuItem Header="Выход" Command="{Binding QuitCommand}"/>
             </MenuItem>
             <MenuItem Header="Edit" ></MenuItem>
             <MenuItem Header="View" ></MenuItem>
@@ -341,7 +341,7 @@
                             <TextBlock>MRL-III-660D</TextBlock>
                         </ComboBox>
                     </Grid>
-                    <Expander Header="Параметры">
+                    <Expander Header="Параметры серии">
                         <StackPanel>
                             <ListView Height="80" x:Name="lvLaserPowerItems">
                                 <ListView.View>
@@ -369,6 +369,23 @@
                             </StackPanel>
                         </StackPanel>
                     </Expander>
+                    <Expander Header="Дискретные значения">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="tbFirstDiskret" Width="50"/>
+                                <Button x:Name="btDiskertFirstButton" Padding="10 0">Пуск</Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="tbSecondDiskret" Width="50"/>
+                                <Button x:Name="btDiskertSecondButton" Padding="10 0">Пуск</Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="tbThirdDiskret" Width="50"/>
+                                <Button x:Name="btDiskertThirdButton" Padding="10 0">Пуск</Button>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                    </Expander>    
                     </StackPanel>
                 </TabItem>
                 <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">

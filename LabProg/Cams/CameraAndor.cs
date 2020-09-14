@@ -31,10 +31,10 @@ namespace LabProg.Cams
         private readonly int f_Y = 0;
         public int XResolution { get => f_X; }
         public int YResolution { get => f_Y; }
-        private static int gblXPixels = 0;
-        private static int gblYPixels = 0;
+        private static readonly int gblXPixels = 0;
+        private static readonly int gblYPixels = 0;
         private readonly int f_buffSize;
-        List<ImgBufferItem> Buffer = new List<ImgBufferItem>();
+        readonly List<ImgBufferItem> Buffer = new List<ImgBufferItem>();
         private readonly Action<string> f_AddLogBoxMessage;
         public int BufSize { get => f_buffSize; }
         private AndorSDK.AndorCapabilities Capabilities;

@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Windows.Controls;
 using System;
+using System.Windows.Input;
+using System.Net.Http.Headers;
 
 namespace LabProg
 {
@@ -14,6 +16,8 @@ namespace LabProg
         private Timer f_ConfocalTimer;
         private Timer f_PyroTimer;
         private Timer f_CameraTimer;
+
+        public ICommand QuitCommand { get; set; }
 
         //System.Windows.Threading.Dispatcher _dispatcher;
         private void InitInternalComponents()
@@ -46,6 +50,7 @@ namespace LabProg
             InitCameraTimer();
             lvLaserPowerItems.Items.Clear();
             //_dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
+            QuitCommand = new LambdaCommand(p => Application.Current.Shutdown());
         }
 
         private void InitPwrItems()
