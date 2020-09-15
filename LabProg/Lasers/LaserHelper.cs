@@ -86,6 +86,8 @@ namespace LabProg
             _laserSerial.SetOn();
             foreach (var item in lvLaserPowerItems.Items)
             {
+               
+               
                 var lItem = (LaserPowerAtomResult)item;
                 if (lItem.Type == LaserPowerAtomType.Linear)
                 {
@@ -95,6 +97,7 @@ namespace LabProg
                         await Task.Delay(lItem.HiDuration);
                         _laserSerial.SetPower(lItem.LowPower);
                         await Task.Delay(lItem.LowDuration);
+                        LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Цткл № {i}" });
                     }
                 } else
                 {
@@ -108,7 +111,8 @@ namespace LabProg
                     }
                 }
             }
-            _laserSerial.SetOff();
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Закончили автосерию" });
+            //_laserSerial.SetOff();
         }
     }
 }

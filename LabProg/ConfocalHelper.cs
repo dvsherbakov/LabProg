@@ -7,7 +7,6 @@ using System.Linq;
 using System.Windows.Threading;
 using Timer = System.Timers.Timer;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Diagnostics;
 
 namespace LabProg
@@ -193,14 +192,14 @@ namespace LabProg
             var tmpDirection = (currentDifferent > 0);
             if (currentLevel.IsSingle) tmpDirection = !tmpDirection;
 
-            Debug.WriteLine($"direction diff={currentDifferent}, issingle={currentLevel.IsSingle}");
+            //Debug.WriteLine($"direction diff={currentDifferent}, issingle={currentLevel.IsSingle}");
             return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
         }
 
         private string GetPumpSpeed(DistMeasureRes currentLevel)
         {
             var subLevel = Math.Abs(currentLevel.Dist - SelectedLevel);
-            Debug.WriteLine($"Speed setup diff = {subLevel}");
+            //Debug.WriteLine($"Speed setup diff = {subLevel}");
             var ss = SpeedGrades.Where(x => x.different < subLevel).OrderByDescending(x => x.different).FirstOrDefault().speed;
             Debug.WriteLine($"Speed  = {ss}");
             return SpeedGrades.Where(x => x.different < subLevel).OrderByDescending(x => x.different).FirstOrDefault().speed;
@@ -213,7 +212,7 @@ namespace LabProg
             {
                 _confocalTimer = new Timer
                 {
-                    Interval = 1000
+                    Interval = 2000
                 };
                 //_confocalTimer.Elapsed += PeackInfo;
                 //Временно закомментировано, во избежание многоразовой подписки на событие

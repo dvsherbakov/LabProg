@@ -119,7 +119,7 @@ namespace LabProg
         {
             _confocalTimer = new Timer
             {
-                Interval = 10000
+                Interval = 5000
             };
             _confocalTimer.Elapsed += PeackInfo;
         }

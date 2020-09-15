@@ -58,18 +58,20 @@ namespace LabProg
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                await Task.Delay(1150);
+                await Task.Delay(1000);
                 queueTimer.Enabled = true; ;
             }
         }
 
         void TimerEvent(object source, ElapsedEventArgs e)
         {
-            var itm = cmdQueue.FirstOrDefault();
-            cmdQueue.Remove(itm);
-            WriteAnyCommand(itm);
-
-            if (cmdQueue.Count == 0) queueTimer.Enabled = false;
+            if (cmdQueue.Count > 0)
+            {
+                var itm = cmdQueue.FirstOrDefault();
+                cmdQueue.Remove(itm);
+                WriteAnyCommand(itm);
+            }
+            else queueTimer.Enabled = false;
         }
 
         private void WriteAnyCommand(string cmd)
