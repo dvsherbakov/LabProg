@@ -7,16 +7,16 @@ namespace LabProg
 {
     public partial class MainWindow
     {
-        public ICommand StartAndorCameraCommand;
+        private ICommand f_StartAndorCameraCommand;
 
-        public CameraAndor camAndor;
+        private CameraAndor camAndor;
 
         private void OnStartAndorCameraCommandExecute(object p)
         {
-            camAndor = new CameraAndor();
+            camAndor = new CameraAndor(AddLogBoxMessage);
         }
 
-        public void ExecuteFromCb(object sender, RoutedEventArgs e)
+        private void ExecuteFromCb(object sender, RoutedEventArgs e)
         {
             OnStartAndorCameraCommandExecute(sender);
         }

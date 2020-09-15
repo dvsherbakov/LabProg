@@ -14,7 +14,7 @@ namespace LabProg
             {
                 _pyroSerial.OpenPort();
                 LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Включен порт пирометра" });
-                _pyroTimer.Start();
+                f_PyroTimer.Start();
             }
             catch (Exception ex)
             {
@@ -36,7 +36,7 @@ namespace LabProg
         private void LaserPortOff(object sender, RoutedEventArgs e)
         {
             _pyroSerial.ClosePort();
-            _pyroTimer.Stop();
+            f_PyroTimer.Stop();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт пирометра" });
             _laserSerial.ClosePort();
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Выключен порт лазера" });
@@ -45,12 +45,10 @@ namespace LabProg
         private void SetLaserPwr(object sender, RoutedEventArgs e)
         {
             var pwrText = TbLaserPwr.Text;
-            if (Int32.TryParse(pwrText, out int outPwr))
-            {
-                _laserSerial.SetPower(outPwr);
-                //_laserSerial.SetPowerLevel(outPwr);
-                LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка установить мощность лазера в {outPwr}" });
-            }
+            if (!int.TryParse(pwrText, out var outPwr)) return;
+            _laserSerial.SetPower(outPwr);
+            //_laserSerial.SetPowerLevel(outPwr);
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка установить мощность лазера в {outPwr}" });
         }
 
         private void SetLaserOn(object sender, RoutedEventArgs e)
@@ -73,15 +71,12 @@ namespace LabProg
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка выключения лазера" });
         }
 
-        private void CbLaserType_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void CbLaserType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_laserSerial != null)
-            {
-                _laserSerial.SetLaserType(((ComboBox)sender).SelectedIndex);
-            }
+            _laserSerial?.SetLaserType(((ComboBox)sender).SelectedIndex);
         }
 
-        private async System.Threading.Tasks.Task AutomaticLaserPowerAsync()
+        private async Task AutomaticLaserPowerAsync()
         {
             _laserSerial.SetOn();
             foreach (var item in lvLaserPowerItems.Items)
@@ -91,7 +86,7 @@ namespace LabProg
                 var lItem = (LaserPowerAtomResult)item;
                 if (lItem.Type == LaserPowerAtomType.Linear)
                 {
-                    for (int i = 0; i < lItem.CyclesCount; i++)
+                    for (var i = 0; i < lItem.CyclesCount; i++)
                     {
                         _laserSerial.SetPower(lItem.HiPower);
                         await Task.Delay(lItem.HiDuration);
@@ -99,20 +94,43 @@ namespace LabProg
                         await Task.Delay(lItem.LowDuration);
                         LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Цткл № {i}" });
                     }
-                } else
+                }
+                else
                 {
                     var pf = new PowerFlow(true);
                     pf.GenerateHarmonicCycle(lItem.Amplitude, lItem.Freq, lItem.HarmonicalDuration);
                     var series = pf.GetSeries;
-                    for (int i = 0; i < series.Length; i++)
+                    foreach (var seriesAtom in series)
                     {
-                        _laserSerial.SetPower(series[i].Power);
-                        await Task.Delay(series[i].Interval);
+                        _laserSerial.SetPower(seriesAtom.Power);
+                        await Task.Delay(seriesAtom.Interval);
                     }
                 }
             }
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Закончили автосерию" });
             //_laserSerial.SetOff();
+        }
+        private void SendDiskretPower(object sender, SelectionChangedEventArgs e)
+        {
+            var name = ((TextBox)sender).Name;
+            var power = 0;
+            switch (name) {
+                case "btDiskertFirstButton":
+                    Int32.TryParse(tbFirstDiskret.Text, out power);
+                    break;
+                case "btDiskertSecondButton":
+                    Int32.TryParse(tbSecondDiskret.Text, out power);
+                    break;
+                case "btDiskertThirdButton":
+                    Int32.TryParse(tbThirdDiskret.Text, out power);
+                    break;
+                default:
+                    power = 0;
+                    break;
+            }
+            _laserSerial.SetPower(power);
+            //_laserSerial.SetPowerLevel(outPwr);
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Попытка установить мощность лазера в {power}" });
         }
     }
 }

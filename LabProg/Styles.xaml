@@ -119,7 +119,20 @@
     </Grid>
 
     <Grid x:Key="StartIcon" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-        <Path Data="M7,1.217v47.566L45.918,25L7,1.217z M9,4.783L42.082,25L9,45.217V4.783z" Fill="#FF000000" Opacity="1" />
+        <Path  Stroke="#FF000000">
+            <Path.Data>
+                <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+            </Path.Data>
+        </Path>
+        <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+    </Grid>
+    <Grid x:Key="StopIcon" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <Path  Stroke="#FF000000">
+            <Path.Data>
+                <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+            </Path.Data>
+        </Path>
+        <Path Data="M6,6L6,18 18,18 18,6z" Stroke="#FF000000" />
     </Grid>
 
     <Color x:Key="DefaultColor" A="255" R="240" G ="240" B="240"/>

@@ -6,19 +6,23 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Windows.Controls;
 using System;
+using System.Windows.Input;
+using System.Net.Http.Headers;
 
 namespace LabProg
 {
     public partial class MainWindow : Window
     {
-        private Timer _confocalTimer;
-        private Timer _pyroTimer;
-        private Timer _cameraTimer;
+        private Timer f_ConfocalTimer;
+        private Timer f_PyroTimer;
+        private Timer f_CameraTimer;
+
+        public ICommand QuitCommand { get; set; }
 
         //System.Windows.Threading.Dispatcher _dispatcher;
         private void InitInternalComponents()
         {
-            StartAndorCameraCommand = new LambdaCommand(OnStartAndorCameraCommandExecute);
+            f_StartAndorCameraCommand = new LambdaCommand(OnStartAndorCameraCommandExecute);
             CbPumpPort.Items.Clear();
             CbMirrorPort.Items.Clear();
             CbPowerPort.Items.Clear();
@@ -46,6 +50,7 @@ namespace LabProg
             InitCameraTimer();
             lvLaserPowerItems.Items.Clear();
             //_dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
+            QuitCommand = new LambdaCommand(p => Application.Current.Shutdown());
         }
 
         private void InitPwrItems()
@@ -117,20 +122,20 @@ namespace LabProg
 
         private void InitPumpItems()
         {
-            _confocalTimer = new Timer
+            f_ConfocalTimer = new Timer
             {
                 Interval = 5000
             };
-            _confocalTimer.Elapsed += PeackInfo;
+            f_ConfocalTimer.Elapsed += PeackInfo;
         }
 
         private void InitPyroTimer()
         {
-            _pyroTimer = new Timer
+            f_PyroTimer = new Timer
             {
                 Interval = 1000
             };
-            _pyroTimer.Elapsed += PeackPyroInfo;
+            f_PyroTimer.Elapsed += PeackPyroInfo;
         }
 
         private int GetCameraTimerInterval()
@@ -145,11 +150,11 @@ namespace LabProg
 
         private void InitCameraTimer()
         {
-            _cameraTimer = new Timer
+            f_CameraTimer = new Timer
             {
                 Interval = GetCameraTimerInterval()
             };
-            _cameraTimer.Elapsed += OnTimerTeak;
+            f_CameraTimer.Elapsed += OnTimerTeak;
         }
 
         private int GetPortNumber(string portName)

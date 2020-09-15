@@ -19,12 +19,12 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*"></ColumnDefinition>
-            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="150*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Menu Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" FontSize="16" Grid.ColumnSpan="3">
             <MenuItem Header="Файл">
-                <MenuItem Header="Выход" Click="CloseApp"></MenuItem>
+                <MenuItem Header="Выход" Command="{Binding QuitCommand}"/>
             </MenuItem>
             <MenuItem Header="Edit" ></MenuItem>
             <MenuItem Header="View" ></MenuItem>
@@ -83,48 +83,20 @@
                                        Width="80"  
                                        HorizontalAlignment="Center" Text="0.0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
-                        <TextBlock Width="180" Text="Установите уровень:" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10 0 10 0">
+                        <TextBlock Text="Установите уровень: " VerticalAlignment="Center"/>
                         <TextBox x:Name="CbConfocalLevel" 
-                                 Width="80"
-                                 Margin="0 0 10 0"
-                                 Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" />
-                        <Button Grid.Column="1" Margin="4" Click="Button_Click" Content="(*)"/>
-                    </StackPanel>
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="3*"/>
-                        </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                        
-                            <Grid Row="3" Column="0" Grid.ColumnSpan="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Margin="10,4,4,4" Width="80" Click="PumpStartButton">Пуск</Button>
-                               
-                            </Grid>
-                            <Grid Row="4" Column="0" Grid.ColumnSpan="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="4*"/>
-                                </Grid.ColumnDefinitions>
+                                 MinWidth="40"
                                 
-                            <ToggleButton x:Name="CbPumpActive" Grid.Column="2" Grid.Row="0" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
-                                              Checked="PumpPortOn" Unchecked="PumpPortOff"/>
-                                <TextBlock Grid.Column="3" Grid.Row="0"  Margin="5">Активно</TextBlock>
-                            </Grid>
-                        </Grid>
+                                 Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" Height="21" />
+                        <Button Margin="4" Click="Button_Click" Content="(*)"/>
+                    </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10 10 0 0 ">
+                            <ToggleButton x:Name="CbPumpActive" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
+                                          Checked="PumpPortOn" Unchecked="PumpPortOff"/>
+                            <TextBlock Margin="5">Активно</TextBlock>
+                    </StackPanel>
+                        
 
                     <Expander Header="Параметры" Padding="5">
                         <StackPanel>
@@ -141,8 +113,8 @@
                                    Grid.Row="0"
                                    x:Name="TbFirstPump"
                                    Margin="10,2,5,2" 
-                                   Text="Порт насоса"/>
-                                <ComboBox x:Name = "CbPumpPort" 
+                                   Text="Порт докачки"/>
+                        <ComboBox x:Name = "CbPumpPort" 
                                   Grid.Column="1" 
                                   Margin="10,2,5,2" >
                                     <TextBlock>COM1</TextBlock>
@@ -169,18 +141,44 @@
                                            Margin="5" Text="Докачка"/>
                                 <ToggleButton  Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
                                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpReverse, Mode=TwoWay}"
-                                               Checked="TbFirstReverceOn"
-                                               Unchecked="TbFirstReverceOff"/>
+                                               Checked="TbFirstReverseOn"
+                                               Unchecked="TbFirstReverseOff"/>
                                 <TextBlock
                                            Margin="5 5 5 5" 
                                     Text="Реверс"/>
                             </StackPanel>
-                            <StackPanel>
-                                <Button  Width="30" Height="30">
+                            <StackPanel Orientation="Horizontal">
+                                <Button  Width="30" Height="30" 
+                                         BorderThickness="0" 
+                                         x:Name="FirstPumpStart"
+                                         Background="Transparent" 
+                                         Click="PumpStartButton">
                                     <Button.Content>
-                                        <StackPanel>
-                                            <ContentControl   Content="{StaticResource StartIcon}"  Margin="5"/>
-                                        </StackPanel>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                <Button  Width="30" Height="30" 
+                                         BorderThickness="0" 
+                                         x:Name="FirstPumpStop"
+                                         Background="Transparent"
+                                         Click="PumpStopButton"
+                                         >
+                                    <Button.Content>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M6,6L6,18 18,18 18,6z" Stroke="#FF000000" />
+                                        </Grid>
                                     </Button.Content>
                                 </Button>
                             </StackPanel>
@@ -189,11 +187,73 @@
                                            Margin="5" Text="Откачка"/>
                                 <ToggleButton  Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
                                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=PumpSecondReverse, Mode=TwoWay}"
-                                               Checked="TbSecondReverceOn"
-                                               Unchecked="TbSecondReverceOff"/>
+                                               Checked="TbSecondReverseOn"
+                                               Unchecked="TbSecondReverseOff"/>
                                 <TextBlock
                                            Margin="5" 
                                     Text="Реверс"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button  Width="30" Height="30" BorderThickness="0" Background="Transparent" Click="PumpStartButton">
+                                    <Button.Content>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                <Button  Width="30" Height="30" 
+                                         BorderThickness="0" 
+                                         x:Name="SecondPumpStop"
+                                         Click="PumpStopButton"
+                                         Background="Transparent">
+                                    <Button.Content>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M6,6L6,18 18,18 18,6z" Stroke="#FF000000" />
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+                    <Expander 
+                        x:Name="ExPerforate"
+                        Padding="5" Header="Прокачка">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Скорость прокачки: "/>
+                                <TextBox MinWidth="40" 
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=PerforatingPumpingSpeed, Mode=TwoWay}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button  Width="30" Height="30" 
+                                         BorderThickness="0" 
+                                         Background="Transparent" 
+                                         Click="StartPerforation">
+                                    <Button.Content>
+                                        <StackPanel>
+                                            <ContentControl Content="{StaticResource StartIcon}" />
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button  Width="30" Height="30" 
+                                         BorderThickness="0" 
+                                         Background="Transparent">
+                                    <Button.Content>
+                                        <StackPanel>
+                                            <ContentControl   Content="{StaticResource StopIcon}" />
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                         </StackPanel>
                     </Expander>
@@ -281,7 +341,7 @@
                             <TextBlock>MRL-III-660D</TextBlock>
                         </ComboBox>
                     </Grid>
-                    <Expander Header="Параметры">
+                    <Expander Header="Параметры серии">
                         <StackPanel>
                             <ListView Height="80" x:Name="lvLaserPowerItems">
                                 <ListView.View>
@@ -309,6 +369,23 @@
                             </StackPanel>
                         </StackPanel>
                     </Expander>
+                    <Expander Header="Дискретные значения">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="tbFirstDiskret" Width="50"/>
+                                <Button x:Name="btDiskertFirstButton" Padding="10 0">Пуск</Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="tbSecondDiskret" Width="50"/>
+                                <Button x:Name="btDiskertSecondButton" Padding="10 0">Пуск</Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="tbThirdDiskret" Width="50"/>
+                                <Button x:Name="btDiskertThirdButton" Padding="10 0">Пуск</Button>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                    </Expander>    
                     </StackPanel>
                 </TabItem>
                 <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -926,7 +1003,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+        <GridSplitter ResizeDirection="Columns" Grid.Row="1" Grid.Column="1" Height="Auto" Width="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
         <Image x:Name="PictureBox1"  Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Cursor="IBeam" MinWidth="604" MinHeight="600" Stretch="Fill"/>
     </Grid>
 </Window>

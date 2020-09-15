@@ -12,26 +12,25 @@ namespace LabProg
 {
     public class PumpSerial
     {
-        private readonly SerialPort _mPort;
-        private bool _active;
-        private readonly List<string> RecievedData;
-        private bool f_direction;
-        public bool IsDriven { get; set; }
-        private readonly string comId;
-        public bool PumpReverse { get; set; }
-        private readonly Action<string> addLogBoxMessage;
-        private readonly ObservableCollection<string> cmdQueue;
-        private Timer queueTimer;
+        private readonly SerialPort f_MPort;
+        private readonly List<string> f_RecievedData;
+        private bool f_Direction;
+        //private bool IsDriven { get; set; }
+        private readonly string f_ComId;
+        public bool PumpReverse { private get; set; }
+        private readonly Action<string> f_AddLogBoxMessage;
+        private readonly ObservableCollection<string> f_CmdQueue;
+        private readonly Timer f_QueueTimer;
 
         //private string prevSpeed = "";
 
         public PumpSerial(string portStr, bool startDirection, Action<string> addLogBoxMessage)
         {
-            RecievedData = new List<string>();
+            f_RecievedData = new List<string>();
             if (portStr == "") portStr = "COM7";
             PumpReverse = startDirection;
-            comId = portStr;
-            _mPort = new SerialPort(portStr)
+            f_ComId = portStr;
+            f_MPort = new SerialPort(portStr)
             {
                 BaudRate = int.Parse("9600"),
                 Parity = Parity.None,
@@ -40,212 +39,199 @@ namespace LabProg
                 Handshake = Handshake.None,
                 RtsEnable = true
             };
-            _mPort.DataReceived += DataReceivedHandler;
-            this.addLogBoxMessage = addLogBoxMessage;
+            f_MPort.DataReceived += DataReceivedHandler;
+            this.f_AddLogBoxMessage = addLogBoxMessage;
 
-            cmdQueue = new ObservableCollection<string>();
-            cmdQueue.CollectionChanged += StartQueue;
+            f_CmdQueue = new ObservableCollection<string>();
+            f_CmdQueue.CollectionChanged += StartQueue;
 
-            queueTimer = new Timer
+            f_QueueTimer = new Timer
             {
                 Interval = 1000,
                 Enabled = false,
             };
-            queueTimer.Elapsed += TimerEvent;
+            f_QueueTimer.Elapsed += TimerEvent;
         }
 
-        async void StartQueue(object sender, NotifyCollectionChangedEventArgs e)
+        private async void StartQueue(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                await Task.Delay(1000);
-                queueTimer.Enabled = true; ;
-            }
+            if (e.Action != NotifyCollectionChangedAction.Add) return;
+            await Task.Delay(1150);
+            f_QueueTimer.Enabled = true; ;
         }
 
         void TimerEvent(object source, ElapsedEventArgs e)
         {
-            if (cmdQueue.Count > 0)
-            {
-                var itm = cmdQueue.FirstOrDefault();
-                cmdQueue.Remove(itm);
-                WriteAnyCommand(itm);
-            }
-            else queueTimer.Enabled = false;
+            var itm = f_CmdQueue.FirstOrDefault();
+            f_CmdQueue.Remove(itm);
+            WriteAnyCommand(itm);
+
+            if (f_CmdQueue.Count == 0) f_QueueTimer.Enabled = false;
         }
 
         private void WriteAnyCommand(string cmd)
         {
-            if (_mPort.IsOpen)
+            if (f_MPort.IsOpen)
             {
-                _mPort.Write(cmd);
+                f_MPort.Write(cmd);
             }
             else
             {
-                addLogBoxMessage($"Pump port {comId} is closed");
+                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
             }
         }
 
         public void OpenPort()
         {
-            _mPort.Open();
-            _active = true;
-            IsDriven = false;
-            //if (f_direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();  
+            f_MPort.Open();
+            Active = true;
+            //IsDriven = false;
+            
         }
 
-        public bool IsOpen => _mPort.IsOpen;
+        public bool IsOpen => f_MPort.IsOpen;
 
         public void ClosePort()
         {
-            _mPort.Close();
-            _active = false;
+            f_MPort.Close();
+            Active = false;
             StopPump();
         }
 
-        public bool Active() => _active;
-        
+        public bool Active { get; private set; }
+
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             System.Threading.Thread.Sleep(30);
-            var cnt = _mPort.ReadBufferSize;
-            var mRxdata = new byte[cnt + 1];
+            var cnt = f_MPort.ReadBufferSize;
+            var mRxData = new byte[cnt + 1];
             try
             {
-                _mPort.Read(mRxdata, 0, cnt);
+                f_MPort.Read(mRxData, 0, cnt);
             }
             catch (Exception ex)
             {
-                addLogBoxMessage(ex.Message);
+                f_AddLogBoxMessage(ex.Message);
             }
             var ascii = Encoding.ASCII;
-            RecievedData.Add(ascii.GetString(mRxdata));
+            f_RecievedData.Add(ascii.GetString(mRxData));
         }
 
         public string ReadPortData()
         {
-            var cnt = _mPort.ReadBufferSize;
-            var mRxdata = new byte[cnt + 1];
+            var cnt = f_MPort.ReadBufferSize;
+            var mRxData = new byte[cnt + 1];
             try
             {
-                _mPort.Read(mRxdata, 0, cnt);
+                f_MPort.Read(mRxData, 0, cnt);
             }
             catch (Exception ex)
             {
-                addLogBoxMessage(ex.Message);
+                f_AddLogBoxMessage(ex.Message);
             }
             var ascii = Encoding.ASCII;
-            return ascii.GetString(mRxdata);
+            return ascii.GetString(mRxData);
         }
 
 
         public void StartPump()
         {
-            if (_mPort.IsOpen)
+            if (f_MPort.IsOpen)
             {
-                if (!IsDriven) _mPort.Write("s");
-                System.Threading.Thread.Sleep(130);
-                IsDriven = true;
+                f_MPort.Write("s");
             }
             else
             {
-                addLogBoxMessage($"Pump port {comId} is closed");
+                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
             }
         }
 
         public void AddStartPump()
         {
-            cmdQueue.Add("s");
+            f_CmdQueue.Add("s");
         }
 
-        public void StopPump()
+        private void StopPump()
         {
-            if (_mPort.IsOpen)
+            if (f_MPort.IsOpen)
             {
-                if (IsDriven) _mPort.Write("t");
-                System.Threading.Thread.Sleep(130);
-                IsDriven = false;
+               f_MPort.Write("t");
             }
             else
             {
-                addLogBoxMessage($"Pump port {comId} is closed");
+                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
             }
         }
 
         public void AddStopPump()
         {
-            cmdQueue.Add("t");
+            f_CmdQueue.Add("t");
         }
 
         public void SetClockwiseDirection()
         {
-            if (_mPort.IsOpen)
+            if (f_MPort.IsOpen)
             {
-                if (PumpReverse) _mPort.Write("l");
-                else _mPort.Write("r");
-                System.Threading.Thread.Sleep(130);
+                if (PumpReverse) f_MPort.Write("l");
+                else f_MPort.Write("r");
             }
             else
             {
-                addLogBoxMessage($"Pump port {comId} is closed");
+                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
             }
         }
 
         public void AddClockwiseDirection()
         {
-            if (PumpReverse) cmdQueue.Add("l");
-            else cmdQueue.Add("r");
+            if (PumpReverse) f_CmdQueue.Add("l");
+            else f_CmdQueue.Add("r");
         }
 
         public void SetCounterClockwiseDirection()
         {
-            if (_mPort.IsOpen)
+            if (f_MPort.IsOpen)
             {
-                if (PumpReverse) _mPort.Write("r");
-                else _mPort.Write("l");
+                if (PumpReverse) f_MPort.Write("r");
+                else f_MPort.Write("l");
                 System.Threading.Thread.Sleep(130);
             }
             else
             {
-                addLogBoxMessage($"Pump port {comId} is closed");
+                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
             }
         }
 
         public void AddCounterClockwiseDirection()
         {
-            if (PumpReverse) cmdQueue.Add("r");
-            else cmdQueue.Add("l");
+            if (PumpReverse) f_CmdQueue.Add("r");
+            else f_CmdQueue.Add("l");
         }
 
         public void Reverce()
         {
-            f_direction = !f_direction;
-            if (f_direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();
+            f_Direction = !f_Direction;
+            if (f_Direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();
             System.Threading.Thread.Sleep(30);
         }
 
         public void SetSpeed(string speed)
         {
-            if (_mPort.IsOpen)
+            if (f_MPort.IsOpen)
             {
-                //if (speed != prevSpeed)
-                //{
-                _mPort.Write(speed);
+                f_MPort.Write(speed);
                 System.Threading.Thread.Sleep(130);
-                addLogBoxMessage($"Порт насоса {comId}, меняем скорость: '{speed}'");
-                //} else addLogBoxMessage($"Порт насоса {comId}, скорость та же");
-                //prevSpeed = speed;
+                f_AddLogBoxMessage($"Порт насоса {f_ComId}, меняем скорость: '{speed}'");
             }
             else
             {
-                addLogBoxMessage($"Pump port {comId} is closed");
+                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
             }
         }
 
         public void AddSpeed(string speed)
         {
-            cmdQueue.Add(speed);
+            f_CmdQueue.Add(speed);
         }
     }
 
