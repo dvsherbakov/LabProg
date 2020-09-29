@@ -95,7 +95,7 @@ namespace LabProg
                 else
                 {
                     var pf = new PowerFlow(true);
-                    pf.GenerateHarmonicCycle(lItem.Amplitude, lItem.Freq, lItem.HarmonicalDuration);
+                    pf.GenerateHarmonicCycle(lItem.Amplitude, lItem.Level, lItem.Freq, lItem.HarmonicalDuration);
                     var series = pf.GetSeries;
                     foreach (var seriesAtom in series)
                     {
@@ -106,10 +106,10 @@ namespace LabProg
             }
             _laserSerial.SetOff();
         }
-        private void SendDiskretPower(object sender, SelectionChangedEventArgs e)
+        private void SendDiskretPower(object sender, RoutedEventArgs e)
         {
             var name = ((TextBox)sender).Name;
-            var power = 0;
+            int power;
             switch (name) {
                 case "btDiskertFirstButton":
                     Int32.TryParse(tbFirstDiskret.Text, out power);

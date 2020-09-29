@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LabProg"
         mc:Ignorable="d"
-        Title="Добавить серию" Height="250" Width="320">
+        Title="Добавить серию" Height="230" Width="320">
     <Grid Margin="3">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
            
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -25,7 +25,7 @@
         <ComboBox x:Name="cbLaserSeriesType"  
                   Grid.Row="0"
                   Grid.Column="1" 
-                  SelectionChanged="cbLaserSeriesType_SelectionChanged"
+                  SelectionChanged="CbLaserSeriesType_SelectionChanged"
                   Margin="3">
             <ComboBoxItem>Линейная</ComboBoxItem>
             <ComboBoxItem>Гармоническая</ComboBoxItem>
@@ -105,33 +105,45 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0"
                            Grid.Row="0"
-                           HorizontalAlignment="Center">Амплитуда (Вт)</TextBlock>
-                <TextBlock Grid.Column="1"
-                           Grid.Row="0"
-                           HorizontalAlignment="Center">Частота (Hz)"</TextBlock>
-                <TextBlock Grid.Column="2"
-                           Grid.Row="0"
-                           HorizontalAlignment="Center">Длительность (сек)</TextBlock>
-                <TextBox Grid.Column="0"
-                         Grid.Row="1"
+                           HorizontalAlignment="Right">Амплитуда (Вт)</TextBlock>
+                <TextBlock Grid.Column="0"
+                           Grid.Row="1"
+                           HorizontalAlignment="Right">Средний уровень (Вт)</TextBlock>
+                <TextBlock Grid.Column="0"
+                           Grid.Row="2"
+                           HorizontalAlignment="Right">Частота (Hz)"</TextBlock>
+                <TextBlock Grid.Column="0"
+                           Grid.Row="3"
+                           HorizontalAlignment="Right">Длительность (сек)</TextBlock>
+                <TextBox Grid.Column="1"
+                         Grid.Row="0"
                          Margin="3"
                          Text="{Binding Amplitude}"
                          Width="55"/>
                 <TextBox Grid.Column="1"
                          Grid.Row="1"
                          Margin="3"
+                         Text="{Binding Level}"
+                         Width="55"/>
+                <TextBox Grid.Column="1"
+                         Grid.Row="2"
+                         Margin="3"
                          Text="{Binding Freq}"
                          Width="55"/>
-                <TextBox Grid.Column="2"
-                         Grid.Row="1"
+                <TextBox Grid.Column="1"
+                         Grid.Row="3"
                          Margin="3"
                          Text="{Binding HarmonicalDuration}"
                          Width="55"/>
@@ -139,6 +151,7 @@
             </Grid>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
+                    Margin="10,20,10,0"
                     Grid.Row="3"
                     Grid.Column="0"
                     HorizontalAlignment="Center"
@@ -146,7 +159,7 @@
             <Button Width="80"
                     x:Name="btAdd"
                     IsDefault="True"
-                    Click="btAdd_Click"
+                    Click="BtAdd_Click"
                     Margin="5">Добавить</Button>
             <Button Width="80"
                     IsCancel="True"

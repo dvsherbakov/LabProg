@@ -20,7 +20,7 @@ namespace LabProg
             this.DataContext = m_res;
         }
 
-        private void cbLaserSeriesType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbLaserSeriesType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var index = ((ComboBox)sender).SelectedIndex;
             if (index==0)
@@ -38,7 +38,7 @@ namespace LabProg
             }
         }
 
-        private void btAdd_Click(object sender, RoutedEventArgs e)
+        private void BtAdd_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
         }
