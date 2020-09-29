@@ -124,7 +124,7 @@ namespace LabProg
         {
             f_ConfocalTimer = new Timer
             {
-                Interval = 10000
+                Interval = 5000
             };
             f_ConfocalTimer.Elapsed += PeackInfo;
         }
