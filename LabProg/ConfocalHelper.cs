@@ -200,7 +200,7 @@ namespace LabProg
         {
             var subLevel = Math.Abs(currentLevel.Dist - SelectedLevel);
             //Debug.WriteLine($"Speed setup diff = {subLevel}");
-            var ss = SpeedGrades.Where(x => x.different < subLevel).OrderByDescending(x => x.different).FirstOrDefault().speed;
+            var ss = f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
             Debug.WriteLine($"Speed  = {ss}");
             return f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
         }
