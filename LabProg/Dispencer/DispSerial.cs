@@ -73,12 +73,57 @@ namespace LabProg.Dispencer
 
         public void GetVersion()
         {
-            _buff.Clear();
-            _buff.Add((byte)'Q');
-            _buff.Add(0x02); //Number bytes
-            _buff.Add(0xF0); //Command
-            _buff.Add(0xF2); //Checksum
-            _mPort.Write(_buff.ToArray(), 0, _buff.Count);
+            var cmd = new byte[4] { 0x53, 0x02, 0xF0, 0xF2 };
+            _mPort.Write(cmd, 0, 4);
+        }
+
+        public void SoftReset()
+        {
+            var cmd = new byte[4] { 0x53, 0x02, 0x01, 0x03 };
+            _mPort.Write(cmd, 0, 4);
+        }
+
+        public void GetNumberOfChannels()
+        {
+            var cmd = new byte[4] { 0x53, 0x02, 0x0D, 0x0F };
+            _mPort.Write(cmd, 0, 4);
+        }
+
+        public void SetPulseVaveForm()
+        {
+            
+            var cmd = new byte[23] { 0x53, //S
+                0x15, //Number of bytes
+                0x06, //command
+                0x00, //not used
+                0x00, //not used
+                0x00, //t1 hi
+                0x1E, //t1 low
+                0x00, //not used
+                0x00, //t2 hi
+                0x5A, //t2 low
+                0x00, //V0 hi
+                0x32, //V0 low 
+                0x00, //V1 hi
+                0x14, //V1 low
+                0x00, //V2 hi
+                0x50, //V2 low
+                0x00, //tr1 hi
+                0x0A, //tr1 low
+                0x00, //tf hi 
+                0x0A, //tf low
+                0x00, //tr2 hi
+                0x0A, //tr2 low
+                0x48 //checkSumm
+            };
+            var chSum = 0;
+            for (int i = 1; i < 23; i++)
+            {
+                chSum += cmd[i];
+            }
+            if (chSum > 255) chSum -= 255;
+            cmd[23] = (byte)chSum;
+            _mPort.Write(cmd, 0, 23);
         }
 
         public void init()
@@ -86,6 +131,14 @@ namespace LabProg.Dispencer
             _mPort.Write("Q");
             System.Threading.Thread.Sleep(50);
             _mPort.Write("X2000");
+            System.Threading.Thread.Sleep(50);
+            SoftReset();
+            System.Threading.Thread.Sleep(50);
+            GetVersion();
+            System.Threading.Thread.Sleep(50);
+            SetPulseVaveForm();
+            System.Threading.Thread.Sleep(50);
+
         }
 
     }
