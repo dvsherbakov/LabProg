@@ -373,15 +373,15 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <TextBox x:Name="tbFirstDiskret" Width="50"/>
-                                <Button x:Name="btDiskertFirstButton" Padding="10 0">Пуск</Button>
+                                <Button x:Name="btDiskertFirstButton" Padding="10 0" Click="SendDiskretPower">Пуск</Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox x:Name="tbSecondDiskret" Width="50"/>
-                                <Button x:Name="btDiskertSecondButton" Padding="10 0">Пуск</Button>
+                                <Button x:Name="btDiskertSecondButton" Padding="10 0" Click="SendDiskretPower">Пуск</Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox x:Name="tbThirdDiskret" Width="50"/>
-                                <Button x:Name="btDiskertThirdButton" Padding="10 0">Пуск</Button>
+                                <Button x:Name="btDiskertThirdButton" Padding="10 0" Click="SendDiskretPower">Пуск</Button>
                             </StackPanel>
                         </StackPanel>
                         

@@ -110,9 +110,9 @@ namespace LabProg
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = $"Закончили автосерию" });
             //_laserSerial.SetOff();
         }
-        private void SendDiskretPower(object sender, SelectionChangedEventArgs e)
+        private void SendDiskretPower(object sender, RoutedEventArgs e)
         {
-            var name = ((TextBox)sender).Name;
+            var name = ((Button)sender).Name;
             var power = 0;
             switch (name) {
                 case "btDiskertFirstButton":

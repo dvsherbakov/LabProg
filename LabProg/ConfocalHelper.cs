@@ -23,10 +23,10 @@ namespace LabProg
         private readonly List<SpeedGradeItem> f_SpeedGrades = new List<SpeedGradeItem> {
             new SpeedGradeItem{Different=3.00, Speed="250 "},
             new SpeedGradeItem{Different=2.00, Speed="150 "},
-                new SpeedGradeItem{Different=1.00, Speed="75.0"},
-                new SpeedGradeItem{Different=0.50, Speed="65.0"},
-                new SpeedGradeItem{Different=0.30, Speed="55.0"},
-                new SpeedGradeItem{Different=0.10, Speed="45.0"},
+                new SpeedGradeItem{Different=1.00, Speed="65.0"},
+                new SpeedGradeItem{Different=0.50, Speed="45.0"},
+                new SpeedGradeItem{Different=0.30, Speed="35.0"},
+                new SpeedGradeItem{Different=0.10, Speed="25.0"},
                 new SpeedGradeItem{Different=0.08, Speed="20.0"},
                 new SpeedGradeItem{Different=0.04, Speed="11.0"},
                 new SpeedGradeItem{Different=0.01, Speed="2.5 "},
@@ -200,8 +200,8 @@ namespace LabProg
         {
             var subLevel = Math.Abs(currentLevel.Dist - SelectedLevel);
             //Debug.WriteLine($"Speed setup diff = {subLevel}");
-            var ss = SpeedGrades.Where(x => x.different < subLevel).OrderByDescending(x => x.different).FirstOrDefault().speed;
-            Debug.WriteLine($"Speed  = {ss}");
+            //var ss = f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
+           // Debug.WriteLine($"Speed  = {ss}");
             return f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
         }
 
