@@ -407,44 +407,12 @@
                                 </Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBox x:Name="tbSecondDiskret" 
-                                         Margin="10,4"
-                                         Width="50"/>
-                                <Button x:Name="btDiskertSecondButton" 
-                                        Click="SendDiskretPower"
-                                        Background="Transparent"
-                                        BorderThickness="0">
-                                    <Button.Content>
-                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                            <Path  Stroke="#FF000000">
-                                                <Path.Data>
-                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
-                                                </Path.Data>
-                                            </Path>
-                                            <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
-                                        </Grid>
-                                    </Button.Content>
-                                </Button>
+                                <TextBox x:Name="tbSecondDiskret" Width="50"/>
+                                <Button x:Name="btDiskertSecondButton" Padding="10 0">Пуск</Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBox x:Name="tbThirdDiskret" 
-                                         Margin="10,4" 
-                                         Width="50"/>
-                                <Button x:Name="btDiskertThirdButton" 
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Click="SendDiskretPower">
-                                    <Button.Content>
-                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                            <Path  Stroke="#FF000000">
-                                                <Path.Data>
-                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
-                                                </Path.Data>
-                                            </Path>
-                                            <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
-                                        </Grid>
-                                    </Button.Content>
-                                </Button>
+                                <TextBox x:Name="tbThirdDiskret" Width="50"/>
+                                <Button x:Name="btDiskertThirdButton" Padding="10 0">Пуск</Button>
                             </StackPanel>
                         </StackPanel>
                         

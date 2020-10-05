@@ -112,8 +112,8 @@ namespace LabProg
         }
         private void SendDiskretPower(object sender, RoutedEventArgs e)
         {
-            var name = ((TextBox)sender).Name;
-            int power;
+            var name = ((Button)sender).Name;
+            var power = 0;
             switch (name) {
                 case "btDiskertFirstButton":
                     Int32.TryParse(tbFirstDiskret.Text, out power);
