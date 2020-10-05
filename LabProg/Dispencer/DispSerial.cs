@@ -45,6 +45,15 @@ namespace LabProg.Dispencer
             _mPort.Close();
         }
 
+        private byte[] trimRecievedData(byte[] src)
+        {
+            var res = new List<byte>(src);
+            while (res.LastOrDefault() == 0){
+                res.RemoveAt(res.Count - 1);
+            }
+            return res.ToArray();
+        }
+
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             System.Threading.Thread.Sleep(30);
@@ -59,7 +68,7 @@ namespace LabProg.Dispencer
                 f_AddLogBoxMessage(ex.Message);
             }
             var ascii = Encoding.ASCII;
-            f_AddLogBoxMessage(ascii.GetString(mRxData));
+            f_AddLogBoxMessage(BitConverter.ToString(trimRecievedData(mRxData)));
         }
 
         public void GetVersion()
@@ -69,6 +78,14 @@ namespace LabProg.Dispencer
             _buff.Add(0x02); //Number bytes
             _buff.Add(0xF0); //Command
             _buff.Add(0xF2); //Checksum
+            _mPort.Write(_buff.ToArray(), 0, _buff.Count);
+        }
+
+        public void init()
+        {
+            _mPort.Write("Q");
+            System.Threading.Thread.Sleep(50);
+            _mPort.Write("X2000");
         }
 
     }
