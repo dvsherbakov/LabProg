@@ -99,6 +99,8 @@
     <Compile Include="Cams\CameraPCO.cs" />
     <Compile Include="Cams\CamHelper.cs" />
     <Compile Include="Cams\CamType.cs" />
+    <Compile Include="Dispencer\DispencerHelper.cs" />
+    <Compile Include="Dispencer\DispSerial.cs" />
     <Compile Include="ImgBufferItem.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="Lasers\LaserPowerAtom.xaml.cs">

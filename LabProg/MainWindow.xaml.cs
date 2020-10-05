@@ -13,6 +13,7 @@ namespace LabProg
         private PumpSerial _pumpSecondSerial;
         private PyroSerial _pyroSerial;
         private LaserSerial _laserSerial;
+        private Dispencer.DispSerial dispSerial;
 
         public MainWindow()
         {
@@ -22,6 +23,7 @@ namespace LabProg
 
             _pwrSerial = new PwrSerial(CbPowerPort.Text);
             _pumpSerial = new PumpSerial(CbPumpPort.Text, Properties.Settings.Default.PumpReverse, AddLogBoxMessage);
+            dispSerial = new Dispencer.DispSerial(CbDispenserPort.Text, AddLogBoxMessage);
             _pyroSerial = new PyroSerial(CbPyroPort.Text);
             _laserSerial = new LaserSerial(CbLaserPort.Text);
             _laserSerial.SetLaserType(Properties.Settings.Default.LaserType);
