@@ -1080,11 +1080,13 @@
                     <TextBlock TextAlignment="Center" Margin="10,5">Диспенсер</TextBlock>
                     <StackPanel Orientation="Horizontal" Margin="10,5">
                         <TextBlock>Подключиться</TextBlock>
-                        <ToggleButton Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="10,0"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="10,0" 
+                                      Checked="DispenserPortConnect"
+                                      />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="10,5">
                         <Button x:Name="btDispenserStart" 
-                                        Click="SendDiskretPower"
+                                        Click="DispenserStart"
                                         Background="Transparent"
                                         BorderThickness="0">
                             <Button.Content>
@@ -1094,7 +1096,7 @@
                                             <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
                                         </Path.Data>
                                     </Path>
-                                    <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+                                    <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" Margin="0.667,0,-0.667,0" />
                                 </Grid>
                             </Button.Content>
                         </Button>

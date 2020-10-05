@@ -1,12 +1,27 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 
 namespace LabProg
 {
     public partial class MainWindow
     {
-        private ICommand f_StartDispencerCommand;
-        private ICommand f_ConnectDispencerPortCommand;
-        private ICommand f_DisconnectDispencerPortCommand;
-        
+        public ICommand f_StartDispencerCommand;
+        public ICommand f_ConnectDispencerPortCommand;
+        public ICommand f_DisconnectDispencerPortCommand;
+       
+        private void DispenserPortConnect(object p)
+        {
+            dispSerial.OpenPort();
+        }
+
+        private void DispenserPortConnect(object sender, RoutedEventArgs e)
+        {
+            dispSerial.OpenPort();
+        }
+
+        private void DispenserStart(object sender, RoutedEventArgs e)
+        {
+            dispSerial.GetVersion();
+        }
     }
 }

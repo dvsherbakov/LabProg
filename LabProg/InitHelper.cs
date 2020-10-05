@@ -53,7 +53,7 @@ namespace LabProg
             lvLaserPowerItems.Items.Clear();
             //_dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
             QuitCommand = new LambdaCommand(p => Application.Current.Shutdown());
-            f_ConnectDispencerPortCommand = new LambdaCommand(p => dispSerial.OpenPort());
+            f_ConnectDispencerPortCommand = new LambdaCommand(DispenserPortConnect);
             f_StartDispencerCommand = new LambdaCommand(p => dispSerial.GetVersion());
             f_DisconnectDispencerPortCommand = new LambdaCommand(p => dispSerial.ClosePort());
         }
