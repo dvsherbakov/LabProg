@@ -47,7 +47,7 @@ namespace LabProg.Dispencer
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            System.Threading.Thread.Sleep(30);
+            //System.Threading.Thread.Sleep(30);
             var cnt = _mPort.ReadBufferSize;
             var mRxData = new byte[cnt + 1];
             try
@@ -65,10 +65,13 @@ namespace LabProg.Dispencer
         public void GetVersion()
         {
             _buff.Clear();
-            _buff.Add((byte)'S');
+            _buff.Add((byte)'Q');
             _buff.Add(0x02); //Number bytes
             _buff.Add(0xF0); //Command
             _buff.Add(0xF2); //Checksum
+
+            var dt = _buff.ToArray();
+            _mPort.Write(dt,0, _buff.Count);
         }
 
     }
