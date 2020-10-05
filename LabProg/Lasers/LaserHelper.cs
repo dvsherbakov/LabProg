@@ -98,7 +98,7 @@ namespace LabProg
                 else
                 {
                     var pf = new PowerFlow(true);
-                    pf.GenerateHarmonicCycle(lItem.Amplitude, lItem.Freq, lItem.HarmonicalDuration);
+                    pf.GenerateHarmonicCycle(lItem.Amplitude, lItem.Level, lItem.Freq, lItem.HarmonicalDuration);
                     var series = pf.GetSeries;
                     foreach (var seriesAtom in series)
                     {

@@ -30,6 +30,7 @@ namespace LabProg
             CbLaserPort.Items.Clear();
             CbPyroPort.Items.Clear();
             CbArduinoPort.Items.Clear();
+            CbDispenserPort.Items.Clear();
             foreach (var s in SerialPort.GetPortNames())
             {
                 CbPumpPort.Items.Add(new TextBlock() { Text = s });
@@ -39,6 +40,7 @@ namespace LabProg
                 CbLaserPort.Items.Add(new TextBlock() { Text = s });
                 CbPyroPort.Items.Add(new TextBlock() { Text = s });
                 CbArduinoPort.Items.Add(new TextBlock() { Text = s });
+                CbDispenserPort.Items.Add(new TextBlock() { Text = s });
             }
             CbPixelFormatConv.ItemsSource = PixelFormatsItems.GetList();
             CbPixelFormatConv.SelectedValuePath = "Value";
@@ -51,6 +53,9 @@ namespace LabProg
             lvLaserPowerItems.Items.Clear();
             //_dispatcher = System.Windows.Threading.Dispatcher.CurrentDispatcher;
             QuitCommand = new LambdaCommand(p => Application.Current.Shutdown());
+            f_ConnectDispencerPortCommand = new LambdaCommand(DispenserPortConnect);
+            f_StartDispencerCommand = new LambdaCommand(p => dispSerial.GetVersion());
+            f_DisconnectDispencerPortCommand = new LambdaCommand(p => dispSerial.ClosePort());
         }
 
         private void InitPwrItems()
@@ -69,6 +74,7 @@ namespace LabProg
             SetPortSelection(CbPowerPort, Properties.Settings.Default.PwrPortIndex);
             SetPortSelection(CbPumpPort, Properties.Settings.Default.LvlPortIndex);
             SetPortSelection(CbPumpSecondPort, Properties.Settings.Default.LvlSecondPortIndex);
+            SetPortSelection(CbDispenserPort, Properties.Settings.Default.DispencerPortIndex);
             SetPortSelection(CbLaserPort, Properties.Settings.Default.LaserPortIndex);
             CbLaserType.SelectedIndex = Properties.Settings.Default.LaserType;
             CbCamType.SelectedIndex = Properties.Settings.Default.CameraType;
@@ -96,6 +102,7 @@ namespace LabProg
             Properties.Settings.Default.ArduinoPortIndex = GetPortSelection(CbArduinoPort);
             Properties.Settings.Default.MirrorPortIndex = GetPortSelection(CbMirrorPort);
             Properties.Settings.Default.LvlPortIndex = GetPortSelection(CbPumpPort);
+            Properties.Settings.Default.DispencerPortIndex = GetPortSelection(CbDispenserPort);
             Properties.Settings.Default.LvlSecondPortIndex = GetPortSelection(CbPumpSecondPort);
             Properties.Settings.Default.LaserPortIndex = GetPortSelection(CbLaserPort);
             Properties.Settings.Default.LaserType = CbLaserType.SelectedIndex;

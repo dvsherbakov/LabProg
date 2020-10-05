@@ -89,7 +89,22 @@
                                  MinWidth="40"
                                 
                                  Text="{Binding Source={x:Static properties:Settings.Default}, Path=ConfocalLevel, Mode=TwoWay}" Height="21" />
-                        <Button Margin="4" Click="Button_Click" Content="(*)"/>
+                        <Button Background="Transparent" 
+                                BorderThickness="0" 
+                                Click="Button_Click" 
+                                Width="30" 
+                                Height="30">
+                            <Button.Content>
+                                <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                    <Path  Stroke="#FF000000">
+                                        <Path.Data>
+                                            <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                        </Path.Data>
+                                    </Path>
+                                    <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
                     </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="10 10 0 0 ">
                             <ToggleButton x:Name="CbPumpActive" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
@@ -341,9 +356,11 @@
                             <TextBlock>MRL-III-660D</TextBlock>
                         </ComboBox>
                     </Grid>
-                    <Expander Header="Параметры серии">
+                    <Expander Header="Параметры серии" Padding="5">
                         <StackPanel>
-                            <ListView Height="80" x:Name="lvLaserPowerItems">
+                            <ListView Height="80" 
+                                      x:Name="lvLaserPowerItems"
+                                      BorderThickness="0">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding AtomType}"/>
@@ -369,19 +386,33 @@
                             </StackPanel>
                         </StackPanel>
                     </Expander>
-                    <Expander Header="Дискретные значения">
+                    <Expander Header="Дискретные значения" Padding="5">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBox x:Name="tbFirstDiskret" Width="50"/>
-                                <Button x:Name="btDiskertFirstButton" Padding="10 0" Click="SendDiskretPower">Пуск</Button>
+                                <TextBox x:Name="tbFirstDiskret" Width="50" Margin="10,4"/>
+                                <Button x:Name="btDiskertFirstButton" 
+                                        Click="SendDiskretPower"
+                                        Background="Transparent"
+                                        BorderThickness="0">
+                                    <Button.Content>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" />
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox x:Name="tbSecondDiskret" Width="50"/>
-                                <Button x:Name="btDiskertSecondButton" Padding="10 0" Click="SendDiskretPower">Пуск</Button>
+                                <Button x:Name="btDiskertSecondButton" Padding="10 0">Пуск</Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox x:Name="tbThirdDiskret" Width="50"/>
-                                <Button x:Name="btDiskertThirdButton" Padding="10 0" Click="SendDiskretPower">Пуск</Button>
+                                <Button x:Name="btDiskertThirdButton" Padding="10 0">Пуск</Button>
                             </StackPanel>
                         </StackPanel>
                         
@@ -993,7 +1024,74 @@
                         </Grid>
                     </StackPanel>
                 </TabItem>
-            </TabControl>
+            <TabItem HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TabItem.Header>
+                    <StackPanel>
+                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Path Fill="#FF000000">
+                                <Path.Data>
+                                    <GeometryGroup>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="17,10"  />
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="21,13"/>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="21,7"/>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="25,4"/>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="25,10"/>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="25,16"/>
+                                    </GeometryGroup>
+                                </Path.Data>
+                            </Path>
+                            <Path Data="M1,3L10,3 14,8 14,12 10,16 1,16z" Stroke="#FF000000" StrokeThickness="2"/>
+                        </Grid>
+                    </StackPanel>
+                </TabItem.Header>
+                <StackPanel>
+                    <TextBlock TextAlignment="Center" Margin="10,5">Диспенсер</TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                        <TextBlock>Подключиться</TextBlock>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" Width="40" Height="20" Margin="10,0" 
+                                      Checked="DispenserPortConnect"
+                                      />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                        <Button x:Name="btDispenserStart" 
+                                        Click="DispenserStart"
+                                        Background="Transparent"
+                                        BorderThickness="0">
+                            <Button.Content>
+                                <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                    <Path  Stroke="#FF000000">
+                                        <Path.Data>
+                                            <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                        </Path.Data>
+                                    </Path>
+                                    <Path Data="M9,6L9,19 18,13z" Stroke="#FF000000" Margin="0.667,0,-0.667,0" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    <Expander Header="Параметры" Padding="5">
+                        <Grid Margin="20,5,1,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0">Порт диспенсера</TextBlock>
+                            <ComboBox x:Name="CbDispenserPort" Grid.Column="1">
+                                <TextBlock>COM1</TextBlock>
+                                <TextBlock>COM2</TextBlock>
+                                <TextBlock>COM3</TextBlock>
+                                <TextBlock>COM4</TextBlock>
+                                <TextBlock>COM5</TextBlock>
+                                <TextBlock>COM6</TextBlock>
+                                <TextBlock>COM7</TextBlock>
+                                <TextBlock>COM8</TextBlock>
+                                <TextBlock>COM9</TextBlock>
+                            </ComboBox>
+                        </Grid>
+                    </Expander>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
             
         <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0">
             <ListView.View>

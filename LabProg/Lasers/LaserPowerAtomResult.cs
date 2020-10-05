@@ -17,6 +17,7 @@ namespace LabProg
         public int CyclesCount { get; set; }
         //Harmonical
         public int Amplitude { get; set; }
+        public int Level { get; set; }
         public double Freq { get; set; }
         public int HarmonicalDuration { get; set; }
 

@@ -8,7 +8,7 @@ namespace LabProg.Lasers
 {
     class PowerFlow
     {
-        private List<PowerFlowAtom> f_powers;
+        private readonly List<PowerFlowAtom> f_powers;
         public bool Circular { get; }
 
         public PowerFlow(bool circular)
@@ -26,15 +26,14 @@ namespace LabProg.Lasers
             }
         }
 
-        public void GenerateHarmonicCycle(int amplitude, double freq, int duration)
+        public void GenerateHarmonicCycle(int amplitude, int level, double freq, int duration)
         {
-            var period = 1 / freq;
             var quantumCount = duration * 20;
 
 
             for (var t = 0; t < quantumCount; t++)
             {
-                f_powers.Add(new PowerFlowAtom((int)((amplitude / 2) + Math.Round((amplitude / 2) * Math.Cos(2 * 3.1415 * freq * 0.05 * t))), 50));
+                f_powers.Add(new PowerFlowAtom((int)(level+(amplitude / 2) + Math.Round((amplitude / 2) * Math.Cos(2 * 3.1415 * freq * 0.05 * t))), 50));
             }
 
         }
