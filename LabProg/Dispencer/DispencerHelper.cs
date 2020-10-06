@@ -21,7 +21,12 @@ namespace LabProg
 
         private void DispenserStart(object sender, RoutedEventArgs e)
         {
-            dispSerial.GetVersion();
+            dispSerial.Start();
+        }
+
+        private void DispenserStop(object sender, RoutedEventArgs e)
+        {
+            dispSerial.Stop();
         }
     }
 }
