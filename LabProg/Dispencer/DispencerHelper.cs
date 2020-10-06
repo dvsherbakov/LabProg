@@ -28,5 +28,10 @@ namespace LabProg
         {
             dispSerial.Stop();
         }
+
+        private void DispenserGetChannels(object sender, RoutedEventArgs e)
+        {
+            dispSerial.GetChannell();
+        }
     }
 }
