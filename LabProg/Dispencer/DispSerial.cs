@@ -137,11 +137,7 @@ namespace LabProg.Dispencer
             var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x00, 0x0A };
             _mPort.Write(cmd, 0, 5);
         }
-        public void GetChannell()
-        {
-            var cmd = new byte[] { 0x53, 0x02, 0x0D, 0x0F };
-            _mPort.Write(cmd, 0, 4);
-        }
+        
 
         public void init()
         {

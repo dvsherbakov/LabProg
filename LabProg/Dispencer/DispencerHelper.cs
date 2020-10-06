@@ -31,7 +31,7 @@ namespace LabProg
 
         private void DispenserGetChannels(object sender, RoutedEventArgs e)
         {
-            dispSerial.GetChannell();
+            dispSerial.GetNumberOfChannels();
         }
     }
 }
