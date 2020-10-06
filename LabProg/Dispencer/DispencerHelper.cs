@@ -33,5 +33,10 @@ namespace LabProg
         {
             dispSerial.GetNumberOfChannels();
         }
+
+        private void DispenserDump(object sender, RoutedEventArgs e)
+        {
+            dispSerial.Dump();
+        }
     }
 }

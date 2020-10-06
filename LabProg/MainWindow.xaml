@@ -1079,6 +1079,7 @@
                             </Button.Content>
                         </Button>
                         <Button Click="DispenserGetChannels">ЧК </Button>
+                        <Button Click="DispenserDump">Сп</Button>
                     </StackPanel>
                     <Expander Header="Параметры" Padding="5">
                         <Grid Margin="20,5,1,5">
