@@ -117,13 +117,25 @@ namespace LabProg.Dispencer
                 0x48 //checkSumm
             };
             var chSum = 0;
-            for (int i = 1; i < 23; i++)
+            for (int i = 3; i < 23; i++)
             {
                 chSum += cmd[i];
             }
             if (chSum > 255) chSum -= 255;
             cmd[23] = (byte)chSum;
             _mPort.Write(cmd, 0, 23);
+        }
+
+        public void Start()
+        {
+            var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x01, 0x01 };
+            _mPort.Write(cmd, 0, 5);
+        }
+
+        public void Stop()
+        {
+            var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x00, 0x00 };
+            _mPort.Write(cmd, 0, 5);
         }
 
         public void init()
