@@ -1079,13 +1079,74 @@
                             </Button.Content>
                         </Button>
                         <Button Click="DispenserGetChannels">ЧК </Button>
-                        <Button Click="DispenserDump">Сп</Button>
+                        <Button Click="DispenserDump">?</Button>
                     </StackPanel>
                     <Expander Header="Параметры" Padding="5">
+                        <StackPanel>
+                            <Grid Margin="20,5,1,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="6*" />
+                                    <ColumnDefinition Width="4*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Padding="0,0,5,0">Тип сигнала</TextBlock>
+                                <ComboBox x:Name="CbDispSignalType" Grid.Column="1">
+                                    <TextBlock>Стандартная волна</TextBlock>
+                                    <TextBlock>Синусоида</TextBlock>
+                                    <TextBlock>Однократный импульс</TextBlock>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="20,5,1,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="6*" />
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Время</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Padding="5">Время накопления 1</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="1" Margin="3"/>
+                                <TextBlock Grid.Column="2" Grid.Row="1" Padding="0,3">μs</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Padding="5">удержание максимума</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="2" Margin="3"/>
+                                <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="3" Padding="5">Время спада</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="3" Margin="3"/>
+                                <TextBlock Grid.Column="2" Grid.Row="3" Padding="0,3">μs</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Padding="5">Удержание минимума</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="4" Margin="3"/>
+                                <TextBlock Grid.Column="2" Grid.Row="4" Padding="0,3">μs</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="5" Padding="5">Время накопления 2</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="5" Margin="3"/>
+                                <TextBlock Grid.Column="2" Grid.Row="5" Padding="0,3">μs</TextBlock>
+                                <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Напряжение</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="7" Padding="5">Ожидание</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="7" Margin="3"/>
+                                <TextBlock Grid.Column="2" Grid.Row="7" Padding="0,3">V</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="8" Padding="5">Максимум</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="8" Margin="3"/>
+                                <TextBlock Grid.Column="2" Grid.Row="8" Padding="0,3">V</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="9" Padding="5">Минимум</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="9" Margin="3"/>
+                                <TextBlock Grid.Column="2" Grid.Row="9" Padding="0,3">V</TextBlock>
+                            </Grid>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Header="Настройки" Padding="5">
                         <Grid Margin="20,5,1,5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0">Порт диспенсера</TextBlock>
                             <ComboBox x:Name="CbDispenserPort" Grid.Column="1">
