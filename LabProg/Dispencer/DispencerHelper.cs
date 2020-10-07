@@ -38,5 +38,15 @@ namespace LabProg
         {
             dispSerial.Dump();
         }
+
+        private void DispenserReset(object sender, RoutedEventArgs e)
+        {
+            dispSerial.SoftReset();
+        }
+
+        private void DispenserVersion(object sender, RoutedEventArgs e)
+        {
+            dispSerial.GetVersion();
+        }
     }
 }

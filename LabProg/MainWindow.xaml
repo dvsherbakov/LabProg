@@ -1080,6 +1080,8 @@
                         </Button>
                         <Button Click="DispenserGetChannels">ЧК </Button>
                         <Button Click="DispenserDump">?</Button>
+                        <Button Click="DispenserReset">*</Button>
+                        <Button Click="DispenserVersion">v</Button>
                     </StackPanel>
                     <Expander Header="Параметры" Padding="5">
                         <StackPanel>
