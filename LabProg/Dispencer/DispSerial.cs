@@ -161,3 +161,21 @@ namespace LabProg.Dispencer
 
     }
 }
+/*
+ * 06-60- command
+ * 00-00- voltage V0
+ * 00-01- Rise tima t1
+ * 00-00- voltage V1
+ * 00-0A- time t1
+ * 00-01- fall time
+ * 00-00- voltage v2
+ * 00-19- time t2
+ * 00-01- final rise time
+ * 00-01- number of drops
+ * 01- strobble divider
+ * 00-01-F5- pulse period
+ * 00-00- strobble delay
+ * 0E-
+ * 40
+ * 
+ */
