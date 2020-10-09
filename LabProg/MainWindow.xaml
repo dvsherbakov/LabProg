@@ -1163,6 +1163,16 @@
                                 <TextBox Grid.Column="1" Grid.Row="2" Margin="3"/>
                                 <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
                             </Grid>
+                            <StackPanel  Margin="20,5,1,5">
+                                <ListView>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Время" Width="80"></GridViewColumn>
+                                            <GridViewColumn Header="Напряжение" Width="Auto"></GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </StackPanel>
                         </StackPanel>
                     </Expander>
                     <Expander Header="Настройки" Padding="5">
