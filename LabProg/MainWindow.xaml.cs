@@ -11,9 +11,9 @@ namespace LabProg
         readonly PwrSerial _pwrSerial;
         readonly PumpSerial _pumpSerial;
         private PumpSerial _pumpSecondSerial;
-        private PyroSerial _pyroSerial;
-        private LaserSerial _laserSerial;
-        private Dispencer.DispSerial dispSerial;
+        private readonly PyroSerial _pyroSerial;
+        private readonly LaserSerial _laserSerial;
+        private readonly Dispencer.DispSerial dispSerial;
 
         public MainWindow()
         {
@@ -23,7 +23,7 @@ namespace LabProg
 
             _pwrSerial = new PwrSerial(CbPowerPort.Text);
             _pumpSerial = new PumpSerial(CbPumpPort.Text, Properties.Settings.Default.PumpReverse, AddLogBoxMessage);
-            dispSerial = new Dispencer.DispSerial(CbDispenserPort.Text, AddLogBoxMessage);
+            dispSerial = new Dispencer.DispSerial(CbDispenserPort.Text, AddLogBoxMessage, DispathData);
             _pyroSerial = new PyroSerial(CbPyroPort.Text);
             _laserSerial = new LaserSerial(CbLaserPort.Text);
             _laserSerial.SetLaserType(Properties.Settings.Default.LaserType);
@@ -44,7 +44,7 @@ namespace LabProg
             lvLaserPowerItems.Items.Remove(lvLaserPowerItems.SelectedItem);
         }
 
-        private void btLaserAddPowerCycle(object sender, RoutedEventArgs e)
+        private void BtLaserAddPowerCycle(object sender, RoutedEventArgs e)
         {
             LaserPowerAtom wa = new LaserPowerAtom();
             if (wa.ShowDialog() == true)

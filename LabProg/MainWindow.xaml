@@ -373,7 +373,7 @@
                                         HorizontalAlignment="Center">
                                 <Button Margin="3"
                                         Padding="3"
-                                        Click="btLaserAddPowerCycle">
+                                        Click="BtLaserAddPowerCycle">
                                     <TextBlock HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                TextWrapping="Wrap"> Добавить серию</TextBlock>
@@ -1116,29 +1116,36 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Время</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="1" Padding="5">Время накопления 1</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="1" Margin="3"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Margin="3"
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispRiseTm, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="1" Padding="0,3">μs</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Padding="5">удержание максимума</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="2" Margin="3"/>
+                                <TextBox Grid.Column="1" Grid.Row="2" Margin="3"
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispKeepTm, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="3" Padding="5">Время спада</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="3" Margin="3"/>
+                                <TextBox Grid.Column="1" Grid.Row="3" Margin="3"
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispFallTm, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="3" Padding="0,3">μs</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Padding="5">Удержание минимума</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="4" Margin="3"/>
+                                <TextBox Grid.Column="1" Grid.Row="4" Margin="4,3,2,3"
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispLowTm, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="4" Padding="0,3">μs</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="5" Padding="5">Время накопления 2</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="5" Margin="3"/>
+                                <TextBox Grid.Column="1" Grid.Row="5" Margin="3"
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispRise2Tm, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="5" Padding="0,3">μs</TextBlock>
                                 <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Напряжение</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="7" Padding="5">Ожидание</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="7" Margin="3"/>
+                                <TextBox Grid.Column="1" Grid.Row="7" Margin="3"
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispV0, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="7" Padding="0,3">V</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="8" Padding="5">Максимум</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="8" Margin="3"/>
+                                <TextBox Grid.Column="1" Grid.Row="8" Margin="3"
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispV1, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="8" Padding="0,3">V</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="9" Padding="5">Минимум</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="9" Margin="3"/>
+                                <TextBox Grid.Column="1" Grid.Row="9" Margin="3" Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispV2, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="9" Padding="0,3">V</TextBlock>
                             </Grid>
                             <Grid Margin="20,5,1,5">

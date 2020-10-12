@@ -11,9 +11,10 @@ namespace LabProg.Dispencer
     {
         private readonly SerialPort _mPort;
         private readonly Action<string> f_AddLogBoxMessage;
-        private List<byte> _buff { get; set; }
+        private readonly Action<byte[]> f_DispatchData;
+        
 
-        public DispSerial(string portName, Action<string> addLogBoxMessage)
+        public DispSerial(string portName, Action<string> addLogBoxMessage, Action<byte[]> dispathData)
         {
             if (portName == "")
             {
@@ -31,7 +32,8 @@ namespace LabProg.Dispencer
             };
             _mPort.DataReceived += DataReceivedHandler;
             this.f_AddLogBoxMessage = addLogBoxMessage;
-            _buff = new List<byte>();
+            this.f_DispatchData = dispathData;
+           
 
         }
 
@@ -45,7 +47,7 @@ namespace LabProg.Dispencer
             _mPort.Close();
         }
 
-        private byte[] trimRecievedData(byte[] src)
+        private byte[] TrimRecievedData(byte[] src)
         {
             var res = new List<byte>(src);
             while (res.LastOrDefault() == 0){
@@ -68,7 +70,7 @@ namespace LabProg.Dispencer
                 f_AddLogBoxMessage(ex.Message);
             }
             var ascii = Encoding.ASCII;
-            f_AddLogBoxMessage(BitConverter.ToString(trimRecievedData(mRxData)));
+            f_DispatchData(TrimRecievedData(mRxData));
         }
 
         public void GetVersion()
@@ -144,7 +146,7 @@ namespace LabProg.Dispencer
             _mPort.Write(cmd, 0, 4);
         }
 
-        public void init()
+        public void Init()
         {
             _mPort.Write("Q");
             System.Threading.Thread.Sleep(50);

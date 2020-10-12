@@ -36,7 +36,7 @@ namespace LabProg
             _mPort.DataReceived += DataReceivedHandler;
             _dPower = 0;
             DMaxPower = 0;
-            TempAmb = 0f;
+            
         }
 
         public void OpenPort()

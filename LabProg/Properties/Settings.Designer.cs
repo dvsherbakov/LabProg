@@ -1162,5 +1162,113 @@ namespace LabProg.Properties {
                 this["DispencerPortIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string DispV0 {
+            get {
+                return ((string)(this["DispV0"]));
+            }
+            set {
+                this["DispV0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispRiseTm {
+            get {
+                return ((string)(this["DispRiseTm"]));
+            }
+            set {
+                this["DispRiseTm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispV1 {
+            get {
+                return ((string)(this["DispV1"]));
+            }
+            set {
+                this["DispV1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispRiseTm2 {
+            get {
+                return ((string)(this["DispRiseTm2"]));
+            }
+            set {
+                this["DispRiseTm2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispKeepTm {
+            get {
+                return ((string)(this["DispKeepTm"]));
+            }
+            set {
+                this["DispKeepTm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispV2 {
+            get {
+                return ((string)(this["DispV2"]));
+            }
+            set {
+                this["DispV2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispFallTm {
+            get {
+                return ((string)(this["DispFallTm"]));
+            }
+            set {
+                this["DispFallTm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispLowTm {
+            get {
+                return ((string)(this["DispLowTm"]));
+            }
+            set {
+                this["DispLowTm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispRise2Tm {
+            get {
+                return ((string)(this["DispRise2Tm"]));
+            }
+            set {
+                this["DispRise2Tm"] = value;
+            }
+        }
     }
 }

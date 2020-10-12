@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 
 namespace LabProg
@@ -47,6 +49,39 @@ namespace LabProg
         private void DispenserVersion(object sender, RoutedEventArgs e)
         {
             dispSerial.GetVersion();
+        }
+
+        private void SetDispOptions(byte[] data)
+        {
+            var v0 = BitConverter.ToInt16(data, 1);
+            Properties.Settings.Default.DispV0 = v0.ToString();
+            var rt1 = BitConverter.ToInt16(data, 2);
+            Properties.Settings.Default.DispRiseTm = rt1.ToString();
+            var v1 = BitConverter.ToInt16(data, 3);
+            Properties.Settings.Default.DispV1 = v1.ToString();
+            var t1 = BitConverter.ToInt16(data, 4);
+            Properties.Settings.Default.DispKeepTm = t1.ToString();
+            var ft = BitConverter.ToInt16(data, 5);
+            Properties.Settings.Default.DispFallTm = ft.ToString();
+            var v2 = BitConverter.ToInt16(data, 6);
+            Properties.Settings.Default.DispV2 = v2.ToString();
+            var t2 = BitConverter.ToInt16(data, 7);
+            Properties.Settings.Default.DispLowTm = t2.ToString();
+            var rt2 = BitConverter.ToInt16(data, 8);
+            Properties.Settings.Default.DispRise2Tm = rt2.ToString();
+        }
+
+        public void DispathData(byte[] data)
+        {
+            Debug.WriteLine(data);
+            if (data.Length > 2 & data[0]==0x06)
+            {
+                switch (data[1]){
+                    case 60:
+                        SetDispOptions(data);
+                        break;
+                }
+            }
         }
     }
 }
