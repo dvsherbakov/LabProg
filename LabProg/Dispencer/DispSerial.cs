@@ -23,6 +23,7 @@ namespace LabProg.Dispencer
                     _mPort.PortName = portName;
                     _mPort.Open();
                 }
+                _mPort.PortName = portName;
             }
         }
 

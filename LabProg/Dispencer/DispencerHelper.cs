@@ -107,7 +107,7 @@ namespace LabProg
             if (data.Length > 2 & data[0]==0x06)
             {
                 switch (data[1]){
-                    case 60:
+                    case 0x60:
                         SetDispOptions(data);
                         break;
                 }
