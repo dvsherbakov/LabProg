@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace LabProg
@@ -19,6 +20,12 @@ namespace LabProg
         private void DispenserPortConnect(object sender, RoutedEventArgs e)
         {
             dispSerial.OpenPort();
+        }
+
+        private void DispenserPortChange(object sender, RoutedEventArgs e)
+        {
+            if (dispSerial!=null)
+                dispSerial.PortName = CbDispenserPort.Text;
         }
 
         private void DispenserStart(object sender, RoutedEventArgs e)
@@ -49,6 +56,29 @@ namespace LabProg
         private void DispenserVersion(object sender, RoutedEventArgs e)
         {
             dispSerial.GetVersion();
+        }
+
+        private void DispenserChangeSignalType(object sender, RoutedEventArgs e)
+        {
+            var type = ((ComboBox)sender).SelectedIndex;
+            switch (type)
+            {
+                case 0:
+                    if (grSingleWave!=null) grSingleWave.Visibility = Visibility.Visible;
+                    if (grHarmonycWave!=null) grHarmonycWave.Visibility = Visibility.Collapsed;
+                    if (spAdvancedWave!=null) spAdvancedWave.Visibility = Visibility.Collapsed;
+                    break;
+                case 1:
+                    if (grSingleWave != null) grSingleWave.Visibility = Visibility.Collapsed;
+                    if (grHarmonycWave != null) grHarmonycWave.Visibility = Visibility.Visible;
+                    if (spAdvancedWave != null) spAdvancedWave.Visibility = Visibility.Collapsed;
+                    break;
+                case 2:
+                    if (grSingleWave != null) grSingleWave.Visibility = Visibility.Collapsed;
+                    if (grHarmonycWave != null) grHarmonycWave.Visibility = Visibility.Collapsed;
+                    if (spAdvancedWave != null) spAdvancedWave.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
         private void SetDispOptions(byte[] data)

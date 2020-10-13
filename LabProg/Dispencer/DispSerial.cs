@@ -12,15 +12,24 @@ namespace LabProg.Dispencer
         private readonly SerialPort _mPort;
         private readonly Action<string> f_AddLogBoxMessage;
         private readonly Action<byte[]> f_DispatchData;
-        
-
-        public DispSerial(string portName, Action<string> addLogBoxMessage, Action<byte[]> dispathData)
-        {
-            if (portName == "")
-            {
-                portName = "COM6";
+        private string portName;
+        public string PortName {
+            get => portName;
+            set { 
+                portName = value; 
+                if (_mPort.IsOpen)
+                {
+                    _mPort.Close();
+                    _mPort.PortName = portName;
+                    _mPort.Open();
+                }
             }
+        }
 
+        public DispSerial(string pName, Action<string> addLogBoxMessage, Action<byte[]> dispathData)
+        {
+            portName = pName == "" ? "COM6" : pName;
+         
             _mPort = new SerialPort(portName)
             {
                 BaudRate = 9600,
@@ -33,8 +42,6 @@ namespace LabProg.Dispencer
             _mPort.DataReceived += DataReceivedHandler;
             this.f_AddLogBoxMessage = addLogBoxMessage;
             this.f_DispatchData = dispathData;
-           
-
         }
 
         public void OpenPort()

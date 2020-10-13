@@ -1090,13 +1090,13 @@
                                     <ColumnDefinition Width="4*" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Padding="0,0,5,0">Тип сигнала</TextBlock>
-                                <ComboBox x:Name="CbDispSignalType" Grid.Column="1">
+                                <ComboBox x:Name="CbDispSignalType" Grid.Column="1" SelectionChanged="DispenserChangeSignalType">
                                     <TextBlock>Стандартная волна</TextBlock>
                                     <TextBlock>Синусоида</TextBlock>
                                     <TextBlock>Однократный импульс</TextBlock>
                                 </ComboBox>
                             </Grid>
-                            <Grid Margin="20,5,1,5">
+                            <Grid Margin="20,5,1,5" x:Name="grSingleWave">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="6*" />
                                     <ColumnDefinition Width="4*" />
@@ -1119,7 +1119,7 @@
                                 <TextBox Grid.Column="1" Grid.Row="1" Margin="3"
                                          Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispRiseTm, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="1" Padding="0,3">μs</TextBlock>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Padding="5">удержание максимума</TextBlock>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Padding="5">Удержание максимума</TextBlock>
                                 <TextBox Grid.Column="1" Grid.Row="2" Margin="3"
                                          Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispKeepTm, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
@@ -1148,7 +1148,7 @@
                                 <TextBox Grid.Column="1" Grid.Row="9" Margin="3" Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispV2, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="9" Padding="0,3">V</TextBlock>
                             </Grid>
-                            <Grid Margin="20,5,1,5">
+                            <Grid Margin="20,5,1,5" x:Name="grHarmonycWave">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="6*" />
                                     <ColumnDefinition Width="4*" />
@@ -1170,7 +1170,7 @@
                                 <TextBox Grid.Column="1" Grid.Row="2" Margin="3"/>
                                 <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
                             </Grid>
-                            <StackPanel  Margin="20,5,1,5">
+                            <StackPanel  Margin="20,5,1,5" x:Name="spAdvancedWave">
                                 <ListView>
                                     <ListView.View>
                                         <GridView>
@@ -1189,7 +1189,7 @@
                                 <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0">Порт диспенсера</TextBlock>
-                            <ComboBox x:Name="CbDispenserPort" Grid.Column="1">
+                            <ComboBox x:Name="CbDispenserPort" Grid.Column="1" SelectionChanged="DispenserPortChange">
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
                                 <TextBlock>COM3</TextBlock>

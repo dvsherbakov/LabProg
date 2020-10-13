@@ -1270,5 +1270,29 @@ namespace LabProg.Properties {
                 this["DispRise2Tm"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispSignalType {
+            get {
+                return ((int)(this["DispSignalType"]));
+            }
+            set {
+                this["DispSignalType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Параметр {
+            get {
+                return ((int)(this["Параметр"]));
+            }
+            set {
+                this["Параметр"] = value;
+            }
+        }
     }
 }

@@ -71,6 +71,7 @@ namespace LabProg
             CbModeCh3.SelectedIndex = Properties.Settings.Default.PwrModeCh3;
             CbModeCh4.SelectedIndex = Properties.Settings.Default.PwrModeCh4;
             CbModeCh5.SelectedIndex = Properties.Settings.Default.PwrModeCh5;
+            CbDispSignalType.SelectedIndex = Properties.Settings.Default.DispSignalType;
             SetPortSelection(CbPowerPort, Properties.Settings.Default.PwrPortIndex);
             SetPortSelection(CbPumpPort, Properties.Settings.Default.LvlPortIndex);
             SetPortSelection(CbPumpSecondPort, Properties.Settings.Default.LvlSecondPortIndex);
@@ -98,6 +99,7 @@ namespace LabProg
             Properties.Settings.Default.PwrModeCh3 = CbModeCh3.SelectedIndex;
             Properties.Settings.Default.PwrModeCh4 = CbModeCh4.SelectedIndex;
             Properties.Settings.Default.PwrModeCh5 = CbModeCh5.SelectedIndex;
+            Properties.Settings.Default.DispSignalType = CbDispSignalType.SelectedIndex;
             Properties.Settings.Default.PwrPortIndex = GetPortSelection(CbPowerPort);
             Properties.Settings.Default.ArduinoPortIndex = GetPortSelection(CbArduinoPort);
             Properties.Settings.Default.MirrorPortIndex = GetPortSelection(CbMirrorPort);
