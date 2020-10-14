@@ -58,6 +58,11 @@ namespace LabProg
             dispSerial.GetVersion();
         }
 
+        private void DispenserSetPF(object sender, RoutedEventArgs e)
+        {
+            dispSerial.SetPulseVaveForm();
+        }
+
         private void DispenserChangeSignalType(object sender, RoutedEventArgs e)
         {
             var type = ((ComboBox)sender).SelectedIndex;

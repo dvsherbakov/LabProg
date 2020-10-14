@@ -127,12 +127,12 @@ namespace LabProg.Dispencer
                 0x48 //checkSumm
             };
             var chSum = 0;
-            for (int i = 3; i < 23; i++)
+            for (int i = 1; i < 21; i++)
             {
                 chSum += cmd[i];
             }
             if (chSum > 255) chSum -= 255;
-            cmd[23] = (byte)chSum;
+            cmd[22] = (byte)chSum;
             _mPort.Write(cmd, 0, 23);
         }
 
@@ -196,3 +196,15 @@ namespace LabProg.Dispencer
  * 40
  * 
  */
+
+/*06 - 60
+ * 23-8E
+ * 6F-FE mks
+ * DF-FE 
+ * 6E-FF 
+ * 3D - F9
+ * 9F - D3
+ * DB - 6F
+ * DF - 56 
+ * CB - 8D 
+ * 37 - CC - F7 - C7 - 6E-49 - 08 - 40*/
