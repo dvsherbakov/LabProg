@@ -45,7 +45,7 @@ namespace LabProg
 
         private void DispenserDump(object sender, RoutedEventArgs e)
         {
-            dispSerial.Dump(1);
+            dispSerial.Dump(2);
         }
 
         private void DispenserReset(object sender, RoutedEventArgs e)
@@ -103,7 +103,7 @@ namespace LabProg
 
         public void DispathData(byte[] data)
         {
-            Debug.WriteLine(data);
+            Debug.WriteLine(BitConverter.ToString(data));
             if (data.Length > 2 & data[0]==0x06)
             {
                 switch (data[1]){
