@@ -154,6 +154,13 @@ namespace LabProg.Dispencer
             _mPort.Write(cmd, 0, 4);
         }
 
+        public void Dump(byte channel)
+        {
+            var cmd = new byte[5] { 0x53, 0x03, 0x60, channel, 0x0 };
+            cmd[4] = (byte)(cmd[1] + cmd[2] + cmd[3]);
+            _mPort.Write(cmd, 0, 5);
+        }
+
         public void Init()
         {
             _mPort.Write("Q");
