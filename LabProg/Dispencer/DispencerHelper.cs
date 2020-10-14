@@ -113,7 +113,7 @@ namespace LabProg
 
         public void DispathData(byte[] data)
         {
-            Debug.WriteLine(data);
+            Debug.WriteLine(BitConverter.ToString(data));
             if (data.Length > 2 & data[0]==0x06)
             {
                 switch (data[1]){
