@@ -101,29 +101,22 @@ namespace LabProg.Dispencer
 
         public void SetPulseVaveForm()
         {
-            var cmd = new byte[23] { 0x53, //S
-                0x15, //Number of bytes
-                0x06, //command
-                0x00, //not used
-                0x00, //not used
-                0x00, //t1 hi
-                0x1E, //t1 low
-                0x00, //not used
-                0x00, //t2 hi
-                0x5A, //t2 low
-                0x00, //V0 hi
-                0x32, //V0 low 
-                0x00, //V1 hi
-                0x14, //V1 low
-                0x00, //V2 hi
-                0x50, //V2 low
-                0x00, //tr1 hi
-                0x0A, //tr1 low
-                0x00, //tf hi 
-                0x0A, //tf low
-                0x00, //tr2 hi
-                0x0A, //tr2 low
-                0x48 //checkSumm
+            
+            //Set wave form to 3.0/20.0/3.0/40.0/3.0µs, 0.0/10.0/-10.0V
+            var cmd = new byte[] { 
+                0x53, 
+                0x15, 0x06, //len, command
+                0xFF, 0xFF, //unused, 
+                0x00, 0xC8, //t1, 200
+                0xFF,//unused 
+                0x01,0x90,//t2, 400
+                0x00, 0x00, //v0, 0
+                0x00,0x0A, //v1, 10
+                0xFF,0xF6, //v2, -10
+                0x00, 0x1E, //tr1, 30
+                0x00, 0x1E, //tf, 30
+                0x00, 0x1E, //tr2,30
+                0xCA //checksumm
             };
 
             var chSum = 0;
@@ -131,8 +124,8 @@ namespace LabProg.Dispencer
             {
                 chSum += cmd[i];
             }
-            if (chSum > 255) chSum -= 255;
-            cmd[22] = (byte)chSum;
+
+            cmd[22] = (byte)(chSum & 0xFF);
             _mPort.Write(cmd, 0, 23);
         }
 
@@ -181,6 +174,18 @@ namespace LabProg.Dispencer
             SetPulseVaveForm();
             System.Threading.Thread.Sleep(50);
 
+        }
+
+        //Вынести в отдельный класс
+
+        private static Int16 JoinByte(byte hiB, byte lowB)
+        {
+            return (short)((hiB << 8) | lowB & 0x00FF);
+        }
+
+        private static Tuple<byte, byte> DivideData(Int16 number)
+        {
+            return new Tuple<byte, byte>((byte)(number >> 8), (byte)(number & 0xff));
         }
 
     }
