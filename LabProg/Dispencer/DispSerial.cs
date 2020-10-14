@@ -101,7 +101,6 @@ namespace LabProg.Dispencer
 
         public void SetPulseVaveForm()
         {
-            
             var cmd = new byte[23] { 0x53, //S
                 0x15, //Number of bytes
                 0x06, //command
@@ -126,8 +125,9 @@ namespace LabProg.Dispencer
                 0x0A, //tr2 low
                 0x48 //checkSumm
             };
+
             var chSum = 0;
-            for (int i = 1; i < 21; i++)
+            for (int i = 1; i < 22; i++)
             {
                 chSum += cmd[i];
             }
