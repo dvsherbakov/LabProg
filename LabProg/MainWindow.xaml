@@ -1086,6 +1086,7 @@
                         <Button Click="DispenserReset">*</Button>
                         <Button Click="DispenserVersion">v</Button>
                         <Button Click="DispenserSetPF">PF</Button>
+                        <Button Click="DispenserSetChannel">SC</Button>
                     </StackPanel>
                     <Expander Header="Параметры" Padding="5">
                         <StackPanel>

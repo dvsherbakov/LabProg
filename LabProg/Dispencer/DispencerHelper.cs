@@ -45,7 +45,12 @@ namespace LabProg
 
         private void DispenserDump(object sender, RoutedEventArgs e)
         {
-            dispSerial.Dump(1);
+            dispSerial.Dump();
+        }
+
+        private void DispenserSetChannel(object sender, RoutedEventArgs e)
+        {
+            dispSerial.SetChannel(1);
         }
 
         private void DispenserReset(object sender, RoutedEventArgs e)
