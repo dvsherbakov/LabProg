@@ -80,6 +80,7 @@ namespace LabProg
             CbLaserType.SelectedIndex = Properties.Settings.Default.LaserType;
             CbCamType.SelectedIndex = Properties.Settings.Default.CameraType;
             CbAndorMode.SelectedIndex = Properties.Settings.Default.AndorMode;
+            CbDispCurrentChannel.SelectedIndex = Properties.Settings.Default.DispCurrentChannel;
             SetPortSelection(CbPyroPort, Properties.Settings.Default.PyroPortIndex);
             SetPortSelection(CbArduinoPort, Properties.Settings.Default.ArduinoPortIndex);
             SetPortSelection(CbMirrorPort, Properties.Settings.Default.MirrorPortIndex);
@@ -110,6 +111,7 @@ namespace LabProg
             Properties.Settings.Default.LaserType = CbLaserType.SelectedIndex;
             Properties.Settings.Default.CameraType = CbCamType.SelectedIndex;
             Properties.Settings.Default.AndorMode = CbAndorMode.SelectedIndex;
+            Properties.Settings.Default.DispCurrentChannel = CbDispCurrentChannel.SelectedIndex;
             //Properties.Settings.Default.PyroPortIndex = 8;
             Properties.Settings.Default.PyroPortIndex = GetPortSelection(CbPyroPort);
             Properties.Settings.Default.CameraSavePath = tbSaveCamPath.Text;

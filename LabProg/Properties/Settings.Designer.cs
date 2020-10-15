@@ -1294,5 +1294,17 @@ namespace LabProg.Properties {
                 this["Параметр"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispCurrentChannel {
+            get {
+                return ((int)(this["DispCurrentChannel"]));
+            }
+            set {
+                this["DispCurrentChannel"] = value;
+            }
+        }
     }
 }

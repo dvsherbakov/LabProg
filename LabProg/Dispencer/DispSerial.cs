@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace LabProg.Dispencer
 {
@@ -124,26 +125,55 @@ namespace LabProg.Dispencer
             return (byte)(chSum & 0xFF);
         }
 
-        public void SetPulseVaveForm()
+        public void SetSineWaveForm()
         {
-            if (!_mPort.IsOpen) {
+            if (!_mPort.IsOpen)
+            {
                 f_AddLogBoxMessage("Порт диспенсера закрыт");
                 return;
             }
+            var cmd = new byte[] {
+                0x53,//Header ‘S’
+                0x08, 0x17, //Number of Bytes 08h //Command 17h 
+                0x00, 0x00, //Voltage V0 * 10(high byte) XXh Voltage V0 * 10(low byte) XXh 
+                0x00, 0x00, //Time toverall * 10(high byte) XXh Time toverall * 10(low byte) XXh 
+                0x00, 0x00, //Voltage Vpeak * 10(high byte) XXh Voltage Vpeak * 10(low byte) XXh 
+                0x0A//Check Sum XXh
+            };
+            cmd[9] = CheckSum(cmd);
+            _mPort.Write(cmd, 0, 10);
+
+        }
+
+        public void SetPulseWaveForm(DispPulseWaveData data)
+        {
+            if (!_mPort.IsOpen)
+            {
+                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                return;
+            }
+            var t1 = DivideData((Int16)data.TimeT1);
+            var t2 = DivideData((Int16)data.TimeT2);
+            var v0 = DivideData((Int16)(data.V0 * 10));
+            var v1 = DivideData((Int16)(data.V1 * 10));
+            var v2 = DivideData((Int16)(data.V2 * 10));
+            var tr1 = DivideData((Int16)data.TimeRise1);
+            var tf = DivideData((Int16)data.TimeFall);
+            var tr2 = DivideData((Int16)data.TimeRise2);
             //Set wave form to 3.0/20.0/3.0/40.0/3.0µs, 0.0/10.0/-10.0V
-            var cmd = new byte[] { 
-                0x53, 
+            var cmd = new byte[] {
+                0x53,
                 0x15, 0x06, //len, command
                 0xFF, 0xFF, //unused, 
-                0x00, 0xC8, //t1, 200
+                t1.Item1, t1.Item2, //0x00, 0xC8, t1, 200
                 0xFF,//unused 
-                0x01,0x90,//t2, 400
-                0x00, 0x00, //v0, 0
-                0x00,0x0A, //v1, 10
-                0xFF,0xF6, //v2, -10
-                0x00, 0x1E, //tr1, 30
-                0x00, 0x1E, //tf, 30
-                0x00, 0x1E, //tr2,30
+                t2.Item1, t2.Item2, //0x01,0x90,//t2, 400
+                v0.Item1, v0.Item2, //0x00, 0x00, //v0, 0
+                v1.Item1, v1.Item2, //0x00,0x0A, //v1, 10
+                v2.Item1, v2.Item2, //0xFF,0xF6, //v2, -10
+                tr1.Item1, tr1.Item2, //0x00, 0x1E, //tr1, 30
+                tf.Item1, tf.Item2, //0x00, 0x1E, //tf, 30
+                tr2.Item1, tr2.Item2,//0x00, 0x1E, //tr2,30
                 0xCA //checksumm
             };
 
@@ -208,7 +238,7 @@ namespace LabProg.Dispencer
             System.Threading.Thread.Sleep(50);
             GetVersion();
             System.Threading.Thread.Sleep(50);
-            SetPulseVaveForm();
+            //SetPulseWaveForm();
             System.Threading.Thread.Sleep(50);
 
         }

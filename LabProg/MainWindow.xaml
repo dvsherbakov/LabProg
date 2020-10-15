@@ -1055,7 +1055,7 @@
                                       Checked="DispenserPortConnect"
                                       />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="10,5">
+                    <StackPanel Orientation="Horizontal" Margin="10,5" HorizontalAlignment="Center">
                         <Button x:Name="btDispenserStart" 
                                         Click="DispenserStart"
                                         Background="Transparent"
@@ -1081,12 +1081,6 @@
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <Button Click="DispenserGetChannels">ЧК</Button>
-                        <Button Click="DispenserDump">?</Button>
-                        <Button Click="DispenserReset">*</Button>
-                        <Button Click="DispenserVersion">v</Button>
-                        <Button Click="DispenserSetPF">PF</Button>
-                        
                     </StackPanel>
                     <Expander Header="Параметры" Padding="5">
                         <StackPanel>
@@ -1099,14 +1093,14 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Padding="0,0,5,0">Тип сигнала</TextBlock>
-                                <ComboBox x:Name="CbDispSignalType" Grid.Column="1" SelectionChanged="DispenserChangeSignalType" Padding="1">
+                                <TextBlock Grid.Column="0" Padding="0,0,5,0" VerticalAlignment="Center">Тип сигнала</TextBlock>
+                                <ComboBox x:Name="CbDispSignalType" Grid.Column="1" SelectionChanged="DispenserChangeSignalType" Margin="2" Padding="2">
                                     <TextBlock>Стандартная волна</TextBlock>
                                     <TextBlock>Синусоида</TextBlock>
                                     <TextBlock>Однократный импульс</TextBlock>
                                 </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="1" Padding="0,0,5,0">Текущий канал</TextBlock>
-                                <ComboBox Grid.Column="1" Grid.Row="1" SelectionChanged="DispenserSetChannel" Padding="1">
+                                <TextBlock Grid.Column="0" Grid.Row="1" Padding="0,0,5,0" VerticalAlignment="Center">Текущий канал</TextBlock>
+                                <ComboBox x:Name="CbDispCurrentChannel" Grid.Column="1" Grid.Row="1" SelectionChanged="DispenserSetChannel" Margin="2" Padding="2">
                                     <TextBlock>1</TextBlock>
                                     <TextBlock>2</TextBlock>
                                 </ComboBox>
@@ -1118,6 +1112,7 @@
                                     <ColumnDefinition Width="1*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
@@ -1160,8 +1155,26 @@
                                          Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispV1, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="8" Padding="0,3">V</TextBlock>
                                 <TextBlock Grid.Column="0" Grid.Row="9" Padding="5">Минимум</TextBlock>
-                                <TextBox Grid.Column="1" Grid.Row="9" Margin="3" Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispV2, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="1" Grid.Row="9" Margin="3" 
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispV2, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="2" Grid.Row="9" Padding="0,3">V</TextBlock>
+                                <StackPanel Grid.Row="10" Grid.ColumnSpan="2"  HorizontalAlignment="Center">
+                                    <Button 
+                                        Click="DispenserSetPF"
+                                        Background="Transparent"
+                                        BorderThickness="0">
+                                        <Button.Content>
+                                            <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                <Path  Stroke="#FF000000">
+                                                    <Path.Data>
+                                                        <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                    </Path.Data>
+                                                </Path>
+                                                <Path Data="M8,19 L16,12 8,5" StrokeThickness="2" Stroke="#FF000000" Margin="0.667,0,-0.667,0" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
                             </Grid>
                             <Grid Margin="20,5,1,5" x:Name="grHarmonycWave">
                                 <Grid.ColumnDefinitions>

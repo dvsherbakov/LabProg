@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LabProg.Dispencer;
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -50,7 +51,9 @@ namespace LabProg
 
         private void DispenserSetChannel(object sender, RoutedEventArgs e)
         {
-            dispSerial.SetChannel((byte)((ComboBox)sender).SelectedIndex);
+            if (dispSerial != null) { 
+                dispSerial.SetChannel((byte)((ComboBox)sender).SelectedIndex); 
+            }
         }
 
         private void DispenserReset(object sender, RoutedEventArgs e)
@@ -65,7 +68,29 @@ namespace LabProg
 
         private void DispenserSetPF(object sender, RoutedEventArgs e)
         {
-            dispSerial.SetPulseVaveForm();
+            //Time
+            int.TryParse(Properties.Settings.Default.DispRiseTm, out int tr1);
+            int.TryParse(Properties.Settings.Default.DispKeepTm, out int t1);
+            int.TryParse(Properties.Settings.Default.DispFallTm, out int tf);
+            int.TryParse(Properties.Settings.Default.DispLowTm, out int t2);
+            int.TryParse(Properties.Settings.Default.DispRise2Tm, out int tr2);
+            //Voltage
+            int.TryParse(Properties.Settings.Default.DispV0, out int v0);
+            int.TryParse(Properties.Settings.Default.DispV1, out int v1);
+            int.TryParse(Properties.Settings.Default.DispV2, out int v2);
+            var data = new DispPulseWaveData {
+                TimeRise1 = tr1,
+                TimeT1 = t1,
+                TimeFall = tf,
+                TimeT2 = t2,
+                TimeRise2 = tr2,
+
+                V0 = v0,
+                V1 = v1,
+                V2 = v2
+            };
+
+            dispSerial.SetPulseWaveForm(data);
         }
 
         private void DispenserChangeSignalType(object sender, RoutedEventArgs e)
