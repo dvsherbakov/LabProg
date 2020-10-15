@@ -83,25 +83,53 @@ namespace LabProg.Dispencer
 
         public void GetVersion()
         {
+            if (!_mPort.IsOpen)
+            {
+                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                return;
+            }
             var cmd = new byte[4] { 0x53, 0x02, 0xF0, 0xF2 };
             _mPort.Write(cmd, 0, 4);
         }
 
         public void SoftReset()
         {
+            if (!_mPort.IsOpen)
+            {
+                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                return;
+            }
             var cmd = new byte[4] { 0x53, 0x02, 0x01, 0x03 };
             _mPort.Write(cmd, 0, 4);
         }
 
         public void GetNumberOfChannels()
         {
+            if (!_mPort.IsOpen)
+            {
+                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                return;
+            }
             var cmd = new byte[4] { 0x53, 0x02, 0x0D, 0x0F };
             _mPort.Write(cmd, 0, 4);
         }
 
+        private byte CheckSum(byte[] data)
+        {
+            var chSum = 0;
+            for (int i = 1; i < data.Length-1; i++)
+            {
+                chSum += data[i];
+            }
+            return (byte)(chSum & 0xFF);
+        }
+
         public void SetPulseVaveForm()
         {
-            
+            if (!_mPort.IsOpen) {
+                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                return;
+            }
             //Set wave form to 3.0/20.0/3.0/40.0/3.0µs, 0.0/10.0/-10.0V
             var cmd = new byte[] { 
                 0x53, 
@@ -119,30 +147,39 @@ namespace LabProg.Dispencer
                 0xCA //checksumm
             };
 
-            var chSum = 0;
-            for (int i = 1; i < 22; i++)
-            {
-                chSum += cmd[i];
-            }
-
-            cmd[22] = (byte)(chSum & 0xFF);
+            cmd[22] = CheckSum(cmd);
             _mPort.Write(cmd, 0, 23);
         }
 
         public void Start()
         {
+            if (!_mPort.IsOpen)
+            {
+                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                return;
+            }
             var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x01, 0x03+0x0A+0x01 };
             _mPort.Write(cmd, 0, 5);
         }
 
         public void Stop()
         {
+            if (!_mPort.IsOpen)
+            {
+                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                return;
+            }
             var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x00, 0x03+0x0A+0x00 };
             _mPort.Write(cmd, 0, 5);
         }
         
         public void SetChannel(byte channel)
         {
+            if (!_mPort.IsOpen)
+            {
+                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                return;
+            }
             var cmd = new byte[] { 0x53, 0x03, 0x0C, channel, 0x62 };
             cmd[4] = (byte)(cmd[1] + cmd[2] + cmd[3]);
             _mPort.Write(cmd, 0, 5);

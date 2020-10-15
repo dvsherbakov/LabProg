@@ -1086,7 +1086,7 @@
                         <Button Click="DispenserReset">*</Button>
                         <Button Click="DispenserVersion">v</Button>
                         <Button Click="DispenserSetPF">PF</Button>
-                        <Button Click="DispenserSetChannel">SC</Button>
+                        
                     </StackPanel>
                     <Expander Header="Параметры" Padding="5">
                         <StackPanel>
@@ -1095,11 +1095,20 @@
                                     <ColumnDefinition Width="6*" />
                                     <ColumnDefinition Width="4*" />
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Padding="0,0,5,0">Тип сигнала</TextBlock>
-                                <ComboBox x:Name="CbDispSignalType" Grid.Column="1" SelectionChanged="DispenserChangeSignalType">
+                                <ComboBox x:Name="CbDispSignalType" Grid.Column="1" SelectionChanged="DispenserChangeSignalType" Padding="1">
                                     <TextBlock>Стандартная волна</TextBlock>
                                     <TextBlock>Синусоида</TextBlock>
                                     <TextBlock>Однократный импульс</TextBlock>
+                                </ComboBox>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Padding="0,0,5,0">Текущий канал</TextBlock>
+                                <ComboBox Grid.Column="1" Grid.Row="1" SelectionChanged="DispenserSetChannel" Padding="1">
+                                    <TextBlock>1</TextBlock>
+                                    <TextBlock>2</TextBlock>
                                 </ComboBox>
                             </Grid>
                             <Grid Margin="20,5,1,5" x:Name="grSingleWave">

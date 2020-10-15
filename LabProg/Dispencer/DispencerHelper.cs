@@ -50,7 +50,7 @@ namespace LabProg
 
         private void DispenserSetChannel(object sender, RoutedEventArgs e)
         {
-            dispSerial.SetChannel(1);
+            dispSerial.SetChannel((byte)((ComboBox)sender).SelectedIndex);
         }
 
         private void DispenserReset(object sender, RoutedEventArgs e)
@@ -114,6 +114,7 @@ namespace LabProg
         public void DispathData(byte[] data)
         {
             Debug.WriteLine(BitConverter.ToString(data));
+            LogBox.Items.Add(new LogBoxItem { Dt = DateTime.Now, LogText = $"Получено из порта диспенсера: {BitConverter.ToString(data)}" });
             if (data.Length > 2 & data[0]==0x06)
             {
                 switch (data[1]){
