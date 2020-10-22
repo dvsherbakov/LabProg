@@ -123,19 +123,22 @@ namespace LabProg.Dispencer
             return (byte)(chSum & 0xFF);
         }
 
-        public void SetSineWaveForm()
+        public void SetSineWaveForm(DispSineWaveData data)
         {
             if (!_mPort.IsOpen)
             {
                 f_AddLogBoxMessage("Порт диспенсера закрыт");
                 return;
             }
+            var v0 = DivideData((Int16)data.V0);
+            var vp = DivideData((Int16)data.Vpeack);
+            var t = DivideData((Int16)data.TimeToverall);
             var cmd = new byte[] {
                 0x53,//Header ‘S’
                 0x08, 0x17, //Number of Bytes 08h //Command 17h 
-                0x00, 0x00, //Voltage V0 * 10(high byte) XXh Voltage V0 * 10(low byte) XXh 
-                0x00, 0x00, //Time toverall * 10(high byte) XXh Time toverall * 10(low byte) XXh 
-                0x00, 0x00, //Voltage Vpeak * 10(high byte) XXh Voltage Vpeak * 10(low byte) XXh 
+                v0.Item1, v0.Item2, //Voltage V0 * 10(high byte) XXh Voltage V0 * 10(low byte) XXh 
+                t.Item1, t.Item1, //Time toverall * 10(high byte) XXh Time toverall * 10(low byte) XXh 
+                vp.Item1, vp.Item2, //Voltage Vpeak * 10(high byte) XXh Voltage Vpeak * 10(low byte) XXh 
                 0x0A//Check Sum XXh
             };
             cmd[9] = CheckSum(cmd);
@@ -158,7 +161,7 @@ namespace LabProg.Dispencer
             var tr1 = DivideData((Int16)data.TimeRise1);
             var tf = DivideData((Int16)data.TimeFall);
             var tr2 = DivideData((Int16)data.TimeRise2);
-            //Set wave form to 3.0/20.0/3.0/40.0/3.0µs, 0.0/10.0/-10.0V
+            
             var cmd = new byte[] {
                 0x53,
                 0x15, 0x06, //len, command

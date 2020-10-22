@@ -102,6 +102,7 @@
     <Compile Include="Dispencer\DispencerHelper.cs" />
     <Compile Include="Dispencer\DispPulseWaveData.cs" />
     <Compile Include="Dispencer\DispSerial.cs" />
+    <Compile Include="Dispencer\DispSineWaveData.cs" />
     <Compile Include="ImgBufferItem.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="Lasers\LaserPowerAtom.xaml.cs">

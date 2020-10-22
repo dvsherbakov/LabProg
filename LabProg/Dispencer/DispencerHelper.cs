@@ -93,6 +93,16 @@ namespace LabProg
             dispSerial.SetPulseWaveForm(data);
         }
 
+        private void DispenserSetHF()
+        {
+            int.TryParse(Properties.Settings.Default.DispHV0, out int v0);
+            int.TryParse(Properties.Settings.Default.DispHVpeak, out int vp);
+            int.TryParse(Properties.Settings.Default.DispHToverall, out int t);
+            var data = new DispSineWaveData { V0 = v0, Vpeack = vp, TimeToverall = t };
+
+            dispSerial.SetSineWaveForm(data);
+        }
+
         private void DispenserChangeSignalType(object sender, RoutedEventArgs e)
         {
             var type = ((ComboBox)sender).SelectedIndex;

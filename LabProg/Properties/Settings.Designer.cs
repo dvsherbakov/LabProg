@@ -1306,5 +1306,41 @@ namespace LabProg.Properties {
                 this["DispCurrentChannel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispHV0 {
+            get {
+                return ((string)(this["DispHV0"]));
+            }
+            set {
+                this["DispHV0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispHVpeak {
+            get {
+                return ((string)(this["DispHVpeak"]));
+            }
+            set {
+                this["DispHVpeak"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispHToverall {
+            get {
+                return ((string)(this["DispHToverall"]));
+            }
+            set {
+                this["DispHToverall"] = value;
+            }
+        }
     }
 }
