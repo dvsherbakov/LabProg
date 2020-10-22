@@ -93,7 +93,7 @@ namespace LabProg
             dispSerial.SetPulseWaveForm(data);
         }
 
-        private void DispenserSetHF()
+        private void DispenserSetHF(object sender, RoutedEventArgs e)
         {
             int.TryParse(Properties.Settings.Default.DispHV0, out int v0);
             int.TryParse(Properties.Settings.Default.DispHVpeak, out int vp);
