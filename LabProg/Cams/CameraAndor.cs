@@ -21,9 +21,10 @@ namespace LabProg.Cams
             private set
             {
                 errorValue = value;
-                if (value != 2002)
+                if (value != 20002)
                 {
-                    f_AddLogBoxMessage(AndorStatusMessages.Messages[value]);
+                    var msg = AndorStatusMessages.Messages[value];
+                    f_AddLogBoxMessage(msg);
                 }
             }
         }
