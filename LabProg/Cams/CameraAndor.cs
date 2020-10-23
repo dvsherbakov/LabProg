@@ -23,8 +23,7 @@ namespace LabProg.Cams
                 errorValue = value;
                 if (value != 20002)
                 {
-                    var msg = AndorStatusMessages.Messages[value];
-                    f_AddLogBoxMessage(msg);
+                    f_AddLogBoxMessage(AndorStatusMessages.GetMessage(value));
                 }
             }
         }

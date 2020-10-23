@@ -8,7 +8,7 @@ namespace LabProg.Cams
 {
     internal static class AndorStatusMessages
     {
-        public static readonly Dictionary<uint, string> Messages = new Dictionary<uint, string>()
+        private static readonly Dictionary<uint, string> Messages = new Dictionary<uint, string>()
         {
             {20001, "DRV_ERROR_CODES"}, {20065, "DRV_DRIVER_ERRORS"},
             {20002, "DRV_SUCCESS"}, {20066, "DRV_P1INVALID"},
@@ -54,5 +54,11 @@ namespace LabProg.Cams
             {20055, "ERROR_DMA_UPLOAD"}, {20100, "DRV_INVALID_AMPLIFIER"},
             {20064, "DRV_DATATYPE"}, {20101, "DRV_INVALID_COUNTCONVERT_MODE"}
         };
+
+        public static string GetMessage(uint messageCode)
+        {
+            return Messages.ContainsKey(messageCode) ? Messages[messageCode] : "Uncnown cam error code";
+                 
+        }
     };
 }
