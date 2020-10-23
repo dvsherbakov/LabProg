@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LabProg.Cams
 {
@@ -57,8 +53,7 @@ namespace LabProg.Cams
 
         public static string GetMessage(uint messageCode)
         {
-            return Messages.ContainsKey(messageCode) ? Messages[messageCode] : "Uncnown cam error code";
-                 
+            return Messages.ContainsKey(messageCode) ? Messages[messageCode] : "Uncnown cam error code";      
         }
     };
 }
