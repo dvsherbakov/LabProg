@@ -896,6 +896,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" 
                                        Grid.Column="0" 
@@ -910,6 +911,23 @@
                                       Grid.ColumnSpan="2"
                                       Checked="ExecuteFromCb"
                                       Content="Соединиться с камерой"/>
+                            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                                <Button 
+                                        
+                                        Background="Transparent"
+                                        BorderThickness="0">
+                                    <Button.Content>
+                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                            <Path  Stroke="#FF000000">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M8,19 L16,12 8,5" StrokeThickness="2" Stroke="#FF000000" Margin="0.667,0,-0.667,0" />
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
                         </Grid>
                     </StackPanel>
                     <Grid  Margin="10,5,5,5">
@@ -1264,6 +1282,6 @@
             </ListView.View>
         </ListView>
         <GridSplitter ResizeDirection="Columns" Grid.Row="1" Grid.Column="1" Height="Auto" Width="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
-        <Image x:Name="PictureBox1"  Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Cursor="IBeam" MinWidth="604" MinHeight="600" Stretch="Fill"/>
+        <Image x:Name="PictureBox1"  Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Cursor="IBeam" MinWidth="600" MinHeight="600" Stretch="Fill"/>
     </Grid>
 </Window>

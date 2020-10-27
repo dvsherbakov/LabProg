@@ -53,6 +53,9 @@ namespace LabProg.Cams
             }
         }
         private readonly System.Timers.Timer f_seriesTimer;
+        private readonly System.Timers.Timer f_commonTimer;
+        public delegate void GetFrameDelegate(Bitmap frame);
+        public event GetFrameDelegate CommonEvent;
 
         public CameraAndor(Action<string> addLogBoxMessage)
         {
@@ -78,6 +81,8 @@ namespace LabProg.Cams
             ErrValue = Api.SetShutter(1, 1, 0, 0);
             f_buffSize = f_X * f_Y;
             f_seriesTimer = new System.Timers.Timer();
+            f_commonTimer = new System.Timers.Timer(500);
+            f_commonTimer.Elapsed += OnCommonEvent;
         }
 
         public float GetTempereture()
@@ -294,5 +299,12 @@ namespace LabProg.Cams
         }
 
         void StopTimer() => f_seriesTimer.Stop();
+
+        public void StartCommonTimer() => f_commonTimer.Start();
+
+        private void OnCommonEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            CommonEvent?.Invoke(GetOnceBitmap());
+        }
     }
 }

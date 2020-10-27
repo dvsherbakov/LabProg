@@ -1,7 +1,9 @@
 ﻿using LabProg.Cams;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace LabProg
 {
@@ -14,6 +16,7 @@ namespace LabProg
         private void OnStartAndorCameraCommandExecute(object p)
         {
             camAndor = new CameraAndor(AddLogBoxMessage);
+            camAndor.CommonEvent += PutImage;
         }
 
         private void ExecuteFromCb(object sender, RoutedEventArgs e)
@@ -33,6 +36,24 @@ namespace LabProg
             {
                 PcoCommands.Visibility = Visibility.Collapsed;
                 AndorCommands.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void PutImage(Bitmap frame)
+        {
+            ImageSourceConverter c = new ImageSourceConverter();
+            PictureBox1.Source = (ImageSource)c.ConvertFrom(frame);
+        }
+
+        private void StartAndorCamSeries(object sender, RoutedEventArgs e)
+        {
+            if (camAndor != null)
+            {
+                camAndor.StartCommonTimer();
+            }
+            else
+            {
+                LogBox.Items.Insert(0, new LogBoxItem { Dt=System.DateTime.Now, LogText="Камера не инициализирована"});
             }
         }
     }
