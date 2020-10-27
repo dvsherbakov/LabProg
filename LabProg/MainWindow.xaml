@@ -913,7 +913,7 @@
                                       Content="Соединиться с камерой"/>
                             <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                                 <Button 
-                                        
+                                         Click="StartAndorCamSeries"
                                         Background="Transparent"
                                         BorderThickness="0">
                                     <Button.Content>

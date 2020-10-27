@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace LabProg.Cams
 {
     internal static class AndorStatusMessages
     {
-        public static readonly Dictionary<uint, string> Messages = new Dictionary<uint, string>()
+        public static string Messages(uint id)
         {
+            var d = new Dictionary<uint, string>() {
             {20001, "DRV_ERROR_CODES"}, {20065, "DRV_DRIVER_ERRORS"},
             {20002, "DRV_SUCCESS"}, {20066, "DRV_P1INVALID"},
             {20003, "DRV_VXDNOTINSTALLED"}, {20067, "DRV_P2INVALID"},
@@ -52,7 +49,8 @@ namespace LabProg.Cams
             {20053, "DRV_FLEXERROR"}, {20131, "DRV_FPGA_VOLTAGE_ERROR"},
             {20054, "DRV_GPIBERROR"}, {20099, "DRV_BINNING_ERROR"},
             {20055, "ERROR_DMA_UPLOAD"}, {20100, "DRV_INVALID_AMPLIFIER"},
-            {20064, "DRV_DATATYPE"}, {20101, "DRV_INVALID_COUNTCONVERT_MODE"}
-        };
+            {20064, "DRV_DATATYPE"}, {20101, "DRV_INVALID_COUNTCONVERT_MODE"}};
+            return d[id];
+        }
     };
 }

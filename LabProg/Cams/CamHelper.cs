@@ -1,9 +1,11 @@
 ﻿using LabProg.Cams;
+using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace LabProg
 {
@@ -41,8 +43,10 @@ namespace LabProg
 
         private void PutImage(Bitmap frame)
         {
-            ImageSourceConverter c = new ImageSourceConverter();
-            PictureBox1.Source = (ImageSource)c.ConvertFrom(frame);
+            BitmapImage bmpImage = BitmapToImageSource(frame);
+            Dispatcher.Invoke(() => PictureBox1.Source = bmpImage);
+            
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
         }
 
         private void StartAndorCamSeries(object sender, RoutedEventArgs e)

@@ -21,9 +21,9 @@ namespace LabProg.Cams
             private set
             {
                 errorValue = value;
-                if (value != 2002)
+                if (value != 20002)
                 {
-                    f_AddLogBoxMessage(AndorStatusMessages.Messages[value]);
+                    f_AddLogBoxMessage(AndorStatusMessages.Messages(value));
                 }
             }
         }
@@ -31,8 +31,8 @@ namespace LabProg.Cams
         private readonly int f_Y = 0;
         public int XResolution { get => f_X; }
         public int YResolution { get => f_Y; }
-        private static readonly int gblXPixels = 0;
-        private static readonly int gblYPixels = 0;
+        //private static readonly int gblXPixels = 0;
+        //private static readonly int gblYPixels = 0;
         private readonly int f_buffSize;
         readonly List<ImgBufferItem> Buffer = new List<ImgBufferItem>();
         private readonly Action<string> f_AddLogBoxMessage;
@@ -180,17 +180,17 @@ namespace LabProg.Cams
             for (var i = 0; i < src.Length; i++)
                 dest[i] = (byte)((src[i] - min) * cScale);
 
-            Bitmap Bm = new Bitmap(gblXPixels, gblYPixels, PixelFormat.Format24bppRgb);
-            var b = new Bitmap(gblXPixels, gblYPixels, PixelFormat.Format8bppIndexed);
+            Bitmap Bm = new Bitmap(XResolution, YResolution, PixelFormat.Format24bppRgb);
+            var b = new Bitmap(XResolution, YResolution, PixelFormat.Format8bppIndexed);
             ColorPalette ncp = b.Palette;
             for (int i = 0; i < 256; i++)
                 ncp.Entries[i] = Color.FromArgb(255, i, i, i);
             b.Palette = ncp;
-            for (int y = 0; y < gblYPixels; y++)
+            for (int y = 0; y < XResolution; y++)
             {
-                for (int x = 0; x < gblXPixels; x++)
+                for (int x = 0; x < YResolution; x++)
                 {
-                    int Value = dest[x + (y * gblXPixels)];
+                    int Value = dest[x + (y * XResolution)];
                     Color C = ncp.Entries[Value];
                     Bm.SetPixel(x, y, C);
                 }
@@ -209,7 +209,7 @@ namespace LabProg.Cams
             ErrValue = Api.SetAcquisitionMode(1); //Тип серии 1 - одиночных снимок, 5 - снимать до остановки
             ErrValue = Api.StartAcquisition();
             ErrValue = Api.WaitForAcquisition();
-            uint size = (uint)(gblXPixels * gblYPixels);
+            uint size = (uint)(XResolution * YResolution);
             int[] imageArray = new int[size];
             ErrValue = Api.GetMostRecentImage(imageArray, size);
 
@@ -224,7 +224,7 @@ namespace LabProg.Cams
             ErrValue = Api.SetAcquisitionMode(1); //Тип серии 1 - одиночных снимок, 5 - снимать до остановки
             errorValue = Api.StartAcquisition();
             errorValue = Api.WaitForAcquisition();
-            uint size = (uint)(gblXPixels * gblYPixels);
+            uint size = (uint)(XResolution * YResolution);
             int[] imageArray = new int[size];
             errorValue = Api.GetMostRecentImage(imageArray, size);
             var bm = Convert2Bitmap(NormalizeData(imageArray), 1024, 1024);
@@ -261,7 +261,7 @@ namespace LabProg.Cams
                 if ((lImage - fImage) > 0)
                 {
                     //Console.WriteLine(imagesCount);
-                    var size = gblXPixels * gblYPixels;
+                    var size = XResolution * YResolution;
                     var imagesData = new int[size];
                     errorValue = Api.GetOldestImage(imagesData, (uint)size);
                     Buffer.Add(new ImgBufferItem(imagesData));
