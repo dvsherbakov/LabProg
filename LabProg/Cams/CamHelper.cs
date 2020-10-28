@@ -18,7 +18,7 @@ namespace LabProg
         private void OnStartAndorCameraCommandExecute(object p)
         {
             camAndor = new CameraAndor(AddLogBoxMessage);
-            camAndor.CommonEvent += PutImage;
+            camAndor.CommonEvent += TransferImage;
         }
 
         private void ExecuteFromCb(object sender, RoutedEventArgs e)
@@ -41,11 +41,23 @@ namespace LabProg
             }
         }
 
-        private void PutImage(Bitmap frame)
+        public delegate void PutImageDelegate(Bitmap frame);
+
+        
+        
+        private void PI(Bitmap frame)
         {
             BitmapImage bmpImage = BitmapToImageSource(frame);
-            Dispatcher.Invoke(() => PictureBox1.Source = bmpImage);
+            PictureBox1.Source = null;
+            PictureBox1.Source = bmpImage;
             
+        }
+
+
+        private void TransferImage(Bitmap frame)
+        {
+            PutImageDelegate putImage = PI;
+            putImage(frame);
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
         }
 
