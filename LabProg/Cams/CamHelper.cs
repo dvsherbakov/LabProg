@@ -48,6 +48,8 @@ namespace LabProg
             BitmapImage bmpImage = BitmapToImageSource(frame);
             PictureBox1.Source = null;
             PictureBox1.Source = bmpImage;
+            //System.InvalidOperationException: 'Вызывающий поток не может получить доступ к данному объекту, 
+            //так как владельцем этого объекта является другой поток.'
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
 
         }
