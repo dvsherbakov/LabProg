@@ -1,6 +1,7 @@
 ﻿using LabProg.Cams;
 using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -56,8 +57,14 @@ namespace LabProg
 
         private void TransferImage(Bitmap frame)
         {
-            PutImageDelegate putImage = PI;
-            putImage(frame);
+            //PutImageDelegate putImage = PI;
+            //putImage(frame);
+            BitmapImage bmpImage = BitmapToImageSource(frame);
+            Dispatcher.BeginInvoke(new ThreadStart(delegate
+            {
+                PictureBox1.Source = null;
+                PictureBox1.Source = bmpImage;
+            }));
         }
 
         private void StartAndorCamSeries(object sender, RoutedEventArgs e)
