@@ -42,23 +42,20 @@ namespace LabProg
         }
 
         public delegate void PutImageDelegate(Bitmap frame);
-
-        
-        
+       
         private void PI(Bitmap frame)
         {
             BitmapImage bmpImage = BitmapToImageSource(frame);
             PictureBox1.Source = null;
             PictureBox1.Source = bmpImage;
-            
-        }
+            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
 
+        }
 
         private void TransferImage(Bitmap frame)
         {
             PutImageDelegate putImage = PI;
             putImage(frame);
-            LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
         }
 
         private void StartAndorCamSeries(object sender, RoutedEventArgs e)
