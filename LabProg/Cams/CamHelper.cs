@@ -63,7 +63,8 @@ namespace LabProg
             Dispatcher.Invoke(() =>
             {
                 PictureBox1.Source = null;
-                PictureBox1.Source = bmpImage;
+               // PictureBox1.Source = bmpImage;
+               //попробовать тут через глобальную переменную ? 
             });
         }
 
