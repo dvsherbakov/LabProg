@@ -60,11 +60,11 @@ namespace LabProg
             //PutImageDelegate putImage = PI;
             //putImage(frame);
             BitmapImage bmpImage = BitmapToImageSource(frame);
-            Dispatcher.BeginInvoke(new ThreadStart(delegate
+            Dispatcher.Invoke(() =>
             {
                 PictureBox1.Source = null;
                 PictureBox1.Source = bmpImage;
-            }));
+            });
         }
 
         private void StartAndorCamSeries(object sender, RoutedEventArgs e)
