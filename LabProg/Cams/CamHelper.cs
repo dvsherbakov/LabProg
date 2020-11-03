@@ -15,6 +15,7 @@ namespace LabProg
         private ICommand f_StartAndorCameraCommand;
 
         private CameraAndor camAndor;
+        private BitmapImage imageFromCam;
 
         private void OnStartAndorCameraCommandExecute(object p)
         {
@@ -42,13 +43,11 @@ namespace LabProg
             }
         }
 
-        public delegate void PutImageDelegate(Bitmap frame);
+        public delegate void PutImageDelegate();
        
-        private void PI(Bitmap frame)
+        private void PI()
         {
-            BitmapImage bmpImage = BitmapToImageSource(frame);
-            PictureBox1.Source = null;
-            PictureBox1.Source = bmpImage;
+            PictureBox1.Source = imageFromCam;
             //System.InvalidOperationException: 'Вызывающий поток не может получить доступ к данному объекту, 
             //так как владельцем этого объекта является другой поток.'
             LogBox.Items.Insert(0, new LogBoxItem { Dt = DateTime.Now, LogText = "Получено изображение с камеры" });
@@ -57,14 +56,15 @@ namespace LabProg
 
         private void TransferImage(Bitmap frame)
         {
-            //PutImageDelegate putImage = PI;
+            PutImageDelegate putImage = PI;
             //putImage(frame);
             BitmapImage bmpImage = BitmapToImageSource(frame);
             Dispatcher.Invoke(() =>
             {
                 PictureBox1.Source = null;
-               // PictureBox1.Source = bmpImage;
-               //попробовать тут через глобальную переменную ? 
+                imageFromCam = bmpImage;
+                Dispatcher.Invoke(putImage);
+                //попробовать тут через глобальную переменную ? 
             });
         }
 
