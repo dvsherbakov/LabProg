@@ -61,9 +61,9 @@ namespace LabProg
             BitmapImage bmpImage = BitmapToImageSource(frame);
             Dispatcher.Invoke(() =>
             {
-                PictureBox1.Source = null;
-                imageFromCam = bmpImage;
-                Dispatcher.Invoke(putImage);
+                PictureBox1.Source = bmpImage;
+                //imageFromCam = bmpImage;
+                //Dispatcher.Invoke(putImage);
                 //попробовать тут через глобальную переменную ? 
             });
         }
