@@ -62,9 +62,12 @@ namespace LabProg
 
         void TimerEvent(object source, ElapsedEventArgs e)
         {
-            var itm = f_CmdQueue.FirstOrDefault();
-            f_CmdQueue.Remove(itm);
-            WriteAnyCommand(itm);
+            if (f_CmdQueue.Count > 0)
+            {
+                var itm = f_CmdQueue.FirstOrDefault();
+                f_CmdQueue.Remove(itm);
+                WriteAnyCommand(itm);
+            }
 
             if (f_CmdQueue.Count == 0) f_QueueTimer.Enabled = false;
         }
@@ -73,7 +76,15 @@ namespace LabProg
         {
             if (f_MPort.IsOpen)
             {
-                f_MPort.Write(cmd);
+                try
+                {
+                    f_MPort.Write(cmd);
+                    f_AddLogBoxMessage($"Pump start command {cmd}");
+                } catch (Exception ex)
+                {
+                    f_AddLogBoxMessage($"Port {f_ComId} is occuped");
+                    f_AddLogBoxMessage(ex.Message);
+                }
             }
             else
             {
@@ -140,6 +151,7 @@ namespace LabProg
             if (f_MPort.IsOpen)
             {
                 f_MPort.Write("s");
+                f_AddLogBoxMessage("Pump  start");
             }
             else
             {
@@ -157,6 +169,7 @@ namespace LabProg
             if (f_MPort.IsOpen)
             {
                f_MPort.Write("t");
+                f_AddLogBoxMessage("Pump  stop");
             }
             else
             {
