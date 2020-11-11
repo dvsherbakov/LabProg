@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Diagnostics;
 using System.Windows.Controls;
 using System.Xml.Serialization;
+using System.Windows.Media;
 
 namespace LabProg
 {
@@ -108,14 +109,16 @@ namespace LabProg
 
             if (!PumpActive)
             {
-                _pumpSerial.AddStopPump();
+                //_pumpSerial.AddStopPump();
+                StopPump(true);
                 return;
             }
             if (speed == f_PrevSpeed)
             {
                 if (Math.Abs(double.Parse(speed.Trim(), CultureInfo.InvariantCulture)) < 0.001)
                 {
-                    _pumpSerial.AddStopPump();
+                    //_pumpSerial.AddStopPump();
+                    StopPump(true);
                 }
             }
             else
@@ -127,7 +130,8 @@ namespace LabProg
             switch (direction)
             {
                 case Direction.Stop:
-                    _pumpSerial.AddStopPump();
+                    //_pumpSerial.AddStopPump();
+                    StopPump(true);
                     break;
                 case Direction.Clockwise:
                     _pumpSerial.AddClockwiseDirection();
@@ -142,7 +146,8 @@ namespace LabProg
 
             if (!speed.Equals("0.0 "))
             {
-                _pumpSerial.AddStartPump();
+                //_pumpSerial.AddStartPump();
+                StartPump(true);
             }
 
             f_PrevSpeed = speed;
@@ -156,9 +161,10 @@ namespace LabProg
 
             if (!PumpActive || speed.Equals("0.0 ") || (direction == Direction.Stop))
             {
-                _pumpSerial.AddStopPump();
-                _pumpSecondSerial.AddStopPump();
-
+                //_pumpSerial.AddStopPump();
+                //_pumpSecondSerial.AddStopPump();
+                StopPump(true);
+                StopPump(false);
 
                 return;
             }
@@ -166,19 +172,25 @@ namespace LabProg
             {
                 case Direction.Clockwise:
                     _pumpSerial.AddSpeed(speed);
-                    _pumpSerial.AddStartPump();
+                    //_pumpSerial.AddStartPump();
+                    StartPump(true);
                     _pumpSecondSerial.AddSpeed("0.5 ");
-                    _pumpSecondSerial.AddStopPump();
+                    //_pumpSecondSerial.AddStopPump();
+                    StopPump(false);
                     break;
                 case Direction.CounterClockwise:
                     _pumpSecondSerial.AddSpeed(speed);
-                    _pumpSecondSerial.AddStartPump();
+                    //_pumpSecondSerial.AddStartPump();
+                    StartPump(false);
                     _pumpSerial.AddSpeed("0.5 ");
-                    _pumpSerial.AddStopPump();
+                    //_pumpSerial.AddStopPump();
+                    StopPump(true);
                     break;
                 case Direction.Stop:
-                    _pumpSecondSerial.AddStopPump();
-                    _pumpSerial.AddStopPump();
+                    // _pumpSecondSerial.AddStopPump();
+                    // _pumpSerial.AddStopPump();
+                    StopPump(false);
+                    StopPump(true);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -201,7 +213,7 @@ namespace LabProg
             var subLevel = Math.Abs(currentLevel.Dist - SelectedLevel);
             //Debug.WriteLine($"Speed setup diff = {subLevel}");
             //var ss = f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
-           // Debug.WriteLine($"Speed  = {ss}");
+            // Debug.WriteLine($"Speed  = {ss}");
             return f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
         }
 
@@ -252,8 +264,10 @@ namespace LabProg
         private void PumpPortOff(object sender, RoutedEventArgs e)
         {
             PumpActive = false;
-            _pumpSerial?.AddStopPump();
-            _pumpSecondSerial?.AddStopPump();
+            //_pumpSerial?.AddStopPump();
+            //_pumpSecondSerial?.AddStopPump();
+            StopPump(true);
+            StopPump(false);
             f_ConfocalTimer.Stop();
         }
 
@@ -273,17 +287,17 @@ namespace LabProg
                 }
             }
 
-            var senderName = ((Button) sender).Name;
-            if (senderName == "FirstPumpStart") _pumpSerial.AddStartPump();
-            else _pumpSecondSerial.AddStartPump();
+            var senderName = ((Button)sender).Name;
+            if (senderName == "FirstPumpStart") StartPump(true);//_pumpSerial.AddStartPump();
+            else StartPump(false);//_pumpSecondSerial.AddStartPump();
 
         }
 
         private void PumpStopButton(object sender, RoutedEventArgs e)
         {
             var senderName = ((Button)sender).Name;
-            if (senderName == "FirstPumpStop") _pumpSerial.AddStopPump();
-            else _pumpSecondSerial.AddStopPump();
+            if (senderName == "FirstPumpStop") StopPump(true); //_pumpSerial.AddStopPump();
+            else StopPump(false);// _pumpSecondSerial.AddStopPump();
         }
 
         private void StartPerforation(object sender, RoutedEventArgs e)
@@ -292,17 +306,19 @@ namespace LabProg
             double.TryParse(Properties.Settings.Default.PerforatingPumpingSpeed, out double dSpeed);
             _pumpSerial.AddSpeed(FormatSpeed(dSpeed));
             _pumpSecondSerial.AddSpeed(FormatSpeed(dSpeed));
-            _pumpSerial.AddStartPump();
-            _pumpSecondSerial.AddStartPump();
+            //_pumpSerial.AddStartPump();
+            StartPump(true);
+            //_pumpSecondSerial.AddStartPump();
+            StartPump(false);
 
         }
 
         private static string FormatSpeed(double speed)
         {
             if (Math.Abs(speed) < 0.01) return "0.5 ";
-            if (speed < 10.0) return speed.ToString("N1")+" ";
+            if (speed < 10.0) return speed.ToString("N1") + " ";
             if (speed < 100) return speed.ToString("N1");
-            return speed.ToString("N0")+" ";
+            return speed.ToString("N0") + " ";
 
         }
 
@@ -348,7 +364,12 @@ namespace LabProg
                 if (TbSecondPump != null) TbSecondPump.Visibility = Visibility.Visible;
                 if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Visible;
                 if (_pumpSecondSerial == null && CbPumpSecondPort != null) _pumpSecondSerial = new PumpSerial(CbPumpSecondPort.Text, Properties.Settings.Default.PumpSecondReverse, AddLogBoxMessage);
-                if (ExPerforate!=null)  ExPerforate.Visibility = Visibility.Visible;
+                if (ExPerforate != null) ExPerforate.Visibility = Visibility.Visible;
+                if (GrPumpInfo != null)
+                {
+                    GrPumpInfo.RowDefinitions[1].Height = new GridLength(30, GridUnitType.Pixel);
+                    ElSecondPumpIsOn.Visibility = Visibility.Visible;
+                }
             }
             else
             {
@@ -357,9 +378,35 @@ namespace LabProg
                 if (TbSecondPump != null) TbSecondPump.Visibility = Visibility.Collapsed;
                 if (CbPumpSecondPort != null) CbPumpSecondPort.Visibility = Visibility.Collapsed;
                 if (ExPerforate != null) ExPerforate.Visibility = Visibility.Collapsed;
+                if (GrPumpInfo != null)
+                {
+                    GrPumpInfo.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Pixel);
+                    ElSecondPumpIsOn.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
+        private void ChangePumpStatus(bool isFirst, bool status)
+        {
+            if (isFirst)
+                ElFirstPumpIsOn.Fill = status ? new SolidColorBrush(Color.FromRgb(0, 255, 0)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            else
+                ElSecondPumpIsOn.Fill = status ? new SolidColorBrush(Color.FromRgb(0, 255, 0)) : new SolidColorBrush(Color.FromRgb(255, 0, 0));
+        }
+
+        private void StartPump(bool isFirst)
+        {
+            if (isFirst) _pumpSerial?.AddStartPump();
+            else _pumpSecondSerial?.AddStartPump();
+            ChangePumpStatus(isFirst, true);
+        }
+
+        private void StopPump(bool isFirst)
+        {
+            if (isFirst) _pumpSerial?.AddStopPump();
+            else _pumpSecondSerial?.AddStopPump();
+            ChangePumpStatus(isFirst, false);
+        }
     }
 
     internal class DistMeasureRes

@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="4"/>
             <RowDefinition Height="120px"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -105,12 +106,34 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
+                    
                     <StackPanel Orientation="Horizontal" Margin="10 10 0 0 ">
                         <ToggleButton x:Name="CbPumpActive" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
                                           Checked="PumpPortOn" Unchecked="PumpPortOff"/>
                         <TextBlock Padding="18,5">Активно</TextBlock>
                     </StackPanel>
 
+                    <Grid Margin="3" x:Name="GrPumpInfo">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="TbFirstPumpSpeed" Padding="5" MinWidth="30" TextAlignment="Center">0</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TbFirstPumpDirection" Padding="5" MinWidth="30" TextAlignment="Center">←</TextBlock>
+                        <Canvas Grid.Row="0" Grid.Column="2" Background="Transparent" Width="30" Height="30">
+                            <Ellipse x:Name="ElFirstPumpIsOn" Canvas.Left="2" Canvas.Top="2" Width="25" Height="25" Fill="Red"  />
+                        </Canvas>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="TbSecondPumpSpeed" Padding="5" MinWidth="30" TextAlignment="Center">0</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TbSecondPumpDirection" Padding="5" MinWidth="30" TextAlignment="Center">→</TextBlock>
+                        <Canvas Grid.Row="1" Grid.Column="2" Background="Transparent" Width="30" Height="30">
+                            <Ellipse x:Name="ElSecondPumpIsOn" Canvas.Left="2" Canvas.Top="2" Width="25" Height="25" Fill="Red"  />
+                        </Canvas>
+                    </Grid>
 
                     <Expander Header="Параметры" Padding="5">
                         <StackPanel>
@@ -1266,8 +1289,8 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
-
-        <ListView x:Name="LogBox" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0">
+        <GridSplitter ResizeDirection="Rows" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3"></GridSplitter>
+        <ListView x:Name="LogBox" Grid.Row="3" Grid.ColumnSpan="3" Grid.Column="0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Dt}"/>
