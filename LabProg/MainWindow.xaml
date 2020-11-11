@@ -13,14 +13,14 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="90px"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="120px"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"></ColumnDefinition>
-            <ColumnDefinition Width="5"></ColumnDefinition>
-            <ColumnDefinition Width="150*"></ColumnDefinition>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="150*"/>
         </Grid.ColumnDefinitions>
         <Menu Grid.Column="0" Grid.Row="0" FontFamily="Tahoma" FontSize="16" Grid.ColumnSpan="3">
             <MenuItem Header="Файл">
