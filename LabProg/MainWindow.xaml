@@ -108,7 +108,7 @@
                     <StackPanel Orientation="Horizontal" Margin="10 10 0 0 ">
                         <ToggleButton x:Name="CbPumpActive" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
                                           Checked="PumpPortOn" Unchecked="PumpPortOff"/>
-                        <TextBlock Margin="5">Активно</TextBlock>
+                        <TextBlock Padding="18,5">Активно</TextBlock>
                     </StackPanel>
 
 
@@ -847,12 +847,6 @@
                                 <TextBlock>COM1</TextBlock>
                                 <TextBlock>COM2</TextBlock>
                                 <TextBlock>COM3</TextBlock>
-                                <TextBlock>COM4</TextBlock>
-                                <TextBlock>COM5</TextBlock>
-                                <TextBlock>COM6</TextBlock>
-                                <TextBlock>COM7</TextBlock>
-                                <TextBlock>COM8</TextBlock>
-                                <TextBlock>COM9</TextBlock>
                             </ComboBox>
                         </Grid>
                     </Expander>
