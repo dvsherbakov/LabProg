@@ -182,6 +182,11 @@ namespace LabProg.Dispencer
             _mPort.Write(cmd, 0, 23);
         }
 
+        public void SetFrequency(int freq)
+        {
+
+        }
+
         public void Start()
         {
             if (!_mPort.IsOpen)
@@ -189,7 +194,13 @@ namespace LabProg.Dispencer
                 f_AddLogBoxMessage("Порт диспенсера закрыт");
                 return;
             }
-            var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x01, 0x03+0x0A+0x01 };
+            var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x01, 0x03 + 0x0A + 0x01 };
+            _mPort.Write(cmd, 0, 5);
+            //Set source to internal
+            cmd = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B };
+            _mPort.Write(cmd, 0, 5);
+            //Set mode to discrete
+            cmd = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 };
             _mPort.Write(cmd, 0, 5);
         }
 

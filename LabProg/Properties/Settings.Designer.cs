@@ -1342,5 +1342,17 @@ namespace LabProg.Properties {
                 this["DispHToverall"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispFreq {
+            get {
+                return ((string)(this["DispFreq"]));
+            }
+            set {
+                this["DispFreq"] = value;
+            }
+        }
     }
 }

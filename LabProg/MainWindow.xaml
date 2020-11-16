@@ -106,7 +106,7 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
-                    
+
                     <StackPanel Orientation="Horizontal" Margin="10 10 0 0 ">
                         <ToggleButton x:Name="CbPumpActive" Style="{StaticResource AnimatedSwitch}" Width="40" Height="20"  Margin="1,6,1,6"
                                           Checked="PumpPortOn" Unchecked="PumpPortOff"/>
@@ -1127,6 +1127,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Padding="0,0,5,0" VerticalAlignment="Center">Тип сигнала</TextBlock>
                                 <ComboBox x:Name="CbDispSignalType" Grid.Column="1" SelectionChanged="DispenserChangeSignalType" Margin="2" Padding="2">
@@ -1139,6 +1140,9 @@
                                     <TextBlock>1</TextBlock>
                                     <TextBlock>2</TextBlock>
                                 </ComboBox>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Padding="0,0,5,0" VerticalAlignment="Center" Margin="0,26,0,1" Grid.RowSpan="2">Частота</TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="2" Margin="2"
+                                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=DispRiseTm, Mode=TwoWay}"/>
                             </Grid>
                             <Grid Margin="20,5,1,5" x:Name="grSingleWave">
                                 <Grid.ColumnDefinitions>
