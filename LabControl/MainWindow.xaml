@@ -6,14 +6,44 @@
         xmlns:local="clr-namespace:LabControl.ViewModels" xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         WindowStyle="None"
+        MouseLeftButtonDown="WindowMouseLeftButtonDown"
         WindowState="{Binding CurWindowState, Mode=TwoWay}"
-        Title="MainWindow" Height="450" Width="800">
+        ResizeMode="CanResizeWithGrip"
+        Style="{DynamicResource MyWindowStyle}"
+        AllowsTransparency="True"
+        Title="{Binding WindowTitle}" 
+         Height="{Binding WindowHeight, Mode=TwoWay}" 
+        Width="{Binding WindowWidth, Mode=TwoWay}"
+        WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <local:MainModel/>
     </Window.DataContext>
-    
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./ResDict.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control" Key="Q" Command="{Binding QuitCommand}"/>
+        <KeyBinding Modifiers="Control" Key="X" Command="{Binding MaximizedCommand}"/>
+        <KeyBinding Modifiers="Control" Key="D" Command="{Binding MinimizedCommand}"/>
+    </Window.InputBindings>
+
+    <x:Code>
+        <![CDATA[            
+        private void WindowMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+    ]]>
+    </x:Code>
+
     <Grid>
-        
+
     </Grid>
 </Window>
