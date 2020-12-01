@@ -43,7 +43,107 @@
     ]]>
     </x:Code>
 
-    <Grid>
+    <DockPanel Margin="5">
+        <DockPanel DockPanel.Dock="Top" Height="35">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="35"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding WindowTitle}" 
+                           Grid.Column="1"
+                           Height="35"
+                           FontSize="24"
+                           VerticalAlignment="Center"
+                           Margin="6,0"/>
+                <Button Grid.Column="2"
+                        Style="{StaticResource TransparentButton}"
+                        Command="{Binding MinimizedCommand}">
+                    <Viewbox Margin="3">
+                        <Path Stroke="SandyBrown" 
+                              StrokeThickness="3"
+                              Fill="Transparent"
+                              Data="M 0,35 H 35"/>
+                    </Viewbox>
+                </Button>
 
-    </Grid>
+                <Button Grid.Column="3"
+                        Style="{StaticResource TransparentButton}"
+                        Command="{Binding MaximizedCommand}">
+                    <Viewbox Margin="3">
+                        <Path Stroke="SandyBrown" 
+                              StrokeThickness="3"
+                              Fill="Transparent"
+                              Data="M 0,0 H 35 V 35 H 0 Z"/>
+                    </Viewbox>
+                </Button>
+                <Button Grid.Column="4"
+                        Style="{StaticResource TransparentButton}"
+                        Command="{Binding QuitCommand}">
+                    <Viewbox Margin="3">
+                        <Path Stroke="SandyBrown" 
+                              StrokeThickness="3"
+                              Fill="Transparent"
+                              Data="M 0,0 L 35,35 M 0,35 L 35,0"/>
+                    </Viewbox>
+                </Button>
+            </Grid>
+        </DockPanel>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="150*"/>
+            </Grid.ColumnDefinitions>
+            <TabControl 
+                Grid.Column="0" 
+                Grid.Row="1" 
+                TabStripPlacement="Left" 
+                Margin="4"  
+                Background="Transparent"
+                FontFamily="Tahoma" 
+                FontSize="16" >
+
+            </TabControl>
+            <GridSplitter 
+                ResizeDirection="Columns" 
+                Grid.Row="0" 
+                Grid.Column="1" 
+                Height="Auto" 
+                Opacity=".3"
+                Width="4" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch" 
+                Margin="0"/>
+            <GridSplitter 
+                ResizeDirection="Rows" 
+                Grid.Row="1" 
+                Grid.Column="0" 
+                Grid.ColumnSpan="3" 
+                Height="4" 
+                Width="Auto" 
+                Opacity=".3"
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch" 
+                Margin="0"/>
+            <ListView Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding LogCollection}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Current}"/>
+                        <GridViewColumn Width="Auto" Header="Сообщение" DisplayMemberBinding="{Binding Message}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+    </DockPanel>
 </Window>
