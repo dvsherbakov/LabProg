@@ -45,7 +45,7 @@ namespace LabControl.ViewModels
         public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
         #endregion
 
-        private Timer f_TestTimer;
+        //private Timer f_TestTimer;
 
         #region Commands
         public ICommand QuitCommand { get; }
@@ -66,14 +66,16 @@ namespace LabControl.ViewModels
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
             NormalizeCommand = new LambdaCommand(OnMaximizedCommandExecute);
             //test area
-            f_TestTimer = new Timer(2000);
-            f_TestTimer.Elapsed += AddMockMessage;
+            //f_TestTimer = new Timer(2000);
+            //f_TestTimer.Elapsed += AddMockMessage;
             //f_TestTimer.Start();
+
+            AddLogMessage("Application Started");
         }
 
-        private void AddMockMessage(object sender, ElapsedEventArgs e)
+        private void AddLogMessage(string message)
         {
-            Application.Current.Dispatcher.Invoke(() => LogCollection.Add(new ClassHelpers.LogItem(DateTime.Now, "wsnedfkjkwer;;fklwer")));
+            Application.Current.Dispatcher.Invoke(() => LogCollection.Add(new ClassHelpers.LogItem(DateTime.Now, message)));
         }
 
         private void OnQuitApp(object p)

@@ -34,4 +34,32 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="ListView" x:Key="LogView">
+        <Setter Property="Foreground" Value="LightYellow" />
+        <Setter Property="Control.Background" >
+            <Setter.Value>
+                <LinearGradientBrush Opacity=".15">
+                    <GradientStop Color="Red" Offset="0" />
+                    <GradientStop Color="Yellow" Offset="1" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="GridViewColumnHeaderStyle1" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                    <Border BorderThickness="0,0,0,1" BorderBrush="SandyBrown" Background="Transparent">
+                        <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground" Value="SandyBrown" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontSize" Value="18" />
+    </Style>
+
 </ResourceDictionary>

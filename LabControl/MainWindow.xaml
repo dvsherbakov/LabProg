@@ -135,9 +135,12 @@
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch" 
                 Margin="0"/>
-            <ListView Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding LogCollection}">
+            <ListView Grid.Row="3" Grid.ColumnSpan="3" 
+                      Style="{DynamicResource LogView}"
+                      Opacity="0.85"
+                      ItemsSource="{Binding LogCollection}">
                 <ListView.View>
-                    <GridView>
+                    <GridView  ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                         <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Current}"/>
                         <GridViewColumn Width="Auto" Header="Сообщение" DisplayMemberBinding="{Binding Message}"/>
                     </GridView>
