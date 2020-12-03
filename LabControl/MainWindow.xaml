@@ -106,13 +106,30 @@
             </Grid.ColumnDefinitions>
             <TabControl 
                 Grid.Column="0" 
-                Grid.Row="1" 
+                Grid.Row="0" 
                 TabStripPlacement="Left" 
                 Margin="4"  
                 Background="Transparent"
                 FontFamily="Tahoma" 
                 FontSize="16" >
-
+                <TabItem VerticalAlignment="Center" 
+                         Style="{DynamicResource TabItemStyle}"
+                         HorizontalAlignment="Center" >
+                    <TabItem.Header>
+                        <Viewbox Width="50" Height="50">
+                            <ContentControl Content="{StaticResource PumpIcon}" Margin="5"/>
+                        </Viewbox>
+                    </TabItem.Header>
+                </TabItem>
+                <TabItem VerticalAlignment="Center" 
+                         Style="{DynamicResource TabItemStyle}"
+                         HorizontalAlignment="Center" >
+                    <TabItem.Header>
+                        <Viewbox Width="50" Height="50">
+                            <ContentControl  Margin="5"/>
+                        </Viewbox>
+                    </TabItem.Header>
+                </TabItem>
             </TabControl>
             <GridSplitter 
                 ResizeDirection="Columns" 
