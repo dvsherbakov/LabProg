@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LabelOnePump" xml:space="preserve">
+    <value>Один насос</value>
+  </data>
+  <data name="LabelTwoPump" xml:space="preserve">
+    <value>Два насоса</value>
+  </data>
+  <data name="LogHeaderColumn1Name" xml:space="preserve">
+    <value>Сообщение</value>
+  </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>ТЮМГУ, Лаборатория микрогидродинамики, X-Bio</value>
+  </data>
+  <data name="PumpOperationTitle" xml:space="preserve">
+    <value>Операции с насосм</value>
   </data>
 </root>

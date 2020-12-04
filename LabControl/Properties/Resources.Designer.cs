@@ -61,11 +61,47 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Один насос.
+        /// </summary>
+        internal static string LabelOnePump {
+            get {
+                return ResourceManager.GetString("LabelOnePump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Два насоса.
+        /// </summary>
+        internal static string LabelTwoPump {
+            get {
+                return ResourceManager.GetString("LabelTwoPump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сообщение.
+        /// </summary>
+        internal static string LogHeaderColumn1Name {
+            get {
+                return ResourceManager.GetString("LogHeaderColumn1Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ТЮМГУ, Лаборатория микрогидродинамики, X-Bio.
         /// </summary>
         internal static string MainWindowTitle {
             get {
                 return ResourceManager.GetString("MainWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Операции с насосм.
+        /// </summary>
+        internal static string PumpOperationTitle {
+            get {
+                return ResourceManager.GetString("PumpOperationTitle", resourceCulture);
             }
         }
     }

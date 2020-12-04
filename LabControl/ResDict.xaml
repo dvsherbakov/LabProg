@@ -35,8 +35,8 @@
     </Style>
 
     <Style TargetType="ListView" x:Key="LogView">
-        <Setter Property="Foreground" Value="LightYellow" />
-        <Setter Property="Control.Background" >
+        <Setter Property="Foreground" Value="SandyBrown" />
+        <Setter Property="Background" >
             <Setter.Value>
                 <LinearGradientBrush Opacity=".15">
                     <GradientStop Color="Red" Offset="0" />
@@ -104,5 +104,62 @@
        Data="m 8490,6983 c -301,-23 -710,-114 -1050,-232 -204,-70 -282,-103 -276,-115 99,-224 118,-283 141,-436 73,-471 -145,-965 -544,-1239 -84,-57 -212,-125 -282,-150 l -31,-11 31,-35 c 174,-199 273,-802 227,-1390 -28,-359 6,-571 118,-722 112,-152 234,-190 580,-180 886,25 1722,536 2328,1422 347,508 528,1019 528,1495 0,422 -145,829 -404,1132 -229,268 -538,417 -950,457 -102,10 -312,12 -416,4 z"
        Fill="#ff7f2a" Opacity="1" />
     </Grid>
+
+
+
+    <Style x:Key="AnimatedSwitch" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background" Value="IndianRed" />
+        <Setter Property="BorderBrush" Value="DarkOrange" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Viewbox Stretch="Uniform">
+                        <Canvas Name="Layer_1" Width="20" Height="20">
+                            <Ellipse Canvas.Left="0" Width="20" Height="20" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
+                            <Ellipse Canvas.Left="15" Width="20" Height="20" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.5"/>
+                            <Border Canvas.Left="10" Width="15" Height="20" Name="rect416927" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0.5,0,0.5"/>
+                            <Ellipse x:Name="ellipse" Canvas.Left="0" Width="20" Height="20" Fill="DarkSlateGray" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0.3">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform X="0" Y="0" />
+                                </Ellipse.RenderTransform>
+                                <Ellipse.BitmapEffect>
+                                    <DropShadowBitmapEffect Softness="0.1" ShadowDepth="0.7" Direction="270" Color="#BBBBBB"/>
+                                </Ellipse.BitmapEffect>
+                            </Ellipse>
+                        </Canvas>
+                    </Viewbox>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True" >
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Background.Color" To="#52D468" Duration="0:0:0.2" />
+                                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" To="#41C955" Duration="0:0:0.2" />
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="ellipse">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+                                            <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="15" KeySpline="0, 1, 0.6, 1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Background.Color" To="IndianRed" Duration="0:0:0.2" />
+                                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color" To="IndianRed" Duration="0:0:0.2" />
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="ellipse">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="15"/>
+                                            <SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="0" KeySpline="0, 0.5, 0.5, 1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

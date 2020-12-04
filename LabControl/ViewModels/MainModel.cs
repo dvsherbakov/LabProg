@@ -11,22 +11,19 @@ using System.Windows.Threading;
 
 namespace LabControl.ViewModels
 {
-    class MainModel : ViewModel
+    internal class MainModel : ViewModel
     {
         #region ModelFields
-        private WindowState f_curWindowState;
+        private WindowState f_CurWindowState;
         public WindowState CurWindowState
         {
-            get => f_curWindowState;
-            set => Set(ref f_curWindowState, value);
+            get => f_CurWindowState;
+            set => Set(ref f_CurWindowState, value);
         }
 
-        private string f_WindowTitle;
-        public string WindowTitle
-        {
-            get => f_WindowTitle;
-            set => Set(ref f_WindowTitle, value);
-        }
+        
+        public static string WindowTitle => Properties.Resources.MainWindowTitle;
+        
 
         private int f_WindowHeight;
         public int WindowHeight
@@ -43,6 +40,29 @@ namespace LabControl.ViewModels
         }
 
         public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
+
+        public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
+        public static string LabelPumpOperation => Properties.Resources.PumpOperationTitle;
+
+        private bool f_IsTwoPump;
+
+        public bool IsTwoPump
+        {
+            get => f_IsTwoPump;
+            set
+            {
+                LabelPumpCount = value ? Properties.Resources.LabelTwoPump : Properties.Resources.LabelOnePump; 
+                Set(ref f_IsTwoPump, value);
+            }
+        }
+
+        private string f_LabelPumpCount;
+
+        public string LabelPumpCount
+        {
+            get => f_LabelPumpCount;
+            set => Set(ref f_LabelPumpCount, value);
+        }
         #endregion
 
         //private Timer f_TestTimer;
@@ -56,10 +76,10 @@ namespace LabControl.ViewModels
         public MainModel()
         {
             LogCollection = new ObservableCollection<ClassHelpers.LogItem>();
-            WindowTitle = Properties.Resources.MainWindowTitle;
             CurWindowState = WindowState.Normal;
             WindowHeight = Properties.Settings.Default.WindowHeight == 0 ? 550 : Properties.Settings.Default.WindowHeight;
             WindowWidth = Properties.Settings.Default.WindowWidth == 0 ? 850 : Properties.Settings.Default.WindowWidth;
+            IsTwoPump = Properties.Settings.Default.IsTwoPump;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -82,6 +102,7 @@ namespace LabControl.ViewModels
         {
             Properties.Settings.Default.WindowHeight = WindowHeight;
             Properties.Settings.Default.WindowWidth = WindowWidth;
+            Properties.Settings.Default.IsTwoPump = IsTwoPump;
             Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }

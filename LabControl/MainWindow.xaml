@@ -120,6 +120,25 @@
                             <ContentControl Content="{StaticResource PumpIcon}" Margin="5"/>
                         </Viewbox>
                     </TabItem.Header>
+
+                    <StackPanel>
+                        <TextBlock TextAlignment="Center" 
+                                   Foreground="SandyBrown" 
+                                   Text="{Binding LabelPumpOperation}"/>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="10 10 0 0">
+                        <TextBlock x:Name="TbTwoPump"
+                                   Foreground="SandyBrown" 
+                                   Width="150"
+                                   Text="{Binding LabelPumpCount}"/>
+                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Width="40" Height="20"  
+                                      HorizontalContentAlignment="Right"
+                                      IsChecked="{Binding IsTwoPump}"
+                                      />
+                    </StackPanel>
+                    </StackPanel>
+
                 </TabItem>
                 <TabItem VerticalAlignment="Center" 
                          Style="{DynamicResource TabItemStyle}"
@@ -152,14 +171,14 @@
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch" 
                 Margin="0"/>
-            <ListView Grid.Row="3" Grid.ColumnSpan="3" 
+            <ListView Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0"
                       Style="{DynamicResource LogView}"
                       Opacity="0.85"
                       ItemsSource="{Binding LogCollection}">
                 <ListView.View>
                     <GridView  ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                         <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Current}"/>
-                        <GridViewColumn Width="Auto" Header="Сообщение" DisplayMemberBinding="{Binding Message}"/>
+                        <GridViewColumn Width="Auto" Header="{Binding LogMessageHeader}" DisplayMemberBinding="{Binding Message}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
