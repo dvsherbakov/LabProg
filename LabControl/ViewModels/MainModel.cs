@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ namespace LabControl.ViewModels
 
         
         public static string WindowTitle => Properties.Resources.MainWindowTitle;
-        
 
         private int f_WindowHeight;
         public int WindowHeight
@@ -43,9 +43,10 @@ namespace LabControl.ViewModels
 
         public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
         public static string LabelPumpOperation => Properties.Resources.PumpOperationTitle;
+        public static string LabelConfocalData => Properties.Resources.LabelConfocalData;
+        public static string LabelConfocalSetter => Properties.Resources.LabelConfocalSetter;
 
         private bool f_IsTwoPump;
-
         public bool IsTwoPump
         {
             get => f_IsTwoPump;
@@ -57,11 +58,24 @@ namespace LabControl.ViewModels
         }
 
         private string f_LabelPumpCount;
-
         public string LabelPumpCount
         {
             get => f_LabelPumpCount;
             set => Set(ref f_LabelPumpCount, value);
+        }
+
+        private double f_ConfocalLevel;
+        public double ConfocalLevel
+        {
+            get => f_ConfocalLevel;
+            set => Set(ref f_ConfocalLevel, value);
+        }
+
+        private double f_ConfocalLevelSetter;
+        public double ConfocalLevelSetter
+        {
+            get => f_ConfocalLevelSetter;
+            set => Set(ref f_ConfocalLevelSetter, value);
         }
         #endregion
 
@@ -77,9 +91,11 @@ namespace LabControl.ViewModels
         {
             LogCollection = new ObservableCollection<ClassHelpers.LogItem>();
             CurWindowState = WindowState.Normal;
+            //load params from settings
             WindowHeight = Properties.Settings.Default.WindowHeight == 0 ? 550 : Properties.Settings.Default.WindowHeight;
             WindowWidth = Properties.Settings.Default.WindowWidth == 0 ? 850 : Properties.Settings.Default.WindowWidth;
             IsTwoPump = Properties.Settings.Default.IsTwoPump;
+            ConfocalLevelSetter = Properties.Settings.Default.ConfocalLevelSetter;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -103,6 +119,7 @@ namespace LabControl.ViewModels
             Properties.Settings.Default.WindowHeight = WindowHeight;
             Properties.Settings.Default.WindowWidth = WindowWidth;
             Properties.Settings.Default.IsTwoPump = IsTwoPump;
+            Properties.Settings.Default.ConfocalLevelSetter = ConfocalLevelSetter;
             Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }

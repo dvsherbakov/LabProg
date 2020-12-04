@@ -61,6 +61,24 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Показания датчика.
+        /// </summary>
+        internal static string LabelConfocalData {
+            get {
+                return ResourceManager.GetString("LabelConfocalData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Установленный уровень.
+        /// </summary>
+        internal static string LabelConfocalSetter {
+            get {
+                return ResourceManager.GetString("LabelConfocalSetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Один насос.
         /// </summary>
         internal static string LabelOnePump {

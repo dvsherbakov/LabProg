@@ -58,5 +58,17 @@ namespace LabControl.Properties {
                 this["IsTwoPump"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ConfocalLevelSetter {
+            get {
+                return ((double)(this["ConfocalLevelSetter"]));
+            }
+            set {
+                this["ConfocalLevelSetter"] = value;
+            }
+        }
     }
 }

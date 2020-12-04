@@ -105,7 +105,38 @@
        Fill="#ff7f2a" Opacity="1" />
     </Grid>
 
+    <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+        <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="Black"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+            <ScrollViewer x:Name="PART_ContentHost"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            </Trigger>
+            <Trigger Property="Width" Value="Auto">
+                <Setter Property="MinWidth" Value="30"/>
+            </Trigger>
+            <Trigger Property="Height" Value="Auto">
+                <Setter Property="MinHeight" Value="20"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
+    <Style x:Key="PartTransparent">
+        <Setter Property="Control.Background" >
+            <Setter.Value>
+                <LinearGradientBrush Opacity=".5">
+                    <GradientStop Color="Gray" Offset="1" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Control.Foreground" Value="SandyBrown" />
+        <Setter Property="Control.FontFamily" Value="Arial"></Setter>
+        <Setter Property="Control.FontSize" Value="20"></Setter>
+    </Style>
 
     <Style x:Key="AnimatedSwitch" TargetType="{x:Type ToggleButton}">
         <Setter Property="Foreground" Value="Black" />
