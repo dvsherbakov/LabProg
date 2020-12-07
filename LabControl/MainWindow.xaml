@@ -190,16 +190,31 @@
                             <Expander Padding="5"
                                   Header="{Binding LabelSettings}"
                                   Foreground="SandyBrown">
-                                <Grid>
+                                <Grid Margin="15,0,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition  Width="4*"/>
                                         <ColumnDefinition  Width="4*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
                                     </Grid.RowDefinitions>
-
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                               Foreground="SandyBrown"
+                                               Margin="0,3"
+                                               Text="{Binding LabelInputPumpPort}"
+                                               />
+                                    <ComboBox Grid.Row="0" Grid.Column="1"
+                                              ItemsSource="{Binding IncomingPumpPortCollection}"
+                                              SelectedItem="{Binding IncomingPumpPortSelected}"
+                                              Margin="0,1"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0"
+                                               Foreground="SandyBrown"
+                                               Margin="0,3"
+                                               Text="{Binding LabelOutputPumpPort}"
+                                               />
+                                    <ComboBox Grid.Row="1" Grid.Column="1"
+                                              Margin="0,1"/>
                                 </Grid>
                             </Expander>
                         </StackPanel>

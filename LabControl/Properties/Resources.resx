@@ -123,8 +123,14 @@
   <data name="LabelConfocalSetter" xml:space="preserve">
     <value>Установленный уровень</value>
   </data>
+  <data name="LabelInputPumpPort" xml:space="preserve">
+    <value>Порт докачки</value>
+  </data>
   <data name="LabelOnePump" xml:space="preserve">
     <value>Один насос</value>
+  </data>
+  <data name="LabelOutputPumpPort" xml:space="preserve">
+    <value>Порт откачки</value>
   </data>
   <data name="LabelPortConnection" xml:space="preserve">
     <value>Соедениться с портом</value>

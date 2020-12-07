@@ -40,16 +40,8 @@ namespace LabControl.ViewModels
         }
 
         public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
-        public ObservableCollection<string> PortCollection { get; set; }
-
-        public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
-        public static string LabelPumpOperation => Properties.Resources.PumpOperationTitle;
-        public static string LabelConfocalData => Properties.Resources.LabelConfocalData;
-        public static string LabelConfocalSetter => Properties.Resources.LabelConfocalSetter;
-        public static string LabelPumpActive => Properties.Resources.LabelPumpActive;
-        public static string LabelPortConnection => Properties.Resources.LabelPortConnection;
-        public static string LabelSettings => Properties.Resources.LabelSettings;
-
+        public ObservableCollection<string> IncomingPumpPortCollection { get; set; }
+        
         private bool f_IsTwoPump;
         public bool IsTwoPump
         {
@@ -81,8 +73,25 @@ namespace LabControl.ViewModels
             get => f_ConfocalLevelSetter;
             set => Set(ref f_ConfocalLevelSetter, value);
         }
-        #endregion
 
+        private string f_IncomingPumpPortSelected;
+        public string IncomingPumpPortSelected
+        {
+            get => f_IncomingPumpPortSelected;
+            set => Set(ref f_IncomingPumpPortSelected, value);
+        }
+        #endregion
+        #region StaticLabels
+        public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
+        public static string LabelPumpOperation => Properties.Resources.PumpOperationTitle;
+        public static string LabelConfocalData => Properties.Resources.LabelConfocalData;
+        public static string LabelConfocalSetter => Properties.Resources.LabelConfocalSetter;
+        public static string LabelPumpActive => Properties.Resources.LabelPumpActive;
+        public static string LabelPortConnection => Properties.Resources.LabelPortConnection;
+        public static string LabelSettings => Properties.Resources.LabelSettings;
+        public static string LabelInputPumpPort => Properties.Resources.LabelInputPumpPort;
+        public static string LabelOutputPumpPort => Properties.Resources.LabelOutputPumpPort;
+        #endregion
         //private Timer f_TestTimer;
 
         #region Commands
@@ -95,7 +104,7 @@ namespace LabControl.ViewModels
         public MainModel()
         {
             LogCollection = new ObservableCollection<ClassHelpers.LogItem>();
-            PortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList()); 
+            IncomingPumpPortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList()); 
            
             CurWindowState = WindowState.Normal;
             //load params from settings

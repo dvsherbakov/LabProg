@@ -79,11 +79,29 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт докачки.
+        /// </summary>
+        internal static string LabelInputPumpPort {
+            get {
+                return ResourceManager.GetString("LabelInputPumpPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Один насос.
         /// </summary>
         internal static string LabelOnePump {
             get {
                 return ResourceManager.GetString("LabelOnePump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт откачки.
+        /// </summary>
+        internal static string LabelOutputPumpPort {
+            get {
+                return ResourceManager.GetString("LabelOutputPumpPort", resourceCulture);
             }
         }
         
