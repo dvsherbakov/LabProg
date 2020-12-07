@@ -126,6 +126,15 @@
   <data name="LabelOnePump" xml:space="preserve">
     <value>Один насос</value>
   </data>
+  <data name="LabelPortConnection" xml:space="preserve">
+    <value>Соедениться с портом</value>
+  </data>
+  <data name="LabelPumpActive" xml:space="preserve">
+    <value>Активно</value>
+  </data>
+  <data name="LabelSettings" xml:space="preserve">
+    <value>Параметры</value>
+  </data>
   <data name="LabelTwoPump" xml:space="preserve">
     <value>Два насоса</value>
   </data>

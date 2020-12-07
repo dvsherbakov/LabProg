@@ -88,6 +88,33 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Соедениться с портом.
+        /// </summary>
+        internal static string LabelPortConnection {
+            get {
+                return ResourceManager.GetString("LabelPortConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Активно.
+        /// </summary>
+        internal static string LabelPumpActive {
+            get {
+                return ResourceManager.GetString("LabelPumpActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Параметры.
+        /// </summary>
+        internal static string LabelSettings {
+            get {
+                return ResourceManager.GetString("LabelSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Два насоса.
         /// </summary>
         internal static string LabelTwoPump {

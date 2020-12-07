@@ -40,11 +40,15 @@ namespace LabControl.ViewModels
         }
 
         public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
+        public ObservableCollection<string> PortCollection { get; set; }
 
         public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
         public static string LabelPumpOperation => Properties.Resources.PumpOperationTitle;
         public static string LabelConfocalData => Properties.Resources.LabelConfocalData;
         public static string LabelConfocalSetter => Properties.Resources.LabelConfocalSetter;
+        public static string LabelPumpActive => Properties.Resources.LabelPumpActive;
+        public static string LabelPortConnection => Properties.Resources.LabelPortConnection;
+        public static string LabelSettings => Properties.Resources.LabelSettings;
 
         private bool f_IsTwoPump;
         public bool IsTwoPump
@@ -86,10 +90,13 @@ namespace LabControl.ViewModels
         public ICommand MinimizedCommand { get; }
         public ICommand MaximizedCommand { get; }
         public ICommand NormalizeCommand { get; }
+        public ICommand StandartSizeCommand { get; }
         #endregion
         public MainModel()
         {
             LogCollection = new ObservableCollection<ClassHelpers.LogItem>();
+            PortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList()); 
+           
             CurWindowState = WindowState.Normal;
             //load params from settings
             WindowHeight = Properties.Settings.Default.WindowHeight == 0 ? 550 : Properties.Settings.Default.WindowHeight;
@@ -101,6 +108,7 @@ namespace LabControl.ViewModels
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
             NormalizeCommand = new LambdaCommand(OnMaximizedCommandExecute);
+            StandartSizeCommand = new LambdaCommand(OnStandartSizeCommand);
             //test area
             //f_TestTimer = new Timer(2000);
             //f_TestTimer.Elapsed += AddMockMessage;
@@ -132,6 +140,12 @@ namespace LabControl.ViewModels
         private void OnMaximizedCommandExecute(object p)
         {
             CurWindowState = CurWindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void OnStandartSizeCommand(object sender)
+        {
+            WindowHeight = 470;
+            WindowWidth = 630;
         }
     }
 }

@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ClassHelpers\LogItem.cs" />
+    <Compile Include="ClassHelpers\PortList.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="ViewModels\MainModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
