@@ -123,6 +123,12 @@
   <data name="LabelConfocalSetter" xml:space="preserve">
     <value>Установленный уровень</value>
   </data>
+  <data name="LabelCurrentPower" xml:space="preserve">
+    <value>Текущая мощность</value>
+  </data>
+  <data name="LabelEmmitLaser" xml:space="preserve">
+    <value>Излучение!</value>
+  </data>
   <data name="LabelInputPumpPort" xml:space="preserve">
     <value>Порт докачки</value>
   </data>
@@ -138,11 +144,17 @@
   <data name="LabelPumpActive" xml:space="preserve">
     <value>Активно</value>
   </data>
+  <data name="LabelSetterPower" xml:space="preserve">
+    <value>Установить мощность</value>
+  </data>
   <data name="LabelSettings" xml:space="preserve">
     <value>Параметры</value>
   </data>
   <data name="LabelTwoPump" xml:space="preserve">
     <value>Два насоса</value>
+  </data>
+  <data name="LaserOpeprationTitle" xml:space="preserve">
+    <value>Управление лазером</value>
   </data>
   <data name="LogHeaderColumn1Name" xml:space="preserve">
     <value>Сообщение</value>
@@ -151,6 +163,6 @@
     <value>ТЮМГУ, Лаборатория микрогидродинамики, X-Bio</value>
   </data>
   <data name="PumpOperationTitle" xml:space="preserve">
-    <value>Операции с насосм</value>
+    <value>Управление уровнем</value>
   </data>
 </root>

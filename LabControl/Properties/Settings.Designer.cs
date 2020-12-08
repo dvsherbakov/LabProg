@@ -70,5 +70,41 @@ namespace LabControl.Properties {
                 this["ConfocalLevelSetter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IncomingPumpPortSelected {
+            get {
+                return ((string)(this["IncomingPumpPortSelected"]));
+            }
+            set {
+                this["IncomingPumpPortSelected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OutloginPumpPortSelected {
+            get {
+                return ((string)(this["OutloginPumpPortSelected"]));
+            }
+            set {
+                this["OutloginPumpPortSelected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LaserPowerSetter {
+            get {
+                return ((int)(this["LaserPowerSetter"]));
+            }
+            set {
+                this["LaserPowerSetter"] = value;
+            }
+        }
     }
 }

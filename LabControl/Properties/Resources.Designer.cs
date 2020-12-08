@@ -79,6 +79,24 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Текущая мощность.
+        /// </summary>
+        internal static string LabelCurrentPower {
+            get {
+                return ResourceManager.GetString("LabelCurrentPower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Излучение!.
+        /// </summary>
+        internal static string LabelEmmitLaser {
+            get {
+                return ResourceManager.GetString("LabelEmmitLaser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Порт докачки.
         /// </summary>
         internal static string LabelInputPumpPort {
@@ -124,6 +142,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Установить мощность.
+        /// </summary>
+        internal static string LabelSetterPower {
+            get {
+                return ResourceManager.GetString("LabelSetterPower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Параметры.
         /// </summary>
         internal static string LabelSettings {
@@ -138,6 +165,15 @@ namespace LabControl.Properties {
         internal static string LabelTwoPump {
             get {
                 return ResourceManager.GetString("LabelTwoPump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Управление лазером.
+        /// </summary>
+        internal static string LaserOpeprationTitle {
+            get {
+                return ResourceManager.GetString("LaserOpeprationTitle", resourceCulture);
             }
         }
         
@@ -160,7 +196,7 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Операции с насосм.
+        ///   Ищет локализованную строку, похожую на Управление уровнем.
         /// </summary>
         internal static string PumpOperationTitle {
             get {

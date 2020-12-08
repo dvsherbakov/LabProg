@@ -22,7 +22,7 @@ namespace LabControl.ViewModels
             set => Set(ref f_CurWindowState, value);
         }
 
-        
+
         public static string WindowTitle => Properties.Resources.MainWindowTitle;
 
         private int f_WindowHeight;
@@ -41,14 +41,15 @@ namespace LabControl.ViewModels
 
         public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
         public ObservableCollection<string> IncomingPumpPortCollection { get; set; }
-        
+        public ObservableCollection<string> OutloginPumpPortCollection { get; set; }
+
         private bool f_IsTwoPump;
         public bool IsTwoPump
         {
             get => f_IsTwoPump;
             set
             {
-                LabelPumpCount = value ? Properties.Resources.LabelTwoPump : Properties.Resources.LabelOnePump; 
+                LabelPumpCount = value ? Properties.Resources.LabelTwoPump : Properties.Resources.LabelOnePump;
                 Set(ref f_IsTwoPump, value);
             }
         }
@@ -80,6 +81,28 @@ namespace LabControl.ViewModels
             get => f_IncomingPumpPortSelected;
             set => Set(ref f_IncomingPumpPortSelected, value);
         }
+
+        private string f_OutloginPumpPortSelected;
+        public string OutloginPumpPortSelected
+        {
+            get => f_OutloginPumpPortSelected;
+            set => Set(ref f_OutloginPumpPortSelected, value);
+        }
+        
+        private int f_CurrentLaserPower;
+        public int CurrentLaserPower
+        {
+            get => f_CurrentLaserPower;
+            set => Set(ref f_CurrentLaserPower, value);
+        }
+
+        private int f_LaserPowerSetter;
+        public int LaserPowerSetter
+        {
+            get => f_LaserPowerSetter;
+            set => Set(ref f_LaserPowerSetter, value);
+        }
+
         #endregion
         #region StaticLabels
         public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
@@ -91,6 +114,10 @@ namespace LabControl.ViewModels
         public static string LabelSettings => Properties.Resources.LabelSettings;
         public static string LabelInputPumpPort => Properties.Resources.LabelInputPumpPort;
         public static string LabelOutputPumpPort => Properties.Resources.LabelOutputPumpPort;
+        public static string LaserOperationTitle => Properties.Resources.LaserOpeprationTitle;
+        public static string LabelEmmitLaser => Properties.Resources.LabelEmmitLaser;
+        public static string LabelCurrentPower => Properties.Resources.LabelCurrentPower;
+        public static string LabelSetterPower => Properties.Resources.LabelSetterPower;
         #endregion
         //private Timer f_TestTimer;
 
@@ -104,14 +131,17 @@ namespace LabControl.ViewModels
         public MainModel()
         {
             LogCollection = new ObservableCollection<ClassHelpers.LogItem>();
-            IncomingPumpPortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList()); 
-           
+            IncomingPumpPortSelected = Properties.Settings.Default.IncomingPumpPortSelected;
+            IncomingPumpPortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList(IncomingPumpPortSelected));
+            OutloginPumpPortSelected = Properties.Settings.Default.OutloginPumpPortSelected;
+            OutloginPumpPortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList(OutloginPumpPortSelected));
             CurWindowState = WindowState.Normal;
             //load params from settings
             WindowHeight = Properties.Settings.Default.WindowHeight == 0 ? 550 : Properties.Settings.Default.WindowHeight;
             WindowWidth = Properties.Settings.Default.WindowWidth == 0 ? 850 : Properties.Settings.Default.WindowWidth;
             IsTwoPump = Properties.Settings.Default.IsTwoPump;
             ConfocalLevelSetter = Properties.Settings.Default.ConfocalLevelSetter;
+            LaserPowerSetter = Properties.Settings.Default.LaserPowerSetter;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -137,6 +167,9 @@ namespace LabControl.ViewModels
             Properties.Settings.Default.WindowWidth = WindowWidth;
             Properties.Settings.Default.IsTwoPump = IsTwoPump;
             Properties.Settings.Default.ConfocalLevelSetter = ConfocalLevelSetter;
+            Properties.Settings.Default.IncomingPumpPortSelected = IncomingPumpPortSelected;
+            Properties.Settings.Default.OutloginPumpPortSelected = OutloginPumpPortSelected;
+            Properties.Settings.Default.LaserPowerSetter = LaserPowerSetter;
             Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }

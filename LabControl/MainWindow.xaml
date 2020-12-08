@@ -126,58 +126,6 @@
                             <TextBlock TextAlignment="Center" 
                                    Foreground="SandyBrown" 
                                    Text="{Binding LabelPumpOperation}"/>
-                            <Grid Margin="3">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
-                                    <RowDefinition Height="28"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0"
-                                       VerticalAlignment="Center"
-                                       Foreground="SandyBrown" 
-                                       Text="{Binding LabelPumpCount}"/>
-                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
-                                          Grid.Row="0" Grid.Column="1"
-                                      Width="40" Height="20"  
-                                      HorizontalContentAlignment="Right"
-                                      IsChecked="{Binding IsTwoPump}"/>
-                                <TextBlock Grid.Row="1" Grid.Column="0"
-                                       VerticalAlignment="Center"
-                                       Foreground="SandyBrown" 
-                                       Text="{Binding LabelConfocalData}"/>
-                                <Border Grid.Row="1" Grid.Column="1"
-                                    Margin="1"
-                                    BorderBrush="Aquamarine"
-                                    CornerRadius="5" BorderThickness="1">
-                                    <TextBlock Text="{Binding ConfocalLevel}"
-                                           Style="{StaticResource PartTransparent}"
-                                           HorizontalAlignment="Center"/>
-                                </Border>
-                                <TextBlock Grid.Row="2" Grid.Column="0"
-                                       Text="{Binding LabelConfocalSetter}"
-                                       VerticalAlignment="Center"
-                                       Foreground="SandyBrown"
-                                />
-                                <TextBox Grid.Row="2" Grid.Column="1"
-                                     Margin="1"
-                                     TextAlignment="Center"
-                                     Text="{Binding ConfocalLevelSetter}"
-                                     Style="{StaticResource PartTransparent}"
-                                     Template="{StaticResource TextBoxBaseControlTemplate}"/>
-                            </Grid>
-                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
-                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
-                                          Width="40" Height="20"  
-                                          Margin="1,6,1,6"
-                                          />
-                                <TextBlock Padding="15,5" 
-                                       Foreground="SandyBrown"
-                                       Text="{Binding LabelPumpActive}" />
-                            </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                           Width="40" Height="20"  
@@ -187,6 +135,60 @@
                                        Foreground="SandyBrown"
                                        Text="{Binding LabelPortConnection}" />
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                      Width="40" Height="20"  
+                                      Margin="1,6,1,6"
+                                      IsChecked="{Binding IsTwoPump}"/>
+                                <TextBlock Padding="15,5" 
+                                       Foreground="SandyBrown" 
+                                       Text="{Binding LabelPumpCount}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                          Width="40" Height="20"  
+                                          Margin="1,6,1,6"
+                                          />
+                                <TextBlock Padding="15,5" 
+                                       Foreground="SandyBrown"
+                                       Text="{Binding LabelPumpActive}" />
+                            </StackPanel>
+
+                            <Grid Margin="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="28"/>
+                                    <RowDefinition Height="28"/>
+                                   
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Foreground="SandyBrown" 
+                                       Text="{Binding LabelConfocalData}"/>
+                                <Border Grid.Row="0" Grid.Column="1"
+                                    Margin="1"
+                                    BorderBrush="Aquamarine"
+                                    CornerRadius="5" BorderThickness="1">
+                                    <TextBlock Text="{Binding ConfocalLevel}"
+                                           Style="{StaticResource PartTransparent}"
+                                           HorizontalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding LabelConfocalSetter}"
+                                       VerticalAlignment="Center"
+                                       Foreground="SandyBrown"
+                                />
+                                <TextBox Grid.Row="1" Grid.Column="1"
+                                     Margin="1"
+                                     TextAlignment="Center"
+                                     Text="{Binding ConfocalLevelSetter}"
+                                     Style="{StaticResource PartTransparent}"
+                                     Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            </Grid>
+
                             <Expander Padding="5"
                                   Header="{Binding LabelSettings}"
                                   Foreground="SandyBrown">
@@ -214,6 +216,8 @@
                                                Text="{Binding LabelOutputPumpPort}"
                                                />
                                     <ComboBox Grid.Row="1" Grid.Column="1"
+                                              ItemsSource="{Binding OutloginPumpPortCollection}"
+                                              SelectedItem="{Binding OutloginPumpPortSelected}"
                                               Margin="0,1"/>
                                 </Grid>
                             </Expander>
@@ -225,9 +229,68 @@
                          HorizontalAlignment="Center" >
                     <TabItem.Header>
                         <Viewbox Width="50" Height="50">
-                            <ContentControl  Margin="5"/>
+                            <ContentControl Content="{StaticResource LaserIcon}" Margin="5"/>
                         </Viewbox>
                     </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock 
+                                TextAlignment="Center" 
+                                Foreground="SandyBrown" 
+                                Text="{Binding LaserOperationTitle}" />
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                          Width="40" Height="20"  
+                                          Margin="1,6,1,6"
+                                          />
+                                <TextBlock Padding="15,5" 
+                                       Foreground="SandyBrown"
+                                       Text="{Binding LabelPortConnection}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                          Width="40" Height="20"  
+                                          Margin="1,6,1,6"
+                                          />
+                                <TextBlock Padding="15,5" 
+                                       Foreground="SandyBrown"
+                                       Text="{Binding LabelEmmitLaser}" />
+                            </StackPanel>
+                            <Grid Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="28"/>
+                                    <RowDefinition Height="28"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Foreground="SandyBrown"
+                                           Text ="{Binding LabelCurrentPower}" />
+                                <Border Grid.Row="0" Grid.Column="1"
+                                    Margin="1"
+                                    BorderBrush="Aquamarine"
+                                    CornerRadius="5" BorderThickness="1">
+                                    <TextBlock Text="{Binding CurrentLaserPower}"
+                                           Style="{StaticResource PartTransparent}"
+                                           HorizontalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Grid.Row="1" Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Foreground="SandyBrown"
+                                           Text ="{Binding LabelSetterPower}" />
+                                <TextBox Grid.Row="1" Grid.Column="1"
+                                     Margin="1"
+                                     TextAlignment="Center"
+                                     Text="{Binding LaserPowerSetter}"
+                                     Style="{StaticResource PartTransparent}"
+                                     Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
                 </TabItem>
             </TabControl>
             <GridSplitter 
