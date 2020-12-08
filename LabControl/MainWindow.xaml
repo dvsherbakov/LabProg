@@ -86,7 +86,7 @@
                         Command="{Binding QuitCommand}">
                     <Viewbox Margin="3">
                         <Path Stroke="SandyBrown" 
-                              StrokeThickness="3"
+                              StrokeThickness="2    "
                               Fill="Transparent"
                               Data="M 0,0 L 35,35 M 0,35 L 35,0"/>
                     </Viewbox>
@@ -103,7 +103,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="150*"/>
+                <ColumnDefinition Width="120*"/>
             </Grid.ColumnDefinitions>
             <TabControl 
                 Grid.Column="0" 
@@ -158,7 +158,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
-                                   
+
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5*"/>
@@ -195,11 +195,11 @@
                                 <Grid Margin="15,0,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition  Width="4*"/>
-                                        <ColumnDefinition  Width="4*"/>
+                                        <ColumnDefinition  Width="3*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="28"/>
-                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="{Binding SecondPumpPortHeight}" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Grid.Column="0"
                                                Foreground="SandyBrown"
@@ -260,9 +260,10 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*"/>
                                     <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="35"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
                                 </Grid.RowDefinitions>
@@ -288,7 +289,48 @@
                                      Text="{Binding LaserPowerSetter}"
                                      Style="{StaticResource PartTransparent}"
                                      Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                <Button 
+                                    Grid.Row="1" Grid.Column="2"
+                                    Style="{StaticResource TransparentButton}">
+                                    <Viewbox>
+                                        <Grid>
+                                            <Path  Stroke="SandyBrown" StrokeThickness="3">
+                                                <Path.Data>
+                                                    <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                </Path.Data>
+                                            </Path>
+                                            <Path Data="M9,6L9,19 18,13z" Stroke="SandyBrown" />
+                                        </Grid>
+                                    </Viewbox>
+                                </Button>
+                                <TextBlock Grid.Row="2" Grid.Column="0"
+                                           VerticalAlignment="Center" 
+                                           Foreground="SandyBrown"
+                                           Text="{Binding LabelCurrentTemperature}"/>
+                                <Border Grid.Row="2" Grid.Column="1"
+                                    Margin="1"
+                                    BorderBrush="Aquamarine"
+                                    CornerRadius="5" BorderThickness="1">
+                                    <TextBlock Text="{Binding CurrentTemperature}"
+                                           Style="{StaticResource PartTransparent}"
+                                           HorizontalAlignment="Center"/>
+                                </Border>
                             </Grid>
+                            <Expander Padding="5"
+                                  Header="{Binding LabelSettings}"
+                                  Foreground="SandyBrown">
+                                <Grid Margin="15,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </Expander>
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>

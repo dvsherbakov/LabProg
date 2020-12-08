@@ -88,6 +88,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Температура.
+        /// </summary>
+        internal static string LabelCurrentTemperature {
+            get {
+                return ResourceManager.GetString("LabelCurrentTemperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Излучение!.
         /// </summary>
         internal static string LabelEmmitLaser {
@@ -106,6 +115,24 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт лазера.
+        /// </summary>
+        internal static string LabelLaserPort {
+            get {
+                return ResourceManager.GetString("LabelLaserPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Тип лазера.
+        /// </summary>
+        internal static string LabelLaserType {
+            get {
+                return ResourceManager.GetString("LabelLaserType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Один насос.
         /// </summary>
         internal static string LabelOnePump {
@@ -120,6 +147,15 @@ namespace LabControl.Properties {
         internal static string LabelOutputPumpPort {
             get {
                 return ResourceManager.GetString("LabelOutputPumpPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт пирометра.
+        /// </summary>
+        internal static string LabelPiroPort {
+            get {
+                return ResourceManager.GetString("LabelPiroPort", resourceCulture);
             }
         }
         

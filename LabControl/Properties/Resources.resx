@@ -126,17 +126,29 @@
   <data name="LabelCurrentPower" xml:space="preserve">
     <value>Текущая мощность</value>
   </data>
+  <data name="LabelCurrentTemperature" xml:space="preserve">
+    <value>Температура</value>
+  </data>
   <data name="LabelEmmitLaser" xml:space="preserve">
     <value>Излучение!</value>
   </data>
   <data name="LabelInputPumpPort" xml:space="preserve">
     <value>Порт докачки</value>
   </data>
+  <data name="LabelLaserPort" xml:space="preserve">
+    <value>Порт лазера</value>
+  </data>
+  <data name="LabelLaserType" xml:space="preserve">
+    <value>Тип лазера</value>
+  </data>
   <data name="LabelOnePump" xml:space="preserve">
     <value>Один насос</value>
   </data>
   <data name="LabelOutputPumpPort" xml:space="preserve">
     <value>Порт откачки</value>
+  </data>
+  <data name="LabelPiroPort" xml:space="preserve">
+    <value>Порт пирометра</value>
   </data>
   <data name="LabelPortConnection" xml:space="preserve">
     <value>Соедениться с портом</value>

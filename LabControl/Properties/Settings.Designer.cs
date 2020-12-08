@@ -106,5 +106,17 @@ namespace LabControl.Properties {
                 this["LaserPowerSetter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LaserPortSelected {
+            get {
+                return ((string)(this["LaserPortSelected"]));
+            }
+            set {
+                this["LaserPortSelected"] = value;
+            }
+        }
     }
 }

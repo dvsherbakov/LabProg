@@ -39,10 +39,6 @@ namespace LabControl.ViewModels
             set => Set(ref f_WindowWidth, value);
         }
 
-        public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
-        public ObservableCollection<string> IncomingPumpPortCollection { get; set; }
-        public ObservableCollection<string> OutloginPumpPortCollection { get; set; }
-
         private bool f_IsTwoPump;
         public bool IsTwoPump
         {
@@ -50,6 +46,7 @@ namespace LabControl.ViewModels
             set
             {
                 LabelPumpCount = value ? Properties.Resources.LabelTwoPump : Properties.Resources.LabelOnePump;
+                SecondPumpPortHeight = value ? 28 : 0;
                 Set(ref f_IsTwoPump, value);
             }
         }
@@ -103,7 +100,35 @@ namespace LabControl.ViewModels
             set => Set(ref f_LaserPowerSetter, value);
         }
 
+        private double f_CurrentTemperature;
+        public double CurrentTemperature
+        {
+            get => f_CurrentTemperature;
+            set => Set(ref f_CurrentTemperature, value);
+        }
+
+        private int f_SecondPumpPortHeight;
+        public int SecondPumpPortHeight
+        {
+            get => f_SecondPumpPortHeight;
+            set => Set(ref f_SecondPumpPortHeight, value);
+        }
+
+        private string f_LaserPortSelected;
+        public string LaserPortSelected
+        {
+            get => f_LaserPortSelected;
+            set => Set(ref f_LaserPortSelected, value);
+        }
         #endregion
+
+        #region Collections
+        public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
+        public ObservableCollection<string> IncomingPumpPortCollection { get; set; }
+        public ObservableCollection<string> OutloginPumpPortCollection { get; set; }
+        public ObservableCollection<string> LaserPortCollection { get; set; }
+        #endregion
+
         #region StaticLabels
         public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
         public static string LabelPumpOperation => Properties.Resources.PumpOperationTitle;
@@ -118,6 +143,10 @@ namespace LabControl.ViewModels
         public static string LabelEmmitLaser => Properties.Resources.LabelEmmitLaser;
         public static string LabelCurrentPower => Properties.Resources.LabelCurrentPower;
         public static string LabelSetterPower => Properties.Resources.LabelSetterPower;
+        public static string LabelCurrentTemperature => Properties.Resources.LabelCurrentTemperature;
+        public static string LabelLaserPort => Properties.Resources.LabelLaserPort;
+        public static string LabelPiroPort => Properties.Resources.LabelPiroPort;
+        public static string LabelLaserType => Properties.Resources.LabelLaserType;
         #endregion
         //private Timer f_TestTimer;
 
@@ -135,6 +164,8 @@ namespace LabControl.ViewModels
             IncomingPumpPortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList(IncomingPumpPortSelected));
             OutloginPumpPortSelected = Properties.Settings.Default.OutloginPumpPortSelected;
             OutloginPumpPortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList(OutloginPumpPortSelected));
+            LaserPortSelected = Properties.Settings.Default.LaserPortSelected;
+            LaserPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(LaserPortSelected));
             CurWindowState = WindowState.Normal;
             //load params from settings
             WindowHeight = Properties.Settings.Default.WindowHeight == 0 ? 550 : Properties.Settings.Default.WindowHeight;

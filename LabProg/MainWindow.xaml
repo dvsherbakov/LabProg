@@ -191,7 +191,7 @@
                                          Background="Transparent" 
                                          Click="PumpStartButton">
                                     <Button.Content>
-                                        <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                        <Grid>
                                             <Path  Stroke="#FF000000">
                                                 <Path.Data>
                                                     <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />

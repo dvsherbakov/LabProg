@@ -26,7 +26,7 @@ namespace LabControl.ClassHelpers
 
         public List<string> GetPortList(string initialport)
         {
-            if (pList.Contains(initialport)) return pList;
+            if (initialport.Length < 2 || pList.Contains(initialport)) return pList;
             pList.Add(initialport);
             return pList;
         }
