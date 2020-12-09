@@ -118,5 +118,29 @@ namespace LabControl.Properties {
                 this["LaserPortSelected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PiroPortSelected {
+            get {
+                return ((string)(this["PiroPortSelected"]));
+            }
+            set {
+                this["PiroPortSelected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LaserTypeSelectedIndex {
+            get {
+                return ((int)(this["LaserTypeSelectedIndex"]));
+            }
+            set {
+                this["LaserTypeSelectedIndex"] = value;
+            }
+        }
     }
 }

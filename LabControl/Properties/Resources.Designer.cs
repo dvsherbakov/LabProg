@@ -61,6 +61,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Включение каналов:.
+        /// </summary>
+        internal static string LabelChanelsSwitch {
+            get {
+                return ResourceManager.GetString("LabelChanelsSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Показания датчика.
         /// </summary>
         internal static string LabelConfocalData {
@@ -102,6 +111,24 @@ namespace LabControl.Properties {
         internal static string LabelEmmitLaser {
             get {
                 return ResourceManager.GetString("LabelEmmitLaser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ИК Источник 1.
+        /// </summary>
+        internal static string LabelIkLed1 {
+            get {
+                return ResourceManager.GetString("LabelIkLed1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ИК Источник 2.
+        /// </summary>
+        internal static string LabelIkLed2 {
+            get {
+                return ResourceManager.GetString("LabelIkLed2", resourceCulture);
             }
         }
         
@@ -205,6 +232,24 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на УФ Диод 1.
+        /// </summary>
+        internal static string LabelUfLed1 {
+            get {
+                return ResourceManager.GetString("LabelUfLed1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на УФ Диод 2.
+        /// </summary>
+        internal static string LabelUfLed2 {
+            get {
+                return ResourceManager.GetString("LabelUfLed2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Управление лазером.
         /// </summary>
         internal static string LaserOpeprationTitle {
@@ -228,6 +273,15 @@ namespace LabControl.Properties {
         internal static string MainWindowTitle {
             get {
                 return ResourceManager.GetString("MainWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Управление блоком питания.
+        /// </summary>
+        internal static string PowerSuplyTitle {
+            get {
+                return ResourceManager.GetString("PowerSuplyTitle", resourceCulture);
             }
         }
         

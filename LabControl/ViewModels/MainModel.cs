@@ -22,7 +22,6 @@ namespace LabControl.ViewModels
             set => Set(ref f_CurWindowState, value);
         }
 
-
         public static string WindowTitle => Properties.Resources.MainWindowTitle;
 
         private int f_WindowHeight;
@@ -85,7 +84,7 @@ namespace LabControl.ViewModels
             get => f_OutloginPumpPortSelected;
             set => Set(ref f_OutloginPumpPortSelected, value);
         }
-        
+
         private int f_CurrentLaserPower;
         public int CurrentLaserPower
         {
@@ -120,13 +119,49 @@ namespace LabControl.ViewModels
             get => f_LaserPortSelected;
             set => Set(ref f_LaserPortSelected, value);
         }
+
+        private string f_PiroPortSelected;
+        public string PiroPortSelected
+        {
+            get => f_PiroPortSelected;
+            set => Set(ref f_PiroPortSelected, value);
+        }
+
+        private int f_LaserTypeSelectedIndex;
+        public int LaserTypeSelectedIndex
+        {
+            get => f_LaserTypeSelectedIndex;
+            set => Set(ref f_LaserTypeSelectedIndex, value);
+        }
+
+        private bool f_PwrSwitchCh0;
+        public bool PwrSwitchCh0
+        {
+            get => f_PwrSwitchCh0;
+            set => Set(ref f_PwrSwitchCh0, value);
+        }
+
+        private bool f_PwrSwitchCh1;
+        public bool PwrSwitchCh1
+        {
+            get => f_PwrSwitchCh1;
+            set => Set(ref f_PwrSwitchCh1, value);
+        }
+        private bool f_PwrSwitchCh2;
+        public bool PwrSwitchCh2
+        {
+            get => f_PwrSwitchCh2;
+            set => Set(ref f_PwrSwitchCh2, value);
+        }
         #endregion
 
         #region Collections
         public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
         public ObservableCollection<string> IncomingPumpPortCollection { get; set; }
+        public ObservableCollection<string> PowerSupplyTypes { get; set; }
         public ObservableCollection<string> OutloginPumpPortCollection { get; set; }
         public ObservableCollection<string> LaserPortCollection { get; set; }
+        public ObservableCollection<string> PiroPortCollection { get; set; }
         #endregion
 
         #region StaticLabels
@@ -147,6 +182,12 @@ namespace LabControl.ViewModels
         public static string LabelLaserPort => Properties.Resources.LabelLaserPort;
         public static string LabelPiroPort => Properties.Resources.LabelPiroPort;
         public static string LabelLaserType => Properties.Resources.LabelLaserType;
+        public static string PowerSuplyTitle => Properties.Resources.PowerSuplyTitle;
+        public static string LabelUfLed1 => Properties.Resources.LabelUfLed1;
+        public static string LabelUfLed2 => Properties.Resources.LabelUfLed2;
+        public static string LabelChanelsSwitch => Properties.Resources.LabelChanelsSwitch;
+        public static string LabelIkLed1 => Properties.Resources.LabelIkLed1;
+        public static string LabelIkLed2 => Properties.Resources.LabelIkLed2;
         #endregion
         //private Timer f_TestTimer;
 
@@ -159,13 +200,17 @@ namespace LabControl.ViewModels
         #endregion
         public MainModel()
         {
+            // init collections
             LogCollection = new ObservableCollection<ClassHelpers.LogItem>();
             IncomingPumpPortSelected = Properties.Settings.Default.IncomingPumpPortSelected;
-            IncomingPumpPortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList(IncomingPumpPortSelected));
+            PowerSupplyTypes = new ObservableCollection<string>(new ClassHelpers.PowerSuplyTupesList().GetTypesList());
+        IncomingPumpPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(IncomingPumpPortSelected));
             OutloginPumpPortSelected = Properties.Settings.Default.OutloginPumpPortSelected;
-            OutloginPumpPortCollection = new ObservableCollection<string>((new ClassHelpers.PortList()).GetPortList(OutloginPumpPortSelected));
+            OutloginPumpPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(OutloginPumpPortSelected));
             LaserPortSelected = Properties.Settings.Default.LaserPortSelected;
             LaserPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(LaserPortSelected));
+            PiroPortSelected = Properties.Settings.Default.PiroPortSelected;
+            PiroPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(PiroPortSelected));
             CurWindowState = WindowState.Normal;
             //load params from settings
             WindowHeight = Properties.Settings.Default.WindowHeight == 0 ? 550 : Properties.Settings.Default.WindowHeight;
@@ -173,6 +218,7 @@ namespace LabControl.ViewModels
             IsTwoPump = Properties.Settings.Default.IsTwoPump;
             ConfocalLevelSetter = Properties.Settings.Default.ConfocalLevelSetter;
             LaserPowerSetter = Properties.Settings.Default.LaserPowerSetter;
+            LaserTypeSelectedIndex = Properties.Settings.Default.LaserTypeSelectedIndex;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -201,6 +247,9 @@ namespace LabControl.ViewModels
             Properties.Settings.Default.IncomingPumpPortSelected = IncomingPumpPortSelected;
             Properties.Settings.Default.OutloginPumpPortSelected = OutloginPumpPortSelected;
             Properties.Settings.Default.LaserPowerSetter = LaserPowerSetter;
+            Properties.Settings.Default.LaserPortSelected = LaserPortSelected;
+            Properties.Settings.Default.PiroPortSelected = PiroPortSelected;
+            Properties.Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
             Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }

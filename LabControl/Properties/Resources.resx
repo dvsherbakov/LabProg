@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="LabelChanelsSwitch" xml:space="preserve">
+    <value>Включение каналов:</value>
+  </data>
   <data name="LabelConfocalData" xml:space="preserve">
     <value>Показания датчика</value>
   </data>
@@ -131,6 +134,12 @@
   </data>
   <data name="LabelEmmitLaser" xml:space="preserve">
     <value>Излучение!</value>
+  </data>
+  <data name="LabelIkLed1" xml:space="preserve">
+    <value>ИК Источник 1</value>
+  </data>
+  <data name="LabelIkLed2" xml:space="preserve">
+    <value>ИК Источник 2</value>
   </data>
   <data name="LabelInputPumpPort" xml:space="preserve">
     <value>Порт докачки</value>
@@ -165,6 +174,12 @@
   <data name="LabelTwoPump" xml:space="preserve">
     <value>Два насоса</value>
   </data>
+  <data name="LabelUfLed1" xml:space="preserve">
+    <value>УФ Диод 1</value>
+  </data>
+  <data name="LabelUfLed2" xml:space="preserve">
+    <value>УФ Диод 2</value>
+  </data>
   <data name="LaserOpeprationTitle" xml:space="preserve">
     <value>Управление лазером</value>
   </data>
@@ -173,6 +188,9 @@
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>ТЮМГУ, Лаборатория микрогидродинамики, X-Bio</value>
+  </data>
+  <data name="PowerSuplyTitle" xml:space="preserve">
+    <value>Управление блоком питания</value>
   </data>
   <data name="PumpOperationTitle" xml:space="preserve">
     <value>Управление уровнем</value>
