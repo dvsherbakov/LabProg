@@ -141,17 +141,143 @@ namespace LabControl.ViewModels
             set => Set(ref f_PwrSwitchCh0, value);
         }
 
+        private int f_PwrCh0Mode;
+        public int PwrCh0Mode
+        {
+            get => f_PwrCh0Mode;
+            set => Set(ref f_PwrCh0Mode, value);
+        }
+
+        private int f_PwrCh0Bias;
+        public int PwrCh0Bias
+        {
+            get => f_PwrCh0Bias;
+            set => Set(ref f_PwrCh0Bias, value);
+        }
+
+        private int f_PwrCh0Amplitude;
+        public int PwrCh0Amplitude
+        {
+            get => f_PwrCh0Amplitude;
+            set => Set(ref f_PwrCh0Amplitude, value);
+        }
+
+        private int f_PwrCh0Duty;
+        public int PwrCh0Duty
+        {
+            get => f_PwrCh0Duty;
+            set => Set(ref f_PwrCh0Duty, value);
+        }
+
+        private int f_PwrCh0Freq;
+        public int PwrCh0Freq
+        {
+            get => f_PwrCh0Freq;
+            set => Set(ref f_PwrCh0Freq, value);
+        }
+
+        private int f_PwrCh0Phase;
+        public int PwrCh0Phase
+        {
+            get => f_PwrCh0Phase;
+            set => Set(ref f_PwrCh0Phase, value);
+        }
+
+        private int f_PwrCh0MaxAmps;
+        public int PwrCh0MaxAmps
+        {
+            get => f_PwrCh0MaxAmps;
+            set => Set(ref f_PwrCh0MaxAmps, value);
+        }
+
+        private int f_PwrCh0MaxVoltage;
+        public int PwrCh0MaxVoltage
+        {
+            get => f_PwrCh0MaxVoltage;
+            set => Set(ref f_PwrCh0MaxVoltage, value);
+        }
+
+        private int f_PwrCh1Mode;
+        public int PwrCh1Mode
+        {
+            get => f_PwrCh1Mode;
+            set => Set(ref f_PwrCh1Mode, value);
+        }
+
         private bool f_PwrSwitchCh1;
         public bool PwrSwitchCh1
         {
             get => f_PwrSwitchCh1;
             set => Set(ref f_PwrSwitchCh1, value);
         }
+
+        private int f_PwrCh1Bias;
+        public int PwrCh1Bias
+        {
+            get => f_PwrCh1Bias;
+            set => Set(ref f_PwrCh1Bias, value);
+        }
+
+        private int f_PwrCh1Amplitude;
+        public int PwrCh1Amplitude
+        {
+            get => f_PwrCh1Amplitude;
+            set => Set(ref f_PwrCh1Amplitude, value);
+        }
+
+        private int f_PwrCh1Freq;
+        public int PwrCh1Freq
+        {
+            get => f_PwrCh1Freq;
+            set => Set(ref f_PwrCh1Freq, value);
+        }
+
+        private int f_PwrCh1Duty;
+        public int PwrCh1Duty
+        {
+            get => f_PwrCh1Duty;
+            set => Set(ref f_PwrCh1Duty, value);
+        }
+
+        private int f_PwrCh1Phase;
+        public int PwrCh1Phase
+        {
+            get => f_PwrCh1Phase;
+            set => Set(ref f_PwrCh1Phase, value);
+        }
+        private int f_PwrCh1MaxVoltage;
+        public int PwrCh1MaxVoltage
+        {
+            get => f_PwrCh1MaxVoltage;
+            set => Set(ref f_PwrCh1MaxVoltage, value);
+        }
+
+        private int f_PwrCh1MaxAmps;
+        public int PwrCh1MaxAmps
+        {
+            get => f_PwrCh1MaxAmps;
+            set => Set(ref f_PwrCh1MaxAmps, value);
+        }
+
         private bool f_PwrSwitchCh2;
         public bool PwrSwitchCh2
         {
             get => f_PwrSwitchCh2;
             set => Set(ref f_PwrSwitchCh2, value);
+        }
+
+        private int f_PwrCh2Mode;
+        public int PwrCh2Mode
+        {
+            get => f_PwrCh2Mode;
+            set => Set(ref f_PwrCh2Mode, value);
+        }
+
+        private int f_PwrCh2Bias;
+        public int PwrCh2Bias
+        {
+            get => f_PwrCh2Bias;
+            set => Set(ref f_PwrCh2Bias, value);
         }
         #endregion
 
@@ -165,6 +291,7 @@ namespace LabControl.ViewModels
         #endregion
 
         #region StaticLabels
+        public static string LabelOn => Properties.Resources.LabelOn;
         public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
         public static string LabelPumpOperation => Properties.Resources.PumpOperationTitle;
         public static string LabelConfocalData => Properties.Resources.LabelConfocalData;
@@ -186,8 +313,21 @@ namespace LabControl.ViewModels
         public static string LabelUfLed1 => Properties.Resources.LabelUfLed1;
         public static string LabelUfLed2 => Properties.Resources.LabelUfLed2;
         public static string LabelChanelsSwitch => Properties.Resources.LabelChanelsSwitch;
+        public static string LabelPwrChannelMode => Properties.Resources.LabelPwrChannelMode;
+        public static string LabelPwrChannelBias => Properties.Resources.LabelPwrChannelBias;
+        public static string LabelPwrChannelAmplitude => Properties.Resources.LabelPwrChannelAmplitude;
+        public static string LabelPwrChannelFreq => Properties.Resources.LabelPwrChannelFreq;
+        public static string LabelPwrChannelPhase => Properties.Resources.LabelPwrChannelPhase;
+        public static string LabelChannel0 => Properties.Resources.LabelChannel0;
+        public static string LabelChannel1 => Properties.Resources.LabelChannel1;
         public static string LabelIkLed1 => Properties.Resources.LabelIkLed1;
         public static string LabelIkLed2 => Properties.Resources.LabelIkLed2;
+        public static string LabelPwrChannelDuty => Properties.Resources.LabelPwrChannelDuty;
+        public static string LabelPwrMaxVoltage => Properties.Resources.LabelPwrMaxVoltage;
+        public static string LabelPwrMaxAmps => Properties.Resources.LabelPwrMaxAmps;
+        public static string LabelRead => Properties.Resources.LabelRead;
+        public static string LabelWrite => Properties.Resources.LabelWrite;
+        public static string LabelChannel2 => Properties.Resources.LabelChannel2;
         #endregion
         //private Timer f_TestTimer;
 
@@ -204,7 +344,7 @@ namespace LabControl.ViewModels
             LogCollection = new ObservableCollection<ClassHelpers.LogItem>();
             IncomingPumpPortSelected = Properties.Settings.Default.IncomingPumpPortSelected;
             PowerSupplyTypes = new ObservableCollection<string>(new ClassHelpers.PowerSuplyTupesList().GetTypesList());
-        IncomingPumpPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(IncomingPumpPortSelected));
+            IncomingPumpPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(IncomingPumpPortSelected));
             OutloginPumpPortSelected = Properties.Settings.Default.OutloginPumpPortSelected;
             OutloginPumpPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(OutloginPumpPortSelected));
             LaserPortSelected = Properties.Settings.Default.LaserPortSelected;
@@ -219,6 +359,25 @@ namespace LabControl.ViewModels
             ConfocalLevelSetter = Properties.Settings.Default.ConfocalLevelSetter;
             LaserPowerSetter = Properties.Settings.Default.LaserPowerSetter;
             LaserTypeSelectedIndex = Properties.Settings.Default.LaserTypeSelectedIndex;
+            PwrCh0Mode = Properties.Settings.Default.PwrCh0Mode;
+            PwrCh0Bias = Properties.Settings.Default.PwrCh0Bias;
+            PwrCh0Amplitude = Properties.Settings.Default.PwrCh0Amplitude;
+            PwrCh0Freq = Properties.Settings.Default.PwrCh0Freq;
+            PwrCh0Duty = Properties.Settings.Default.PwrCh0Duty;
+            PwrCh0Phase = Properties.Settings.Default.PwrCh0Phase;
+            PwrCh0MaxVoltage = Properties.Settings.Default.PwrCh0MaxVoltage;
+            PwrCh0MaxAmps = Properties.Settings.Default.PwrCh0MaxAmps;
+            PwrCh1Mode = Properties.Settings.Default.PwrCh1Mode;
+            PwrCh1Mode = Properties.Settings.Default.PwrCh1Mode;
+            PwrCh1Bias = Properties.Settings.Default.PwrCh1Bias;
+            PwrCh1Amplitude = Properties.Settings.Default.PwrCh1Amplitude;
+            PwrCh1Freq = Properties.Settings.Default.PwrCh1Freq;
+            PwrCh1Duty = Properties.Settings.Default.PwrCh1Duty;
+            PwrCh1Phase = Properties.Settings.Default.PwrCh1Phase;
+            PwrCh1MaxVoltage = Properties.Settings.Default.PwrCh1MaxVoltage;
+            PwrCh1MaxAmps = Properties.Settings.Default.PwrCh1MaxAmps;
+            PwrCh2Mode = Properties.Settings.Default.PwrCh2Mode;
+            PwrCh2Bias = Properties.Settings.Default.PwrCh2Bias;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -250,6 +409,24 @@ namespace LabControl.ViewModels
             Properties.Settings.Default.LaserPortSelected = LaserPortSelected;
             Properties.Settings.Default.PiroPortSelected = PiroPortSelected;
             Properties.Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
+            Properties.Settings.Default.PwrCh0Mode = PwrCh0Mode;
+            Properties.Settings.Default.PwrCh0Bias = PwrCh0Bias;
+            Properties.Settings.Default.PwrCh0Amplitude = PwrCh0Amplitude;
+            Properties.Settings.Default.PwrCh0Freq = PwrCh0Freq;
+            Properties.Settings.Default.PwrCh0Duty = PwrCh0Duty;
+            Properties.Settings.Default.PwrCh0Phase = PwrCh0Phase;
+            Properties.Settings.Default.PwrCh0MaxVoltage = PwrCh0MaxVoltage;
+            Properties.Settings.Default.PwrCh0MaxAmps = PwrCh0MaxAmps;
+            Properties.Settings.Default.PwrCh1Mode = PwrCh1Mode;
+            Properties.Settings.Default.PwrCh1Bias = PwrCh1Bias;
+            Properties.Settings.Default.PwrCh1Amplitude = PwrCh1Amplitude;
+            Properties.Settings.Default.PwrCh1Freq = PwrCh1Freq;
+            Properties.Settings.Default.PwrCh1Duty = PwrCh1Duty;
+            Properties.Settings.Default.PwrCh1Phase = PwrCh1Phase;
+            Properties.Settings.Default.PwrCh1MaxVoltage = PwrCh1MaxVoltage;
+            Properties.Settings.Default.PwrCh1MaxAmps = PwrCh1MaxAmps;
+            Properties.Settings.Default.PwrCh2Mode = PwrCh2Mode;
+            Properties.Settings.Default.PwrCh2Bias = PwrCh2Bias;
             Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }

@@ -70,6 +70,33 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Канал 0: (УФ диод 1).
+        /// </summary>
+        internal static string LabelChannel0 {
+            get {
+                return ResourceManager.GetString("LabelChannel0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Канал 1: (УФ диод 2).
+        /// </summary>
+        internal static string LabelChannel1 {
+            get {
+                return ResourceManager.GetString("LabelChannel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Канал 2: (ИК источник 1).
+        /// </summary>
+        internal static string LabelChannel2 {
+            get {
+                return ResourceManager.GetString("LabelChannel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Показания датчика.
         /// </summary>
         internal static string LabelConfocalData {
@@ -160,6 +187,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Включить.
+        /// </summary>
+        internal static string LabelOn {
+            get {
+                return ResourceManager.GetString("LabelOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Один насос.
         /// </summary>
         internal static string LabelOnePump {
@@ -205,6 +241,87 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Амплитуда колебаний.
+        /// </summary>
+        internal static string LabelPwrChannelAmplitude {
+            get {
+                return ResourceManager.GetString("LabelPwrChannelAmplitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Напряжение смешения(Регулируемый ток).
+        /// </summary>
+        internal static string LabelPwrChannelBias {
+            get {
+                return ResourceManager.GetString("LabelPwrChannelBias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Скважность(%).
+        /// </summary>
+        internal static string LabelPwrChannelDuty {
+            get {
+                return ResourceManager.GetString("LabelPwrChannelDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Частота(Гц).
+        /// </summary>
+        internal static string LabelPwrChannelFreq {
+            get {
+                return ResourceManager.GetString("LabelPwrChannelFreq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Режим работы.
+        /// </summary>
+        internal static string LabelPwrChannelMode {
+            get {
+                return ResourceManager.GetString("LabelPwrChannelMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Фаза(градусы).
+        /// </summary>
+        internal static string LabelPwrChannelPhase {
+            get {
+                return ResourceManager.GetString("LabelPwrChannelPhase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Максимальный ток.
+        /// </summary>
+        internal static string LabelPwrMaxAmps {
+            get {
+                return ResourceManager.GetString("LabelPwrMaxAmps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Максимальное напряжение.
+        /// </summary>
+        internal static string LabelPwrMaxVoltage {
+            get {
+                return ResourceManager.GetString("LabelPwrMaxVoltage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Прочитать.
+        /// </summary>
+        internal static string LabelRead {
+            get {
+                return ResourceManager.GetString("LabelRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Установить мощность.
         /// </summary>
         internal static string LabelSetterPower {
@@ -246,6 +363,15 @@ namespace LabControl.Properties {
         internal static string LabelUfLed2 {
             get {
                 return ResourceManager.GetString("LabelUfLed2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Записать.
+        /// </summary>
+        internal static string LabelWrite {
+            get {
+                return ResourceManager.GetString("LabelWrite", resourceCulture);
             }
         }
         

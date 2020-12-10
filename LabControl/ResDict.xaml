@@ -169,8 +169,9 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Control.Foreground" Value="SandyBrown" />
-        <Setter Property="Control.FontFamily" Value="Arial"></Setter>
-        <Setter Property="Control.FontSize" Value="20"></Setter>
+        <Setter Property="Control.FontFamily" Value="Arial"/>
+        <Setter Property="Control.FontSize" Value="20"/>
+        <Setter Property="Control.Margin" Value="1" />
     </Style>
 
     <!--#region IPhoneButton-->

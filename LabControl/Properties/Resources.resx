@@ -120,6 +120,15 @@
   <data name="LabelChanelsSwitch" xml:space="preserve">
     <value>Включение каналов:</value>
   </data>
+  <data name="LabelChannel0" xml:space="preserve">
+    <value>Канал 0: (УФ диод 1)</value>
+  </data>
+  <data name="LabelChannel1" xml:space="preserve">
+    <value>Канал 1: (УФ диод 2)</value>
+  </data>
+  <data name="LabelChannel2" xml:space="preserve">
+    <value>Канал 2: (ИК источник 1)</value>
+  </data>
   <data name="LabelConfocalData" xml:space="preserve">
     <value>Показания датчика</value>
   </data>
@@ -150,6 +159,9 @@
   <data name="LabelLaserType" xml:space="preserve">
     <value>Тип лазера</value>
   </data>
+  <data name="LabelOn" xml:space="preserve">
+    <value>Включить</value>
+  </data>
   <data name="LabelOnePump" xml:space="preserve">
     <value>Один насос</value>
   </data>
@@ -165,6 +177,33 @@
   <data name="LabelPumpActive" xml:space="preserve">
     <value>Активно</value>
   </data>
+  <data name="LabelPwrChannelAmplitude" xml:space="preserve">
+    <value>Амплитуда колебаний</value>
+  </data>
+  <data name="LabelPwrChannelBias" xml:space="preserve">
+    <value>Напряжение смешения(Регулируемый ток)</value>
+  </data>
+  <data name="LabelPwrChannelDuty" xml:space="preserve">
+    <value>Скважность(%)</value>
+  </data>
+  <data name="LabelPwrChannelFreq" xml:space="preserve">
+    <value>Частота(Гц)</value>
+  </data>
+  <data name="LabelPwrChannelMode" xml:space="preserve">
+    <value>Режим работы</value>
+  </data>
+  <data name="LabelPwrChannelPhase" xml:space="preserve">
+    <value>Фаза(градусы)</value>
+  </data>
+  <data name="LabelPwrMaxAmps" xml:space="preserve">
+    <value>Максимальный ток</value>
+  </data>
+  <data name="LabelPwrMaxVoltage" xml:space="preserve">
+    <value>Максимальное напряжение</value>
+  </data>
+  <data name="LabelRead" xml:space="preserve">
+    <value>Прочитать</value>
+  </data>
   <data name="LabelSetterPower" xml:space="preserve">
     <value>Установить мощность</value>
   </data>
@@ -179,6 +218,9 @@
   </data>
   <data name="LabelUfLed2" xml:space="preserve">
     <value>УФ Диод 2</value>
+  </data>
+  <data name="LabelWrite" xml:space="preserve">
+    <value>Записать</value>
   </data>
   <data name="LaserOpeprationTitle" xml:space="preserve">
     <value>Управление лазером</value>
