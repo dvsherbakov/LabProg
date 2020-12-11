@@ -132,6 +132,9 @@
   <data name="LabelChannel3" xml:space="preserve">
     <value>Канал 3: (ИК источник 2)</value>
   </data>
+  <data name="LabelChannel4" xml:space="preserve">
+    <value>Канал 4: (Микрокомпрессор)</value>
+  </data>
   <data name="LabelConfocalData" xml:space="preserve">
     <value>Показания датчика</value>
   </data>

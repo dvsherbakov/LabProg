@@ -431,6 +431,7 @@
                                     <TextBlock Grid.Row="2" Grid.Column="1" Margin="5,5,5,5">Микрокомпрессор</TextBlock>
                                     <ToggleButton Grid.Row="2" Grid.Column="0" 
                                                   Width="40" Height="20" 
+                                                  IsChecked="{Binding PwrSwitchCh4}"
                                                   Style="{StaticResource AnimatedSwitch}" />
                                     <TextBlock Grid.Row="2" Grid.Column="2" Margin="5,5,5,5">Нагрев стекла</TextBlock>
                                     <ToggleButton Grid.Row="2" Grid.Column="3" 
@@ -843,6 +844,138 @@
                                     <TabItem.Header>
                                         <TextBlock Foreground="SandyBrown" Text="3"/>
                                     </TabItem.Header>
+                                    <StackPanel>
+                                        <Grid Margin="10,10,10,10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="35"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                                <ColumnDefinition Width="18*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
+                                                   Text="{Binding LabelChannel3}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <CheckBox Grid.Row="1"
+                                                Foreground="SandyBrown"
+                                                  IsChecked="{Binding PwrSwitchCh3}"
+                                                  VerticalAlignment="Center"
+                                                  Content="{Binding LabelOn}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="2" 
+                                                   Text="{Binding LabelPwrChannelMode}"
+                                                    Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <ComboBox  Grid.Column="2" Grid.Row="2" 
+                                                   ItemsSource="{Binding PowerSupplyTypes}"
+                                                   SelectedIndex="{Binding PwrCh3Mode}"
+                                                   Margin="5,5,5,5"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="3" 
+                                                   Text="{Binding LabelPwrChannelBias}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBox Grid.Column="1" Grid.Row="3"
+                                                 Text="{Binding PwrCh3Bias}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="4" 
+                                                   Text="{Binding LabelPwrChannelAmplitude}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBox Grid.Column="1" Grid.Row="4" 
+                                                 Text="{Binding PwrCh3Amplitude}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="5" 
+                                                   Text="{Binding LabelPwrChannelFreq}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBox Grid.Column="1" Grid.Row="5" 
+                                                 Text="{Binding PwrCh3Freq}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="6" 
+                                                   Text="{Binding LabelPwrChannelDuty}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBox Grid.Column="1" Grid.Row="6" 
+                                                 Text="{Binding PwrCh3Duty}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="7" 
+                                                   Text="{Binding LabelPwrChannelPhase}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBox Grid.Column="1" Grid.Row="7" 
+                                                 Text="{Binding PwrCh3Phase}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="8" 
+                                                   Text="{Binding LabelPwrMaxVoltage}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBox Grid.Column="1" Grid.Row="8"
+                                                 Text="{Binding PwrCh3MaxVoltage}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                            <TextBlock Grid.Column="0" Grid.Row="9" 
+                                                   Text="{Binding LabelPwrMaxAmps}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                            <TextBox Grid.Column="1" Grid.Row="9" 
+                                                 Text="{Binding PwrCh3MaxAmps}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                        </Grid>
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Center">
+                                            <Border Margin="1"
+                                                    BorderBrush="Aquamarine"
+                                                    CornerRadius="5" 
+                                                    BorderThickness="1">
+                                                <Button 
+                                                    Style="{StaticResource TransparentButton}"
+                                                    Margin="5" 
+                                                    Padding="5" 
+                                                    Content="{Binding LabelRead}"
+                                                    Foreground="SandyBrown"/>
+                                            </Border>
+                                            <Border Margin="1"
+                                                    BorderBrush="Aquamarine"
+                                                    CornerRadius="5" 
+                                                    BorderThickness="1">
+                                                <Button 
+                                                    Style="{StaticResource TransparentButton}"
+                                                    Margin="5" 
+                                                    Padding="5" 
+                                                    Content="{Binding LabelWrite}"
+                                                    Foreground="SandyBrown"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </TabItem>
+                                <TabItem Style="{DynamicResource TabItemStyle}"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center">
+                                    <TabItem.Header>
+                                        <TextBlock Foreground="SandyBrown" Text="4"/>
+                                    </TabItem.Header>
                                     <Grid Margin="10,10,10,10">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="28"></RowDefinition>
@@ -861,28 +994,28 @@
                                             <ColumnDefinition Width="18*"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
-                                                   Text="{Binding LabelChannel3}"
+                                                   Text="{Binding LabelChannel4}"
                                                    Foreground="SandyBrown"
-                                                   VerticalAlignment="Center"/>
+                                                   TextAlignment="Center"/>
                                         <CheckBox Grid.Row="1"
                                                 Foreground="SandyBrown"
-                                                  IsChecked="{Binding PwrSwitchCh3}"
+                                                  IsChecked="{Binding PwrSwitchCh4}"
                                                   VerticalAlignment="Center"
                                                   Content="{Binding LabelOn}" />
                                         <TextBlock Grid.Column="0" Grid.Row="2" 
                                                    Text="{Binding LabelPwrChannelMode}"
-                                                    Foreground="SandyBrown"
+                                                   Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                         <ComboBox  Grid.Column="2" Grid.Row="2" 
                                                    ItemsSource="{Binding PowerSupplyTypes}"
-                                                   SelectedIndex="{Binding PwrCh2Mode}"
+                                                   SelectedIndex="{Binding PwrCh4Mode}"
                                                    Margin="5,5,5,5"/>
                                         <TextBlock Grid.Column="0" Grid.Row="3" 
                                                    Text="{Binding LabelPwrChannelBias}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
-                                        <TextBox Grid.Column="1" Grid.Row="3"
-                                                 Text="{Binding PwrCh3Bias}"
+                                        <TextBox Grid.Column="1" Grid.Row="3" 
+                                                 Text="{Binding PwrCh4Bias}"
                                                  TextAlignment="Center"
                                                  Style="{StaticResource PartTransparent}"
                                                  Template="{StaticResource TextBoxBaseControlTemplate}"/>
@@ -891,66 +1024,41 @@
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                         <TextBox Grid.Column="1" Grid.Row="4" 
-                                                 Text="{Binding PwrCh3Amplitude}"
+                                                 Text="{Binding PwrCh4Amplitude}"
                                                  TextAlignment="Center"
                                                  Style="{StaticResource PartTransparent}"
                                                  Template="{StaticResource TextBoxBaseControlTemplate}"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                        <TextBox x:Name="TbCh3Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                        <TextBox x:Name="TbCh3Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                        <TextBox x:Name="TbCh3Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
-                                        <TextBox x:Name="TbCh3MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"></TextBox>
-                                        <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
-                                        <TextBox x:Name="TbCh3MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"></TextBox>
-                                        <Button x:Name="PwrCh3Read"  Grid.Column="0" Grid.Row="10" Margin="5,5,5,5" >Прочитать</Button>
-                                        <Button x:Name="PwrCh3Write" Grid.Column="1" Grid.Row="10" Margin="5,5,5,5" >Записать</Button>
-                                    </Grid>
-                                </TabItem>
-                                <TabItem VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TabItem.Header>
-                                        <TextBlock>4</TextBlock>
-                                    </TabItem.Header>
-                                    <Grid Margin="10,10,10,10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                            <RowDefinition Height="Auto"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="31*"></ColumnDefinition>
-                                            <ColumnDefinition Width="29*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center">Канал 4: (Микрокомпрессор)</TextBlock>
-                                        <CheckBox  Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" >Включить</CheckBox>
-                                        <TextBlock Grid.Column="0" Grid.Row="2" Margin="5,5,5,5" >Режим работы</TextBlock>
-                                        <ComboBox x:Name="CbModeCh4"  Grid.Column="1" Grid.Row="2" Margin="5,5,5,5" >
-                                            <TextBlock>Регулирование по напряжению</TextBlock>
-                                            <TextBlock>Регулирование по току</TextBlock>
-                                            <TextBlock>Синусоидальный сигнал</TextBlock>
-                                            <TextBlock>ШИМ сигнал</TextBlock>
-                                        </ComboBox>
-                                        <TextBlock x:Name="TbChannel4Bias" Grid.Column="0" Grid.Row="3" Margin="5,5,5,5">Напряжение смешения(Регулируемый ток)</TextBlock>
-                                        <TextBox x:Name="TbCh4Bias" Grid.Column="1" Grid.Row="3" Margin="5,5,5,5"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="4" Margin="5,5,5,5">Амплитуда колебаний</TextBlock>
-                                        <TextBox x:Name="TbCh4Amplitude" Grid.Column="1" Grid.Row="4" Margin="5,5,5,5"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="5" Margin="5,5,5,5">Частота(Гц)</TextBlock>
-                                        <TextBox x:Name="TbCh4Freq" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,5">Скважность(%)</TextBlock>
-                                        <TextBox x:Name="TbCh4Duty" Grid.Column="1" Grid.Row="6" Margin="5,5,5,5"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="7" Margin="5,5,5,5">Фаза(градусы)</TextBlock>
-                                        <TextBox x:Name="TbCh4Phase" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="8" Margin="5,5,5,5">Максимальное напряжение</TextBlock>
+                                        <TextBlock Grid.Column="0" Grid.Row="5" 
+                                                   Text="{Binding LabelPwrChannelFreq}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBox Grid.Column="1" Grid.Row="5" 
+                                                 Text="{Binding PwrCh4Freq}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="6"
+                                                   Text="{Binding LabelPwrChannelDuty}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBox Grid.Column="1" Grid.Row="6" 
+                                                 Text="{Binding PwrCh4Duty}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="7" 
+                                                   Text="{Binding LabelPwrChannelPhase}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBox Grid.Column="1" Grid.Row="7"
+                                                 Text="{Binding PwrCh4Phase}"
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="8"
+                                                   Text="{Binding LabelPwrMaxVoltage}"
+                                                   Foreground="SandyBrown"
+                                                   VerticalAlignment="Center"/>
                                         <TextBox x:Name="TbCh4MaxVolts" Grid.Column="1" Grid.Row="8" Margin="5,5,5,5"/>
                                         <TextBlock Grid.Column="0" Grid.Row="9" Margin="5,5,5,5">Максимальный ток</TextBlock>
                                         <TextBox x:Name="TbCh4MaxAmps" Grid.Column="1" Grid.Row="9" Margin="5,5,5,5"/>

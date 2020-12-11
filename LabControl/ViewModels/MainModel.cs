@@ -329,6 +329,20 @@ namespace LabControl.ViewModels
             set => Set(ref f_PwrSwitchCh3, value);
         }
 
+        private int f_PwrCh3Mode;
+        public int PwrCh3Mode
+        {
+            get => f_PwrCh3Mode;
+            set => Set(ref f_PwrCh3Mode, value);
+        }
+
+        private int f_PwrCh4Mode;
+        public int PwrCh4Mode
+        {
+            get => f_PwrCh4Mode;
+            set => Set(ref f_PwrCh4Mode, value);
+        }
+
         private int f_PwrCh3Bias;
         public int PwrCh3Bias
         {
@@ -343,7 +357,82 @@ namespace LabControl.ViewModels
             set => Set(ref f_PwrCh3Amplitude, value);
         }
 
+        private int f_PwrCh3Freq;
+        public int PwrCh3Freq
+        {
+            get => f_PwrCh3Freq;
+            set => Set(ref f_PwrCh3Freq, value);
+        }
 
+        private int f_PwrCh3Duty;
+        public int PwrCh3Duty
+        {
+            get => f_PwrCh3Duty;
+            set => Set(ref f_PwrCh3Duty, value);
+        }
+
+        private int f_PwrCh3Phase;
+        public int PwrCh3Phase
+        {
+            get => f_PwrCh3Phase;
+            set => Set(ref f_PwrCh3Phase, value);
+        }
+
+        private int f_PwrCh3MaxVoltage;
+        public int PwrCh3MaxVoltage
+        {
+            get => f_PwrCh3MaxVoltage;
+            set => Set(ref f_PwrCh3MaxVoltage, value);
+        }
+
+        private int f_PwrCh3MaxAmps;
+        public int PwrCh3MaxAmps
+        {
+            get => f_PwrCh3MaxAmps;
+            set => Set(ref f_PwrCh3MaxAmps, value);
+        }
+
+        private bool f_PwrSwitchCh4;
+        public bool PwrSwitchCh4
+        {
+            get => f_PwrSwitchCh4;
+            set => Set(ref f_PwrSwitchCh4, value);
+        }
+
+        private int f_PwrCh4Bias;
+        public int PwrCh4Bias
+        {
+            get => f_PwrCh4Bias;
+            set => Set(ref f_PwrCh4Bias, value);
+        }
+
+        private int f_PwrCh4Amplitude;
+        public int PwrCh4Amplitude
+        {
+            get => f_PwrCh4Amplitude;
+            set => Set(ref f_PwrCh4Amplitude, value);
+        }
+
+        private int f_PwrCh4Freq;
+        public int PwrCh4Freq
+        {
+            get => f_PwrCh4Freq;
+            set => Set(ref f_PwrCh4Freq, value);
+        }
+
+        private int f_PwrCh4Duty;
+        public int PwrCh4Duty
+        {
+            get => f_PwrCh4Duty;
+            set => Set(ref f_PwrCh4Duty, value);
+        }
+
+        private int f_PwrCh4Phase;
+        public int PwrCh4Phase
+        {
+            get => f_PwrCh4Phase;
+            set => Set(ref f_PwrCh4Phase, value);
+        }
         #endregion
 
         #region Collections
@@ -452,6 +541,18 @@ namespace LabControl.ViewModels
             PwrCh2MaxAmps = Properties.Settings.Default.PwrCh2MaxAmps;
             PwrCh3Bias = Properties.Settings.Default.PwrCh3Bias;
             PwrCh3Amplitude = Properties.Settings.Default.PwrCh3Amplitude;
+            PwrCh3Freq = Properties.Settings.Default.PwrCh3Freq;
+            PwrCh3Duty = Properties.Settings.Default.PwrCh3Duty;
+            PwrCh3Phase = Properties.Settings.Default.PwrCh3Phase;
+            PwrCh3MaxVoltage = Properties.Settings.Default.PwrCh3MaxVoltage;
+            PwrCh3MaxAmps = Properties.Settings.Default.PwrCh3MaxAmps;
+            PwrCh3Mode = Properties.Settings.Default.PwrCh3Mode;
+            PwrCh4Mode = Properties.Settings.Default.PwrCh4Mode;
+            PwrCh4Bias = Properties.Settings.Default.PwrCh4Bias;
+            PwrCh4Amplitude = Properties.Settings.Default.PwrCh4Amplitude;
+            PwrCh4Freq = Properties.Settings.Default.PwrCh4Freq;
+            PwrCh4Duty = Properties.Settings.Default.PwrCh4Duty;
+            PwrCh4Phase = Properties.Settings.Default.PwrCh4Phase;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -509,7 +610,19 @@ namespace LabControl.ViewModels
             Properties.Settings.Default.PwrCh2MaxAmps = PwrCh2MaxAmps;
             Properties.Settings.Default.PwrCh3Bias = PwrCh3Bias;
             Properties.Settings.Default.PwrCh3Amplitude = PwrCh3Amplitude;
+            Properties.Settings.Default.PwrCh3Freq = PwrCh3Freq;
+            Properties.Settings.Default.PwrCh3Duty = PwrCh3Duty;
+            Properties.Settings.Default.PwrCh3Phase = PwrCh3Phase;
+            Properties.Settings.Default.PwrCh3MaxVoltage = PwrCh3MaxVoltage;
+            Properties.Settings.Default.PwrCh3MaxAmps = PwrCh3MaxAmps;
+            Properties.Settings.Default.PwrCh3Mode = PwrCh3Mode;
+            Properties.Settings.Default.PwrCh4Mode = PwrCh4Mode;
+            Properties.Settings.Default.PwrCh4Bias = PwrCh4Bias;
+            Properties.Settings.Default.PwrCh4Amplitude = PwrCh4Amplitude;
+            Properties.Settings.Default.PwrCh4Freq = PwrCh4Freq;
+            Properties.Settings.Default.PwrCh4Duty = PwrCh4Duty;
             Properties.Settings.Default.Save();
+            Properties.Settings.Default.PwrCh4Phase = PwrCh4Phase;
             Application.Current.Shutdown();
         }
 

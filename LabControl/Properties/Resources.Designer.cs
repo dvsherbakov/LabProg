@@ -106,6 +106,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Канал 4: (Микрокомпрессор).
+        /// </summary>
+        internal static string LabelChannel4 {
+            get {
+                return ResourceManager.GetString("LabelChannel4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Показания датчика.
         /// </summary>
         internal static string LabelConfocalData {
