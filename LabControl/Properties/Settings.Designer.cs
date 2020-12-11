@@ -358,5 +358,113 @@ namespace LabControl.Properties {
                 this["PwrCh2Bias"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PwrCh2Amplitude {
+            get {
+                return ((int)(this["PwrCh2Amplitude"]));
+            }
+            set {
+                this["PwrCh2Amplitude"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PwrCh2Freq {
+            get {
+                return ((int)(this["PwrCh2Freq"]));
+            }
+            set {
+                this["PwrCh2Freq"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PwrCh2Duty {
+            get {
+                return ((int)(this["PwrCh2Duty"]));
+            }
+            set {
+                this["PwrCh2Duty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PwrCh2Phase {
+            get {
+                return ((int)(this["PwrCh2Phase"]));
+            }
+            set {
+                this["PwrCh2Phase"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PwrCh2MaxVoltage {
+            get {
+                return ((int)(this["PwrCh2MaxVoltage"]));
+            }
+            set {
+                this["PwrCh2MaxVoltage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PwrCh2MaxAmps {
+            get {
+                return ((int)(this["PwrCh2MaxAmps"]));
+            }
+            set {
+                this["PwrCh2MaxAmps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PwrSwitchCh3 {
+            get {
+                return ((bool)(this["PwrSwitchCh3"]));
+            }
+            set {
+                this["PwrSwitchCh3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PwrCh3Bias {
+            get {
+                return ((int)(this["PwrCh3Bias"]));
+            }
+            set {
+                this["PwrCh3Bias"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PwrCh3Amplitude {
+            get {
+                return ((int)(this["PwrCh3Amplitude"]));
+            }
+            set {
+                this["PwrCh3Amplitude"] = value;
+            }
+        }
     }
 }

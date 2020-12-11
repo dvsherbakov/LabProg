@@ -279,6 +279,71 @@ namespace LabControl.ViewModels
             get => f_PwrCh2Bias;
             set => Set(ref f_PwrCh2Bias, value);
         }
+
+        private int f_PwrCh2Amplitude;
+        public int PwrCh2Amplitude
+        {
+            get => f_PwrCh2Amplitude;
+            set => Set(ref f_PwrCh2Amplitude, value);
+        }
+
+        private int f_PwrCh2Freq;
+        public int PwrCh2Freq
+        {
+            get => f_PwrCh2Freq;
+            set => Set(ref f_PwrCh2Freq, value);
+        }
+
+        private int f_PwrCh2Duty;
+        public int PwrCh2Duty
+        {
+            get => f_PwrCh2Duty;
+            set => Set(ref f_PwrCh2Duty, value);
+        }
+
+        private int f_PwrCh2Phase;
+        public int PwrCh2Phase
+        {
+            get => f_PwrCh2Phase;
+            set => Set(ref f_PwrCh2Phase, value);
+        }
+
+        private int f_PwrCh2MaxVoltage;
+        public int PwrCh2MaxVoltage
+        {
+            get => f_PwrCh2MaxVoltage;
+            set => Set(ref f_PwrCh2MaxVoltage, value);
+        }
+
+        private int f_PwrCh2MaxAmps;
+        public int PwrCh2MaxAmps
+        {
+            get => f_PwrCh2MaxAmps;
+            set => Set(ref f_PwrCh2MaxAmps, value);
+        }
+
+        private bool f_PwrSwitchCh3;
+        public bool PwrSwitchCh3
+        {
+            get => f_PwrSwitchCh3;
+            set => Set(ref f_PwrSwitchCh3, value);
+        }
+
+        private int f_PwrCh3Bias;
+        public int PwrCh3Bias
+        {
+            get => f_PwrCh3Bias;
+            set => Set(ref f_PwrCh3Bias, value);
+        }
+
+        private int f_PwrCh3Amplitude;
+        public int PwrCh3Amplitude
+        {
+            get => f_PwrCh3Amplitude;
+            set => Set(ref f_PwrCh3Amplitude, value);
+        }
+
+
         #endregion
 
         #region Collections
@@ -328,6 +393,7 @@ namespace LabControl.ViewModels
         public static string LabelRead => Properties.Resources.LabelRead;
         public static string LabelWrite => Properties.Resources.LabelWrite;
         public static string LabelChannel2 => Properties.Resources.LabelChannel2;
+        public static string LabelChannel3 => Properties.Resources.LabelChannel3;
         #endregion
         //private Timer f_TestTimer;
 
@@ -378,6 +444,14 @@ namespace LabControl.ViewModels
             PwrCh1MaxAmps = Properties.Settings.Default.PwrCh1MaxAmps;
             PwrCh2Mode = Properties.Settings.Default.PwrCh2Mode;
             PwrCh2Bias = Properties.Settings.Default.PwrCh2Bias;
+            PwrCh2Amplitude = Properties.Settings.Default.PwrCh2Amplitude;
+            PwrCh2Freq = Properties.Settings.Default.PwrCh2Freq;
+            PwrCh2Duty = Properties.Settings.Default.PwrCh2Duty;
+            PwrCh2Phase = Properties.Settings.Default.PwrCh2Phase;
+            PwrCh2MaxVoltage = Properties.Settings.Default.PwrCh2MaxVoltage;
+            PwrCh2MaxAmps = Properties.Settings.Default.PwrCh2MaxAmps;
+            PwrCh3Bias = Properties.Settings.Default.PwrCh3Bias;
+            PwrCh3Amplitude = Properties.Settings.Default.PwrCh3Amplitude;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -427,6 +501,14 @@ namespace LabControl.ViewModels
             Properties.Settings.Default.PwrCh1MaxAmps = PwrCh1MaxAmps;
             Properties.Settings.Default.PwrCh2Mode = PwrCh2Mode;
             Properties.Settings.Default.PwrCh2Bias = PwrCh2Bias;
+            Properties.Settings.Default.PwrCh2Amplitude = PwrCh2Amplitude;
+            Properties.Settings.Default.PwrCh2Freq = PwrCh2Freq;
+            Properties.Settings.Default.PwrCh2Duty = PwrCh2Duty;
+            Properties.Settings.Default.PwrCh2Phase = PwrCh2Phase;
+            Properties.Settings.Default.PwrCh2MaxVoltage = PwrCh2MaxVoltage;
+            Properties.Settings.Default.PwrCh2MaxAmps = PwrCh2MaxAmps;
+            Properties.Settings.Default.PwrCh3Bias = PwrCh3Bias;
+            Properties.Settings.Default.PwrCh3Amplitude = PwrCh3Amplitude;
             Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }

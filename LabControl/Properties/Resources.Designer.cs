@@ -97,6 +97,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Канал 3: (ИК источник 2).
+        /// </summary>
+        internal static string LabelChannel3 {
+            get {
+                return ResourceManager.GetString("LabelChannel3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Показания датчика.
         /// </summary>
         internal static string LabelConfocalData {
