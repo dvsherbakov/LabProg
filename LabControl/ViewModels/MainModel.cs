@@ -127,6 +127,8 @@ namespace LabControl.ViewModels
             set => Set(ref f_PiroPortSelected, value);
         }
 
+        //PwrPortAdd
+
         private int f_LaserTypeSelectedIndex;
         public int LaserTypeSelectedIndex
         {
@@ -433,6 +435,83 @@ namespace LabControl.ViewModels
             get => f_PwrCh4Phase;
             set => Set(ref f_PwrCh4Phase, value);
         }
+
+        private int f_PwrCh4MaxVoltage;
+        public int PwrCh4MaxVoltage
+        {
+            get => f_PwrCh4MaxVoltage;
+            set => Set(ref f_PwrCh4MaxVoltage, value);
+        }
+
+        private int f_PwrCh4MaxAmps;
+        public int PwrCh4MaxAmps
+        {
+            get => f_PwrCh4MaxAmps;
+            set => Set(ref f_PwrCh4MaxAmps, value);
+        }
+
+        private int f_PwrSwitchCh5;
+        public int PwrSwitchCh5
+        {
+            get => f_PwrSwitchCh5;
+            set => Set(ref f_PwrSwitchCh5, value);
+        }
+
+        private int f_PwrCh5Mode;
+        public int PwrCh5Mode
+        {
+            get => f_PwrCh5Mode;
+            set => Set(ref f_PwrCh5Mode, value);
+        }
+
+        private int f_PwrCh5Bias;
+        public int PwrCh5Bias
+        {
+            get => f_PwrCh5Bias;
+            set => Set(ref f_PwrCh5Bias, value);
+        }
+
+        private int f_PwrCh5Amplitude;
+        public int PwrCh5Amplitude
+        {
+            get => f_PwrCh5Amplitude;
+            set => Set(ref f_PwrCh5Amplitude, value);
+        }
+
+        private int f_PwrCh5Freq;
+        public int PwrCh5Freq
+        {
+            get => f_PwrCh5Freq;
+            set => Set(ref f_PwrCh5Freq, value);
+        }
+
+        private int f_PwrCh5Duty;
+        public int PwrCh5Duty
+        {
+            get => f_PwrCh5Duty;
+            set => Set(ref f_PwrCh5Duty, value);
+        }
+
+        private int f_PwrCh5Phase;
+        public int PwrCh5Phase
+        {
+            get => f_PwrCh5Phase;
+            set => Set(ref f_PwrCh5Phase, value);
+        }
+
+        private int f_PwrCh5MaxVoltage;
+        public int PwrCh5MaxVoltage
+        {
+            get => f_PwrCh5MaxVoltage;
+            set => Set(ref f_PwrCh5MaxVoltage, value);
+        }
+
+        private int f_PwrCh5MaxAmps;
+        public int PwrCh5MaxAmps
+        {
+            get => f_PwrCh5MaxAmps;
+            set => Set(ref f_PwrCh5MaxAmps, value);
+        }
         #endregion
 
         #region Collections
@@ -442,6 +521,7 @@ namespace LabControl.ViewModels
         public ObservableCollection<string> OutloginPumpPortCollection { get; set; }
         public ObservableCollection<string> LaserPortCollection { get; set; }
         public ObservableCollection<string> PiroPortCollection { get; set; }
+        public ObservableCollection<string> PwrPortCollection { get; set; }
         #endregion
 
         #region StaticLabels
@@ -483,6 +563,9 @@ namespace LabControl.ViewModels
         public static string LabelWrite => Properties.Resources.LabelWrite;
         public static string LabelChannel2 => Properties.Resources.LabelChannel2;
         public static string LabelChannel3 => Properties.Resources.LabelChannel3;
+        public static string LabelChannel4 => Properties.Resources.LabelChannel4;
+        public static string LabelChannel5 => Properties.Resources.LabelChannel5;
+        public static string LabelPwrPort => Properties.Resources.LabelPwrPort;
         #endregion
         //private Timer f_TestTimer;
 
@@ -553,6 +636,16 @@ namespace LabControl.ViewModels
             PwrCh4Freq = Properties.Settings.Default.PwrCh4Freq;
             PwrCh4Duty = Properties.Settings.Default.PwrCh4Duty;
             PwrCh4Phase = Properties.Settings.Default.PwrCh4Phase;
+            PwrCh4MaxVoltage = Properties.Settings.Default.PwrCh4MaxVoltage;
+            PwrCh4MaxAmps = Properties.Settings.Default.PwrCh4MaxAmps;
+            PwrCh5Mode = Properties.Settings.Default.PwrCh5Mode;
+            PwrCh5Bias = Properties.Settings.Default.PwrCh5Bias;
+            PwrCh5Amplitude = Properties.Settings.Default.PwrCh5Amplitude;
+            PwrCh5Freq = Properties.Settings.Default.PwrCh5Freq;
+            PwrCh5Duty = Properties.Settings.Default.PwrCh5Duty;
+            PwrCh5Phase = Properties.Settings.Default.PwrCh5Phase;
+            PwrCh5MaxVoltage = Properties.Settings.Default.PwrCh5MaxVoltage;
+            PwrCh5MaxAmps = Properties.Settings.Default.PwrCh5MaxAmps;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -621,8 +714,18 @@ namespace LabControl.ViewModels
             Properties.Settings.Default.PwrCh4Amplitude = PwrCh4Amplitude;
             Properties.Settings.Default.PwrCh4Freq = PwrCh4Freq;
             Properties.Settings.Default.PwrCh4Duty = PwrCh4Duty;
-            Properties.Settings.Default.Save();
             Properties.Settings.Default.PwrCh4Phase = PwrCh4Phase;
+            Properties.Settings.Default.PwrCh4MaxVoltage = PwrCh4MaxVoltage;
+            Properties.Settings.Default.PwrCh4MaxAmps = PwrCh4MaxAmps;
+            Properties.Settings.Default.PwrCh5Mode = PwrCh5Mode;
+            Properties.Settings.Default.PwrCh5Bias = PwrCh5Bias;
+            Properties.Settings.Default.PwrCh5Amplitude = PwrCh5Amplitude;
+            Properties.Settings.Default.PwrCh5Freq = PwrCh5Freq;
+            Properties.Settings.Default.PwrCh5Duty = PwrCh5Duty;
+            Properties.Settings.Default.PwrCh5Phase = PwrCh5Phase;
+            Properties.Settings.Default.PwrCh5MaxVoltage = PwrCh5MaxVoltage;
+            Properties.Settings.Default.PwrCh5MaxAmps = PwrCh5MaxAmps;
+            Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }
 

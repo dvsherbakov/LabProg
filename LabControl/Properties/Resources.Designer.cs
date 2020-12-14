@@ -115,6 +115,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Канал 5: (Нагрев стекла).
+        /// </summary>
+        internal static string LabelChannel5 {
+            get {
+                return ResourceManager.GetString("LabelChannel5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Показания датчика.
         /// </summary>
         internal static string LabelConfocalData {
@@ -327,6 +336,15 @@ namespace LabControl.Properties {
         internal static string LabelPwrMaxVoltage {
             get {
                 return ResourceManager.GetString("LabelPwrMaxVoltage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт блока питания.
+        /// </summary>
+        internal static string LabelPwrPort {
+            get {
+                return ResourceManager.GetString("LabelPwrPort", resourceCulture);
             }
         }
         

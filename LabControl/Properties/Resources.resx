@@ -135,6 +135,9 @@
   <data name="LabelChannel4" xml:space="preserve">
     <value>Канал 4: (Микрокомпрессор)</value>
   </data>
+  <data name="LabelChannel5" xml:space="preserve">
+    <value>Канал 5: (Нагрев стекла)</value>
+  </data>
   <data name="LabelConfocalData" xml:space="preserve">
     <value>Показания датчика</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="LabelPwrMaxVoltage" xml:space="preserve">
     <value>Максимальное напряжение</value>
+  </data>
+  <data name="LabelPwrPort" xml:space="preserve">
+    <value>Порт блока питания</value>
   </data>
   <data name="LabelRead" xml:space="preserve">
     <value>Прочитать</value>
