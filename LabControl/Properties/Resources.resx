@@ -150,6 +150,9 @@
   <data name="LabelCurrentTemperature" xml:space="preserve">
     <value>Температура</value>
   </data>
+  <data name="LabelElectricFlow" xml:space="preserve">
+    <value>Регулируемый ток (мА)</value>
+  </data>
   <data name="LabelEmmitLaser" xml:space="preserve">
     <value>Излучение!</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="LabelLaserType" xml:space="preserve">
     <value>Тип лазера</value>
+  </data>
+  <data name="LabelOffsetVoltage" xml:space="preserve">
+    <value>Напряжение смещения (мВ)</value>
   </data>
   <data name="LabelOn" xml:space="preserve">
     <value>Включить</value>

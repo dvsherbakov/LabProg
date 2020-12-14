@@ -160,6 +160,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Регулируемый ток (мА).
+        /// </summary>
+        internal static string LabelElectricFlow {
+            get {
+                return ResourceManager.GetString("LabelElectricFlow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Излучение!.
         /// </summary>
         internal static string LabelEmmitLaser {
@@ -210,6 +219,15 @@ namespace LabControl.Properties {
         internal static string LabelLaserType {
             get {
                 return ResourceManager.GetString("LabelLaserType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Напряжение смещения (мВ).
+        /// </summary>
+        internal static string LabelOffsetVoltage {
+            get {
+                return ResourceManager.GetString("LabelOffsetVoltage", resourceCulture);
             }
         }
         

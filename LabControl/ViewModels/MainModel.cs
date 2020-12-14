@@ -127,7 +127,12 @@ namespace LabControl.ViewModels
             set => Set(ref f_PiroPortSelected, value);
         }
 
-        //PwrPortAdd
+        private string f_PwrPortSelected;
+        public string PwrPortSelected
+        {
+            get => f_PwrPortSelected;
+            set => Set(ref f_PwrPortSelected, value);
+        }
 
         private int f_LaserTypeSelectedIndex;
         public int LaserTypeSelectedIndex
@@ -143,11 +148,22 @@ namespace LabControl.ViewModels
             set => Set(ref f_PwrSwitchCh0, value);
         }
 
+        private string f_LabelPwrChannel0Bias;
+        public string LabelPwrChannel0Bias
+        {
+            get => f_LabelPwrChannel0Bias;
+            set => Set(ref f_LabelPwrChannel0Bias, value);
+        }
+
         private int f_PwrCh0Mode;
         public int PwrCh0Mode
         {
             get => f_PwrCh0Mode;
-            set => Set(ref f_PwrCh0Mode, value);
+            set
+            {
+                Set(ref f_PwrCh0Mode, value);
+                LabelPwrChannel0Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+            }
         }
 
         private int f_PwrCh0Bias;
@@ -199,11 +215,22 @@ namespace LabControl.ViewModels
             set => Set(ref f_PwrCh0MaxVoltage, value);
         }
 
+        private string f_LabelPwrChannel1Bias;
+        public string LabelPwrChannel1Bias
+        {
+            get => f_LabelPwrChannel1Bias;
+            set => Set(ref f_LabelPwrChannel1Bias, value);
+        }
+
         private int f_PwrCh1Mode;
         public int PwrCh1Mode
         {
             get => f_PwrCh1Mode;
-            set => Set(ref f_PwrCh1Mode, value);
+            set
+            {
+                Set(ref f_PwrCh1Mode, value);
+                LabelPwrChannel1Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+            }
         }
 
         private bool f_PwrSwitchCh1;
@@ -268,11 +295,22 @@ namespace LabControl.ViewModels
             set => Set(ref f_PwrSwitchCh2, value);
         }
 
+        private string f_LabelPwrChannel2Bias;
+        public string LabelPwrChannel2Bias
+        {
+            get => f_LabelPwrChannel2Bias;
+            set => Set(ref f_LabelPwrChannel2Bias, value);
+        }
+
         private int f_PwrCh2Mode;
         public int PwrCh2Mode
         {
             get => f_PwrCh2Mode;
-            set => Set(ref f_PwrCh2Mode, value);
+            set
+            {
+                Set(ref f_PwrCh2Mode, value);
+                LabelPwrChannel2Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+            }
         }
 
         private int f_PwrCh2Bias;
@@ -331,18 +369,40 @@ namespace LabControl.ViewModels
             set => Set(ref f_PwrSwitchCh3, value);
         }
 
+        private string f_LabelPwrChannel3Bias;
+        public string LabelPwrChannel3Bias
+        {
+            get => f_LabelPwrChannel3Bias;
+            set => Set(ref f_LabelPwrChannel3Bias, value);
+        }
+
         private int f_PwrCh3Mode;
         public int PwrCh3Mode
         {
             get => f_PwrCh3Mode;
-            set => Set(ref f_PwrCh3Mode, value);
+            set
+            {
+                Set(ref f_PwrCh3Mode, value);
+                LabelPwrChannel3Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+            }
+        }
+
+        private string f_LabelPwrChannel4Bias;
+        public string LabelPwrChannel4Bias
+        {
+            get => f_LabelPwrChannel4Bias;
+            set => Set(ref f_LabelPwrChannel4Bias, value);
         }
 
         private int f_PwrCh4Mode;
         public int PwrCh4Mode
         {
             get => f_PwrCh4Mode;
-            set => Set(ref f_PwrCh4Mode, value);
+            set
+            {
+                Set(ref f_PwrCh4Mode, value);
+                LabelPwrChannel4Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+            }
         }
 
         private int f_PwrCh3Bias;
@@ -457,11 +517,21 @@ namespace LabControl.ViewModels
             set => Set(ref f_PwrSwitchCh5, value);
         }
 
+        private string f_LabelPwrChannel5Bias;
+        public string LabelPwrChannel5Bias
+        {
+            get => f_LabelPwrChannel5Bias;
+            set => Set(ref f_LabelPwrChannel5Bias, value);
+        }
+
         private int f_PwrCh5Mode;
         public int PwrCh5Mode
         {
             get => f_PwrCh5Mode;
-            set => Set(ref f_PwrCh5Mode, value);
+            set { 
+                Set(ref f_PwrCh5Mode, value);
+                LabelPwrChannel5Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+            }
         }
 
         private int f_PwrCh5Bias;
@@ -589,6 +659,8 @@ namespace LabControl.ViewModels
             LaserPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(LaserPortSelected));
             PiroPortSelected = Properties.Settings.Default.PiroPortSelected;
             PiroPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(PiroPortSelected));
+            PiroPortSelected = Properties.Settings.Default.PwrPortSelected;
+            PwrPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(PiroPortSelected));
             CurWindowState = WindowState.Normal;
             //load params from settings
             WindowHeight = Properties.Settings.Default.WindowHeight == 0 ? 550 : Properties.Settings.Default.WindowHeight;

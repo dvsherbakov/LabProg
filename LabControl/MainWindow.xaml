@@ -490,7 +490,7 @@
                                                    Margin="5,5,5,5"/>
                                             <TextBlock Grid.Column="0" Grid.Row="3" 
                                                    Foreground="SandyBrown"
-                                                   Text="{Binding LabelPwrChannelBias}"
+                                                   Text="{Binding LabelPwrChannel0Bias}"
                                                    VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="3" 
                                                  Text="{Binding PwrCh0Bias}"
@@ -623,11 +623,12 @@
                                                    SelectedIndex="{Binding PwrCh1Mode}"
                                                    Margin="5,5,5,5"/>
                                             <TextBlock Grid.Column="0" Grid.Row="3" 
-                                                       Text="{Binding LabelPwrChannelBias}"
+                                                       Text="{Binding LabelPwrChannel1Bias}"
                                                        Foreground="SandyBrown"
                                                         VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="3" 
                                                      Text="{Binding PwrCh1Bias}"
+                                                     TextAlignment="Center"
                                                      Style="{StaticResource PartTransparent}"
                                                  Template="{StaticResource TextBoxBaseControlTemplate}"/>
                                             <TextBlock Grid.Column="0" Grid.Row="4" 
@@ -636,6 +637,7 @@
                                                         VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="4" 
                                                      Text="{Binding PwrCh1Amplitude}"
+                                                     TextAlignment="Center"
                                                      Style="{StaticResource PartTransparent}"
                                                  Template="{StaticResource TextBoxBaseControlTemplate}"/>
                                             <TextBlock Grid.Column="0" Grid.Row="5" 
@@ -644,6 +646,7 @@
                                                         VerticalAlignment="Center"/>
                                             <TextBox x:Name="TbCh1Freq" Grid.Column="1" Grid.Row="5"
                                                      Text="{Binding PwrCh1Freq}"
+                                                     TextAlignment="Center"
                                                      Style="{StaticResource PartTransparent}"
                                                  Template="{StaticResource TextBoxBaseControlTemplate}"/>
                                             <TextBlock Grid.Column="0" Grid.Row="6" 
@@ -652,6 +655,7 @@
                                                         VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="6" 
                                                         Text="{Binding PwrCh1Duty}"
+                                                     TextAlignment="Center"
                                                         Style="{StaticResource PartTransparent}"
                                                         Template="{StaticResource TextBoxBaseControlTemplate}" />
                                             <TextBlock Grid.Column="0" Grid.Row="7" 
@@ -660,6 +664,7 @@
                                                         VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="7" 
                                                      Text="{Binding PwrCh1Phase}"
+                                                     TextAlignment="Center"
                                                      Style="{StaticResource PartTransparent}"
                                                         Template="{StaticResource TextBoxBaseControlTemplate}"/>
                                             <TextBlock Grid.Column="0" Grid.Row="8" 
@@ -668,6 +673,7 @@
                                                         VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="8" 
                                                      Text="{Binding PwrCh1MaxVoltage}"
+                                                     TextAlignment="Center"
                                                      Style="{StaticResource PartTransparent}"
                                                         Template="{StaticResource TextBoxBaseControlTemplate}" />
                                             <TextBlock Grid.Column="0" Grid.Row="9" 
@@ -676,6 +682,7 @@
                                                         VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="9" 
                                                      Text="{Binding PwrCh1MaxAmps}"
+                                                     TextAlignment="Center"
                                                      Style="{StaticResource PartTransparent}"
                                                         Template="{StaticResource TextBoxBaseControlTemplate}"/>
                                         </Grid>
@@ -749,7 +756,7 @@
                                                    SelectedIndex="{Binding PwrCh2Mode}"
                                                    Margin="5,5,5,5"/>
                                             <TextBlock Grid.Column="0" Grid.Row="3" 
-                                                   Text="{Binding LabelPwrChannelBias}"
+                                                   Text="{Binding LabelPwrChannel2Bias}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                             <TextBox x:Name="TbCh2Bias" Grid.Column="1" Grid.Row="3" 
@@ -881,7 +888,7 @@
                                                    SelectedIndex="{Binding PwrCh3Mode}"
                                                    Margin="5,5,5,5"/>
                                             <TextBlock Grid.Column="0" Grid.Row="3" 
-                                                   Text="{Binding LabelPwrChannelBias}"
+                                                   Text="{Binding LabelPwrChannel3Bias}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="3"
@@ -1013,7 +1020,7 @@
                                                    SelectedIndex="{Binding PwrCh4Mode}"
                                                    Margin="5,5,5,5"/>
                                             <TextBlock Grid.Column="0" Grid.Row="3" 
-                                                   Text="{Binding LabelPwrChannelBias}"
+                                                   Text="{Binding LabelPwrChannel4Bias}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="3" 
@@ -1145,7 +1152,7 @@
                                                    SelectedIndex="{Binding PwrCh5Mode}"
                                                    Margin="5,5,5,5"/>
                                             <TextBlock Grid.Column="0" Grid.Row="3" 
-                                                   Text="{Binding LabelPwrChannelBias}"
+                                                   Text="{Binding LabelPwrChannel5Bias}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="3" 
@@ -1241,6 +1248,10 @@
                                   Foreground="SandyBrown">
                                 <StackPanel>
                                     <TextBlock Text="{Binding LabelPwrPort}"/>
+                                    <ComboBox 
+                                        ItemsSource="{Binding PwrPortCollection}"
+                                        SelectedItem="{Binding PwrPortSelected}"
+                                        Margin="0,1"/>
                                 </StackPanel>
                             </Expander>
                         </StackPanel>

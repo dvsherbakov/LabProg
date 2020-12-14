@@ -754,5 +754,17 @@ namespace LabControl.Properties {
                 this["PwrCh5MaxAmps"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string PwrPortSelected {
+            get {
+                return ((string)(this["PwrPortSelected"]));
+            }
+            set {
+                this["PwrPortSelected"] = value;
+            }
+        }
     }
 }
