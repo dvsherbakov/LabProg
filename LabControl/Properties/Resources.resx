@@ -138,6 +138,9 @@
   <data name="LabelChannel5" xml:space="preserve">
     <value>Канал 5: (Нагрев стекла)</value>
   </data>
+  <data name="LabelConfocalActive" xml:space="preserve">
+    <value>Активность измерения</value>
+  </data>
   <data name="LabelConfocalData" xml:space="preserve">
     <value>Показания датчика</value>
   </data>
@@ -193,7 +196,7 @@
     <value>Насос</value>
   </data>
   <data name="LabelPumpActive" xml:space="preserve">
-    <value>Активно</value>
+    <value>Активность насоса(ов)</value>
   </data>
   <data name="LabelPumpIn" xml:space="preserve">
     <value>Насос докачки</value>

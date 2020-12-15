@@ -604,6 +604,24 @@ namespace LabControl.ViewModels
             get => f_PwrCh5MaxAmps;
             set => Set(ref f_PwrCh5MaxAmps, value);
         }
+
+        private bool f_IsPumpsActive;
+        public bool IsPumpsActive
+        {
+            get => f_IsPumpsActive;
+            set
+            {
+                Set(ref f_IsPumpsActive, value);
+                if (value) IsConfocalActive = value;
+            }
+        }
+
+        private bool f_IsConfocalActive;
+        public bool IsConfocalActive
+        {
+            get => f_IsConfocalActive;
+            set => Set(ref f_IsConfocalActive, value);
+        }
         #endregion
 
         #region Collections
@@ -659,6 +677,7 @@ namespace LabControl.ViewModels
         public static string LabelChannel5 => Properties.Resources.LabelChannel5;
         public static string LabelPwrPort => Properties.Resources.LabelPwrPort;
         public static string LabelPumpOut => Properties.Resources.LabelPumpOut;
+        public static string LabelConfocalActive => Properties.Resources.LabelConfocalActive;
         #endregion
         //private Timer f_TestTimer;
 

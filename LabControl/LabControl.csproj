@@ -74,6 +74,7 @@
     <Compile Include="ClassHelpers\PortList.cs" />
     <Compile Include="ClassHelpers\PowerSuplyTupesList.cs" />
     <Compile Include="LambdaCommand.cs" />
+    <Compile Include="LogicModels\ConfocalDriver.cs" />
     <Compile Include="PortModels\PumpSerial.cs" />
     <Compile Include="ViewModels\MainModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
@@ -132,8 +133,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LogicModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

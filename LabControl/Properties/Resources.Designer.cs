@@ -124,6 +124,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Активность измерения.
+        /// </summary>
+        internal static string LabelConfocalActive {
+            get {
+                return ResourceManager.GetString("LabelConfocalActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Показания датчика.
         /// </summary>
         internal static string LabelConfocalData {
@@ -286,7 +295,7 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Активно.
+        ///   Ищет локализованную строку, похожую на Активность насоса(ов).
         /// </summary>
         internal static string LabelPumpActive {
             get {
