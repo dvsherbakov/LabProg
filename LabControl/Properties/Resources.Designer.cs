@@ -277,11 +277,38 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Насос.
+        /// </summary>
+        internal static string LabelPump {
+            get {
+                return ResourceManager.GetString("LabelPump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Активно.
         /// </summary>
         internal static string LabelPumpActive {
             get {
                 return ResourceManager.GetString("LabelPumpActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Насос докачки.
+        /// </summary>
+        internal static string LabelPumpIn {
+            get {
+                return ResourceManager.GetString("LabelPumpIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Насос откачки.
+        /// </summary>
+        internal static string LabelPumpOut {
+            get {
+                return ResourceManager.GetString("LabelPumpOut", resourceCulture);
             }
         }
         

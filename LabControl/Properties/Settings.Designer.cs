@@ -766,5 +766,29 @@ namespace LabControl.Properties {
                 this["PwrPortSelected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsRevereFirstPump {
+            get {
+                return ((bool)(this["IsRevereFirstPump"]));
+            }
+            set {
+                this["IsRevereFirstPump"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsRevereSecondPump {
+            get {
+                return ((bool)(this["IsRevereSecondPump"]));
+            }
+            set {
+                this["IsRevereSecondPump"] = value;
+            }
+        }
     }
 }

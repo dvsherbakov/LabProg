@@ -192,34 +192,71 @@
                             <Expander Padding="5"
                                   Header="{Binding LabelSettings}"
                                   Foreground="SandyBrown">
-                                <Grid Margin="15,0,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition  Width="4*"/>
-                                        <ColumnDefinition  Width="3*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="28"/>
-                                        <RowDefinition Height="{Binding SecondPumpPortHeight}" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                <StackPanel Margin="15,0,0,0">
+                                    <Border Padding="2"
+                                            BorderBrush="Aquamarine"
+                                            CornerRadius="5" BorderThickness="1">
+                                        <StackPanel>
+                                            <TextBlock HorizontalAlignment="Center" 
+                                                       Text="{Binding LabelPump}"
+                                                   Margin="0,5"/>
+                                            <DockPanel HorizontalAlignment="Stretch">
+                                                <TextBlock 
                                                Foreground="SandyBrown"
-                                               Margin="0,3"
+                                               VerticalAlignment="Center"
+                                                       Padding="0,0,15,0"
                                                Text="{Binding LabelInputPumpPort}"
                                                />
-                                    <ComboBox Grid.Row="0" Grid.Column="1"
+                                                <ComboBox 
                                               ItemsSource="{Binding IncomingPumpPortCollection}"
                                               SelectedItem="{Binding IncomingPumpPortSelected}"
-                                              Margin="0,1"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="0"
+                                              Margin="1"/>
+                                            </DockPanel>
+                                            <DockPanel>
+                                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                                              Width="40" Height="20"  
+                                                              IsChecked="{Binding IsRevereFirstPump}"
+                                                              Margin="1,6,1,6"/>
+                                                <TextBlock Padding="15,0,0,0" 
+                                                       VerticalAlignment="Center"
+                                                        Foreground="SandyBrown"
+                                                        Text="Реверс" />
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Padding="2"
+                                            BorderBrush="Aquamarine"
+                                            Visibility="{Binding SecondPumpPanelVisibility}"
+                                            CornerRadius="5" BorderThickness="1">
+                                        <StackPanel>
+                                            <TextBlock HorizontalAlignment="Center" 
+                                                       Text="{Binding LabelPumpOut}"
+                                                   Margin="0,5"/>
+                                            <DockPanel HorizontalAlignment="Stretch">
+                                                <TextBlock Grid.Row="1" Grid.Column="0"
                                                Foreground="SandyBrown"
-                                               Margin="0,3"
+                                                Padding="0,0,15,0"
                                                Text="{Binding LabelOutputPumpPort}"
                                                />
-                                    <ComboBox Grid.Row="1" Grid.Column="1"
+                                                <ComboBox Grid.Row="1" Grid.Column="1"
                                               ItemsSource="{Binding OutloginPumpPortCollection}"
                                               SelectedItem="{Binding OutloginPumpPortSelected}"
-                                              Margin="0,1"/>
-                                </Grid>
+                                              Margin="1"/>
+                                            </DockPanel>
+                                            <DockPanel>
+                                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                                              Width="40" Height="20"
+                                                              IsChecked="{Binding IsRevereSecondPump}"
+                                                              Margin="1,6,1,6"/>
+                                                <TextBlock Padding="15,0,0,0" 
+                                                        VerticalAlignment="Center"
+                                                        Foreground="SandyBrown"
+                                                        Text="Реверс" />
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    
+                                </StackPanel>
                             </Expander>
                         </StackPanel>
                     </ScrollViewer>

@@ -45,9 +45,17 @@ namespace LabControl.ViewModels
             set
             {
                 LabelPumpCount = value ? Properties.Resources.LabelTwoPump : Properties.Resources.LabelOnePump;
-                SecondPumpPortHeight = value ? 28 : 0;
+                SecondPumpPanelVisibility = value ? Visibility.Visible : Visibility.Collapsed;
+                LabelPump = value ? Properties.Resources.LabelPumpIn : Properties.Resources.LabelPump;
                 Set(ref f_IsTwoPump, value);
             }
+        }
+
+        private string f_LabelPump;
+        public string LabelPump
+        {
+            get => f_LabelPump;
+            set => Set(ref f_LabelPump, value);
         }
 
         private string f_LabelPumpCount;
@@ -106,11 +114,25 @@ namespace LabControl.ViewModels
             set => Set(ref f_CurrentTemperature, value);
         }
 
-        private int f_SecondPumpPortHeight;
-        public int SecondPumpPortHeight
+        private Visibility f_SecondPumpPanelVisibility;
+        public Visibility SecondPumpPanelVisibility
         {
-            get => f_SecondPumpPortHeight;
-            set => Set(ref f_SecondPumpPortHeight, value);
+            get => f_SecondPumpPanelVisibility;
+            set => Set(ref f_SecondPumpPanelVisibility, value);
+        }
+
+        private bool f_IsRevereFirstPump;
+        public bool IsRevereFirstPump
+        {
+            get => f_IsRevereFirstPump;
+            set => Set(ref f_IsRevereFirstPump, value);
+        }
+
+        private bool f_IsRevereSecondPump;
+        public bool IsRevereSecondPump
+        {
+            get => f_IsRevereSecondPump;
+            set => Set(ref f_IsRevereSecondPump, value);
         }
 
         private string f_LaserPortSelected;
@@ -636,6 +658,7 @@ namespace LabControl.ViewModels
         public static string LabelChannel4 => Properties.Resources.LabelChannel4;
         public static string LabelChannel5 => Properties.Resources.LabelChannel5;
         public static string LabelPwrPort => Properties.Resources.LabelPwrPort;
+        public static string LabelPumpOut => Properties.Resources.LabelPumpOut;
         #endregion
         //private Timer f_TestTimer;
 
@@ -718,6 +741,8 @@ namespace LabControl.ViewModels
             PwrCh5Phase = Properties.Settings.Default.PwrCh5Phase;
             PwrCh5MaxVoltage = Properties.Settings.Default.PwrCh5MaxVoltage;
             PwrCh5MaxAmps = Properties.Settings.Default.PwrCh5MaxAmps;
+            IsRevereFirstPump = Properties.Settings.Default.IsRevereFirstPump;
+            IsRevereSecondPump = Properties.Settings.Default.IsRevereSecondPump;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -797,6 +822,8 @@ namespace LabControl.ViewModels
             Properties.Settings.Default.PwrCh5Phase = PwrCh5Phase;
             Properties.Settings.Default.PwrCh5MaxVoltage = PwrCh5MaxVoltage;
             Properties.Settings.Default.PwrCh5MaxAmps = PwrCh5MaxAmps;
+            Properties.Settings.Default.IsRevereFirstPump = IsRevereFirstPump;
+            Properties.Settings.Default.IsRevereSecondPump = IsRevereSecondPump;
             Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }

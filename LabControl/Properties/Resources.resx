@@ -189,8 +189,17 @@
   <data name="LabelPortConnection" xml:space="preserve">
     <value>Соедениться с портом</value>
   </data>
+  <data name="LabelPump" xml:space="preserve">
+    <value>Насос</value>
+  </data>
   <data name="LabelPumpActive" xml:space="preserve">
     <value>Активно</value>
+  </data>
+  <data name="LabelPumpIn" xml:space="preserve">
+    <value>Насос докачки</value>
+  </data>
+  <data name="LabelPumpOut" xml:space="preserve">
+    <value>Насос откачки</value>
   </data>
   <data name="LabelPwrChannelAmplitude" xml:space="preserve">
     <value>Амплитуда колебаний</value>
