@@ -70,11 +70,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClassHelpers\DistMeasureRes.cs" />
     <Compile Include="ClassHelpers\LogItem.cs" />
     <Compile Include="ClassHelpers\PortList.cs" />
     <Compile Include="ClassHelpers\PowerSuplyTupesList.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="LogicModels\ConfocalDriver.cs" />
+    <Compile Include="LogicModels\PumpDriver.cs" />
     <Compile Include="PortModels\PumpSerial.cs" />
     <Compile Include="ViewModels\MainModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />

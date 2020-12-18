@@ -40,7 +40,7 @@ namespace LabControl.PortModels
                 RtsEnable = true
             };
             f_MPort.DataReceived += DataReceivedHandler;
-            this.f_AddLogBoxMessage = addLogBoxMessage;
+            f_AddLogBoxMessage = addLogBoxMessage;
 
             f_CmdQueue = new ObservableCollection<string>();
             f_CmdQueue.CollectionChanged += StartQueue;

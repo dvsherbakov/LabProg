@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LabControl.ClassHelpers;
+using LabControl.LogicModels;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO.Packaging;
@@ -14,6 +16,11 @@ namespace LabControl.ViewModels
 {
     internal class MainModel : ViewModel
     {
+        #region drivers
+        private PumpDriver f_PumpDriver;
+        private ConfocalDriver f_ConfocalDriver;
+        #endregion
+
         #region ModelFields
         private WindowState f_CurWindowState;
         public WindowState CurWindowState
@@ -768,12 +775,13 @@ namespace LabControl.ViewModels
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
             NormalizeCommand = new LambdaCommand(OnMaximizedCommandExecute);
             StandartSizeCommand = new LambdaCommand(OnStandartSizeCommand);
-            //test area
-            //f_TestTimer = new Timer(2000);
-            //f_TestTimer.Elapsed += AddMockMessage;
-            //f_TestTimer.Start();
+            //Drivers area
+            f_ConfocalDriver = new ConfocalDriver();
+            f_ConfocalDriver.ResievedDataEvent += (DistMeasureRes xData) => { ConfocalLevel = xData.Dist; };
+            f_ConfocalDriver.SetLogMessage += AddLogMessage;
 
             AddLogMessage("Application Started");
+            //port init
         }
 
         private void AddLogMessage(string message)
