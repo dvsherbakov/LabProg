@@ -15,16 +15,15 @@ namespace LabControl.PortModels
         private readonly SerialPort f_MPort;
         private readonly List<string> f_RecievedData;
         private bool f_Direction;
-        //private bool IsDriven { get; set; }
         private readonly string f_ComId;
         public bool PumpReverse { private get; set; }
-        private readonly Action<string> f_AddLogBoxMessage;
         private readonly ObservableCollection<string> f_CmdQueue;
         private readonly Timer f_QueueTimer;
 
-        //private string prevSpeed = "";
+        public delegate void LogMessage(string msg);
+        public event LogMessage SetLogMessage;
 
-        public PumpSerial(string portStr, bool startDirection, Action<string> addLogBoxMessage)
+        public PumpSerial(string portStr, bool startDirection)
         {
             f_RecievedData = new List<string>();
             if (portStr == "") portStr = "COM7";
@@ -40,7 +39,6 @@ namespace LabControl.PortModels
                 RtsEnable = true
             };
             f_MPort.DataReceived += DataReceivedHandler;
-            f_AddLogBoxMessage = addLogBoxMessage;
 
             f_CmdQueue = new ObservableCollection<string>();
             f_CmdQueue.CollectionChanged += StartQueue;
@@ -79,17 +77,17 @@ namespace LabControl.PortModels
                 try
                 {
                     f_MPort.Write(cmd);
-                    f_AddLogBoxMessage($"Pump start command {cmd}");
+                    SetLogMessage?.Invoke($"Pump start command {cmd}");
                 }
                 catch (Exception ex)
                 {
-                    f_AddLogBoxMessage($"Port {f_ComId} is occuped");
-                    f_AddLogBoxMessage(ex.Message);
+                    SetLogMessage?.Invoke($"Port {f_ComId} is occuped");
+                    SetLogMessage?.Invoke(ex.Message);
                 }
             }
             else
             {
-                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
+                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
             }
         }
 
@@ -124,7 +122,7 @@ namespace LabControl.PortModels
             }
             catch (Exception ex)
             {
-                f_AddLogBoxMessage(ex.Message);
+                SetLogMessage?.Invoke(ex.Message);
             }
             var ascii = Encoding.ASCII;
             f_RecievedData.Add(ascii.GetString(mRxData));
@@ -140,7 +138,7 @@ namespace LabControl.PortModels
             }
             catch (Exception ex)
             {
-                f_AddLogBoxMessage(ex.Message);
+                SetLogMessage?.Invoke(ex.Message);
             }
             var ascii = Encoding.ASCII;
             return ascii.GetString(mRxData);
@@ -152,11 +150,11 @@ namespace LabControl.PortModels
             if (f_MPort.IsOpen)
             {
                 f_MPort.Write("s");
-                f_AddLogBoxMessage("Pump  start");
+                SetLogMessage?.Invoke("Pump  start");
             }
             else
             {
-                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
+                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
             }
         }
 
@@ -170,11 +168,11 @@ namespace LabControl.PortModels
             if (f_MPort.IsOpen)
             {
                 f_MPort.Write("t");
-                f_AddLogBoxMessage("Pump  stop");
+                SetLogMessage?.Invoke("Pump  stop");
             }
             else
             {
-                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
+                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
             }
         }
 
@@ -192,7 +190,7 @@ namespace LabControl.PortModels
             }
             else
             {
-                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
+                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
             }
         }
 
@@ -212,7 +210,7 @@ namespace LabControl.PortModels
             }
             else
             {
-                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
+                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
             }
         }
 
@@ -235,11 +233,11 @@ namespace LabControl.PortModels
             {
                 f_MPort.Write(speed);
                 System.Threading.Thread.Sleep(130);
-                f_AddLogBoxMessage($"Порт насоса {f_ComId}, меняем скорость: '{speed}'");
+                SetLogMessage?.Invoke($"Порт насоса {f_ComId}, меняем скорость: '{speed}'");
             }
             else
             {
-                f_AddLogBoxMessage($"Pump port {f_ComId} is closed");
+                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
             }
         }
 

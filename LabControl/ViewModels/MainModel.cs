@@ -780,6 +780,9 @@ namespace LabControl.ViewModels
             f_ConfocalDriver.ResievedDataEvent += (DistMeasureRes xData) => { ConfocalLevel = xData.Dist; };
             f_ConfocalDriver.SetLogMessage += AddLogMessage;
 
+            f_PumpDriver = new PumpDriver();
+            f_PumpDriver.SetLogMessage += AddLogMessage;
+
             AddLogMessage("Application Started");
             //port init
         }

@@ -9,16 +9,32 @@ namespace LabControl.LogicModels
 {
     class PumpDriver
     {
-        private readonly PumpSerial _portInput;
-        private readonly PumpSerial _portOutput;
+        private PumpSerial _portInput;
+        private PumpSerial _portOutput;
         public string PortStrInput { get; set; }
         public string PortStrOutput { get; set; }
         public bool DirectionInput { get; set; }
         public bool DirectionOutput { get; set; }
-        public PumpDriver(Action<string> addLogBoxMessage)
+
+        public delegate void LogMessage(string msg);
+        public event LogMessage SetLogMessage;
+        
+        public PumpDriver()
         {
-            _portInput = new PumpSerial(PortStrInput, DirectionInput, addLogBoxMessage);
-            _portOutput = new PumpSerial(PortStrOutput, DirectionOutput, addLogBoxMessage);
+
+        }
+
+        public void ConnectToPorts()
+        {
+            _portInput = new PumpSerial(PortStrInput, DirectionInput);
+            _portInput.SetLogMessage += TestLog;
+            _portOutput = new PumpSerial(PortStrOutput, DirectionOutput);
+            _portOutput.SetLogMessage += TestLog;
+        }
+
+        private void TestLog(string msg)
+        {
+            SetLogMessage?.Invoke(msg);
         }
     }
 }
