@@ -73,8 +73,11 @@ namespace LabControl.LogicModels
                 if (double.TryParse(tmp[1], out var outD)) res1.Add(outD / 1000000);
                 if (double.TryParse(tmp[2], out var outE)) res2.Add(outE / 1000000);
             }
+
             var res = new DistMeasureRes { Dist = 0, IsSingle = true };
             if (res1.Count == 0 || res2.Count == 0) return res;
+
+            if (res2.Average() > 1000) return new DistMeasureRes { Dist = res1.Average(), IsSingle = true };
 
             if (res2.Average() > res1.Average())
             {

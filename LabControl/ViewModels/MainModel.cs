@@ -884,7 +884,7 @@ namespace LabControl.ViewModels
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
         {
-            ConfocalLevel = lvl.Dist;
+            ConfocalLevel = Math.Round(lvl.Dist, 5);
             f_PumpDriver?.SetMeasuredLevel(lvl);
         }
     }
