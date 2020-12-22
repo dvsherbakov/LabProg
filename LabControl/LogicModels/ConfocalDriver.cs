@@ -22,7 +22,8 @@ namespace LabControl.LogicModels
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
-        
+
+        private bool f_MeasuredActive;
 
         public ConfocalDriver()
         {
@@ -85,6 +86,13 @@ namespace LabControl.LogicModels
 
             return res;
         }
-        
+
+        public void SetMeasuredActive(bool active)
+        {
+            f_MeasuredActive = active;
+            if (f_MeasuredActive) f_ConfocalTimer.Start();
+            else f_ConfocalTimer.Stop();
+        }
+
     }
 }

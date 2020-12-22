@@ -74,6 +74,7 @@
     <Compile Include="ClassHelpers\LogItem.cs" />
     <Compile Include="ClassHelpers\PortList.cs" />
     <Compile Include="ClassHelpers\PowerSuplyTupesList.cs" />
+    <Compile Include="ClassHelpers\SpeedGradeItem.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="LogicModels\ConfocalDriver.cs" />
     <Compile Include="LogicModels\PumpDriver.cs" />

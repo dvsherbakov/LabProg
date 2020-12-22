@@ -264,7 +264,25 @@
                                             </DockPanel>
                                         </StackPanel>
                                     </Border>
-                                    
+
+                                </StackPanel>
+                            </Expander>
+                            <Expander
+                                Padding="5"
+                                Foreground="SandyBrown"
+                                Header="{Binding LabelMonitoring}">
+                                <StackPanel
+                                    Orientation="Vertical">
+                                    <Border
+                                    Margin="1"
+                                    BorderBrush="Aquamarine"
+                                    CornerRadius="5" BorderThickness="1">
+                                        <Viewbox
+                                    Height="100"></Viewbox>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal">
+
+                                    </StackPanel>
                                 </StackPanel>
                             </Expander>
                         </StackPanel>

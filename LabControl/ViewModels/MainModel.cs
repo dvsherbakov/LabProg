@@ -54,6 +54,7 @@ namespace LabControl.ViewModels
                 LabelPumpCount = value ? Properties.Resources.LabelTwoPump : Properties.Resources.LabelOnePump;
                 SecondPumpPanelVisibility = value ? Visibility.Visible : Visibility.Collapsed;
                 LabelPump = value ? Properties.Resources.LabelPumpIn : Properties.Resources.LabelPump;
+                f_PumpDriver?.TogleTwoPump(value);
                 Set(ref f_IsTwoPump, value);
             }
         }
@@ -620,6 +621,7 @@ namespace LabControl.ViewModels
             {
                 Set(ref f_IsPumpsActive, value);
                 if (value) IsConfocalActive = value;
+                f_PumpDriver?.SetPumpActive(value);
             }
         }
 
@@ -627,7 +629,11 @@ namespace LabControl.ViewModels
         public bool IsConfocalActive
         {
             get => f_IsConfocalActive;
-            set => Set(ref f_IsConfocalActive, value);
+            set
+            {
+                Set(ref f_IsConfocalActive, value);
+                f_ConfocalDriver?.SetMeasuredActive(value);
+            }
         }
         #endregion
 
@@ -685,8 +691,9 @@ namespace LabControl.ViewModels
         public static string LabelPwrPort => Properties.Resources.LabelPwrPort;
         public static string LabelPumpOut => Properties.Resources.LabelPumpOut;
         public static string LabelConfocalActive => Properties.Resources.LabelConfocalActive;
+        public static string LabelMonitoring => Properties.Resources.LabelMonitoring;
         #endregion
-        //private Timer f_TestTimer;
+        
 
         #region Commands
         public ICommand QuitCommand { get; }
@@ -708,7 +715,7 @@ namespace LabControl.ViewModels
             LaserPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(LaserPortSelected));
             PiroPortSelected = Properties.Settings.Default.PiroPortSelected;
             PiroPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(PiroPortSelected));
-            PiroPortSelected = Properties.Settings.Default.PwrPortSelected;
+            PwrPortSelected = Properties.Settings.Default.PwrPortSelected;
             PwrPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(PiroPortSelected));
             CurWindowState = WindowState.Normal;
             //load params from settings
@@ -777,7 +784,8 @@ namespace LabControl.ViewModels
             StandartSizeCommand = new LambdaCommand(OnStandartSizeCommand);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
-            f_ConfocalDriver.ResievedDataEvent += (DistMeasureRes xData) => { ConfocalLevel = xData.Dist; };
+            f_ConfocalDriver.ResievedDataEvent += SetUpMeasuredLevel;
+                //(DistMeasureRes xData) => { ConfocalLevel = xData.Dist; };
             f_ConfocalDriver.SetLogMessage += AddLogMessage;
 
             f_PumpDriver = new PumpDriver();
@@ -872,6 +880,12 @@ namespace LabControl.ViewModels
         {
             WindowHeight = 470;
             WindowWidth = 630;
+        }
+
+        private void SetUpMeasuredLevel(DistMeasureRes lvl)
+        {
+            ConfocalLevel = lvl.Dist;
+            f_PumpDriver?.SetMeasuredLevel(lvl);
         }
     }
 }

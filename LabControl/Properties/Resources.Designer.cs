@@ -232,6 +232,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Мониторинг.
+        /// </summary>
+        internal static string LabelMonitoring {
+            get {
+                return ResourceManager.GetString("LabelMonitoring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Напряжение смещения (мВ).
         /// </summary>
         internal static string LabelOffsetVoltage {
