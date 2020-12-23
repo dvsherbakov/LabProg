@@ -2,9 +2,8 @@
 using LabControl.PortModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LabControl.LogicModels
 {
@@ -20,6 +19,7 @@ namespace LabControl.LogicModels
         private DistMeasureRes f_MeasuredLvl;
         private bool f_IsTwoPump;
         private bool f_IsPumpActive;
+        private string f_PrevSpeed;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -82,14 +82,107 @@ namespace LabControl.LogicModels
             else _portOutput?.AddStopPump();
         }
 
+        private void StartPump(bool isFirst)
+        {
+            if (isFirst) _portInput?.AddStartPump();
+            else _portOutput?.AddStartPump();
+        }
+
         private string GetPumpSpeed(DistMeasureRes currentLevel)
         {
             var subLevel = Math.Abs(currentLevel.Dist - f_MeasuredLvl.Dist);
             
             return f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
         }
-    }
 
+        private void OperatePump(DistMeasureRes measureRes)
+        {
+            var speed = GetPumpSpeed(measureRes);
+            if (!f_IsPumpActive)
+            {
+                StopPump(true);
+                return;
+            }
+            if (speed == f_PrevSpeed)
+            {
+                if (Math.Abs(double.Parse(speed.Trim(), CultureInfo.InvariantCulture)) < 0.001)
+                {
+                    StopPump(true);
+                }
+            }
+            else
+            {
+                _portInput?.AddSpeed(speed);
+            }
+            var direction = GetDirection(measureRes);
+            switch (direction)
+            {
+                case Direction.Stop:
+                    //_pumpSerial.AddStopPump();
+                    StopPump(true);
+                    break;
+                case Direction.Clockwise:
+                    _portInput?.AddClockwiseDirection();
+                    break;
+                case Direction.CounterClockwise:
+
+                    _portInput?.AddCounterClockwiseDirection();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            if (!speed.Equals("0.0 "))
+            {
+                StartPump(true);
+            }
+            f_PrevSpeed = speed;
+        }
+
+        private void OperateTwoPump(DistMeasureRes measureRes)
+        {
+            var speed = GetPumpSpeed(measureRes);
+            var direction = GetDirection(measureRes);
+
+            if (!f_IsPumpActive || speed.Equals("0.0 ") || (direction == Direction.Stop))
+            {
+                StopPump(true);
+                StopPump(false);
+                return;
+            }
+            switch (direction)
+            {
+                case Direction.Clockwise:
+                    _portInput.AddSpeed(speed);
+                    StartPump(true);
+                    _portOutput.AddSpeed("0.5 ");
+                    StopPump(false);
+                    break;
+                case Direction.CounterClockwise:
+                    _portOutput.AddSpeed(speed);
+                    StartPump(false);
+                    _portInput.AddSpeed("0.5 ");
+                    StopPump(true);
+                    break;
+                case Direction.Stop:
+                    StopPump(false);
+                    StopPump(true);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private Direction GetDirection(DistMeasureRes currentLevel)
+        {
+            var currentDifferent = f_MeasuredLvl.Dist - currentLevel.Dist;
+            if (Math.Abs(currentDifferent) < 0.001) return Direction.Stop;
+            var tmpDirection = (currentDifferent > 0);
+            if (currentLevel.IsSingle) tmpDirection = !tmpDirection;
+
+            return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
+        }
+    }
+    
     internal enum Direction
     {
         Clockwise, CounterClockwise, Stop
