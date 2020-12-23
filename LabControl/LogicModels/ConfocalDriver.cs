@@ -24,6 +24,7 @@ namespace LabControl.LogicModels
         public event LogMessage SetLogMessage;
 
         private bool f_MeasuredActive;
+        private bool f_PumpActive;
 
         public ConfocalDriver()
         {
@@ -95,6 +96,62 @@ namespace LabControl.LogicModels
             f_MeasuredActive = active;
             if (f_MeasuredActive) f_ConfocalTimer.Start();
             else f_ConfocalTimer.Stop();
+        }
+
+        public void SetPumpActive(bool active)
+        {
+            f_PumpActive = active;
+        }
+
+        private void OperatePump(DistMeasureRes measureRes)
+        {
+            
+            var speed = GetPumpSpeed(measureRes);
+
+            if (!PumpActive)
+            {
+                //_pumpSerial.AddStopPump();
+                StopPump(true);
+                return;
+            }
+            if (speed == f_PrevSpeed)
+            {
+                if (Math.Abs(double.Parse(speed.Trim(), CultureInfo.InvariantCulture)) < 0.001)
+                {
+                    //_pumpSerial.AddStopPump();
+                    StopPump(true);
+                }
+            }
+            else
+            {
+                _pumpSerial.AddSpeed(speed);
+
+            }
+            var direction = GetDirection(measureRes);
+            switch (direction)
+            {
+                case Direction.Stop:
+                    //_pumpSerial.AddStopPump();
+                    StopPump(true);
+                    break;
+                case Direction.Clockwise:
+                    _pumpSerial.AddClockwiseDirection();
+                    break;
+                case Direction.CounterClockwise:
+
+                    _pumpSerial.AddCounterClockwiseDirection();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (!speed.Equals("0.0 "))
+            {
+                //_pumpSerial.AddStartPump();
+                StartPump(true);
+            }
+
+            f_PrevSpeed = speed;
         }
 
     }
