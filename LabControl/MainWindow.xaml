@@ -278,7 +278,7 @@
                                     CornerRadius="5" BorderThickness="1">
                                         <Viewbox
                                             Height="100">
-                                            <Canvas Width="100" Height="100" >
+                                            <Canvas Width="200" Height="100" >
 
                                                 <!-- Display the wave -->
                                                 <Polyline Stroke="#48F" StrokeThickness="1.5"

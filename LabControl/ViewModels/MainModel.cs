@@ -708,7 +708,7 @@ namespace LabControl.ViewModels
         public MainModel()
         {
             // init collections
-            ConfocalLog = new[] {0d, 0d};
+            ConfocalLog = new[] {0d, .40d, .3d};
             LogCollection = new ObservableCollection<LogItem>();
             IncomingPumpPortSelected = Settings.Default.IncomingPumpPortSelected;
             PowerSupplyTypes = new ObservableCollection<string>(new PowerSuplyTupesList().GetTypesList());

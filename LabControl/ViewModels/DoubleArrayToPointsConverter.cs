@@ -10,29 +10,29 @@ namespace LabControl.ViewModels
     internal class DoubleArrayToPointsConverter : IValueConverter
     {
         #region Fields
-        private double widthValue = 100;
-        private double scaleValue = 1;
-        private double offsetValue;
+        private double f_WidthValue = 100;
+        private double f_ScaleValue = 1;
+        private double f_OffsetValue;
         #endregion
 
         #region Properties
 
         public double Width
         {
-            get { return widthValue; }
-            set { widthValue = value; }
+            get => f_WidthValue;
+            set => f_WidthValue = value;
         }
 
         public double Scale
         {
-            get { return scaleValue; }
-            set { scaleValue = value; }
+            private get { return f_ScaleValue; }
+            set { f_ScaleValue = value; }
         }
 
         public double Offset
         {
-            get { return offsetValue; }
-            set { offsetValue = value; }
+            get => f_OffsetValue;
+            set { f_OffsetValue = value; }
         }
 
         #endregion
@@ -41,17 +41,16 @@ namespace LabControl.ViewModels
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double[] values = value as double[];
-            if (values == null)
+            if (!(value is double[] values))
             {
                 throw new ArgumentException("value", "Must be double[]");
             }
 
-            PointCollection points = new PointCollection(values.Length);
-            for (int i = 0; i < values.Length; ++i)
+            var points = new PointCollection(values.Length);
+            for (var i = 0; i < values.Length; ++i)
             {
-                double x = i * Width / values.Length;
-                double y = values[i] * Scale + Offset;
+                var x = i * Width / values.Length;
+                var y = values[i] * Scale + Offset;
                 points.Add(new Point(x, y));
             }
 

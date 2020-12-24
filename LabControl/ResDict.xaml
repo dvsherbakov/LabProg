@@ -426,6 +426,6 @@
     </Style>
     <!--#endregion-->
     <viewModels:DoubleArrayToPointsConverter x:Key="PointConverter"
-                                     Scale="20" />
+                                     Scale="50" />
 
 </ResourceDictionary>
