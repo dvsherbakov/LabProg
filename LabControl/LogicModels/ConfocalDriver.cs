@@ -1,6 +1,7 @@
 ﻿using LabControl.ClassHelpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -22,6 +23,8 @@ namespace LabControl.LogicModels
         public event LogMessage SetLogMessage;
 
         private bool f_MeasuredActive;
+
+        private readonly ObservableCollection<ConfocalDataItem> f_MeasureLogCollection;
         
 
         public ConfocalDriver()
@@ -32,6 +35,10 @@ namespace LabControl.LogicModels
             };
             f_ConfocalTimer.Elapsed += InterceptInfo;
             f_FakeRnd = new Random();
+            f_MeasureLogCollection = new ObservableCollection<ConfocalDataItem>
+            {
+                (new ConfocalDataItem(0d))
+            };
         }
 
         private void InterceptInfo(object source, ElapsedEventArgs e)
@@ -39,8 +46,10 @@ namespace LabControl.LogicModels
             var x = new DistMeasureRes { Dist = 0 };
             if (f_IsFakeData)
             {
-                var dx = +f_FakeRnd.NextDouble();
+                var dx = f_FakeRnd.NextDouble();
                 x.Dist = 0.3 + dx*0.1;
+                x.IsSingle = false;
+                f_MeasureLogCollection.Add(new ConfocalDataItem(x.Dist));
                 ObtainedDataEvent?.Invoke(x);
                 return;
             }
@@ -106,7 +115,11 @@ namespace LabControl.LogicModels
             else f_ConfocalTimer.Stop();
         }
 
-        
+        public double[] GetLastFragment()
+        {
+            return f_MeasureLogCollection.OrderByDescending(x => x.MomentDateTime).Take(300).Select(x => x.Value)
+                .ToArray();
+        }
 
     }
 }

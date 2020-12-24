@@ -187,6 +187,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Нагрев стекла.
+        /// </summary>
+        internal static string LabelGlassHeating {
+            get {
+                return ResourceManager.GetString("LabelGlassHeating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ИК Источник 1.
         /// </summary>
         internal static string LabelIkLed1 {

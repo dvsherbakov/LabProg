@@ -277,7 +277,16 @@
                                     BorderBrush="Aquamarine"
                                     CornerRadius="5" BorderThickness="1">
                                         <Viewbox
-                                    Height="100"></Viewbox>
+                                            Height="100">
+                                            <Canvas Width="100" Height="100" >
+
+                                                <!-- Display the wave -->
+                                                <Polyline Stroke="#48F" StrokeThickness="1.5"
+                                                          Points="{Binding ConfocalLog, Converter={StaticResource PointConverter}}"
+                                                          Canvas.Top="50"/>
+                                            </Canvas>
+                                        </Viewbox>
+
                                     </Border>
                                     <StackPanel Orientation="Horizontal">
 
@@ -492,12 +501,14 @@
                                                   IsChecked="{Binding PwrSwitchCh3}"
                                                   Style="{StaticResource AnimatedSwitch}" />
                                     <TextBlock Grid.Row="2" Grid.Column="1" Margin="5,5,5,5"
-                                               Text="{Binding LabelMicroCompressor}"></TextBlock>
+                                               Text="{Binding LabelMicroCompressor}"/>
                                     <ToggleButton Grid.Row="2" Grid.Column="0" 
                                                   Width="40" Height="20" 
                                                   IsChecked="{Binding PwrSwitchCh4}"
                                                   Style="{StaticResource AnimatedSwitch}" />
-                                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="5,5,5,5">Нагрев стекла</TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="2" 
+                                               Text="{Binding LabelGlassHeating}" 
+                                               Margin="5,5,5,5"/>
                                     <ToggleButton Grid.Row="2" Grid.Column="3" 
                                                   Width="40" Height="20" 
                                                   IsChecked="{Binding PwrSwitchCh5}"
@@ -682,7 +693,7 @@
                                                         Text="{Binding LabelPwrChannelMode}"
                                                         Foreground="SandyBrown"
                                                         VerticalAlignment="Center"/>
-                                            <ComboBox Grid.Column="2" Grid.Row="2" 
+                                            <ComboBox Grid.Column="1" Grid.Row="2" 
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh1Mode}"
                                                    Margin="5,5,5,5"/>
@@ -708,7 +719,7 @@
                                                        Text="{Binding LabelPwrChannelFreq}"
                                                        Foreground="SandyBrown"
                                                         VerticalAlignment="Center"/>
-                                            <TextBox x:Name="TbCh1Freq" Grid.Column="1" Grid.Row="5"
+                                            <TextBox Grid.Column="1" Grid.Row="5"
                                                      Text="{Binding PwrCh1Freq}"
                                                      TextAlignment="Center"
                                                      Style="{StaticResource PartTransparent}"
@@ -806,8 +817,8 @@
                                                    Text="{Binding LabelChannel2}"
                                                    Foreground="SandyBrown"
                                                    TextAlignment="Center" />
-                                            <CheckBox Grid.Row="1"
-                                                Foreground="SandyBrown"
+                                            <CheckBox Grid.Row="1" Grid.Column="0"
+                                                      Foreground="SandyBrown"
                                                   IsChecked="{Binding PwrSwitchCh2}"
                                                   VerticalAlignment="Center"
                                                   Content="{Binding LabelOn}" />
@@ -815,7 +826,7 @@
                                                    Text="{Binding LabelPwrChannelMode}"
                                                     Foreground="SandyBrown"
                                                    VerticalAlignment="Center" />
-                                            <ComboBox  Grid.Column="2" Grid.Row="2" 
+                                            <ComboBox  Grid.Column="1" Grid.Row="2" 
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh2Mode}"
                                                    Margin="5,5,5,5"/>
@@ -823,7 +834,7 @@
                                                    Text="{Binding LabelPwrChannel2Bias}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
-                                            <TextBox x:Name="TbCh2Bias" Grid.Column="1" Grid.Row="3" 
+                                            <TextBox Grid.Column="1" Grid.Row="3" 
                                                  Text="{Binding PwrCh2Bias}"
                                                  TextAlignment="Center"
                                                  Style="{StaticResource PartTransparent}"
@@ -938,8 +949,8 @@
                                                    Text="{Binding LabelChannel3}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
-                                            <CheckBox Grid.Row="1"
-                                                Foreground="SandyBrown"
+                                            <CheckBox Grid.Row="1" Grid.Column="0"
+                                                      Foreground="SandyBrown"
                                                   IsChecked="{Binding PwrSwitchCh3}"
                                                   VerticalAlignment="Center"
                                                   Content="{Binding LabelOn}" />
@@ -947,7 +958,7 @@
                                                    Text="{Binding LabelPwrChannelMode}"
                                                     Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
-                                            <ComboBox  Grid.Column="2" Grid.Row="2" 
+                                            <ComboBox  Grid.Column="1" Grid.Row="2" 
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh3Mode}"
                                                    Margin="5,5,5,5"/>
@@ -1070,8 +1081,8 @@
                                                    Text="{Binding LabelChannel4}"
                                                    Foreground="SandyBrown"
                                                    TextAlignment="Center"/>
-                                            <CheckBox Grid.Row="1"
-                                                Foreground="SandyBrown"
+                                            <CheckBox Grid.Row="1" Grid.Column="0"
+                                                      Foreground="SandyBrown"
                                                   IsChecked="{Binding PwrSwitchCh4}"
                                                   VerticalAlignment="Center"
                                                   Content="{Binding LabelOn}" />
@@ -1079,7 +1090,7 @@
                                                    Text="{Binding LabelPwrChannelMode}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
-                                            <ComboBox  Grid.Column="2" Grid.Row="2" 
+                                            <ComboBox  Grid.Column="1" Grid.Row="2" 
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh4Mode}"
                                                    Margin="5,5,5,5"/>
@@ -1201,9 +1212,9 @@
                                             <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
                                                    Text="{Binding LabelChannel5}"
                                                    Foreground="SandyBrown"
-                                                   TextAlignment="Center">Канал 5: (Нагрев стекла)</TextBlock>
-                                            <CheckBox Grid.Row="1"
-                                                Foreground="SandyBrown"
+                                                   TextAlignment="Center"/>
+                                            <CheckBox Grid.Row="1" Grid.Column="0"
+                                                      Foreground="SandyBrown"
                                                   IsChecked="{Binding PwrSwitchCh5}"
                                                   VerticalAlignment="Center"
                                                   Content="{Binding LabelOn}" />
@@ -1211,7 +1222,7 @@
                                                    Text="{Binding LabelPwrChannelMode}"
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
-                                            <ComboBox  Grid.Column="2" Grid.Row="2" 
+                                            <ComboBox  Grid.Column="1" Grid.Row="2" 
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh5Mode}"
                                                    Margin="5,5,5,5"/>

@@ -276,4 +276,7 @@
   <data name="LabelMicroCompressor" xml:space="preserve">
     <value>Микрокомпрессор</value>
   </data>
+  <data name="LabelGlassHeating" xml:space="preserve">
+    <value>Нагрев стекла</value>
+  </data>
 </root>

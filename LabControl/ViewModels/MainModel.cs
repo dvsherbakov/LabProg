@@ -629,6 +629,13 @@ namespace LabControl.ViewModels
                 f_ConfocalDriver?.SetMeasuredActive(value);
             }
         }
+
+        private double[] f_ConfocalLog;
+        public double[] ConfocalLog
+        {
+            get => f_ConfocalLog;
+            set => Set(ref f_ConfocalLog, value);
+        }
         #endregion
 
         #region Collections
@@ -688,6 +695,7 @@ namespace LabControl.ViewModels
         public static string LabelMonitoring => Resources.LabelMonitoring;
         public static string LabelReverse => Resources.LabelReverse;
         public static string LabelMicroCompressor => Resources.LabelMicroCompressor;
+        public static string LabelGlassHeating => Resources.LabelGlassHeating;
         #endregion
 
 
@@ -700,6 +708,7 @@ namespace LabControl.ViewModels
         public MainModel()
         {
             // init collections
+            ConfocalLog = new[] {0d, 0d};
             LogCollection = new ObservableCollection<LogItem>();
             IncomingPumpPortSelected = Settings.Default.IncomingPumpPortSelected;
             PowerSupplyTypes = new ObservableCollection<string>(new PowerSuplyTupesList().GetTypesList());
@@ -880,6 +889,7 @@ namespace LabControl.ViewModels
         {
             ConfocalLevel = Math.Round(lvl.Dist, 5);
             f_PumpDriver?.SetMeasuredLevel(lvl);
+            f_ConfocalLog = f_ConfocalDriver.GetLastFragment();
         }
     }
 }
