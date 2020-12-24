@@ -189,7 +189,7 @@
   <data name="LabelOutputPumpPort" xml:space="preserve">
     <value>Порт откачки</value>
   </data>
-  <data name="LabelPiroPort" xml:space="preserve">
+  <data name="LabelPyroPort" xml:space="preserve">
     <value>Порт пирометра</value>
   </data>
   <data name="LabelPortConnection" xml:space="preserve">
@@ -237,6 +237,9 @@
   <data name="LabelRead" xml:space="preserve">
     <value>Прочитать</value>
   </data>
+  <data name="LabelReverse" xml:space="preserve">
+    <value>Реверс</value>
+  </data>
   <data name="LabelSetterPower" xml:space="preserve">
     <value>Установить мощность</value>
   </data>
@@ -269,5 +272,8 @@
   </data>
   <data name="PumpOperationTitle" xml:space="preserve">
     <value>Управление уровнем</value>
+  </data>
+  <data name="LabelMicroCompressor" xml:space="preserve">
+    <value>Микрокомпрессор</value>
   </data>
 </root>

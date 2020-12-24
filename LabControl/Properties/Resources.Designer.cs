@@ -232,6 +232,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Микрокомпрессор.
+        /// </summary>
+        internal static string LabelMicroCompressor {
+            get {
+                return ResourceManager.GetString("LabelMicroCompressor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Мониторинг.
         /// </summary>
         internal static string LabelMonitoring {
@@ -273,15 +282,6 @@ namespace LabControl.Properties {
         internal static string LabelOutputPumpPort {
             get {
                 return ResourceManager.GetString("LabelOutputPumpPort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Порт пирометра.
-        /// </summary>
-        internal static string LabelPiroPort {
-            get {
-                return ResourceManager.GetString("LabelPiroPort", resourceCulture);
             }
         }
         
@@ -412,11 +412,29 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт пирометра.
+        /// </summary>
+        internal static string LabelPyroPort {
+            get {
+                return ResourceManager.GetString("LabelPyroPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Прочитать.
         /// </summary>
         internal static string LabelRead {
             get {
                 return ResourceManager.GetString("LabelRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Реверс.
+        /// </summary>
+        internal static string LabelReverse {
+            get {
+                return ResourceManager.GetString("LabelReverse", resourceCulture);
             }
         }
         

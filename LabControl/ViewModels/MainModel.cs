@@ -1,16 +1,10 @@
-﻿using LabControl.ClassHelpers;
-using LabControl.LogicModels;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.IO.Packaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
+using LabControl.ClassHelpers;
+using LabControl.LogicModels;
+using LabControl.Properties;
 
 namespace LabControl.ViewModels
 {
@@ -29,7 +23,7 @@ namespace LabControl.ViewModels
             set => Set(ref f_CurWindowState, value);
         }
 
-        public static string WindowTitle => Properties.Resources.MainWindowTitle;
+        public static string WindowTitle => Resources.MainWindowTitle;
 
         private int f_WindowHeight;
         public int WindowHeight
@@ -51,9 +45,9 @@ namespace LabControl.ViewModels
             get => f_IsTwoPump;
             set
             {
-                LabelPumpCount = value ? Properties.Resources.LabelTwoPump : Properties.Resources.LabelOnePump;
+                LabelPumpCount = value ? Resources.LabelTwoPump : Resources.LabelOnePump;
                 SecondPumpPanelVisibility = value ? Visibility.Visible : Visibility.Collapsed;
-                LabelPump = value ? Properties.Resources.LabelPumpIn : Properties.Resources.LabelPump;
+                LabelPump = value ? Resources.LabelPumpIn : Resources.LabelPump;
                 f_PumpDriver?.TogleTwoPump(value);
                 Set(ref f_IsTwoPump, value);
             }
@@ -94,11 +88,11 @@ namespace LabControl.ViewModels
             set => Set(ref f_IncomingPumpPortSelected, value);
         }
 
-        private string f_OutloginPumpPortSelected;
+        private string f_OutcomingPumpPortSelected;
         public string OutloginPumpPortSelected
         {
-            get => f_OutloginPumpPortSelected;
-            set => Set(ref f_OutloginPumpPortSelected, value);
+            get => f_OutcomingPumpPortSelected;
+            set => Set(ref f_OutcomingPumpPortSelected, value);
         }
 
         private int f_CurrentLaserPower;
@@ -150,11 +144,11 @@ namespace LabControl.ViewModels
             set => Set(ref f_LaserPortSelected, value);
         }
 
-        private string f_PiroPortSelected;
-        public string PiroPortSelected
+        private string f_PyroPortSelected;
+        public string PyroPortSelected
         {
-            get => f_PiroPortSelected;
-            set => Set(ref f_PiroPortSelected, value);
+            get => f_PyroPortSelected;
+            set => Set(ref f_PyroPortSelected, value);
         }
 
         private string f_PwrPortSelected;
@@ -192,7 +186,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrCh0Mode, value);
-                LabelPwrChannel0Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+                LabelPwrChannel0Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
             }
         }
 
@@ -259,7 +253,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrCh1Mode, value);
-                LabelPwrChannel1Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+                LabelPwrChannel1Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
             }
         }
 
@@ -339,7 +333,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrCh2Mode, value);
-                LabelPwrChannel2Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+                LabelPwrChannel2Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
             }
         }
 
@@ -413,7 +407,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrCh3Mode, value);
-                LabelPwrChannel3Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+                LabelPwrChannel3Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
             }
         }
 
@@ -431,7 +425,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrCh4Mode, value);
-                LabelPwrChannel4Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+                LabelPwrChannel4Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
             }
         }
 
@@ -560,7 +554,7 @@ namespace LabControl.ViewModels
             get => f_PwrCh5Mode;
             set { 
                 Set(ref f_PwrCh5Mode, value);
-                LabelPwrChannel5Bias = value == 1 ? Properties.Resources.LabelElectricFlow : Properties.Resources.LabelOffsetVoltage;
+                LabelPwrChannel5Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
             }
         }
 
@@ -620,7 +614,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_IsPumpsActive, value);
-                if (value) IsConfocalActive = value;
+                if (value) IsConfocalActive = true;
                 f_PumpDriver?.SetPumpActive(value);
             }
         }
@@ -638,153 +632,153 @@ namespace LabControl.ViewModels
         #endregion
 
         #region Collections
-        public ObservableCollection<ClassHelpers.LogItem> LogCollection { get; }
+        public ObservableCollection<LogItem> LogCollection { get; }
         public ObservableCollection<string> IncomingPumpPortCollection { get; set; }
         public ObservableCollection<string> PowerSupplyTypes { get; set; }
-        public ObservableCollection<string> OutloginPumpPortCollection { get; set; }
+        public ObservableCollection<string> OutcomingPumpPortCollection { get; set; }
         public ObservableCollection<string> LaserPortCollection { get; set; }
-        public ObservableCollection<string> PiroPortCollection { get; set; }
+        public ObservableCollection<string> PyroPortCollection { get; set; }
         public ObservableCollection<string> PwrPortCollection { get; set; }
         #endregion
 
         #region StaticLabels
-        public static string LabelOn => Properties.Resources.LabelOn;
-        public static string LogMessageHeader => Properties.Resources.LogHeaderColumn1Name;
-        public static string LabelPumpOperation => Properties.Resources.PumpOperationTitle;
-        public static string LabelConfocalData => Properties.Resources.LabelConfocalData;
-        public static string LabelConfocalSetter => Properties.Resources.LabelConfocalSetter;
-        public static string LabelPumpActive => Properties.Resources.LabelPumpActive;
-        public static string LabelPortConnection => Properties.Resources.LabelPortConnection;
-        public static string LabelSettings => Properties.Resources.LabelSettings;
-        public static string LabelInputPumpPort => Properties.Resources.LabelInputPumpPort;
-        public static string LabelOutputPumpPort => Properties.Resources.LabelOutputPumpPort;
-        public static string LaserOperationTitle => Properties.Resources.LaserOpeprationTitle;
-        public static string LabelEmmitLaser => Properties.Resources.LabelEmmitLaser;
-        public static string LabelCurrentPower => Properties.Resources.LabelCurrentPower;
-        public static string LabelSetterPower => Properties.Resources.LabelSetterPower;
-        public static string LabelCurrentTemperature => Properties.Resources.LabelCurrentTemperature;
-        public static string LabelLaserPort => Properties.Resources.LabelLaserPort;
-        public static string LabelPiroPort => Properties.Resources.LabelPiroPort;
-        public static string LabelLaserType => Properties.Resources.LabelLaserType;
-        public static string PowerSuplyTitle => Properties.Resources.PowerSuplyTitle;
-        public static string LabelUfLed1 => Properties.Resources.LabelUfLed1;
-        public static string LabelUfLed2 => Properties.Resources.LabelUfLed2;
-        public static string LabelChanelsSwitch => Properties.Resources.LabelChanelsSwitch;
-        public static string LabelPwrChannelMode => Properties.Resources.LabelPwrChannelMode;
-        public static string LabelPwrChannelBias => Properties.Resources.LabelPwrChannelBias;
-        public static string LabelPwrChannelAmplitude => Properties.Resources.LabelPwrChannelAmplitude;
-        public static string LabelPwrChannelFreq => Properties.Resources.LabelPwrChannelFreq;
-        public static string LabelPwrChannelPhase => Properties.Resources.LabelPwrChannelPhase;
-        public static string LabelChannel0 => Properties.Resources.LabelChannel0;
-        public static string LabelChannel1 => Properties.Resources.LabelChannel1;
-        public static string LabelIkLed1 => Properties.Resources.LabelIkLed1;
-        public static string LabelIkLed2 => Properties.Resources.LabelIkLed2;
-        public static string LabelPwrChannelDuty => Properties.Resources.LabelPwrChannelDuty;
-        public static string LabelPwrMaxVoltage => Properties.Resources.LabelPwrMaxVoltage;
-        public static string LabelPwrMaxAmps => Properties.Resources.LabelPwrMaxAmps;
-        public static string LabelRead => Properties.Resources.LabelRead;
-        public static string LabelWrite => Properties.Resources.LabelWrite;
-        public static string LabelChannel2 => Properties.Resources.LabelChannel2;
-        public static string LabelChannel3 => Properties.Resources.LabelChannel3;
-        public static string LabelChannel4 => Properties.Resources.LabelChannel4;
-        public static string LabelChannel5 => Properties.Resources.LabelChannel5;
-        public static string LabelPwrPort => Properties.Resources.LabelPwrPort;
-        public static string LabelPumpOut => Properties.Resources.LabelPumpOut;
-        public static string LabelConfocalActive => Properties.Resources.LabelConfocalActive;
-        public static string LabelMonitoring => Properties.Resources.LabelMonitoring;
+        public static string LabelOn => Resources.LabelOn;
+        public static string LogMessageHeader => Resources.LogHeaderColumn1Name;
+        public static string LabelPumpOperation => Resources.PumpOperationTitle;
+        public static string LabelConfocalData => Resources.LabelConfocalData;
+        public static string LabelConfocalSetter => Resources.LabelConfocalSetter;
+        public static string LabelPumpActive => Resources.LabelPumpActive;
+        public static string LabelPortConnection => Resources.LabelPortConnection;
+        public static string LabelSettings => Resources.LabelSettings;
+        public static string LabelInputPumpPort => Resources.LabelInputPumpPort;
+        public static string LabelOutputPumpPort => Resources.LabelOutputPumpPort;
+        public static string LaserOperationTitle => Resources.LaserOpeprationTitle;
+        public static string LabelEmitLaser => Resources.LabelEmmitLaser;
+        public static string LabelCurrentPower => Resources.LabelCurrentPower;
+        public static string LabelSetterPower => Resources.LabelSetterPower;
+        public static string LabelCurrentTemperature => Resources.LabelCurrentTemperature;
+        public static string LabelLaserPort => Resources.LabelLaserPort;
+        public static string LabelPyroPort => Resources.LabelPyroPort;
+        public static string LabelLaserType => Resources.LabelLaserType;
+        public static string PowerSupplyTitle => Resources.PowerSuplyTitle;
+        public static string LabelUfLed1 => Resources.LabelUfLed1;
+        public static string LabelUfLed2 => Resources.LabelUfLed2;
+        public static string LabelChannelsSwitch => Resources.LabelChanelsSwitch;
+        public static string LabelPwrChannelMode => Resources.LabelPwrChannelMode;
+        // public static string LabelPwrChannelBias => Resources.LabelPwrChannelBias;
+        public static string LabelPwrChannelAmplitude => Resources.LabelPwrChannelAmplitude;
+        public static string LabelPwrChannelFreq => Resources.LabelPwrChannelFreq;
+        public static string LabelPwrChannelPhase => Resources.LabelPwrChannelPhase;
+        public static string LabelChannel0 => Resources.LabelChannel0;
+        public static string LabelChannel1 => Resources.LabelChannel1;
+        public static string LabelIkLed1 => Resources.LabelIkLed1;
+        public static string LabelIkLed2 => Resources.LabelIkLed2;
+        public static string LabelPwrChannelDuty => Resources.LabelPwrChannelDuty;
+        public static string LabelPwrMaxVoltage => Resources.LabelPwrMaxVoltage;
+        public static string LabelPwrMaxAmps => Resources.LabelPwrMaxAmps;
+        public static string LabelRead => Resources.LabelRead;
+        public static string LabelWrite => Resources.LabelWrite;
+        public static string LabelChannel2 => Resources.LabelChannel2;
+        public static string LabelChannel3 => Resources.LabelChannel3;
+        public static string LabelChannel4 => Resources.LabelChannel4;
+        public static string LabelChannel5 => Resources.LabelChannel5;
+        public static string LabelPwrPort => Resources.LabelPwrPort;
+        public static string LabelPumpOut => Resources.LabelPumpOut;
+        public static string LabelConfocalActive => Resources.LabelConfocalActive;
+        public static string LabelMonitoring => Resources.LabelMonitoring;
+        public static string LabelReverse => Resources.LabelReverse;
+        public static string LabelMicroCompressor => Resources.LabelMicroCompressor;
         #endregion
-        
+
 
         #region Commands
         public ICommand QuitCommand { get; }
         public ICommand MinimizedCommand { get; }
         public ICommand MaximizedCommand { get; }
-        public ICommand NormalizeCommand { get; }
-        public ICommand StandartSizeCommand { get; }
+        public ICommand StandardSizeCommand { get; }
         #endregion
         public MainModel()
         {
             // init collections
-            LogCollection = new ObservableCollection<ClassHelpers.LogItem>();
-            IncomingPumpPortSelected = Properties.Settings.Default.IncomingPumpPortSelected;
-            PowerSupplyTypes = new ObservableCollection<string>(new ClassHelpers.PowerSuplyTupesList().GetTypesList());
-            IncomingPumpPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(IncomingPumpPortSelected));
-            OutloginPumpPortSelected = Properties.Settings.Default.OutloginPumpPortSelected;
-            OutloginPumpPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(OutloginPumpPortSelected));
-            LaserPortSelected = Properties.Settings.Default.LaserPortSelected;
-            LaserPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(LaserPortSelected));
-            PiroPortSelected = Properties.Settings.Default.PiroPortSelected;
-            PiroPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(PiroPortSelected));
-            PwrPortSelected = Properties.Settings.Default.PwrPortSelected;
-            PwrPortCollection = new ObservableCollection<string>(new ClassHelpers.PortList().GetPortList(PiroPortSelected));
+            LogCollection = new ObservableCollection<LogItem>();
+            IncomingPumpPortSelected = Settings.Default.IncomingPumpPortSelected;
+            PowerSupplyTypes = new ObservableCollection<string>(new PowerSuplyTupesList().GetTypesList());
+            IncomingPumpPortCollection = new ObservableCollection<string>(new PortList().GetPortList(IncomingPumpPortSelected));
+            OutloginPumpPortSelected = Settings.Default.OutloginPumpPortSelected;
+            OutcomingPumpPortCollection = new ObservableCollection<string>(new PortList().GetPortList(OutloginPumpPortSelected));
+            LaserPortSelected = Settings.Default.LaserPortSelected;
+            LaserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(LaserPortSelected));
+            PyroPortSelected = Settings.Default.PyroPortSelected;
+            PyroPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
+            PwrPortSelected = Settings.Default.PwrPortSelected;
+            PwrPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             CurWindowState = WindowState.Normal;
             //load params from settings
-            WindowHeight = Properties.Settings.Default.WindowHeight == 0 ? 550 : Properties.Settings.Default.WindowHeight;
-            WindowWidth = Properties.Settings.Default.WindowWidth == 0 ? 850 : Properties.Settings.Default.WindowWidth;
-            IsTwoPump = Properties.Settings.Default.IsTwoPump;
-            ConfocalLevelSetter = Properties.Settings.Default.ConfocalLevelSetter;
-            LaserPowerSetter = Properties.Settings.Default.LaserPowerSetter;
-            LaserTypeSelectedIndex = Properties.Settings.Default.LaserTypeSelectedIndex;
-            PwrCh0Mode = Properties.Settings.Default.PwrCh0Mode;
-            PwrCh0Bias = Properties.Settings.Default.PwrCh0Bias;
-            PwrCh0Amplitude = Properties.Settings.Default.PwrCh0Amplitude;
-            PwrCh0Freq = Properties.Settings.Default.PwrCh0Freq;
-            PwrCh0Duty = Properties.Settings.Default.PwrCh0Duty;
-            PwrCh0Phase = Properties.Settings.Default.PwrCh0Phase;
-            PwrCh0MaxVoltage = Properties.Settings.Default.PwrCh0MaxVoltage;
-            PwrCh0MaxAmps = Properties.Settings.Default.PwrCh0MaxAmps;
-            PwrCh1Mode = Properties.Settings.Default.PwrCh1Mode;
-            PwrCh1Mode = Properties.Settings.Default.PwrCh1Mode;
-            PwrCh1Bias = Properties.Settings.Default.PwrCh1Bias;
-            PwrCh1Amplitude = Properties.Settings.Default.PwrCh1Amplitude;
-            PwrCh1Freq = Properties.Settings.Default.PwrCh1Freq;
-            PwrCh1Duty = Properties.Settings.Default.PwrCh1Duty;
-            PwrCh1Phase = Properties.Settings.Default.PwrCh1Phase;
-            PwrCh1MaxVoltage = Properties.Settings.Default.PwrCh1MaxVoltage;
-            PwrCh1MaxAmps = Properties.Settings.Default.PwrCh1MaxAmps;
-            PwrCh2Mode = Properties.Settings.Default.PwrCh2Mode;
-            PwrCh2Bias = Properties.Settings.Default.PwrCh2Bias;
-            PwrCh2Amplitude = Properties.Settings.Default.PwrCh2Amplitude;
-            PwrCh2Freq = Properties.Settings.Default.PwrCh2Freq;
-            PwrCh2Duty = Properties.Settings.Default.PwrCh2Duty;
-            PwrCh2Phase = Properties.Settings.Default.PwrCh2Phase;
-            PwrCh2MaxVoltage = Properties.Settings.Default.PwrCh2MaxVoltage;
-            PwrCh2MaxAmps = Properties.Settings.Default.PwrCh2MaxAmps;
-            PwrCh3Bias = Properties.Settings.Default.PwrCh3Bias;
-            PwrCh3Amplitude = Properties.Settings.Default.PwrCh3Amplitude;
-            PwrCh3Freq = Properties.Settings.Default.PwrCh3Freq;
-            PwrCh3Duty = Properties.Settings.Default.PwrCh3Duty;
-            PwrCh3Phase = Properties.Settings.Default.PwrCh3Phase;
-            PwrCh3MaxVoltage = Properties.Settings.Default.PwrCh3MaxVoltage;
-            PwrCh3MaxAmps = Properties.Settings.Default.PwrCh3MaxAmps;
-            PwrCh3Mode = Properties.Settings.Default.PwrCh3Mode;
-            PwrCh4Mode = Properties.Settings.Default.PwrCh4Mode;
-            PwrCh4Bias = Properties.Settings.Default.PwrCh4Bias;
-            PwrCh4Amplitude = Properties.Settings.Default.PwrCh4Amplitude;
-            PwrCh4Freq = Properties.Settings.Default.PwrCh4Freq;
-            PwrCh4Duty = Properties.Settings.Default.PwrCh4Duty;
-            PwrCh4Phase = Properties.Settings.Default.PwrCh4Phase;
-            PwrCh4MaxVoltage = Properties.Settings.Default.PwrCh4MaxVoltage;
-            PwrCh4MaxAmps = Properties.Settings.Default.PwrCh4MaxAmps;
-            PwrCh5Mode = Properties.Settings.Default.PwrCh5Mode;
-            PwrCh5Bias = Properties.Settings.Default.PwrCh5Bias;
-            PwrCh5Amplitude = Properties.Settings.Default.PwrCh5Amplitude;
-            PwrCh5Freq = Properties.Settings.Default.PwrCh5Freq;
-            PwrCh5Duty = Properties.Settings.Default.PwrCh5Duty;
-            PwrCh5Phase = Properties.Settings.Default.PwrCh5Phase;
-            PwrCh5MaxVoltage = Properties.Settings.Default.PwrCh5MaxVoltage;
-            PwrCh5MaxAmps = Properties.Settings.Default.PwrCh5MaxAmps;
-            IsRevereFirstPump = Properties.Settings.Default.IsRevereFirstPump;
-            IsRevereSecondPump = Properties.Settings.Default.IsRevereSecondPump;
+            WindowHeight = Settings.Default.WindowHeight == 0 ? 550 : Settings.Default.WindowHeight;
+            WindowWidth = Settings.Default.WindowWidth == 0 ? 850 : Settings.Default.WindowWidth;
+            IsTwoPump = Settings.Default.IsTwoPump;
+            ConfocalLevelSetter = Settings.Default.ConfocalLevelSetter;
+            LaserPowerSetter = Settings.Default.LaserPowerSetter;
+            LaserTypeSelectedIndex = Settings.Default.LaserTypeSelectedIndex;
+            PwrCh0Mode = Settings.Default.PwrCh0Mode;
+            PwrCh0Bias = Settings.Default.PwrCh0Bias;
+            PwrCh0Amplitude = Settings.Default.PwrCh0Amplitude;
+            PwrCh0Freq = Settings.Default.PwrCh0Freq;
+            PwrCh0Duty = Settings.Default.PwrCh0Duty;
+            PwrCh0Phase = Settings.Default.PwrCh0Phase;
+            PwrCh0MaxVoltage = Settings.Default.PwrCh0MaxVoltage;
+            PwrCh0MaxAmps = Settings.Default.PwrCh0MaxAmps;
+            PwrCh1Mode = Settings.Default.PwrCh1Mode;
+            PwrCh1Mode = Settings.Default.PwrCh1Mode;
+            PwrCh1Bias = Settings.Default.PwrCh1Bias;
+            PwrCh1Amplitude = Settings.Default.PwrCh1Amplitude;
+            PwrCh1Freq = Settings.Default.PwrCh1Freq;
+            PwrCh1Duty = Settings.Default.PwrCh1Duty;
+            PwrCh1Phase = Settings.Default.PwrCh1Phase;
+            PwrCh1MaxVoltage = Settings.Default.PwrCh1MaxVoltage;
+            PwrCh1MaxAmps = Settings.Default.PwrCh1MaxAmps;
+            PwrCh2Mode = Settings.Default.PwrCh2Mode;
+            PwrCh2Bias = Settings.Default.PwrCh2Bias;
+            PwrCh2Amplitude = Settings.Default.PwrCh2Amplitude;
+            PwrCh2Freq = Settings.Default.PwrCh2Freq;
+            PwrCh2Duty = Settings.Default.PwrCh2Duty;
+            PwrCh2Phase = Settings.Default.PwrCh2Phase;
+            PwrCh2MaxVoltage = Settings.Default.PwrCh2MaxVoltage;
+            PwrCh2MaxAmps = Settings.Default.PwrCh2MaxAmps;
+            PwrCh3Bias = Settings.Default.PwrCh3Bias;
+            PwrCh3Amplitude = Settings.Default.PwrCh3Amplitude;
+            PwrCh3Freq = Settings.Default.PwrCh3Freq;
+            PwrCh3Duty = Settings.Default.PwrCh3Duty;
+            PwrCh3Phase = Settings.Default.PwrCh3Phase;
+            PwrCh3MaxVoltage = Settings.Default.PwrCh3MaxVoltage;
+            PwrCh3MaxAmps = Settings.Default.PwrCh3MaxAmps;
+            PwrCh3Mode = Settings.Default.PwrCh3Mode;
+            PwrCh4Mode = Settings.Default.PwrCh4Mode;
+            PwrCh4Bias = Settings.Default.PwrCh4Bias;
+            PwrCh4Amplitude = Settings.Default.PwrCh4Amplitude;
+            PwrCh4Freq = Settings.Default.PwrCh4Freq;
+            PwrCh4Duty = Settings.Default.PwrCh4Duty;
+            PwrCh4Phase = Settings.Default.PwrCh4Phase;
+            PwrCh4MaxVoltage = Settings.Default.PwrCh4MaxVoltage;
+            PwrCh4MaxAmps = Settings.Default.PwrCh4MaxAmps;
+            PwrCh5Mode = Settings.Default.PwrCh5Mode;
+            PwrCh5Bias = Settings.Default.PwrCh5Bias;
+            PwrCh5Amplitude = Settings.Default.PwrCh5Amplitude;
+            PwrCh5Freq = Settings.Default.PwrCh5Freq;
+            PwrCh5Duty = Settings.Default.PwrCh5Duty;
+            PwrCh5Phase = Settings.Default.PwrCh5Phase;
+            PwrCh5MaxVoltage = Settings.Default.PwrCh5MaxVoltage;
+            PwrCh5MaxAmps = Settings.Default.PwrCh5MaxAmps;
+            IsRevereFirstPump = Settings.Default.IsRevereFirstPump;
+            IsRevereSecondPump = Settings.Default.IsRevereSecondPump;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
-            NormalizeCommand = new LambdaCommand(OnMaximizedCommandExecute);
-            StandartSizeCommand = new LambdaCommand(OnStandartSizeCommand);
+            StandardSizeCommand = new LambdaCommand(OnStandardSizeCommand);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
-            f_ConfocalDriver.ResievedDataEvent += SetUpMeasuredLevel;
+            f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
                 //(DistMeasureRes xData) => { ConfocalLevel = xData.Dist; };
             f_ConfocalDriver.SetLogMessage += AddLogMessage;
 
@@ -797,72 +791,72 @@ namespace LabControl.ViewModels
 
         private void AddLogMessage(string message)
         {
-            Application.Current.Dispatcher.Invoke(() => LogCollection.Add(new ClassHelpers.LogItem(DateTime.Now, message)));
+            Application.Current.Dispatcher.Invoke(() => LogCollection.Add(new LogItem(DateTime.Now, message)));
         }
 
         private void OnQuitApp(object p)
         {
-            Properties.Settings.Default.WindowHeight = WindowHeight;
-            Properties.Settings.Default.WindowWidth = WindowWidth;
-            Properties.Settings.Default.IsTwoPump = IsTwoPump;
-            Properties.Settings.Default.ConfocalLevelSetter = ConfocalLevelSetter;
-            Properties.Settings.Default.IncomingPumpPortSelected = IncomingPumpPortSelected;
-            Properties.Settings.Default.OutloginPumpPortSelected = OutloginPumpPortSelected;
-            Properties.Settings.Default.LaserPowerSetter = LaserPowerSetter;
-            Properties.Settings.Default.LaserPortSelected = LaserPortSelected;
-            Properties.Settings.Default.PiroPortSelected = PiroPortSelected;
-            Properties.Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
-            Properties.Settings.Default.PwrCh0Mode = PwrCh0Mode;
-            Properties.Settings.Default.PwrCh0Bias = PwrCh0Bias;
-            Properties.Settings.Default.PwrCh0Amplitude = PwrCh0Amplitude;
-            Properties.Settings.Default.PwrCh0Freq = PwrCh0Freq;
-            Properties.Settings.Default.PwrCh0Duty = PwrCh0Duty;
-            Properties.Settings.Default.PwrCh0Phase = PwrCh0Phase;
-            Properties.Settings.Default.PwrCh0MaxVoltage = PwrCh0MaxVoltage;
-            Properties.Settings.Default.PwrCh0MaxAmps = PwrCh0MaxAmps;
-            Properties.Settings.Default.PwrCh1Mode = PwrCh1Mode;
-            Properties.Settings.Default.PwrCh1Bias = PwrCh1Bias;
-            Properties.Settings.Default.PwrCh1Amplitude = PwrCh1Amplitude;
-            Properties.Settings.Default.PwrCh1Freq = PwrCh1Freq;
-            Properties.Settings.Default.PwrCh1Duty = PwrCh1Duty;
-            Properties.Settings.Default.PwrCh1Phase = PwrCh1Phase;
-            Properties.Settings.Default.PwrCh1MaxVoltage = PwrCh1MaxVoltage;
-            Properties.Settings.Default.PwrCh1MaxAmps = PwrCh1MaxAmps;
-            Properties.Settings.Default.PwrCh2Mode = PwrCh2Mode;
-            Properties.Settings.Default.PwrCh2Bias = PwrCh2Bias;
-            Properties.Settings.Default.PwrCh2Amplitude = PwrCh2Amplitude;
-            Properties.Settings.Default.PwrCh2Freq = PwrCh2Freq;
-            Properties.Settings.Default.PwrCh2Duty = PwrCh2Duty;
-            Properties.Settings.Default.PwrCh2Phase = PwrCh2Phase;
-            Properties.Settings.Default.PwrCh2MaxVoltage = PwrCh2MaxVoltage;
-            Properties.Settings.Default.PwrCh2MaxAmps = PwrCh2MaxAmps;
-            Properties.Settings.Default.PwrCh3Bias = PwrCh3Bias;
-            Properties.Settings.Default.PwrCh3Amplitude = PwrCh3Amplitude;
-            Properties.Settings.Default.PwrCh3Freq = PwrCh3Freq;
-            Properties.Settings.Default.PwrCh3Duty = PwrCh3Duty;
-            Properties.Settings.Default.PwrCh3Phase = PwrCh3Phase;
-            Properties.Settings.Default.PwrCh3MaxVoltage = PwrCh3MaxVoltage;
-            Properties.Settings.Default.PwrCh3MaxAmps = PwrCh3MaxAmps;
-            Properties.Settings.Default.PwrCh3Mode = PwrCh3Mode;
-            Properties.Settings.Default.PwrCh4Mode = PwrCh4Mode;
-            Properties.Settings.Default.PwrCh4Bias = PwrCh4Bias;
-            Properties.Settings.Default.PwrCh4Amplitude = PwrCh4Amplitude;
-            Properties.Settings.Default.PwrCh4Freq = PwrCh4Freq;
-            Properties.Settings.Default.PwrCh4Duty = PwrCh4Duty;
-            Properties.Settings.Default.PwrCh4Phase = PwrCh4Phase;
-            Properties.Settings.Default.PwrCh4MaxVoltage = PwrCh4MaxVoltage;
-            Properties.Settings.Default.PwrCh4MaxAmps = PwrCh4MaxAmps;
-            Properties.Settings.Default.PwrCh5Mode = PwrCh5Mode;
-            Properties.Settings.Default.PwrCh5Bias = PwrCh5Bias;
-            Properties.Settings.Default.PwrCh5Amplitude = PwrCh5Amplitude;
-            Properties.Settings.Default.PwrCh5Freq = PwrCh5Freq;
-            Properties.Settings.Default.PwrCh5Duty = PwrCh5Duty;
-            Properties.Settings.Default.PwrCh5Phase = PwrCh5Phase;
-            Properties.Settings.Default.PwrCh5MaxVoltage = PwrCh5MaxVoltage;
-            Properties.Settings.Default.PwrCh5MaxAmps = PwrCh5MaxAmps;
-            Properties.Settings.Default.IsRevereFirstPump = IsRevereFirstPump;
-            Properties.Settings.Default.IsRevereSecondPump = IsRevereSecondPump;
-            Properties.Settings.Default.Save();
+            Settings.Default.WindowHeight = WindowHeight;
+            Settings.Default.WindowWidth = WindowWidth;
+            Settings.Default.IsTwoPump = IsTwoPump;
+            Settings.Default.ConfocalLevelSetter = ConfocalLevelSetter;
+            Settings.Default.IncomingPumpPortSelected = IncomingPumpPortSelected;
+            Settings.Default.OutloginPumpPortSelected = OutloginPumpPortSelected;
+            Settings.Default.LaserPowerSetter = LaserPowerSetter;
+            Settings.Default.LaserPortSelected = LaserPortSelected;
+            Settings.Default.PyroPortSelected = PyroPortSelected;
+            Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
+            Settings.Default.PwrCh0Mode = PwrCh0Mode;
+            Settings.Default.PwrCh0Bias = PwrCh0Bias;
+            Settings.Default.PwrCh0Amplitude = PwrCh0Amplitude;
+            Settings.Default.PwrCh0Freq = PwrCh0Freq;
+            Settings.Default.PwrCh0Duty = PwrCh0Duty;
+            Settings.Default.PwrCh0Phase = PwrCh0Phase;
+            Settings.Default.PwrCh0MaxVoltage = PwrCh0MaxVoltage;
+            Settings.Default.PwrCh0MaxAmps = PwrCh0MaxAmps;
+            Settings.Default.PwrCh1Mode = PwrCh1Mode;
+            Settings.Default.PwrCh1Bias = PwrCh1Bias;
+            Settings.Default.PwrCh1Amplitude = PwrCh1Amplitude;
+            Settings.Default.PwrCh1Freq = PwrCh1Freq;
+            Settings.Default.PwrCh1Duty = PwrCh1Duty;
+            Settings.Default.PwrCh1Phase = PwrCh1Phase;
+            Settings.Default.PwrCh1MaxVoltage = PwrCh1MaxVoltage;
+            Settings.Default.PwrCh1MaxAmps = PwrCh1MaxAmps;
+            Settings.Default.PwrCh2Mode = PwrCh2Mode;
+            Settings.Default.PwrCh2Bias = PwrCh2Bias;
+            Settings.Default.PwrCh2Amplitude = PwrCh2Amplitude;
+            Settings.Default.PwrCh2Freq = PwrCh2Freq;
+            Settings.Default.PwrCh2Duty = PwrCh2Duty;
+            Settings.Default.PwrCh2Phase = PwrCh2Phase;
+            Settings.Default.PwrCh2MaxVoltage = PwrCh2MaxVoltage;
+            Settings.Default.PwrCh2MaxAmps = PwrCh2MaxAmps;
+            Settings.Default.PwrCh3Bias = PwrCh3Bias;
+            Settings.Default.PwrCh3Amplitude = PwrCh3Amplitude;
+            Settings.Default.PwrCh3Freq = PwrCh3Freq;
+            Settings.Default.PwrCh3Duty = PwrCh3Duty;
+            Settings.Default.PwrCh3Phase = PwrCh3Phase;
+            Settings.Default.PwrCh3MaxVoltage = PwrCh3MaxVoltage;
+            Settings.Default.PwrCh3MaxAmps = PwrCh3MaxAmps;
+            Settings.Default.PwrCh3Mode = PwrCh3Mode;
+            Settings.Default.PwrCh4Mode = PwrCh4Mode;
+            Settings.Default.PwrCh4Bias = PwrCh4Bias;
+            Settings.Default.PwrCh4Amplitude = PwrCh4Amplitude;
+            Settings.Default.PwrCh4Freq = PwrCh4Freq;
+            Settings.Default.PwrCh4Duty = PwrCh4Duty;
+            Settings.Default.PwrCh4Phase = PwrCh4Phase;
+            Settings.Default.PwrCh4MaxVoltage = PwrCh4MaxVoltage;
+            Settings.Default.PwrCh4MaxAmps = PwrCh4MaxAmps;
+            Settings.Default.PwrCh5Mode = PwrCh5Mode;
+            Settings.Default.PwrCh5Bias = PwrCh5Bias;
+            Settings.Default.PwrCh5Amplitude = PwrCh5Amplitude;
+            Settings.Default.PwrCh5Freq = PwrCh5Freq;
+            Settings.Default.PwrCh5Duty = PwrCh5Duty;
+            Settings.Default.PwrCh5Phase = PwrCh5Phase;
+            Settings.Default.PwrCh5MaxVoltage = PwrCh5MaxVoltage;
+            Settings.Default.PwrCh5MaxAmps = PwrCh5MaxAmps;
+            Settings.Default.IsRevereFirstPump = IsRevereFirstPump;
+            Settings.Default.IsRevereSecondPump = IsRevereSecondPump;
+            Settings.Default.Save();
             Application.Current.Shutdown();
         }
 
@@ -876,7 +870,7 @@ namespace LabControl.ViewModels
             CurWindowState = CurWindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
 
-        private void OnStandartSizeCommand(object sender)
+        private void OnStandardSizeCommand(object sender)
         {
             WindowHeight = 470;
             WindowWidth = 630;

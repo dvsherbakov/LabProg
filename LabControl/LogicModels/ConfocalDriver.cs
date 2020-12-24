@@ -1,24 +1,22 @@
 ﻿using LabControl.ClassHelpers;
-using LabControl.PortModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Timers;
-using System.Windows.Threading;
 
 namespace LabControl.LogicModels
 {
-    class ConfocalDriver
+    internal class ConfocalDriver
     {
+        private readonly bool f_IsFakeData = true;
+        private readonly Random f_FakeRnd;
 
         private readonly Timer f_ConfocalTimer;
 
-        public delegate void ResievedData(DistMeasureRes xData);
-        public event ResievedData ResievedDataEvent;
+        public delegate void ObtainedData(DistMeasureRes xData);
+        public event ObtainedData ObtainedDataEvent;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -32,13 +30,23 @@ namespace LabControl.LogicModels
             {
                 Interval = 5000
             };
-            f_ConfocalTimer.Elapsed += PeackInfo;
+            f_ConfocalTimer.Elapsed += InterceptInfo;
+            f_FakeRnd = new Random();
         }
 
-        private void PeackInfo(object source, System.Timers.ElapsedEventArgs e)
+        private void InterceptInfo(object source, ElapsedEventArgs e)
         {
-            var timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
             var x = new DistMeasureRes { Dist = 0 };
+            if (f_IsFakeData)
+            {
+                var dx = +f_FakeRnd.NextDouble();
+                x.Dist = 0.3 + dx*0.1;
+                ObtainedDataEvent?.Invoke(x);
+                return;
+            }
+
+            var timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+         
             timestamp++;
             while (Math.Abs(x.Dist) < 0.000001)
             {
@@ -56,7 +64,7 @@ namespace LabControl.LogicModels
                         SetLogMessage?.Invoke(ex.Message);
                     }
                     //if (!IsTwoPump) OperatePump(x); else OperateTwoPump(x);
-                    ResievedDataEvent?.Invoke(x);
+                    ObtainedDataEvent?.Invoke(x);
                 }
             }
         }

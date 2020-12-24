@@ -26,7 +26,7 @@
     <Setting Name="LaserPortSelected" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PiroPortSelected" Type="System.String" Scope="User">
+    <Setting Name="PyroPortSelected" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LaserTypeSelectedIndex" Type="System.Int32" Scope="User">
