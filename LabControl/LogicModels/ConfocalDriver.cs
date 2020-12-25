@@ -35,10 +35,7 @@ namespace LabControl.LogicModels
             };
             f_ConfocalTimer.Elapsed += InterceptInfo;
             f_FakeRnd = new Random();
-            f_MeasureLogCollection = new ObservableCollection<ConfocalDataItem>
-            {
-                (new ConfocalDataItem(0d))
-            };
+            f_MeasureLogCollection = new ObservableCollection<ConfocalDataItem>();
         }
 
         private void InterceptInfo(object source, ElapsedEventArgs e)

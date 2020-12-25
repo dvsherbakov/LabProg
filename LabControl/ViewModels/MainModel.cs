@@ -11,8 +11,8 @@ namespace LabControl.ViewModels
     internal class MainModel : ViewModel
     {
         #region drivers
-        private PumpDriver f_PumpDriver;
-        private ConfocalDriver f_ConfocalDriver;
+        private readonly PumpDriver f_PumpDriver;
+        private readonly ConfocalDriver f_ConfocalDriver;
         #endregion
 
         #region ModelFields
@@ -889,7 +889,7 @@ namespace LabControl.ViewModels
         {
             ConfocalLevel = Math.Round(lvl.Dist, 5);
             f_PumpDriver?.SetMeasuredLevel(lvl);
-            f_ConfocalLog = f_ConfocalDriver.GetLastFragment();
+            ConfocalLog = f_ConfocalDriver.GetLastFragment();
         }
     }
 }

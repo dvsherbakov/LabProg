@@ -270,21 +270,27 @@
                                 Padding="5"
                                 Foreground="SandyBrown"
                                 Header="{Binding LabelMonitoring}">
-                                <StackPanel
-                                    Orientation="Vertical">
+                                <StackPanel x:Name="ConfocalViewBox"
+                                            Orientation="Vertical">
                                     <Border
                                     Margin="1"
                                     BorderBrush="Aquamarine"
                                     CornerRadius="5" BorderThickness="1">
-                                        <Viewbox
+                                        <Viewbox 
                                             Height="100">
-                                            <Canvas Width="200" Height="100" >
-
-                                                <!-- Display the wave -->
-                                                <Polyline Stroke="#48F" StrokeThickness="1.5"
+                                            <Border Margin="2"
+                                                    BorderBrush="Bisque"
+                                                    CornerRadius="7"
+                                                    BorderThickness="2">
+                                                <Canvas  
+                                                Width="{Binding ElementName=ConfocalViewBox, Path=ActualWidth}" 
+                                                Height="100"
+                                                >
+                                                    <Polyline Stroke="#48F" StrokeThickness="1"
                                                           Points="{Binding ConfocalLog, Converter={StaticResource PointConverter}}"
                                                           Canvas.Top="50"/>
-                                            </Canvas>
+                                                </Canvas>
+                                            </Border>
                                         </Viewbox>
 
                                     </Border>

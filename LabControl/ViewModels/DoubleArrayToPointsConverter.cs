@@ -10,20 +10,20 @@ namespace LabControl.ViewModels
     internal class DoubleArrayToPointsConverter : IValueConverter
     {
         #region Fields
-        private double f_WidthValue = 100;
-        private double f_ScaleValue = 1;
+        private double f_WidthValue = 250;
+        private int f_ScaleValue = 1;
         private double f_OffsetValue;
         #endregion
 
         #region Properties
-
+        
         public double Width
         {
             get => f_WidthValue;
             set => f_WidthValue = value;
         }
-
-        public double Scale
+        
+        public int Scale
         {
             private get { return f_ScaleValue; }
             set { f_ScaleValue = value; }
