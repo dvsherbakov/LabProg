@@ -56,6 +56,12 @@ namespace LabControl.LogicModels
             _portOutput?.AddClockwiseDirection();
         }
 
+        public void Disconnect()
+        {
+            _portInput?.ClosePort();
+            _portOutput?.ClosePort()
+        }
+
         private void TestLog(string msg)
         {
             SetLogMessage?.Invoke(msg);

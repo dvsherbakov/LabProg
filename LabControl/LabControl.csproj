@@ -83,6 +83,7 @@
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="LogicModels\ConfocalDriver.cs" />
     <Compile Include="LogicModels\PumpDriver.cs" />
+    <Compile Include="LogicModels\PwrDriver.cs" />
     <Compile Include="PortModels\LaserSerial.cs" />
     <Compile Include="PortModels\PumpSerial.cs" />
     <Compile Include="PortModels\PwrSerial.cs" />

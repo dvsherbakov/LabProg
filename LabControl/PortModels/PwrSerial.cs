@@ -10,7 +10,7 @@ namespace LabControl.PortModels
     {
         public static int CurChannel { get; set; }
         private static SerialPort Port;
-        public byte[] _rxdata { get; set; }
+        public byte[] Rxdata { get; set; }
         public static byte ChCommand { get; set; }
         private static readonly List<string> ErrList = new List<string>();
         //readonly Timer _aTimer = new Timer();
@@ -18,6 +18,9 @@ namespace LabControl.PortModels
 
         public delegate void RecievedData(object sender, EventArgs e);
         public event RecievedData onRecieve;
+
+        public delegate void LogMessage(string msg);
+        public event LogMessage SetLogMessage;
 
         public PwrSerial(string port)
         {
@@ -52,19 +55,17 @@ namespace LabControl.PortModels
             try
             {
                 var cnt = sp.ReadBufferSize;
-                _rxdata = new byte[cnt + 1];
-                var rc = sp.Read(_rxdata, 0, cnt);
-                if (cnt > 3 && _rxdata[0] == 1 && _rxdata[1] == 3 && _rxdata[2] == 18)
+                Rxdata = new byte[cnt + 1];
+                var rc = sp.Read(Rxdata, 0, cnt);
+                if (cnt > 3 && Rxdata[0] == 1 && Rxdata[1] == 3 && Rxdata[2] == 18)
                 {
                     EventArgs ea = new EventArgs();
                     onRecieve?.Invoke(this, e);
                 }
-                //var ascii = Encoding.ASCII;
-                //var answrs = ascii.GetString(_rxdata).Split('\r');
-                //var ans = BitConverter.ToString(_rxdata);
             }
             catch (Exception ex)
             {
+                SetLogMessage?.Invoke(ex.Message);
                 ErrList.Add(ex.Message);
             }
         }

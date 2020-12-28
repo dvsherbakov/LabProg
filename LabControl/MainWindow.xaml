@@ -455,8 +455,9 @@
                                 Text="{Binding PowerSupplyTitle}" />
                             <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
-                                          Width="40" Height="20"  
-                                          Margin="1,6,1,6"
+                                              Width="40" Height="20"  
+                                              Margin="1,6,1,6"
+                                              IsChecked="{Binding IsPwrPortConnect}"
                                           />
                                 <TextBlock Padding="15,5" 
                                        Foreground="SandyBrown"

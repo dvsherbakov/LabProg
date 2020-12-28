@@ -13,6 +13,7 @@ namespace LabControl.ViewModels
         #region drivers
         private readonly PumpDriver f_PumpDriver;
         private readonly ConfocalDriver f_ConfocalDriver;
+        private readonly PwrDriver f_PwrDriver;
         #endregion
 
         #region ModelFields
@@ -37,6 +38,20 @@ namespace LabControl.ViewModels
         {
             get => f_WindowWidth;
             set => Set(ref f_WindowWidth, value);
+        }
+
+        private bool f_IsPumpPortsConnect;
+        public bool IsPumpPortsConnect
+        {
+            get => f_IsPumpPortsConnect;
+            set
+            {
+                Set(ref f_IsPumpPortsConnect, value);
+                if (value)
+                    f_PumpDriver.ConnectToPorts();
+                else
+                    f_PumpDriver.Disconnect();
+            }
         }
 
         private bool f_IsTwoPump;
@@ -85,14 +100,22 @@ namespace LabControl.ViewModels
         public string IncomingPumpPortSelected
         {
             get => f_IncomingPumpPortSelected;
-            set => Set(ref f_IncomingPumpPortSelected, value);
+            set
+            {
+                Set(ref f_IncomingPumpPortSelected, value);
+                f_PumpDriver.PortStrInput = value;
+            }
         }
 
         private string f_OutcomingPumpPortSelected;
         public string OutloginPumpPortSelected
         {
             get => f_OutcomingPumpPortSelected;
-            set => Set(ref f_OutcomingPumpPortSelected, value);
+            set
+            {
+                Set(ref f_OutcomingPumpPortSelected, value);
+                f_PumpDriver.PortStrOutput = value;
+            }
         }
 
         private int f_CurrentLaserPower;
@@ -155,7 +178,11 @@ namespace LabControl.ViewModels
         public string PwrPortSelected
         {
             get => f_PwrPortSelected;
-            set => Set(ref f_PwrPortSelected, value);
+            set
+            {
+                Set(ref f_PwrPortSelected, value);
+                f_PwrDriver.PortStr = value;
+            }
         }
 
         private int f_LaserTypeSelectedIndex;
@@ -163,6 +190,17 @@ namespace LabControl.ViewModels
         {
             get => f_LaserTypeSelectedIndex;
             set => Set(ref f_LaserTypeSelectedIndex, value);
+        }
+
+        private bool f_IsPwrPortConnect;
+        public bool IsPwrPortConnect
+        {
+            get => f_IsPwrPortConnect;
+            set
+            {
+                Set(ref f_IsPwrPortConnect, value);
+                f_PwrDriver.ConnectToPort();
+            }
         }
 
         private bool f_PwrSwitchCh0;
@@ -552,7 +590,8 @@ namespace LabControl.ViewModels
         public int PwrCh5Mode
         {
             get => f_PwrCh5Mode;
-            set { 
+            set
+            {
                 Set(ref f_PwrCh5Mode, value);
                 LabelPwrChannel5Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
             }
@@ -708,7 +747,7 @@ namespace LabControl.ViewModels
         public MainModel()
         {
             // init collections
-            ConfocalLog = new[] {0d, .40d, .3d};
+            ConfocalLog = new[] { 0d, .40d, .3d };
             LogCollection = new ObservableCollection<LogItem>();
             IncomingPumpPortSelected = Settings.Default.IncomingPumpPortSelected;
             PowerSupplyTypes = new ObservableCollection<string>(new PowerSuplyTupesList().GetTypesList());
@@ -788,11 +827,14 @@ namespace LabControl.ViewModels
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
-                //(DistMeasureRes xData) => { ConfocalLevel = xData.Dist; };
+            //(DistMeasureRes xData) => { ConfocalLevel = xData.Dist; };
             f_ConfocalDriver.SetLogMessage += AddLogMessage;
 
             f_PumpDriver = new PumpDriver();
             f_PumpDriver.SetLogMessage += AddLogMessage;
+
+            f_PwrDriver = new PwrDriver();
+            f_PwrDriver.SetLogMessage += AddLogMessage;
 
             AddLogMessage("Application Started");
             //port init
@@ -814,6 +856,7 @@ namespace LabControl.ViewModels
             Settings.Default.LaserPowerSetter = LaserPowerSetter;
             Settings.Default.LaserPortSelected = LaserPortSelected;
             Settings.Default.PyroPortSelected = PyroPortSelected;
+            Settings.Default.PwrPortSelected = PwrPortSelected;
             Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
             Settings.Default.PwrCh0Mode = PwrCh0Mode;
             Settings.Default.PwrCh0Bias = PwrCh0Bias;
