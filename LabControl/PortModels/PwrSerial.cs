@@ -57,7 +57,7 @@ namespace LabControl.PortModels
                 if (cnt > 3 && _rxdata[0] == 1 && _rxdata[1] == 3 && _rxdata[2] == 18)
                 {
                     EventArgs ea = new EventArgs();
-                    onRecieve(this, e);
+                    onRecieve?.Invoke(this, e);
                 }
                 //var ascii = Encoding.ASCII;
                 //var answrs = ascii.GetString(_rxdata).Split('\r');
