@@ -283,8 +283,9 @@
                                                     CornerRadius="7"
                                                     BorderThickness="2">
                                                 <Canvas  
-                                                Width="{Binding ElementName=ConfocalViewBox, Path=ActualWidth}" 
-                                                Height="100"
+                                                    ClipToBounds="True"
+                                                    Width="{Binding ElementName=ConfocalViewBox, Path=ActualWidth}" 
+                                                    Height="100"
                                                 >
                                                     <Polyline Stroke="#48F" StrokeThickness="1"
                                                           Points="{Binding ConfocalLog, Converter={StaticResource PointConverter}}"
