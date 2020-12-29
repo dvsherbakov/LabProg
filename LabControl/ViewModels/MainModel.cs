@@ -14,6 +14,7 @@ namespace LabControl.ViewModels
         private readonly PumpDriver f_PumpDriver;
         private readonly ConfocalDriver f_ConfocalDriver;
         private readonly PwrDriver f_PwrDriver;
+        private readonly LaserDriver f_LaserDriver;
         #endregion
 
         #region ModelFields
@@ -160,11 +161,27 @@ namespace LabControl.ViewModels
             set => Set(ref f_IsRevereSecondPump, value);
         }
 
+        private bool f_IsLaserPortConnected;
+        public bool IsLaserPortConnected
+        {
+            get => f_IsLaserPortConnected;
+            set
+            {
+                Set(ref f_IsLaserPortConnected, value);
+                if (value) f_LaserDriver.ConnectToPort();
+                else f_LaserDriver.Disconnect();
+            }
+        }
+
         private string f_LaserPortSelected;
         public string LaserPortSelected
         {
             get => f_LaserPortSelected;
-            set => Set(ref f_LaserPortSelected, value);
+            set
+            {
+                Set(ref f_LaserPortSelected, value);
+                f_LaserDriver.PortString = value;
+            }
         }
 
         private string f_PyroPortSelected;
@@ -835,6 +852,9 @@ namespace LabControl.ViewModels
 
             f_PwrDriver = new PwrDriver();
             f_PwrDriver.SetLogMessage += AddLogMessage;
+
+            f_LaserDriver = new LaserDriver();
+            f_LaserDriver.SetLogMessage += AddLogMessage;
 
             AddLogMessage("Application Started");
             //port init

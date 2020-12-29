@@ -59,7 +59,7 @@ namespace LabControl.LogicModels
         public void Disconnect()
         {
             _portInput?.ClosePort();
-            _portOutput?.ClosePort()
+            _portOutput?.ClosePort();
         }
 
         private void TestLog(string msg)

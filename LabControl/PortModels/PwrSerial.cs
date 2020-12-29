@@ -59,7 +59,7 @@ namespace LabControl.PortModels
                 var rc = sp.Read(Rxdata, 0, cnt);
                 if (cnt > 3 && Rxdata[0] == 1 && Rxdata[1] == 3 && Rxdata[2] == 18)
                 {
-                    EventArgs ea = new EventArgs();
+                    // EventArgs ea = new EventArgs();
                     onRecieve?.Invoke(this, e);
                 }
             }
