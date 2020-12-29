@@ -15,6 +15,7 @@ namespace LabControl.ViewModels
         private readonly ConfocalDriver f_ConfocalDriver;
         private readonly PwrDriver f_PwrDriver;
         private readonly LaserDriver f_LaserDriver;
+        private readonly PyroDriver f_PyroDriver;
         #endregion
 
         #region ModelFields
@@ -94,7 +95,11 @@ namespace LabControl.ViewModels
         public double ConfocalLevelSetter
         {
             get => f_ConfocalLevelSetter;
-            set => Set(ref f_ConfocalLevelSetter, value);
+            set
+            {
+                Set(ref f_ConfocalLevelSetter, value);
+                if (f_PumpDriver != null) f_PumpDriver.SetRequiredLvl(value);
+            }
         }
 
         private string f_IncomingPumpPortSelected;
@@ -104,7 +109,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_IncomingPumpPortSelected, value);
-                if (f_PumpDriver!=null) f_PumpDriver.PortStrInput = value;
+                if (f_PumpDriver != null) f_PumpDriver.PortStrInput = value;
             }
         }
 
@@ -115,8 +120,22 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_OutcomingPumpPortSelected, value);
-                if (f_PumpDriver!=null) f_PumpDriver.PortStrOutput = value;
+                if (f_PumpDriver != null) f_PumpDriver.PortStrOutput = value;
             }
+        }
+
+        private string f_IncomingPumpSpeed;
+        public string IncomingPumpSpeed
+        {
+            get=> f_IncomingPumpSpeed;
+            set => Set(ref f_IncomingPumpSpeed, value);
+        }
+
+        private string f_OutcomingPumpSpeed;
+        public string OutcomingPumpSpeed
+        {
+            get => f_OutcomingPumpSpeed;
+            set => Set(ref f_OutcomingPumpSpeed, value);
         }
 
         private int f_CurrentLaserPower;
@@ -168,7 +187,11 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_IsLaserPortConnected, value);
-                if (value) f_LaserDriver.ConnectToPort();
+                if (value)
+                {
+                    f_LaserDriver.ConnectToPort();
+
+                }
                 else f_LaserDriver.Disconnect();
             }
         }
@@ -180,7 +203,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_LaserPortSelected, value);
-                if (f_LaserDriver!=null) f_LaserDriver.PortString = value;
+                if (f_LaserDriver != null) f_LaserDriver.PortString = value;
             }
         }
 
@@ -198,7 +221,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrPortSelected, value);
-                if (f_PwrDriver!=null) f_PwrDriver.PortStr = value;
+                if (f_PwrDriver != null) f_PwrDriver.PortStr = value;
             }
         }
 
@@ -850,6 +873,10 @@ namespace LabControl.ViewModels
             f_PumpDriver.SetLogMessage += AddLogMessage;
             f_PumpDriver.PortStrInput = Settings.Default.IncomingPumpPortSelected;
             f_PumpDriver.PortStrOutput = Settings.Default.OutloginPumpPortSelected;
+            f_PumpDriver.TogleTwoPump(Settings.Default.IsTwoPump);
+            f_PumpDriver.SetInputSpeed += SetIncomingPumpSpeedLabel;
+            f_PumpDriver.SetOutputSpeed += SetOutcomingPumpSpeedLabel;
+            f_PumpDriver.SetRequiredLvl(ConfocalLevelSetter);
 
             f_PwrDriver = new PwrDriver();
             f_PwrDriver.SetLogMessage += AddLogMessage;
@@ -859,13 +886,16 @@ namespace LabControl.ViewModels
             f_LaserDriver.SetLogMessage += AddLogMessage;
             f_LaserDriver.PortString = Settings.Default.LaserPortSelected;
 
+            f_PyroDriver = new PyroDriver();
+            f_PyroDriver.SetLogMessage += AddLogMessage;
+            f_PyroDriver.PortStr = Settings.Default.PyroPortSelected;
+
             AddLogMessage("Application Started");
-            //port init
         }
 
         private void AddLogMessage(string message)
         {
-            Application.Current.Dispatcher.Invoke(() => LogCollection.Add(new LogItem(DateTime.Now, message)));
+            Application.Current.Dispatcher.Invoke(() => LogCollection.Insert(0, new LogItem(DateTime.Now, message)));
         }
 
         private void OnQuitApp(object p)
@@ -956,6 +986,15 @@ namespace LabControl.ViewModels
             ConfocalLevel = Math.Round(lvl.Dist, 5);
             f_PumpDriver?.SetMeasuredLevel(lvl);
             ConfocalLog = f_ConfocalDriver.GetLastFragment();
+        }
+
+        private void SetIncomingPumpSpeedLabel(string speed)
+        {
+            Application.Current.Dispatcher.Invoke(() => IncomingPumpSpeed = speed);
+        }
+        private void SetOutcomingPumpSpeedLabel(string speed)
+        {
+            Application.Current.Dispatcher.Invoke(() => OutcomingPumpSpeed = speed);
         }
     }
 }

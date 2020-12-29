@@ -29,7 +29,6 @@ namespace LabControl.PortModels
             _errList = new List<string>();
             _msgList = new List<string>();
             if (portStr == "") portStr = "COM6";
-            SetLogMessage?.Invoke($"Try connected Laser on port {portStr}");
             _mPort = new SerialPort(portStr)
             {
                 BaudRate = 9600,

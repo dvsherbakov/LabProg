@@ -130,6 +130,7 @@
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                           Width="40" Height="20"  
                                           Margin="1,6,1,6"
+                                              IsChecked="{Binding IsPumpPortsConnect}"
                                           />
                                 <TextBlock Padding="15,5" 
                                        Foreground="SandyBrown"
@@ -276,28 +277,50 @@
                                     Margin="1"
                                     BorderBrush="Aquamarine"
                                     CornerRadius="5" BorderThickness="1">
-                                        <Viewbox 
+                                        <StackPanel>
+                                            <Viewbox 
                                             Height="100">
-                                            <Border Margin="2"
+                                                <Border Margin="2"
                                                     BorderBrush="Bisque"
                                                     CornerRadius="7"
                                                     BorderThickness="2">
-                                                <Canvas  
+                                                    <Canvas  
                                                     ClipToBounds="True"
                                                     Width="{Binding ElementName=ConfocalViewBox, Path=ActualWidth}" 
                                                     Height="100"
                                                 >
-                                                    <Polyline Stroke="#48F" StrokeThickness="1"
+                                                        <Polyline Stroke="#48F" StrokeThickness="1"
                                                           Points="{Binding ConfocalLog, Converter={StaticResource PointConverter}}"
                                                           Canvas.Top="50"/>
-                                                </Canvas>
-                                            </Border>
-                                        </Viewbox>
+                                                    </Canvas>
+                                                </Border>
+                                            </Viewbox>
+                                            <StackPanel Orientation="Horizontal">
 
+                                            </StackPanel>
+                                        </StackPanel>
                                     </Border>
-                                    <StackPanel Orientation="Horizontal">
-
-                                    </StackPanel>
+                                    <DockPanel 
+                                        HorizontalAlignment="Stretch">
+                                        <Border Grid.Row="0" Grid.Column="1"
+                                                Margin="1"
+                                                BorderBrush="Aquamarine"
+                                                CornerRadius="5" BorderThickness="1">
+                                            <TextBlock Text="{Binding IncomingPumpSpeed}"
+                                                Style="{StaticResource PartTransparent}"
+                                                HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <TextBlock/>
+                                        <TextBlock />
+                                        <Border Grid.Row="0" Grid.Column="1"
+                                                Margin="1"
+                                                BorderBrush="Aquamarine"
+                                                CornerRadius="5" BorderThickness="1">
+                                            <TextBlock Text="{Binding OutcomingPumpSpeed}"
+                                                Style="{StaticResource PartTransparent}"
+                                                HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </DockPanel>
                                 </StackPanel>
                             </Expander>
                         </StackPanel>
@@ -321,6 +344,7 @@
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                           Width="40" Height="20"  
                                           Margin="1,6,1,6"
+                                              IsChecked="{Binding IsLaserPortConnected}"
                                           />
                                 <TextBlock Padding="15,5" 
                                        Foreground="SandyBrown"
@@ -1382,7 +1406,7 @@
                 <ListView.View>
                     <GridView  ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                         <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Current}"/>
-                        <GridViewColumn Width="Auto" Header="{Binding LogMessageHeader}" DisplayMemberBinding="{Binding Message}"/>
+                        <GridViewColumn Width="1050" Header="{Binding LogMessageHeader}" DisplayMemberBinding="{Binding Message}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

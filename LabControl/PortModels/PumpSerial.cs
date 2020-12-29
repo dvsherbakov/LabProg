@@ -29,7 +29,6 @@ namespace LabControl.PortModels
             if (portStr == "") portStr = "COM7";
             PumpReverse = startDirection;
             f_ComId = portStr;
-            SetLogMessage?.Invoke($"Try connected Pump on port {portStr}");
             f_MPort = new SerialPort(portStr)
             {
                 BaudRate = int.Parse("9600"),
@@ -94,10 +93,15 @@ namespace LabControl.PortModels
 
         public void OpenPort()
         {
-            f_MPort.Open();
+            SetLogMessage?.Invoke($"Try connect pump on port {f_ComId}");
+            try
+            {
+                f_MPort.Open();
+            } catch (Exception ex)
+            {
+                SetLogMessage?.Invoke(ex.Message);
+            }
             Active = true;
-            //IsDriven = false;
-
         }
 
         public bool IsOpen => f_MPort.IsOpen;
