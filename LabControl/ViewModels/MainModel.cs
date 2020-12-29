@@ -103,7 +103,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_IncomingPumpPortSelected, value);
-                f_PumpDriver.PortStrInput = value;
+                if (f_PumpDriver!=null) f_PumpDriver.PortStrInput = value;
             }
         }
 
@@ -114,7 +114,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_OutcomingPumpPortSelected, value);
-                f_PumpDriver.PortStrOutput = value;
+                if (f_PumpDriver!=null) f_PumpDriver.PortStrOutput = value;
             }
         }
 
@@ -181,7 +181,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrPortSelected, value);
-                f_PwrDriver.PortStr = value;
+                if (f_PwrDriver!=null) f_PwrDriver.PortStr = value;
             }
         }
 
