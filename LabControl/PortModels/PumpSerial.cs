@@ -29,6 +29,7 @@ namespace LabControl.PortModels
             if (portStr == "") portStr = "COM7";
             PumpReverse = startDirection;
             f_ComId = portStr;
+            SetLogMessage?.Invoke($"Try connected Pump on port {portStr}");
             f_MPort = new SerialPort(portStr)
             {
                 BaudRate = int.Parse("9600"),

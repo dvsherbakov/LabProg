@@ -180,7 +180,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_LaserPortSelected, value);
-                f_LaserDriver.PortString = value;
+                if (f_LaserDriver!=null) f_LaserDriver.PortString = value;
             }
         }
 
@@ -844,17 +844,20 @@ namespace LabControl.ViewModels
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
-            //(DistMeasureRes xData) => { ConfocalLevel = xData.Dist; };
             f_ConfocalDriver.SetLogMessage += AddLogMessage;
 
             f_PumpDriver = new PumpDriver();
             f_PumpDriver.SetLogMessage += AddLogMessage;
+            f_PumpDriver.PortStrInput = Settings.Default.IncomingPumpPortSelected;
+            f_PumpDriver.PortStrOutput = Settings.Default.OutloginPumpPortSelected;
 
             f_PwrDriver = new PwrDriver();
             f_PwrDriver.SetLogMessage += AddLogMessage;
+            f_PwrDriver.PortStr = Settings.Default.PwrPortSelected;
 
             f_LaserDriver = new LaserDriver();
             f_LaserDriver.SetLogMessage += AddLogMessage;
+            f_LaserDriver.PortString = Settings.Default.LaserPortSelected;
 
             AddLogMessage("Application Started");
             //port init

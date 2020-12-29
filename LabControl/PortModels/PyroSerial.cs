@@ -19,8 +19,10 @@ namespace LabControl.PortModels
 
         public PyroSerial(string port)
         {
+            
             if (port == "") port = "COM4";
             _rxidx = 0;
+            SetLogMessage?.Invoke($"Try connected Pyro on port {port}");
             _port = new SerialPort(port)
             {
                 BaudRate = 115200,

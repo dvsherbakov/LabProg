@@ -26,6 +26,7 @@ namespace LabControl.PortModels
         {
             CurChannel = 99;
             modBus = new ModBus();
+            SetLogMessage?.Invoke($"Try connected Power Supply on port {port}");
             if (port == "") port = "COM9";
             Port = new SerialPort(port)
             {
