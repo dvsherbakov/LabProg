@@ -279,4 +279,7 @@
   <data name="LabelGlassHeating" xml:space="preserve">
     <value>Нагрев стекла</value>
   </data>
+  <data name="LaserPowerHistory" xml:space="preserve">
+    <value>История мощности</value>
+  </data>
 </root>

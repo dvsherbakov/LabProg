@@ -46,15 +46,21 @@ namespace LabControl.PortModels
 
         public void OpenPort()
         {
-            _mPort.Open();
-            SendCommand(1);
-            SendCommand(7);
-            SendCommand(18);
-            SendCommand(16);
-            SendCommand(21);
-            SendCommand(13);
-            SendCommand(30);
-            SendCommand(23);
+            try
+            {
+                _mPort.Open();
+                SendCommand(1);
+                SendCommand(7);
+                SendCommand(18);
+                SendCommand(16);
+                SendCommand(21);
+                SendCommand(13);
+                SendCommand(30);
+                SendCommand(23);
+            } catch (Exception ex)
+            {
+                SetLogMessage?.Invoke(ex.Message);
+            }
         }
 
         public void ClosePort()

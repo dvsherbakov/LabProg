@@ -73,8 +73,7 @@ namespace LabControl.LogicModels
         public void SetMeasuredLevel(DistMeasureRes lvl)
         {
             f_MeasuredLvl = lvl;
-            if (f_IsPumpActive)
-                if (f_IsTwoPump) OperateTwoPump(); else OperatePump();
+            if (f_IsTwoPump) OperateTwoPump(); else OperatePump();
         }
 
         public void SetRequiredLvl(double lvl)
@@ -107,7 +106,7 @@ namespace LabControl.LogicModels
         private string GetPumpSpeed()
         {
             var subLevel = Math.Abs(f_RequiredLvl - f_MeasuredLvl.Dist);
-            
+
             return f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
         }
 
@@ -197,7 +196,7 @@ namespace LabControl.LogicModels
 
         private Direction GetDirection()
         {
-            var currentDifferent = f_RequiredLvl- f_MeasuredLvl.Dist;
+            var currentDifferent = f_RequiredLvl - f_MeasuredLvl.Dist;
             if (Math.Abs(currentDifferent) < 0.001) return Direction.Stop;
             var tmpDirection = (currentDifferent > 0);
             if (f_MeasuredLvl.IsSingle) tmpDirection = !tmpDirection;
@@ -205,7 +204,7 @@ namespace LabControl.LogicModels
             return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
         }
     }
-    
+
     internal enum Direction
     {
         Clockwise, CounterClockwise, Stop

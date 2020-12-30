@@ -127,7 +127,7 @@ namespace LabControl.ViewModels
         private string f_IncomingPumpSpeed;
         public string IncomingPumpSpeed
         {
-            get=> f_IncomingPumpSpeed;
+            get => f_IncomingPumpSpeed;
             set => Set(ref f_IncomingPumpSpeed, value);
         }
 
@@ -150,6 +150,17 @@ namespace LabControl.ViewModels
         {
             get => f_LaserPowerSetter;
             set => Set(ref f_LaserPowerSetter, value);
+        }
+
+        private int f_LaserPowerHistorySelectedItem;
+        public int LaserPowerHistorySelectedItem
+        {
+            get => f_LaserPowerHistorySelectedItem;
+            set
+            {
+                Set(ref f_LaserPowerHistorySelectedItem, value);
+                LaserPowerSetter = value;
+            }
         }
 
         private double f_CurrentTemperature;
@@ -725,6 +736,7 @@ namespace LabControl.ViewModels
         public ObservableCollection<string> LaserPortCollection { get; set; }
         public ObservableCollection<string> PyroPortCollection { get; set; }
         public ObservableCollection<string> PwrPortCollection { get; set; }
+        public ObservableCollection<int> LaserHistoryCollection { get; set; }
         #endregion
 
         #region StaticLabels
@@ -775,6 +787,7 @@ namespace LabControl.ViewModels
         public static string LabelReverse => Resources.LabelReverse;
         public static string LabelMicroCompressor => Resources.LabelMicroCompressor;
         public static string LabelGlassHeating => Resources.LabelGlassHeating;
+        public static string LaserPowerHistory => Resources.LaserPowerHistory;
         #endregion
 
 
@@ -783,6 +796,7 @@ namespace LabControl.ViewModels
         public ICommand MinimizedCommand { get; }
         public ICommand MaximizedCommand { get; }
         public ICommand StandardSizeCommand { get; }
+        public ICommand SetLaserPwrCommand { get; }
         #endregion
         public MainModel()
         {
@@ -800,6 +814,7 @@ namespace LabControl.ViewModels
             PyroPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             PwrPortSelected = Settings.Default.PwrPortSelected;
             PwrPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
+            LaserHistoryCollection = new ObservableCollection<int>() { 100, 200, 300 };
             CurWindowState = WindowState.Normal;
             //load params from settings
             WindowHeight = Settings.Default.WindowHeight == 0 ? 550 : Settings.Default.WindowHeight;
@@ -864,6 +879,7 @@ namespace LabControl.ViewModels
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
             StandardSizeCommand = new LambdaCommand(OnStandardSizeCommand);
+            SetLaserPwrCommand = new LambdaCommand(OnSetLaserPower);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -979,6 +995,12 @@ namespace LabControl.ViewModels
         {
             WindowHeight = 470;
             WindowWidth = 630;
+        }
+
+        private void OnSetLaserPower(object sender)
+        {
+            if (!LaserHistoryCollection.Contains(LaserPowerSetter))
+                LaserHistoryCollection.Insert(0, LaserPowerSetter);
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)

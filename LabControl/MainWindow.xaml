@@ -277,32 +277,32 @@
                                     Margin="1"
                                     BorderBrush="Aquamarine"
                                     CornerRadius="5" BorderThickness="1">
-                                        <StackPanel>
-                                            <Viewbox 
+                                        <Viewbox 
                                             Height="100">
-                                                <Border Margin="2"
+                                            <Border Margin="2"
                                                     BorderBrush="Bisque"
                                                     CornerRadius="7"
                                                     BorderThickness="2">
-                                                    <Canvas  
+                                                <Canvas  
                                                     ClipToBounds="True"
                                                     Width="{Binding ElementName=ConfocalViewBox, Path=ActualWidth}" 
                                                     Height="100"
                                                 >
-                                                        <Polyline Stroke="#48F" StrokeThickness="1"
+                                                    <Polyline Stroke="#48F" StrokeThickness="1"
                                                           Points="{Binding ConfocalLog, Converter={StaticResource PointConverter}}"
                                                           Canvas.Top="50"/>
-                                                    </Canvas>
-                                                </Border>
-                                            </Viewbox>
-                                            <StackPanel Orientation="Horizontal">
-
-                                            </StackPanel>
-                                        </StackPanel>
+                                                </Canvas>
+                                            </Border>
+                                        </Viewbox>
                                     </Border>
-                                    <DockPanel 
-                                        HorizontalAlignment="Stretch">
-                                        <Border Grid.Row="0" Grid.Column="1"
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0" Grid.Column="0"
                                                 Margin="1"
                                                 BorderBrush="Aquamarine"
                                                 CornerRadius="5" BorderThickness="1">
@@ -312,7 +312,7 @@
                                         </Border>
                                         <TextBlock/>
                                         <TextBlock />
-                                        <Border Grid.Row="0" Grid.Column="1"
+                                        <Border Grid.Row="0" Grid.Column="3"
                                                 Margin="1"
                                                 BorderBrush="Aquamarine"
                                                 CornerRadius="5" BorderThickness="1">
@@ -320,7 +320,7 @@
                                                 Style="{StaticResource PartTransparent}"
                                                 HorizontalAlignment="Center"/>
                                         </Border>
-                                    </DockPanel>
+                                    </Grid>
                                 </StackPanel>
                             </Expander>
                         </StackPanel>
@@ -369,6 +369,7 @@
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
+                                    <RowDefinition Height="28"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Grid.Column="0"
                                            VerticalAlignment="Center"
@@ -387,13 +388,13 @@
                                            Foreground="SandyBrown"
                                            Text ="{Binding LabelSetterPower}" />
                                 <TextBox Grid.Row="1" Grid.Column="1"
-                                     
                                      TextAlignment="Center"
                                      Text="{Binding LaserPowerSetter}"
                                      Style="{StaticResource PartTransparent}"
                                      Template="{StaticResource TextBoxBaseControlTemplate}"/>
                                 <Button 
                                     Grid.Row="1" Grid.Column="2"
+                                    Command="{Binding SetLaserPwrCommand}"
                                     Style="{StaticResource TransparentButton}">
                                     <Viewbox>
                                         <Grid>
@@ -409,8 +410,17 @@
                                 <TextBlock Grid.Row="2" Grid.Column="0"
                                            VerticalAlignment="Center" 
                                            Foreground="SandyBrown"
+                                           Text="{Binding LaserPowerHistory}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                              ItemsSource="{Binding LaserHistoryCollection}"
+                                              SelectedItem="{Binding LaserPowerHistorySelectedItem}"
+                                              Margin="0,1"/>
+                                <TextBlock Grid.Row="3" Grid.Column="0"
+                                           VerticalAlignment="Center" 
+                                           Foreground="SandyBrown"
                                            Text="{Binding LabelCurrentTemperature}"/>
-                                <Border Grid.Row="2" Grid.Column="1"
+                                <Border Grid.Row="3" Grid.Column="1"
                                     Margin="1"
                                     BorderBrush="Aquamarine"
                                     CornerRadius="5" BorderThickness="1">
