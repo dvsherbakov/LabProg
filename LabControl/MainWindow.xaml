@@ -130,6 +130,7 @@
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                           Width="40" Height="20"  
                                           Margin="1,6,1,6"
+                                              IsChecked="{Binding IsPumpPortsConnect}"
                                           />
                                 <TextBlock Padding="15,5" 
                                        Foreground="SandyBrown"
@@ -283,8 +284,9 @@
                                                     CornerRadius="7"
                                                     BorderThickness="2">
                                                 <Canvas  
-                                                Width="{Binding ElementName=ConfocalViewBox, Path=ActualWidth}" 
-                                                Height="100"
+                                                    ClipToBounds="True"
+                                                    Width="{Binding ElementName=ConfocalViewBox, Path=ActualWidth}" 
+                                                    Height="100"
                                                 >
                                                     <Polyline Stroke="#48F" StrokeThickness="1"
                                                           Points="{Binding ConfocalLog, Converter={StaticResource PointConverter}}"
@@ -292,11 +294,33 @@
                                                 </Canvas>
                                             </Border>
                                         </Viewbox>
-
                                     </Border>
-                                    <StackPanel Orientation="Horizontal">
-
-                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Row="0" Grid.Column="0"
+                                                Margin="1"
+                                                BorderBrush="Aquamarine"
+                                                CornerRadius="5" BorderThickness="1">
+                                            <TextBlock Text="{Binding IncomingPumpSpeed}"
+                                                Style="{StaticResource PartTransparent}"
+                                                HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <TextBlock/>
+                                        <TextBlock />
+                                        <Border Grid.Row="0" Grid.Column="3"
+                                                Margin="1"
+                                                BorderBrush="Aquamarine"
+                                                CornerRadius="5" BorderThickness="1">
+                                            <TextBlock Text="{Binding OutcomingPumpSpeed}"
+                                                Style="{StaticResource PartTransparent}"
+                                                HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </Grid>
                                 </StackPanel>
                             </Expander>
                         </StackPanel>
@@ -320,6 +344,7 @@
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                           Width="40" Height="20"  
                                           Margin="1,6,1,6"
+                                              IsChecked="{Binding IsLaserPortConnected}"
                                           />
                                 <TextBlock Padding="15,5" 
                                        Foreground="SandyBrown"
@@ -344,6 +369,7 @@
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
+                                    <RowDefinition Height="28"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Grid.Column="0"
                                            VerticalAlignment="Center"
@@ -362,13 +388,13 @@
                                            Foreground="SandyBrown"
                                            Text ="{Binding LabelSetterPower}" />
                                 <TextBox Grid.Row="1" Grid.Column="1"
-                                     
                                      TextAlignment="Center"
                                      Text="{Binding LaserPowerSetter}"
                                      Style="{StaticResource PartTransparent}"
                                      Template="{StaticResource TextBoxBaseControlTemplate}"/>
                                 <Button 
                                     Grid.Row="1" Grid.Column="2"
+                                    Command="{Binding SetLaserPwrCommand}"
                                     Style="{StaticResource TransparentButton}">
                                     <Viewbox>
                                         <Grid>
@@ -384,8 +410,17 @@
                                 <TextBlock Grid.Row="2" Grid.Column="0"
                                            VerticalAlignment="Center" 
                                            Foreground="SandyBrown"
+                                           Text="{Binding LaserPowerHistory}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                              ItemsSource="{Binding LaserHistoryCollection}"
+                                              SelectedItem="{Binding LaserPowerHistorySelectedItem}"
+                                              Margin="0,1"/>
+                                <TextBlock Grid.Row="3" Grid.Column="0"
+                                           VerticalAlignment="Center" 
+                                           Foreground="SandyBrown"
                                            Text="{Binding LabelCurrentTemperature}"/>
-                                <Border Grid.Row="2" Grid.Column="1"
+                                <Border Grid.Row="3" Grid.Column="1"
                                     Margin="1"
                                     BorderBrush="Aquamarine"
                                     CornerRadius="5" BorderThickness="1">
@@ -454,8 +489,9 @@
                                 Text="{Binding PowerSupplyTitle}" />
                             <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
-                                          Width="40" Height="20"  
-                                          Margin="1,6,1,6"
+                                              Width="40" Height="20"  
+                                              Margin="1,6,1,6"
+                                              IsChecked="{Binding IsPwrPortConnect}"
                                           />
                                 <TextBlock Padding="15,5" 
                                        Foreground="SandyBrown"
@@ -1380,7 +1416,7 @@
                 <ListView.View>
                     <GridView  ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle1}">
                         <GridViewColumn Width="Auto"  Header="#" DisplayMemberBinding="{Binding Current}"/>
-                        <GridViewColumn Width="Auto" Header="{Binding LogMessageHeader}" DisplayMemberBinding="{Binding Message}"/>
+                        <GridViewColumn Width="1050" Header="{Binding LogMessageHeader}" DisplayMemberBinding="{Binding Message}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

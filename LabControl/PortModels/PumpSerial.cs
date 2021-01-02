@@ -93,10 +93,15 @@ namespace LabControl.PortModels
 
         public void OpenPort()
         {
-            f_MPort.Open();
+            SetLogMessage?.Invoke($"Try connect pump on port {f_ComId}");
+            try
+            {
+                f_MPort.Open();
+            } catch (Exception ex)
+            {
+                SetLogMessage?.Invoke(ex.Message);
+            }
             Active = true;
-            //IsDriven = false;
-
         }
 
         public bool IsOpen => f_MPort.IsOpen;

@@ -21,6 +21,9 @@ namespace LabControl.PortModels
         private int lPwr;
         private int LaserType;
 
+        public delegate void LogMessage(string msg);
+        public event LogMessage SetLogMessage;
+
         public LaserSerial(string portStr)
         {
             _errList = new List<string>();
@@ -39,20 +42,25 @@ namespace LabControl.PortModels
             _mPort.DataReceived += DataReceivedHandler;
             _dPower = 0;
             DMaxPower = 0;
-
         }
 
         public void OpenPort()
         {
-            _mPort.Open();
-            SendCommand(1);
-            SendCommand(7);
-            SendCommand(18);
-            SendCommand(16);
-            SendCommand(21);
-            SendCommand(13);
-            SendCommand(30);
-            SendCommand(23);
+            try
+            {
+                _mPort.Open();
+                SendCommand(1);
+                SendCommand(7);
+                SendCommand(18);
+                SendCommand(16);
+                SendCommand(21);
+                SendCommand(13);
+                SendCommand(30);
+                SendCommand(23);
+            } catch (Exception ex)
+            {
+                SetLogMessage?.Invoke(ex.Message);
+            }
         }
 
         public void ClosePort()
@@ -84,6 +92,7 @@ namespace LabControl.PortModels
                 catch (Exception ex)
                 {
                     _errList.Add(ex.Message);
+                    SetLogMessage?.Invoke(ex.Message);
                 }
 
                 var ascii = Encoding.ASCII;
@@ -98,7 +107,7 @@ namespace LabControl.PortModels
             }
             catch (Exception ex)
             {
-                //Dispatcher.Invoke(() => windowLogBox.Items.Add(new LogBoxItem { Dt = DateTime.Now, LogText = "Приложение запущено" }));
+                SetLogMessage?.Invoke(ex.Message);
                 _errList.Add(ex.Message);
             }
         }

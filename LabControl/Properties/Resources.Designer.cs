@@ -511,6 +511,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на История мощности.
+        /// </summary>
+        internal static string LaserPowerHistory {
+            get {
+                return ResourceManager.GetString("LaserPowerHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Сообщение.
         /// </summary>
         internal static string LogHeaderColumn1Name {
