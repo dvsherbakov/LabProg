@@ -211,8 +211,8 @@ namespace LabControl.PortModels
             var bts = BitConverter.GetBytes(level);
             command.Add(bts[1]);
             command.Add(bts[0]);
-            Int16 sm = 0;
-            foreach (byte x in command)
+            short sm = 0;
+            foreach (var x in command)
                 sm += x;
             var cb = BitConverter.GetBytes(sm);
             command.Add(cb[0]);
@@ -224,7 +224,7 @@ namespace LabControl.PortModels
 
         public void SetPowerStart()
         {
-            List<byte> command = new List<byte> { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01 };
+            var command = new List<byte> { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01 };
 
             Int16 sm = 0;
             foreach (byte x in command)
