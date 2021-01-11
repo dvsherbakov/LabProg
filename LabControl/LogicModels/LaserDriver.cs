@@ -31,5 +31,10 @@ namespace LabControl.LogicModels
         {
             SetLogMessage?.Invoke(msg);
         }
+
+        public void SetPower(int pwr)
+        {
+            f_Port.SetPower(pwr);
+        }
     }
 }

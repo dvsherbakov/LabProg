@@ -999,6 +999,7 @@ namespace LabControl.ViewModels
 
         private void OnSetLaserPower(object sender)
         {
+            f_LaserDriver.SetPower(LaserPowerSetter);
             if (!LaserHistoryCollection.Contains(LaserPowerSetter))
                 LaserHistoryCollection.Insert(0, LaserPowerSetter);
         }
