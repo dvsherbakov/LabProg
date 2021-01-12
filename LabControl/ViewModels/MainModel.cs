@@ -201,6 +201,7 @@ namespace LabControl.ViewModels
                 if (value)
                 {
                     f_LaserDriver.ConnectToPort();
+                    f_LaserDriver.SetLaserType(LaserTypeSelectedIndex);
 
                 }
                 else f_LaserDriver.Disconnect();
@@ -241,8 +242,8 @@ namespace LabControl.ViewModels
         {
             get => f_LaserTypeSelectedIndex;
             set { 
-                Set(ref f_LaserTypeSelectedIndex, value); 
-                // f_LaserDriver
+                Set(ref f_LaserTypeSelectedIndex, value);
+                if (f_LaserDriver != null) f_LaserDriver.SetLaserType(value);
             }
         }
 
@@ -825,7 +826,7 @@ namespace LabControl.ViewModels
             IsTwoPump = Settings.Default.IsTwoPump;
             ConfocalLevelSetter = Settings.Default.ConfocalLevelSetter;
             LaserPowerSetter = Settings.Default.LaserPowerSetter;
-            LaserTypeSelectedIndex = Settings.Default.LaserTypeSelectedIndex;
+            
             PwrCh0Mode = Settings.Default.PwrCh0Mode;
             PwrCh0Bias = Settings.Default.PwrCh0Bias;
             PwrCh0Amplitude = Settings.Default.PwrCh0Amplitude;
@@ -904,6 +905,7 @@ namespace LabControl.ViewModels
             f_LaserDriver = new LaserDriver();
             f_LaserDriver.SetLogMessage += AddLogMessage;
             f_LaserDriver.PortString = Settings.Default.LaserPortSelected;
+            LaserTypeSelectedIndex = Settings.Default.LaserTypeSelectedIndex;
 
             f_PyroDriver = new PyroDriver();
             f_PyroDriver.SetLogMessage += AddLogMessage;
