@@ -69,7 +69,7 @@ namespace LabControl.LogicModels
                     {
                         SetLogMessage?.Invoke(ex.Message);
                     }
-                    //if (!IsTwoPump) OperatePump(x); else OperateTwoPump(x);
+                    
                     ObtainedDataEvent?.Invoke(x);
                 }
             }

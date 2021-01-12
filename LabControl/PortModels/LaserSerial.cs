@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using LabControl.ClassHelpers;
 
 namespace LabControl.PortModels
 {
     internal class LaserSerial
     {
-        private readonly SerialPort _mPort;
-        private readonly LaserCommand _lCommand;
+        private readonly SerialPort f_MPort;
+        private readonly LaserCommand f_LCommand;
         private static List<string> _errList;
         private static List<string> _msgList;
-        private int _dPower;
-        private int DMaxPower;
+        private int f_DPower;
+        private int f_DMaxPower;
         private float TempAmb;
-        private int lPwr;
-        private int LaserType;
+        private int f_LPwr;
+        private int f_LaserType;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -28,8 +26,8 @@ namespace LabControl.PortModels
         {
             _errList = new List<string>();
             _msgList = new List<string>();
-            if (portStr == "") portStr = "COM6";
-            _mPort = new SerialPort(portStr)
+            if (portStr.Length == 0) portStr = "COM6";
+            f_MPort = new SerialPort(portStr)
             {
                 BaudRate = 9600,
                 Parity = Parity.None,
@@ -38,17 +36,17 @@ namespace LabControl.PortModels
                 Handshake = Handshake.None,
                 RtsEnable = true
             };
-            _lCommand = new LaserCommand();
-            _mPort.DataReceived += DataReceivedHandler;
-            _dPower = 0;
-            DMaxPower = 0;
+            f_LCommand = new LaserCommand();
+            f_MPort.DataReceived += DataReceivedHandler;
+            f_DPower = 0;
+            f_DMaxPower = 0;
         }
 
         public void OpenPort()
         {
             try
             {
-                _mPort.Open();
+                f_MPort.Open();
                 SendCommand(1);
                 SendCommand(7);
                 SendCommand(18);
@@ -65,17 +63,17 @@ namespace LabControl.PortModels
 
         public void ClosePort()
         {
-            if (_mPort.IsOpen) _mPort.Close();
+            if (f_MPort.IsOpen) f_MPort.Close();
         }
 
         public int GetDPower()
         {
-            return _dPower;
+            return f_DPower;
         }
 
         public int GetMaxPower()
         {
-            return DMaxPower;
+            return f_DMaxPower;
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -84,10 +82,10 @@ namespace LabControl.PortModels
             try
             {
                 var cnt = sp.ReadBufferSize;
-                var mRxdata = new byte[cnt + 1];
+                var mXdata = new byte[cnt + 1];
                 try
                 {
-                    sp.Read(mRxdata, 0, cnt);
+                    sp.Read(mXdata, 0, cnt);
                 }
                 catch (Exception ex)
                 {
@@ -96,8 +94,8 @@ namespace LabControl.PortModels
                 }
 
                 var ascii = Encoding.ASCII;
-                var answrs = ascii.GetString(mRxdata).Split('\r');
-                foreach (var s in answrs)
+                var answers = ascii.GetString(mXdata).Split('\r');
+                foreach (var s in answers)
                 {
                     if ((s.Length > 3) && (s.Length < 50))
                         _msgList.Add(s);
@@ -114,28 +112,28 @@ namespace LabControl.PortModels
 
         private void SetResMatt(string res)
         {
-            var cmd = _lCommand.GetCommandByMem(res);
+            var cmd = f_LCommand.GetCommandByMem(res);
             switch (cmd)
             {
                 case 7:
-                    Match mpwr = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
-                    if (mpwr.Success)
-                        DMaxPower = Convert.ToInt32(mpwr.Groups[1].Value);
+                    var mPwr = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
+                    if (mPwr.Success)
+                        f_DMaxPower = Convert.ToInt32(mPwr.Groups[1].Value);
                     break;
                 case 9:
-                    var dpwr = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
-                    if (dpwr.Success)
-                        _dPower = Convert.ToInt32(dpwr.Groups[1].Value);
+                    var dPwr = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
+                    if (dPwr.Success)
+                        f_DPower = Convert.ToInt32(dPwr.Groups[1].Value);
                     break;
                 case 11:
-                    var tmpa = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
-                    if (tmpa.Success)
-                        TempAmb = Convert.ToInt32(tmpa.Groups[1].Value);
+                    var tMpa = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
+                    if (tMpa.Success)
+                        TempAmb = Convert.ToInt32(tMpa.Groups[1].Value);
                     break;
                 case 16:
-                    var lpwr = res.Substring(4);
-                    int b = Convert.ToInt32(lpwr, 16);
-                    lPwr = (int)(b * 800 / 4095);
+                    var lPwr = res.Substring(4);
+                    var b = Convert.ToInt32(lPwr, 16);
+                    f_LPwr = b * 800 / 4095;
                     break;
                 default:
                     break;
@@ -144,18 +142,18 @@ namespace LabControl.PortModels
 
         private void SendCommand(int cmd)
         {
-            if (_mPort.IsOpen)
-                _mPort.Write(_lCommand.GetCmdById(cmd).SCommand);
+            if (f_MPort.IsOpen)
+                f_MPort.Write(f_LCommand.GetCmdById(cmd).SCommand);
         }
 
         public void SetPower(int pwr)
         {
-            if (this.LaserType == 0)
+            if (this.f_LaserType == 0)
             {
-                var cmd = _lCommand.SetPowerLvl(pwr);
-                if (_mPort.IsOpen)
+                var cmd = f_LCommand.SetPowerLvl(pwr);
+                if (f_MPort.IsOpen)
                 {
-                    _mPort.Write(cmd.SCommand);
+                    f_MPort.Write(cmd.SCommand);
                 }
             }
             else SetPowerLevel(pwr);
@@ -163,12 +161,12 @@ namespace LabControl.PortModels
 
         public int GetLasePower()
         {
-            return lPwr;
+            return f_LPwr;
         }
 
         public void SetOn()
         {
-            if (LaserType == 0)
+            if (f_LaserType == 0)
             {
                 SendCommand(35);
                 SendCommand(37);
@@ -178,7 +176,7 @@ namespace LabControl.PortModels
 
         public void SetOff()
         {
-            if (LaserType == 0)
+            if (f_LaserType == 0)
             {
                 SendCommand(36);
                 SendCommand(38);
@@ -188,26 +186,24 @@ namespace LabControl.PortModels
 
         private void Start()
         {
-            if (LaserType == 1) SetPowerStart();
+            if (f_LaserType == 1) SetPowerStart();
             else
             {
                 var cmd = new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01, 0x63, 0x0D };
-                _mPort.Write(cmd, 0, 8);
+                f_MPort.Write(cmd, 0, 8);
             }
         }
 
         private void Stop()
         {
-            if (_mPort.IsOpen)
-            {
-                var cmd = new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
-                _mPort.Write(cmd, 0, 8);
-            }
+            if (!f_MPort.IsOpen) return;
+            var cmd = new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
+            f_MPort.Write(cmd, 0, 8);
         }
 
-        public void SetPowerLevel(int level)
+        private void SetPowerLevel(int level)
         {
-            List<byte> command = new List<byte> { 0x53, 0x08, 0x04, 0x01 };
+            var command = new List<byte> { 0x53, 0x08, 0x04, 0x01 };
             var bts = BitConverter.GetBytes(level);
             command.Add(bts[1]);
             command.Add(bts[0]);
@@ -219,27 +215,27 @@ namespace LabControl.PortModels
             command.Add(0x0D);
 
             var cmd = command.ToArray();
-            _mPort.Write(cmd, 0, 8);
+            f_MPort.Write(cmd, 0, 8);
         }
 
-        public void SetPowerStart()
+        private void SetPowerStart()
         {
             var command = new List<byte> { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01 };
 
-            Int16 sm = 0;
-            foreach (byte x in command)
+            short sm = 0;
+            foreach (var x in command)
                 sm += x;
             var cb = BitConverter.GetBytes(sm);
             command.Add(cb[0]);
             command.Add(0x0D);
 
             var cmd = command.ToArray();
-            _mPort.Write(cmd, 0, 8);
+            f_MPort.Write(cmd, 0, 8);
         }
 
         public void SetLaserType(int tp)
         {
-            LaserType = tp;
+            f_LaserType = tp;
         }
     }
 }
