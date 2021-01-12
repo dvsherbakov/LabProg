@@ -36,5 +36,10 @@ namespace LabControl.LogicModels
         {
             f_Port.SetPower(pwr);
         }
+
+        public void SetLaserType(int tp)
+        {
+            f_Port.SetLaserType(tp);
+        }
     }
 }

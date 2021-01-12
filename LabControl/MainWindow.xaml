@@ -430,7 +430,7 @@
                                 </Border>
                             </Grid>
                             <Expander Padding="5"
-                                  Header=""
+                                  Header="{Binding LabelSettings}"
                                   Foreground="SandyBrown">
                                 <Grid Margin="15,0,0,0">
                                     <Grid.RowDefinitions>

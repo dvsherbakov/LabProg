@@ -240,7 +240,10 @@ namespace LabControl.ViewModels
         public int LaserTypeSelectedIndex
         {
             get => f_LaserTypeSelectedIndex;
-            set => Set(ref f_LaserTypeSelectedIndex, value);
+            set { 
+                Set(ref f_LaserTypeSelectedIndex, value); 
+                // f_LaserDriver
+            }
         }
 
         private bool f_IsPwrPortConnect;
