@@ -13,17 +13,30 @@ namespace LabControl.DataModels
         public DataInit()
         {
             if (File.Exists("MyDatabase.sqlite")) return;
-            SQLiteConnection.CreateFile("MyDatabase.sqlite");
+
+            var con = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
+            var commands = new List<SQLiteCommand> {GetTestTable(con)};
+
+            con.Open();
+            using (var transaction = con.BeginTransaction())
+            {
+                foreach (var command in commands)
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+            }
+        }
+
+        private static SQLiteCommand GetTestTable(SQLiteConnection con)
+        {
             const string sql = @"CREATE TABLE Student(
                                ID INTEGER PRIMARY KEY AUTOINCREMENT,
                                FirstName           TEXT      NOT NULL,
                                LastName            TEXT       NOT NULL
                             );";
-            var con = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
-            con.Open();
-            var cmd = new SQLiteCommand(sql, con);
-            cmd.ExecuteNonQuery();
-            con.Close();
+            return new SQLiteCommand(sql, con);
         }
     }
 }
