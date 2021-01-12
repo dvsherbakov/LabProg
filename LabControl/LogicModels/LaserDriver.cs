@@ -24,12 +24,31 @@ namespace LabControl.LogicModels
 
         public void Disconnect()
         {
-            f_Port.ClosePort();
+            if (f_Port != null) f_Port.ClosePort();
         }
 
         private void TestLog(string msg)
         {
             SetLogMessage?.Invoke(msg);
         }
+
+        public void SetPower(int pwr)
+        {
+            if (f_Port != null) f_Port.SetPower(pwr);
+        }
+
+        public void SetLaserType(int tp)
+        {
+            if (f_Port!=null) f_Port.SetLaserType(tp);
+        }
+
+        public void EmitOn(bool isEmit)
+        {
+            if (f_Port != null) {
+                if (isEmit) f_Port.SetOn();
+                else f_Port.SetOff();
+            }
+        }
+
     }
 }

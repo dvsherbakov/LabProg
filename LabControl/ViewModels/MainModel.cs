@@ -201,9 +201,21 @@ namespace LabControl.ViewModels
                 if (value)
                 {
                     f_LaserDriver.ConnectToPort();
+                    f_LaserDriver.SetLaserType(LaserTypeSelectedIndex);
 
                 }
                 else f_LaserDriver.Disconnect();
+            }
+        }
+
+        private bool f_IsLaserEmit;
+        public bool IsLaserEmit
+        {
+            get => f_IsLaserEmit;
+            set {
+                if (!IsLaserPortConnected) IsLaserPortConnected = true;
+                Set(ref f_IsLaserEmit, value);
+                if (f_LaserDriver != null) f_LaserDriver.EmitOn(value);
             }
         }
 
@@ -240,7 +252,10 @@ namespace LabControl.ViewModels
         public int LaserTypeSelectedIndex
         {
             get => f_LaserTypeSelectedIndex;
-            set => Set(ref f_LaserTypeSelectedIndex, value);
+            set { 
+                Set(ref f_LaserTypeSelectedIndex, value);
+                if (f_LaserDriver != null) f_LaserDriver.SetLaserType(value);
+            }
         }
 
         private bool f_IsPwrPortConnect;
@@ -822,7 +837,7 @@ namespace LabControl.ViewModels
             IsTwoPump = Settings.Default.IsTwoPump;
             ConfocalLevelSetter = Settings.Default.ConfocalLevelSetter;
             LaserPowerSetter = Settings.Default.LaserPowerSetter;
-            LaserTypeSelectedIndex = Settings.Default.LaserTypeSelectedIndex;
+            
             PwrCh0Mode = Settings.Default.PwrCh0Mode;
             PwrCh0Bias = Settings.Default.PwrCh0Bias;
             PwrCh0Amplitude = Settings.Default.PwrCh0Amplitude;
@@ -901,6 +916,7 @@ namespace LabControl.ViewModels
             f_LaserDriver = new LaserDriver();
             f_LaserDriver.SetLogMessage += AddLogMessage;
             f_LaserDriver.PortString = Settings.Default.LaserPortSelected;
+            LaserTypeSelectedIndex = Settings.Default.LaserTypeSelectedIndex;
 
             f_PyroDriver = new PyroDriver();
             f_PyroDriver.SetLogMessage += AddLogMessage;
@@ -999,6 +1015,7 @@ namespace LabControl.ViewModels
 
         private void OnSetLaserPower(object sender)
         {
+            f_LaserDriver.SetPower(LaserPowerSetter);
             if (!LaserHistoryCollection.Contains(LaserPowerSetter))
                 LaserHistoryCollection.Insert(0, LaserPowerSetter);
         }

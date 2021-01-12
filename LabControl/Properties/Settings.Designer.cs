@@ -790,5 +790,17 @@ namespace LabControl.Properties {
                 this["IsRevereSecondPump"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsLaserEmit {
+            get {
+                return ((bool)(this["IsLaserEmit"]));
+            }
+            set {
+                this["IsLaserEmit"] = value;
+            }
+        }
     }
 }
