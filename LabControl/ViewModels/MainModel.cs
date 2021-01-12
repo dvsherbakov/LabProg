@@ -208,6 +208,17 @@ namespace LabControl.ViewModels
             }
         }
 
+        private bool f_IsLaserEmit;
+        public bool IsLaserEmit
+        {
+            get => f_IsLaserEmit;
+            set {
+                if (!IsLaserPortConnected) IsLaserPortConnected = true;
+                Set(ref f_IsLaserEmit, value);
+                if (f_LaserDriver != null) f_LaserDriver.EmitOn(value);
+            }
+        }
+
         private string f_LaserPortSelected;
         public string LaserPortSelected
         {
