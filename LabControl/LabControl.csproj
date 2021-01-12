@@ -99,7 +99,9 @@
     <Compile Include="ClassHelpers\PwrItem.cs" />
     <Compile Include="ClassHelpers\PwrParams.cs" />
     <Compile Include="ClassHelpers\SpeedGradeItem.cs" />
+    <Compile Include="DataModels\ApplicationContext.cs" />
     <Compile Include="DataModels\DataInit.cs" />
+    <Compile Include="DataModels\Log.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="LogicModels\ConfocalDriver.cs" />
     <Compile Include="LogicModels\LaserDriver.cs" />

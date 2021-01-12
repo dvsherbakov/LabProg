@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Windows;
 using System.Windows.Input;
 using LabControl.ClassHelpers;
+using LabControl.DataModels;
 using LabControl.LogicModels;
 using LabControl.Properties;
 
@@ -10,6 +12,7 @@ namespace LabControl.ViewModels
 {
     internal class MainModel : ViewModel
     {
+        private readonly ApplicationContext f_DbContext;
         #region drivers
         private readonly PumpDriver f_PumpDriver;
         private readonly ConfocalDriver f_ConfocalDriver;
@@ -212,7 +215,8 @@ namespace LabControl.ViewModels
         public bool IsLaserEmit
         {
             get => f_IsLaserEmit;
-            set {
+            set
+            {
                 if (!IsLaserPortConnected) IsLaserPortConnected = true;
                 Set(ref f_IsLaserEmit, value);
                 if (f_LaserDriver != null) f_LaserDriver.EmitOn(value);
@@ -252,7 +256,8 @@ namespace LabControl.ViewModels
         public int LaserTypeSelectedIndex
         {
             get => f_LaserTypeSelectedIndex;
-            set { 
+            set
+            {
                 Set(ref f_LaserTypeSelectedIndex, value);
                 if (f_LaserDriver != null) f_LaserDriver.SetLaserType(value);
             }
@@ -815,6 +820,9 @@ namespace LabControl.ViewModels
         #endregion
         public MainModel()
         {
+            // Data context
+            f_DbContext = new ApplicationContext();
+            f_DbContext.Logs.Load();
             // init collections
             ConfocalLog = new[] { 0d, .40d, .3d };
             LogCollection = new ObservableCollection<LogItem>();
@@ -837,7 +845,7 @@ namespace LabControl.ViewModels
             IsTwoPump = Settings.Default.IsTwoPump;
             ConfocalLevelSetter = Settings.Default.ConfocalLevelSetter;
             LaserPowerSetter = Settings.Default.LaserPowerSetter;
-            
+
             PwrCh0Mode = Settings.Default.PwrCh0Mode;
             PwrCh0Bias = Settings.Default.PwrCh0Bias;
             PwrCh0Amplitude = Settings.Default.PwrCh0Amplitude;
@@ -927,11 +935,16 @@ namespace LabControl.ViewModels
 
         private void AddLogMessage(string message)
         {
-            Application.Current.Dispatcher.Invoke(() => LogCollection.Insert(0, new LogItem(DateTime.Now, message)));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                LogCollection.Insert(0, new LogItem(DateTime.Now, message));
+                f_DbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
+            });
         }
 
         private void OnQuitApp(object p)
         {
+            f_DbContext.SaveChanges();
             Settings.Default.WindowHeight = WindowHeight;
             Settings.Default.WindowWidth = WindowWidth;
             Settings.Default.IsTwoPump = IsTwoPump;
@@ -994,6 +1007,7 @@ namespace LabControl.ViewModels
             Settings.Default.IsRevereFirstPump = IsRevereFirstPump;
             Settings.Default.IsRevereSecondPump = IsRevereSecondPump;
             Settings.Default.Save();
+            f_DbContext.Dispose();
             Application.Current.Shutdown();
         }
 
