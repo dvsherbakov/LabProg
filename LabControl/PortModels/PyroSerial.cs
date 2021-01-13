@@ -17,6 +17,9 @@ namespace LabControl.PortModels
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
+        public delegate void PyroEventHandler(float temperature);
+        public event PyroEventHandler EventHandler;
+
         public PyroSerial(string port)
         {
             
@@ -66,6 +69,7 @@ namespace LabControl.PortModels
             float t = RcConvert(_rxdata);
             _tempLog.Add(_rxidx, t);
             _rxidx++;
+            EventHandler?.Invoke(t);
         }
 
         private static float RcConvert(byte[] rData)
