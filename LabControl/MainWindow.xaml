@@ -1388,6 +1388,19 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem VerticalAlignment="Center" 
+                         Style="{DynamicResource TabItemStyle}"
+                         HorizontalAlignment="Center" >
+                    <TabItem.Header>
+                        <Viewbox Width="50" Height="50">
+                            <ContentControl Content="{StaticResource PyroIcon}" Margin="5"/>
+                        </Viewbox>
+                    </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
             </TabControl>
             <GridSplitter 
                 ResizeDirection="Columns" 
