@@ -802,5 +802,17 @@ namespace LabControl.Properties {
                 this["IsLaserEmit"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPyroPortConnected {
+            get {
+                return ((bool)(this["IsPyroPortConnected"]));
+            }
+            set {
+                this["IsPyroPortConnected"] = value;
+            }
+        }
     }
 }

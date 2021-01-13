@@ -746,6 +746,14 @@ namespace LabControl.ViewModels
             get => f_ConfocalLog;
             set => Set(ref f_ConfocalLog, value);
         }
+
+        private bool f_IsPyroPortConnected;
+
+        public bool IsPyroPortConnected
+        {
+            get => f_IsPyroPortConnected;
+            set => Set(ref f_IsPyroPortConnected, value);
+        }
         #endregion
 
         #region Collections
@@ -779,6 +787,7 @@ namespace LabControl.ViewModels
         public static string LabelPyroPort => Resources.LabelPyroPort;
         public static string LabelLaserType => Resources.LabelLaserType;
         public static string PowerSupplyTitle => Resources.PowerSuplyTitle;
+        public static string PyroOperationTitle => Resources.PyroOperationTitle;
         public static string LabelUfLed1 => Resources.LabelUfLed1;
         public static string LabelUfLed2 => Resources.LabelUfLed2;
         public static string LabelChannelsSwitch => Resources.LabelChanelsSwitch;
@@ -808,6 +817,7 @@ namespace LabControl.ViewModels
         public static string LabelMicroCompressor => Resources.LabelMicroCompressor;
         public static string LabelGlassHeating => Resources.LabelGlassHeating;
         public static string LaserPowerHistory => Resources.LaserPowerHistory;
+        
         #endregion
 
 
@@ -897,6 +907,7 @@ namespace LabControl.ViewModels
             PwrCh5MaxAmps = Settings.Default.PwrCh5MaxAmps;
             IsRevereFirstPump = Settings.Default.IsRevereFirstPump;
             IsRevereSecondPump = Settings.Default.IsRevereSecondPump;
+            IsPyroPortConnected = Settings.Default.IsPyroPortConnected;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -1006,6 +1017,7 @@ namespace LabControl.ViewModels
             Settings.Default.PwrCh5MaxAmps = PwrCh5MaxAmps;
             Settings.Default.IsRevereFirstPump = IsRevereFirstPump;
             Settings.Default.IsRevereSecondPump = IsRevereSecondPump;
+            Settings.Default.IsPyroPortConnected = IsPyroPortConnected;
             Settings.Default.Save();
             f_DbContext.Dispose();
             Application.Current.Shutdown();

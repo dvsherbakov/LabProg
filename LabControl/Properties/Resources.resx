@@ -282,4 +282,7 @@
   <data name="LaserPowerHistory" xml:space="preserve">
     <value>История мощности</value>
   </data>
+  <data name="PyroOperationTitle" xml:space="preserve">
+    <value>Управление пирометром</value>
+  </data>
 </root>

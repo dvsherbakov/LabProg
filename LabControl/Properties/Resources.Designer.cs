@@ -554,5 +554,14 @@ namespace LabControl.Properties {
                 return ResourceManager.GetString("PumpOperationTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Управление пирометром.
+        /// </summary>
+        internal static string PyroOperationTitle {
+            get {
+                return ResourceManager.GetString("PyroOperationTitle", resourceCulture);
+            }
+        }
     }
 }

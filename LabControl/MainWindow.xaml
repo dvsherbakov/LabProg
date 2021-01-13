@@ -1393,11 +1393,25 @@
                          HorizontalAlignment="Center" >
                     <TabItem.Header>
                         <Viewbox Width="50" Height="50">
-                            <ContentControl Content="{StaticResource PyroIcon}" Margin="5"/>
+                            <ContentControl Content="{StaticResource PyroIcon}" Margin="0,0,120,0" />
                         </Viewbox>
                     </TabItem.Header>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
+                            <TextBlock 
+                                    TextAlignment="Center" 
+                                    Foreground="SandyBrown" 
+                                    Text="{Binding PyroOperationTitle}" />
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                              Width="40" Height="20"  
+                                              Margin="1,6,1,6"
+                                              IsChecked="{Binding IsPyroPortConnected}"
+                                />
+                                <TextBlock Padding="15,5" 
+                                           Foreground="SandyBrown"
+                                           Text="{Binding LabelPortConnection}" />
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
