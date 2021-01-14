@@ -437,7 +437,6 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="28"/>
                                         <RowDefinition Height="28"/>
-                                        <RowDefinition Height="28"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="4*" />
@@ -454,16 +453,8 @@
                                     <TextBlock Grid.Row="1" Grid.Column="0"
                                                VerticalAlignment="Center"
                                                Foreground="SandyBrown"
-                                               Text="{Binding LabelPyroPort}"/>
-                                    <ComboBox Grid.Row="1" Grid.Column="1"
-                                              ItemsSource="{Binding PyroPortCollection}"
-                                              SelectedItem="{Binding PyroPortSelected}"
-                                              Margin="0,1"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="0"
-                                               VerticalAlignment="Center"
-                                               Foreground="SandyBrown"
                                                Text="{Binding LabelLaserType}" />
-                                    <ComboBox Grid.Row="2" Grid.Column="1"
+                                    <ComboBox Grid.Row="1" Grid.Column="1"
                                               SelectedIndex="{Binding LaserTypeSelectedIndex}"
                                               Margin="0,1">
                                         <TextBlock>Omicron</TextBlock>
@@ -1412,15 +1403,28 @@
                                            Foreground="SandyBrown"
                                            Text="{Binding LabelPortConnection}" />
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
-                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
-                                              Width="40" Height="20"  
-                                              Margin="1,6,1,6"
-                                              IsChecked="{Binding IsPyroActive}" />
-                                <TextBlock Padding="15,5" 
-                                           Foreground="SandyBrown"
-                                           Text="{Binding LabelConfocalActive}" />
-                            </StackPanel>
+                            <Expander Padding="5"
+                                  Header="{Binding LabelSettings}"
+                                  Foreground="SandyBrown">
+                                <Grid Margin="15,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="28"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                               VerticalAlignment="Center"
+                                               Foreground="SandyBrown"
+                                               Text="{Binding LabelPyroPort}"/>
+                                    <ComboBox Grid.Row="0" Grid.Column="1"
+                                              ItemsSource="{Binding PyroPortCollection}"
+                                              SelectedItem="{Binding PyroPortSelected}"
+                                              Margin="0,1"/>
+                                </Grid>
+                            </Expander>
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>

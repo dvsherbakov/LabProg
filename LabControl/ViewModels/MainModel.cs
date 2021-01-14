@@ -238,7 +238,11 @@ namespace LabControl.ViewModels
         public string PyroPortSelected
         {
             get => f_PyroPortSelected;
-            set => Set(ref f_PyroPortSelected, value);
+            set
+            {
+                Set(ref f_PyroPortSelected, value);
+                if (f_PyroDriver != null) f_PyroDriver.PortStr = value;
+            }
         }
 
         private string f_PwrPortSelected;
@@ -751,7 +755,12 @@ namespace LabControl.ViewModels
         public bool IsPyroPortConnected
         {
             get => f_IsPyroPortConnected;
-            set => Set(ref f_IsPyroPortConnected, value);
+            set
+            {
+                Set(ref f_IsPyroPortConnected, value);
+                if (value) f_PyroDriver.ConnectToPort();
+                else f_PyroDriver.Disconnect();
+            }
         }
 
         private bool f_IsPyroActive;
@@ -823,7 +832,7 @@ namespace LabControl.ViewModels
         public static string LabelMicroCompressor => Resources.LabelMicroCompressor;
         public static string LabelGlassHeating => Resources.LabelGlassHeating;
         public static string LaserPowerHistory => Resources.LaserPowerHistory;
-        
+
         #endregion
 
 
@@ -913,7 +922,6 @@ namespace LabControl.ViewModels
             PwrCh5MaxAmps = Settings.Default.PwrCh5MaxAmps;
             IsRevereFirstPump = Settings.Default.IsRevereFirstPump;
             IsRevereSecondPump = Settings.Default.IsRevereSecondPump;
-            IsPyroPortConnected = Settings.Default.IsPyroPortConnected;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -1023,7 +1031,6 @@ namespace LabControl.ViewModels
             Settings.Default.PwrCh5MaxAmps = PwrCh5MaxAmps;
             Settings.Default.IsRevereFirstPump = IsRevereFirstPump;
             Settings.Default.IsRevereSecondPump = IsRevereSecondPump;
-            Settings.Default.IsPyroPortConnected = IsPyroPortConnected;
             Settings.Default.Save();
             f_DbContext.Dispose();
             Application.Current.Shutdown();
