@@ -767,7 +767,11 @@ namespace LabControl.ViewModels
         public bool IsPyroActive
         {
             get => f_IsPyroActive;
-            set => Set(ref f_IsPyroActive, value);
+            set
+            {
+                Set(ref f_IsPyroActive, value);
+                f_PyroDriver.SetMeasuring(value);
+            }
         }
         #endregion
 

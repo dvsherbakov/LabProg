@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LabControl.LogicModels
 {
-    class PyroDriver
+    internal class PyroDriver
     {
         public string PortStr { get; set; }
         private PyroSerial f_Port;
@@ -19,7 +19,7 @@ namespace LabControl.LogicModels
         {
             f_Port = new PyroSerial(PortStr);
             f_Port.SetLogMessage += TestLog;
-            f_Port.OpenPort();
+            PyroSerial.OpenPort();
         }
 
         public void Disconnect()
@@ -30,6 +30,11 @@ namespace LabControl.LogicModels
         private void TestLog(string msg)
         {
             SetLogMessage?.Invoke(msg);
+        }
+
+        public void SetMeasuring(bool isMeasuring)
+        {
+            if (isMeasuring) f_Port.StartMeasuring(); else f_Port.StopMeasuring();
         }
     }
 }
