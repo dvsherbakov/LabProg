@@ -15,10 +15,14 @@ namespace LabControl.LogicModels
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
+        public delegate void PyroEventHandler(float temperature);
+        public event PyroSerial.PyroEventHandler EventHandler;
+
         public void ConnectToPort()
         {
             f_Port = new PyroSerial(PortStr);
             f_Port.SetLogMessage += TestLog;
+            f_Port.EventHandler += HandleEvent;
             PyroSerial.OpenPort();
         }
 
@@ -32,9 +36,15 @@ namespace LabControl.LogicModels
             SetLogMessage?.Invoke(msg);
         }
 
+        private void HandleEvent(float t)
+        {
+            EventHandler?.Invoke(t);
+        }
+
         public void SetMeasuring(bool isMeasuring)
         {
             if (isMeasuring) f_Port.StartMeasuring(); else f_Port.StopMeasuring();
         }
+
     }
 }

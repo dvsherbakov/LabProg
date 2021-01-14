@@ -773,6 +773,14 @@ namespace LabControl.ViewModels
                 f_PyroDriver.SetMeasuring(value);
             }
         }
+
+        private float f_PyroTemperature;
+
+        public float PyroTemperature
+        {
+            get => f_PyroTemperature;
+            set => Set(ref f_PyroTemperature, value);
+        }
         #endregion
 
         #region Collections
@@ -836,7 +844,8 @@ namespace LabControl.ViewModels
         public static string LabelMicroCompressor => Resources.LabelMicroCompressor;
         public static string LabelGlassHeating => Resources.LabelGlassHeating;
         public static string LaserPowerHistory => Resources.LaserPowerHistory;
-
+        public static string LabelTemperature => Resources.LabelTemperature;
+        public static string DispenserOperationTitle => Resources.DispenserOperationTitle;
         #endregion
 
 
@@ -957,6 +966,7 @@ namespace LabControl.ViewModels
 
             f_PyroDriver = new PyroDriver();
             f_PyroDriver.SetLogMessage += AddLogMessage;
+            f_PyroDriver.EventHandler += PyroHandler;
             f_PyroDriver.PortStr = Settings.Default.PyroPortSelected;
 
             AddLogMessage("Application Started");
@@ -969,6 +979,11 @@ namespace LabControl.ViewModels
                 LogCollection.Insert(0, new LogItem(DateTime.Now, message));
                 f_DbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
             });
+        }
+
+        private void PyroHandler(float temperature)
+        {
+            Application.Current.Dispatcher.Invoke(() => { PyroTemperature = temperature; });
         }
 
         private void OnQuitApp(object p)

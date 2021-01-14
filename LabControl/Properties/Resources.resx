@@ -285,4 +285,10 @@
   <data name="PyroOperationTitle" xml:space="preserve">
     <value>Управление пирометром</value>
   </data>
+  <data name="DispenserOperationTitle" xml:space="preserve">
+    <value>Управление диспенсером</value>
+  </data>
+  <data name="LabelTemperature" xml:space="preserve">
+    <value>Температура</value>
+  </data>
 </root>

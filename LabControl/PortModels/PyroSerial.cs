@@ -10,7 +10,6 @@ namespace LabControl.PortModels
         private static SerialPort _port;
         private byte[] f_RxData;
         private long f_RxIdx;
-        private static readonly List<string> ErrList = new List<string>();
         private readonly Dictionary<long, float> f_TempLog = new Dictionary<long, float>();
         private readonly Timer f_ATimer = new Timer();
 
@@ -72,7 +71,6 @@ namespace LabControl.PortModels
             }
             catch (Exception ex)
             {
-                ErrList.Add(ex.Message);
                 SetLogMessage?.Invoke(ex.Message);
             }
             var t = RcConvert(f_RxData);
@@ -85,7 +83,7 @@ namespace LabControl.PortModels
         {
             while (rData[0] > 10)
             {
-                var tLst = new List<Byte>(rData);
+                var tLst = new List<byte>(rData);
                 tLst.RemoveAt(0);
                 rData = tLst.ToArray();
             }
@@ -98,7 +96,7 @@ namespace LabControl.PortModels
             return (res - 1000) / 10;
         }
 
-        private static void Write(byte[] buf)
+        private void Write(byte[] buf)
         {
             try
             {
@@ -106,11 +104,12 @@ namespace LabControl.PortModels
             }
             catch (Exception ex)
             {
-                ErrList.Add(ex.Message);
+                //ErrList.Add(ex.Message);
+                SetLogMessage?.Invoke(ex.Message);
             }
         }
 
-        private static void OnTimedEvent(object source, ElapsedEventArgs e)
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             byte[] buf = { 01 };
             Write(buf);
@@ -118,7 +117,7 @@ namespace LabControl.PortModels
 
         public float GetLastRes()
         {
-            f_TempLog.TryGetValue(f_RxIdx - 1, out float val);
+            f_TempLog.TryGetValue(f_RxIdx - 1, out var val);
             return val;
         }
     }

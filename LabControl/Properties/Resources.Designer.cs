@@ -61,6 +61,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Управление диспенсером.
+        /// </summary>
+        internal static string DispenserOperationTitle {
+            get {
+                return ResourceManager.GetString("DispenserOperationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Включение каналов:.
         /// </summary>
         internal static string LabelChanelsSwitch {
@@ -462,6 +471,15 @@ namespace LabControl.Properties {
         internal static string LabelSettings {
             get {
                 return ResourceManager.GetString("LabelSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Температура.
+        /// </summary>
+        internal static string LabelTemperature {
+            get {
+                return ResourceManager.GetString("LabelTemperature", resourceCulture);
             }
         }
         

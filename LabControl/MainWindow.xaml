@@ -1411,7 +1411,28 @@
                                 <TextBlock Padding="15,5" 
                                            Foreground="SandyBrown"
                                            Text="{Binding LabelConfocalActive}" />
-                                </StackPanel>
+                            </StackPanel>
+                            <Grid Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="28"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Foreground="SandyBrown" 
+                                           Text="{Binding LabelTemperature}"/>
+                                <Border Grid.Row="0" Grid.Column="1"
+                                        Margin="1"
+                                        BorderBrush="Aquamarine"
+                                        CornerRadius="5" BorderThickness="1">
+                                    <TextBlock Text="{Binding PyroTemperature}"
+                                               Style="{StaticResource PartTransparent}"
+                                               HorizontalAlignment="Center"/>
+                                </Border>
+                            </Grid>
                             <Expander Padding="5"
                                   Header="{Binding LabelSettings}"
                                   Foreground="SandyBrown">
@@ -1434,6 +1455,23 @@
                                               Margin="0,1"/>
                                 </Grid>
                             </Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem VerticalAlignment="Center" 
+                         Style="{DynamicResource TabItemStyle}"
+                         HorizontalAlignment="Center" >
+                    <TabItem.Header>
+                        <Viewbox Width="50" Height="50">
+                            <ContentControl Content="{StaticResource DispenserIcon}" Margin="2" />
+                        </Viewbox>
+                    </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock 
+                                TextAlignment="Center" 
+                                Foreground="SandyBrown" 
+                                Text="{Binding DispenserOperationTitle}" />
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
