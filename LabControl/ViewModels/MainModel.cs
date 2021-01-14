@@ -748,11 +748,17 @@ namespace LabControl.ViewModels
         }
 
         private bool f_IsPyroPortConnected;
-
         public bool IsPyroPortConnected
         {
             get => f_IsPyroPortConnected;
             set => Set(ref f_IsPyroPortConnected, value);
+        }
+
+        private bool f_IsPyroActive;
+        public bool IsPyroActive
+        {
+            get => f_IsPyroActive;
+            set => Set(ref f_IsPyroActive, value);
         }
         #endregion
 

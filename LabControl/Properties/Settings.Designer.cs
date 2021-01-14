@@ -814,5 +814,17 @@ namespace LabControl.Properties {
                 this["IsPyroPortConnected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPyroActive {
+            get {
+                return ((bool)(this["IsPyroActive"]));
+            }
+            set {
+                this["IsPyroActive"] = value;
+            }
+        }
     }
 }
