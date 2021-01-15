@@ -103,6 +103,7 @@
     <Compile Include="DataModels\ApplicationContext.cs" />
     <Compile Include="DataModels\DataInit.cs" />
     <Compile Include="DataModels\Log.cs" />
+    <Compile Include="DataModels\Temperature.cs" />
     <Compile Include="LambdaCommand.cs" />
     <Compile Include="LogicModels\ConfocalDriver.cs" />
     <Compile Include="LogicModels\LaserDriver.cs" />

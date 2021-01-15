@@ -15,7 +15,7 @@ namespace LabControl.DataModels
             if (File.Exists("MyDatabase.sqlite")) return;
 
             var con = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
-            var commands = new List<SQLiteCommand> {GetLogTable(con)};
+            var commands = new List<SQLiteCommand> {GetLogTable(con), GetTemperatureTable(con)};
 
             con.Open();
             using (var transaction = con.BeginTransaction())
@@ -36,6 +36,16 @@ namespace LabControl.DataModels
                                Dt datetime default current_timestamp,
                                Message TEXT,
                                Code INT
+                            );";
+            return new SQLiteCommand(sql, con);
+        }
+
+        private static SQLiteCommand GetTemperatureTable(SQLiteConnection con)
+        {
+            const string sql = @"CREATE TABLE Temperatures(
+                               Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                               Dt datetime default current_timestamp,
+                               Tmp real
                             );";
             return new SQLiteCommand(sql, con);
         }
