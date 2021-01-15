@@ -860,7 +860,7 @@ namespace LabControl.ViewModels
         {
             // Data context
             f_DbContext = new ApplicationContext();
-            f_DbContext.Logs.Load();
+            //f_DbContext.Logs.Load();
             // init collections
             ConfocalLog = new[] { 0d, .40d, .3d };
             LogCollection = new ObservableCollection<LogItem>();

@@ -8,16 +8,16 @@ namespace LabControl.PortModels
 {
     internal class PwrSerial
     {
-        public static int CurChannel { get; set; }
-        private static SerialPort Port;
-        public byte[] Rxdata { get; set; }
-        public static byte ChCommand { get; set; }
+        private static int CurChannel { get; set; }
+        private static SerialPort _port;
+        private byte[] RxData { get; set; }
+        private static byte ChCommand { get; set; }
         private static readonly List<string> ErrList = new List<string>();
         //readonly Timer _aTimer = new Timer();
-        private static ModBus modBus;
+        private static ModBus _modBus;
 
         public delegate void RecievedData(object sender, EventArgs e);
-        public event RecievedData onRecieve;
+        public event RecievedData OnRecieve;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -25,10 +25,10 @@ namespace LabControl.PortModels
         public PwrSerial(string port)
         {
             CurChannel = 99;
-            modBus = new ModBus();
+            _modBus = new ModBus();
             SetLogMessage?.Invoke($"Try connected Power Supply on port {port}");
             if (port == "") port = "COM9";
-            Port = new SerialPort(port)
+            _port = new SerialPort(port)
             {
                 BaudRate = 115200,
                 Parity = Parity.None,
@@ -37,17 +37,17 @@ namespace LabControl.PortModels
                 Handshake = Handshake.None,
                 RtsEnable = true
             };
-            Port.DataReceived += DataReceivedHandler;
+            _port.DataReceived += DataReceivedHandler;
         }
 
-        public void OpenPort()
+        public static void OpenPort()
         {
-            Port.Open();
+            _port.Open();
         }
 
-        public void ClosePort()
+        public static void ClosePort()
         {
-            Port.Close();
+            _port.Close();
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -56,18 +56,18 @@ namespace LabControl.PortModels
             try
             {
                 var cnt = sp.ReadBufferSize;
-                Rxdata = new byte[cnt + 1];
-                var rc = sp.Read(Rxdata, 0, cnt);
-                if (cnt > 3 && Rxdata[0] == 1 && Rxdata[1] == 3 && Rxdata[2] == 18)
+                RxData = new byte[cnt + 1];
+                var rc = sp.Read(RxData, 0, cnt);
+                if (cnt > 3 && RxData[0] == 1 && RxData[1] == 3 && RxData[2] == 18)
                 {
                     // EventArgs ea = new EventArgs();
-                    onRecieve?.Invoke(this, e);
+                    OnRecieve?.Invoke(this, e);
                 }
             }
             catch (Exception ex)
             {
                 SetLogMessage?.Invoke(ex.Message);
-                ErrList.Add(ex.Message);
+                //ErrList.Add(ex.Message);
             }
         }
 
@@ -75,7 +75,7 @@ namespace LabControl.PortModels
         {
             try
             {
-                Port.Write(buf, 0, buf.Length);
+                _port.Write(buf, 0, buf.Length);
             }
             catch (Exception ex)
             {
@@ -83,10 +83,10 @@ namespace LabControl.PortModels
             }
         }
 
-        public static void GetChanellData(byte channel)
+        public static void GetChanelData(byte channel)
         {
             CurChannel = channel;
-            byte[] dt = modBus.GetQueryChannel(channel);
+            var dt = _modBus.GetQueryChannel(channel);
             //{ 0x1, 0x3, 0x7, 0xD0, 0x0, 0x9, 0x85, 0x41 };
             Write(dt);
             ChCommand = channel;
@@ -94,148 +94,144 @@ namespace LabControl.PortModels
 
         public static void SetChannelOn(int channel)
         {
-            if (Port.IsOpen)
+            if (!_port.IsOpen) return;
+            switch (channel)
             {
-                switch (channel)
+                case 0:
                 {
-                    case 0:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x1, 0x2, 0xC0 };
-                            Write(dt);
-                            break;
-                        }
-                    case 1:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x1, 0x2, 0x6A };
-                            Write(dt);
-                            break;
-                        }
-                    case 2:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x1, 0x6, 0xB4 };
-                            Write(dt);
-                            break;
-                        }
-                    case 3:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x1, 0x6, 0x1E };
-                            Write(dt);
-                            break;
-                        }
-                    case 4:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x1, 0x4, 0xE8 };
-                            Write(dt);
-                            break;
-                        }
-                    case 5:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x1, 0xEF, 0xB2 };
-                            Write(dt);
-                            break;
-                        }
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x1, 0x2, 0xC0 };
+                    Write(dt);
+                    break;
+                }
+                case 1:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x1, 0x2, 0x6A };
+                    Write(dt);
+                    break;
+                }
+                case 2:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x1, 0x6, 0xB4 };
+                    Write(dt);
+                    break;
+                }
+                case 3:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x1, 0x6, 0x1E };
+                    Write(dt);
+                    break;
+                }
+                case 4:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x1, 0x4, 0xE8 };
+                    Write(dt);
+                    break;
+                }
+                case 5:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x1, 0xEF, 0xB2 };
+                    Write(dt);
+                    break;
                 }
             }
         }
 
         public static void SetChannelOff(int channel)
         {
-            if (Port.IsOpen)
+            if (!_port.IsOpen) return;
+            switch (channel)
             {
-                switch (channel)
+                case 0:
                 {
-                    case 0:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0x0 };
-                            Write(dt);
-                            break;
-                        }
-                    case 1:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0xAA };
-                            Write(dt);
-                            break;
-                        }
-                    case 2:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0x74 };
-                            Write(dt);
-                            break;
-                        }
-                    case 3:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0xDE };
-                            Write(dt);
-                            break;
-                        }
-                    case 4:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC5, 0x28 };
-                            Write(dt);
-                            break;
-                        }
-                    case 5:
-                        {
-                            byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x0, 0x2E, 0x72 };
-                            Write(dt);
-                            break;
-                        }
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0x0 };
+                    Write(dt);
+                    break;
+                }
+                case 1:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0xAA };
+                    Write(dt);
+                    break;
+                }
+                case 2:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0x74 };
+                    Write(dt);
+                    break;
+                }
+                case 3:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0xDE };
+                    Write(dt);
+                    break;
+                }
+                case 4:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC5, 0x28 };
+                    Write(dt);
+                    break;
+                }
+                case 5:
+                {
+                    byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x0, 0x2E, 0x72 };
+                    Write(dt);
+                    break;
                 }
             }
         }
 
-        public void SetMode(int chanell, int mode)
+        public void SetMode(int chanel, int mode)
         {
-            byte[] dt = modBus.GetMaxVolts(PwrParams.Modes[chanell], mode);
+            var dt = _modBus.GetMaxVolts(PwrParams.Modes[chanel], mode);
             Write(dt);
             Thread.Sleep(1000);
         }
 
-        public void SetAmplitude(int chanell, int amplitude)
+        public void SetAmplitude(int chanel, int amplitude)
         {
-            byte[] dt = modBus.GetMaxVolts(PwrParams.Amplitudes[chanell], amplitude);
+            var dt = _modBus.GetMaxVolts(PwrParams.Amplitudes[chanel], amplitude);
             Write(dt);
             Thread.Sleep(1000);
         }
 
-        public void SetBias(int chanell, int bias)
+        public void SetBias(int chanel, int bias)
         {
-            byte[] dt = modBus.GetMaxVolts(PwrParams.Biases[chanell], bias);
+            var dt = _modBus.GetMaxVolts(PwrParams.Biases[chanel], bias);
             Write(dt);
             Thread.Sleep(1000);
         }
 
-        public void SetFreq(int chanell, int freq)
+        public void SetFreq(int chanel, int freq)
         {
-            byte[] dt = modBus.GetMaxVolts(PwrParams.Freqs[chanell], freq);
+            var dt = _modBus.GetMaxVolts(PwrParams.Freqs[chanel], freq);
             Write(dt);
             Thread.Sleep(1000);
         }
 
-        public void SetDuty(int chanell, int duty)
+        public void SetDuty(int chanel, int duty)
         {
-            byte[] dt = modBus.GetMaxVolts(PwrParams.Dutys[chanell], duty);
+            var dt = _modBus.GetMaxVolts(PwrParams.Dutys[chanel], duty);
             Write(dt);
             Thread.Sleep(1000);
         }
 
-        public void SetPhase(int chanell, int phase)
+        public void SetPhase(int chanel, int phase)
         {
-            byte[] dt = modBus.GetMaxVolts(PwrParams.Phases[chanell], phase);
+            var dt = _modBus.GetMaxVolts(PwrParams.Phases[chanel], phase);
             Write(dt);
             Thread.Sleep(1000);
         }
 
-        public void SetMaxVolts(int chanell, int maxVolts)
+        public void SetMaxVolts(int chanel, int maxVolts)
         {
-            byte[] dt = modBus.GetMaxVolts(PwrParams.MaxVolts[chanell], maxVolts);
+            var dt = _modBus.GetMaxVolts(PwrParams.MaxVolts[chanel], maxVolts);
             Write(dt);
             Thread.Sleep(1000);
         }
 
-        public void SetMaxAmps(int chanell, int amps)
+        public void SetMaxAmps(int chanel, int amps)
         {
-            byte[] dt = modBus.GetMaxVolts(PwrParams.MaxAmps[chanell], amps);
+            var dt = _modBus.GetMaxVolts(PwrParams.MaxAmps[chanel], amps);
             Write(dt);
             Thread.Sleep(1000);
         }
