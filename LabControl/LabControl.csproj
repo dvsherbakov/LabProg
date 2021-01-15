@@ -91,6 +91,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ClassHelpers\ConfocalDataItem.cs" />
+    <Compile Include="ClassHelpers\DispenserPulseWaveData.cs" />
+    <Compile Include="ClassHelpers\DispenserSineWaveData.cs" />
     <Compile Include="ClassHelpers\DistMeasureRes.cs" />
     <Compile Include="ClassHelpers\LaserCommand.cs" />
     <Compile Include="ClassHelpers\LogItem.cs" />
@@ -110,6 +112,7 @@
     <Compile Include="LogicModels\PumpDriver.cs" />
     <Compile Include="LogicModels\PwrDriver.cs" />
     <Compile Include="LogicModels\PyroDriver.cs" />
+    <Compile Include="PortModels\DispenserSerial.cs" />
     <Compile Include="PortModels\LaserSerial.cs" />
     <Compile Include="PortModels\PumpSerial.cs" />
     <Compile Include="PortModels\PwrSerial.cs" />
