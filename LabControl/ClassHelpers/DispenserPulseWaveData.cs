@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LabControl.ClassHelpers
 {
-    internal class DispenserPulseWaveData
+    public class DispenserPulseWaveData
     {
         public int TimeRise1 { get; set; }
         public int TimeT1 { get; set; }

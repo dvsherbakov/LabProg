@@ -8,11 +8,15 @@ using LabControl.ClassHelpers;
 
 namespace LabControl.PortModels
 {
-    internal class DispenserSerial
+    public class DispenserSerial
     {
         private readonly SerialPort _mPort;
         private readonly Action<string> f_AddLogBoxMessage;
         private readonly Action<byte[]> f_DispatchData;
+
+        public delegate void LogMessage(string msg);
+        public event LogMessage SetLogMessage;
+
         private string f_PortName;
         public string PortName
         {
@@ -30,7 +34,7 @@ namespace LabControl.PortModels
             }
         }
 
-        public DispenserSerial(string pName, Action<string> addLogBoxMessage, Action<byte[]> dispatchData)
+        public DispenserSerial(string pName)
         {
             f_PortName = string.IsNullOrEmpty(pName) ? "COM6" : pName;
 
@@ -44,8 +48,8 @@ namespace LabControl.PortModels
                 RtsEnable = true
             };
             _mPort.DataReceived += DataReceivedHandler;
-            this.f_AddLogBoxMessage = addLogBoxMessage;
-            this.f_DispatchData = dispatchData;
+            //this.f_AddLogBoxMessage = addLogBoxMessage;
+            //this.f_DispatchData = dispatchData;
         }
 
         public void OpenPort()

@@ -61,11 +61,38 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Текущий канал.
+        /// </summary>
+        internal static string DispenserCurrentChannelLabel {
+            get {
+                return ResourceManager.GetString("DispenserCurrentChannelLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Частота.
+        /// </summary>
+        internal static string DispenserFrequencyLabel {
+            get {
+                return ResourceManager.GetString("DispenserFrequencyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Управление диспенсером.
         /// </summary>
         internal static string DispenserOperationTitle {
             get {
                 return ResourceManager.GetString("DispenserOperationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Тип сигнала.
+        /// </summary>
+        internal static string DispenserSignalTypeLabel {
+            get {
+                return ResourceManager.GetString("DispenserSignalTypeLabel", resourceCulture);
             }
         }
         

@@ -826,5 +826,53 @@ namespace LabControl.Properties {
                 this["IsPyroActive"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispenserPortSelected {
+            get {
+                return ((string)(this["DispenserPortSelected"]));
+            }
+            set {
+                this["DispenserPortSelected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserSignalType {
+            get {
+                return ((int)(this["DispenserSignalType"]));
+            }
+            set {
+                this["DispenserSignalType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserChannel {
+            get {
+                return ((int)(this["DispenserChannel"]));
+            }
+            set {
+                this["DispenserChannel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserFrequency {
+            get {
+                return ((int)(this["DispenserFrequency"]));
+            }
+            set {
+                this["DispenserFrequency"] = value;
+            }
+        }
     }
 }
