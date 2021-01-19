@@ -300,4 +300,28 @@
   <data name="DispenserSignalTypeLabel" xml:space="preserve">
     <value>Тип сигнала</value>
   </data>
+  <data name="DispenserFallTimeLabel" xml:space="preserve">
+    <value>Время спада</value>
+  </data>
+  <data name="DispenserKeepTimeLabel" xml:space="preserve">
+    <value>Удержание максимума</value>
+  </data>
+  <data name="DispenserLowTimeLabel" xml:space="preserve">
+    <value>Удержание минимума</value>
+  </data>
+  <data name="DispenserRiseTime2Label" xml:space="preserve">
+    <value>Время накопления 2</value>
+  </data>
+  <data name="DispenserRiseTimeLabel" xml:space="preserve">
+    <value>Время накопления</value>
+  </data>
+  <data name="DispenserTimeLabel" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="DispenserVoltageLabel" xml:space="preserve">
+    <value>Напряжение</value>
+  </data>
+  <data name="DispenserWaitingLabel" xml:space="preserve">
+    <value>Ожидание</value>
+  </data>
 </root>

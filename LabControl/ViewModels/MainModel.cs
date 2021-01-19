@@ -826,6 +826,48 @@ namespace LabControl.ViewModels
             get => f_DispenserFrequency;
             set => Set(ref f_DispenserFrequency, value);
         }
+
+        private int f_DispenserRiseTime;
+        public int DispenserRiseTime
+        {
+            get => f_DispenserRiseTime;
+            set => Set(ref f_DispenserRiseTime, value);
+        }
+
+        private int f_DispenserKeepTime;
+        public int DispenserKeepTime
+        {
+            get => f_DispenserKeepTime;
+            set => Set(ref f_DispenserKeepTime, value);
+        }
+
+        private int f_DispenserFallTime;
+        public int DispenserFallTime
+        {
+            get => f_DispenserFallTime;
+            set => Set(ref f_DispenserFallTime, value);
+        }
+
+        private int f_DispenserLowTime;
+        public int DispenserLowTime
+        {
+            get => f_DispenserLowTime;
+            set => Set(ref f_DispenserLowTime, value);
+        }
+
+        private int f_DispenserRiseTime2;
+        public int DispenserRiseTime2
+        {
+            get => f_DispenserRiseTime2;
+            set => Set(ref f_DispenserRiseTime2, value);
+        }
+
+        private int f_DispenserV0;
+        public int DispenserV0
+        {
+            get => f_DispenserV0;
+            set => Set(ref f_DispenserV0, value);
+        }
         #endregion
 
         #region Collections
@@ -895,7 +937,14 @@ namespace LabControl.ViewModels
         public static string DispenserSignalTypeLabel => Resources.DispenserSignalTypeLabel;
         public static string DispenserCurrentChannelLabel => Resources.DispenserCurrentChannelLabel;
         public static string DispenserFrequencyLabel => Resources.DispenserFrequencyLabel;
-
+        public static string DispenserTimeLabel => Resources.DispenserTimeLabel;
+        public static string DispenserRiseTimeLabel => Resources.DispenserRiseTimeLabel;
+        public static string DispenserRiseTime2Label => Resources.DispenserRiseTime2Label;
+        public static string DispenserKeepTimeLabel => Resources.DispenserKeepTimeLabel;
+        public static string DispenserFallTimeLabel => Resources.DispenserFallTimeLabel;
+        public static string DispenserLowTimeLabel => Resources.DispenserLowTimeLabel;
+        public static string DispenserWaitingLabel => Resources.DispenserWaitingLabel;
+        public static string DispenserVoltageLabel => Resources.DispenserVoltageLabel;
         #endregion
 
 
@@ -991,6 +1040,12 @@ namespace LabControl.ViewModels
             DispenserSignalType = Settings.Default.DispenserSignalType;
             DispenserChannel = Settings.Default.DispenserChannel;
             DispenserFrequency = Settings.Default.DispenserFrequency;
+            DispenserRiseTime = Settings.Default.DispenserRiseTime;
+            DispenserKeepTime = Settings.Default.DispenserKeepTime;
+            DispenserFallTime = Settings.Default.DispenserFallTime;
+            DispenserLowTime = Settings.Default.DispenserLowTime;
+            DispenserRiseTime2 = Settings.Default.DispenserRiseTime2;
+            DispenserV0 = Settings.Default.DispenserV0;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -1114,6 +1169,12 @@ namespace LabControl.ViewModels
             Settings.Default.DispenserSignalType = DispenserSignalType;
             Settings.Default.DispenserChannel = DispenserChannel;
             Settings.Default.DispenserFrequency = DispenserFrequency;
+            Settings.Default.DispenserRiseTime = DispenserRiseTime;
+            Settings.Default.DispenserKeepTime = DispenserKeepTime;
+            Settings.Default.DispenserFallTime = DispenserFallTime;
+            Settings.Default.DispenserLowTime = DispenserLowTime;
+            Settings.Default.DispenserRiseTime2 = DispenserRiseTime2;
+            Settings.Default.DispenserV0 = DispenserV0;
             Settings.Default.Save();
             f_DbContext.Dispose();
             Application.Current.Shutdown();

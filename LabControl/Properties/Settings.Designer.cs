@@ -874,5 +874,77 @@ namespace LabControl.Properties {
                 this["DispenserFrequency"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserRiseTime {
+            get {
+                return ((int)(this["DispenserRiseTime"]));
+            }
+            set {
+                this["DispenserRiseTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserKeepTime {
+            get {
+                return ((int)(this["DispenserKeepTime"]));
+            }
+            set {
+                this["DispenserKeepTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserFallTime {
+            get {
+                return ((int)(this["DispenserFallTime"]));
+            }
+            set {
+                this["DispenserFallTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserLowTime {
+            get {
+                return ((int)(this["DispenserLowTime"]));
+            }
+            set {
+                this["DispenserLowTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserRiseTime2 {
+            get {
+                return ((int)(this["DispenserRiseTime2"]));
+            }
+            set {
+                this["DispenserRiseTime2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserV0 {
+            get {
+                return ((int)(this["DispenserV0"]));
+            }
+            set {
+                this["DispenserV0"] = value;
+            }
+        }
     }
 }

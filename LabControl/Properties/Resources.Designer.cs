@@ -70,11 +70,38 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Время спада.
+        /// </summary>
+        internal static string DispenserFallTimeLabel {
+            get {
+                return ResourceManager.GetString("DispenserFallTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Частота.
         /// </summary>
         internal static string DispenserFrequencyLabel {
             get {
                 return ResourceManager.GetString("DispenserFrequencyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удержание максимума.
+        /// </summary>
+        internal static string DispenserKeepTimeLabel {
+            get {
+                return ResourceManager.GetString("DispenserKeepTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удержание минимума.
+        /// </summary>
+        internal static string DispenserLowTimeLabel {
+            get {
+                return ResourceManager.GetString("DispenserLowTimeLabel", resourceCulture);
             }
         }
         
@@ -88,11 +115,56 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Время накопления 2.
+        /// </summary>
+        internal static string DispenserRiseTime2Label {
+            get {
+                return ResourceManager.GetString("DispenserRiseTime2Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Время накопления.
+        /// </summary>
+        internal static string DispenserRiseTimeLabel {
+            get {
+                return ResourceManager.GetString("DispenserRiseTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Тип сигнала.
         /// </summary>
         internal static string DispenserSignalTypeLabel {
             get {
                 return ResourceManager.GetString("DispenserSignalTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Время.
+        /// </summary>
+        internal static string DispenserTimeLabel {
+            get {
+                return ResourceManager.GetString("DispenserTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Напряжение.
+        /// </summary>
+        internal static string DispenserVoltageLabel {
+            get {
+                return ResourceManager.GetString("DispenserVoltageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ожидание.
+        /// </summary>
+        internal static string DispenserWaitingLabel {
+            get {
+                return ResourceManager.GetString("DispenserWaitingLabel", resourceCulture);
             }
         }
         
