@@ -946,5 +946,65 @@ namespace LabControl.Properties {
                 this["DispenserV0"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserV1 {
+            get {
+                return ((int)(this["DispenserV1"]));
+            }
+            set {
+                this["DispenserV1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserV2 {
+            get {
+                return ((int)(this["DispenserV2"]));
+            }
+            set {
+                this["DispenserV2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserHV0 {
+            get {
+                return ((int)(this["DispenserHV0"]));
+            }
+            set {
+                this["DispenserHV0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserHVpeak {
+            get {
+                return ((int)(this["DispenserHVpeak"]));
+            }
+            set {
+                this["DispenserHVpeak"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserHToverall {
+            get {
+                return ((int)(this["DispenserHToverall"]));
+            }
+            set {
+                this["DispenserHToverall"] = value;
+            }
+        }
     }
 }

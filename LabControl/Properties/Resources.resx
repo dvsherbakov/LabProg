@@ -324,4 +324,19 @@
   <data name="DispenserWaitingLabel" xml:space="preserve">
     <value>Ожидание</value>
   </data>
+  <data name="DispenserAverageLabel" xml:space="preserve">
+    <value>Среднее значение</value>
+  </data>
+  <data name="DispenserMaximumLabel" xml:space="preserve">
+    <value>Максимум</value>
+  </data>
+  <data name="DispenserMinimumLabel" xml:space="preserve">
+    <value>Минимум</value>
+  </data>
+  <data name="DispenserPeakLabel" xml:space="preserve">
+    <value>Пик</value>
+  </data>
+  <data name="DispenserPeriodLabel" xml:space="preserve">
+    <value>Период</value>
+  </data>
 </root>

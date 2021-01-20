@@ -1537,8 +1537,9 @@
                                                Template="{StaticResource TextBoxBaseControlTemplate}"
                                                TextAlignment="Center"/>
                                     </Grid>
-
-                                    <Grid Margin="20,5,1,5" x:Name="grSingleWave">
+                                    <!--Single Wave-->
+                                    <Grid Margin="20,5,1,5" 
+                                          Visibility="{Binding DispenserSingleWaveVisible}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="6*" />
                                             <ColumnDefinition Width="4*" />
@@ -1562,7 +1563,8 @@
                                                    HorizontalAlignment="Center" 
                                                    Text="{Binding DispenserTimeLabel}"/>
 
-                                        <TextBlock Grid.Column="0" Grid.Row="1" 
+                                        <TextBlock Grid.Column="0" Grid.Row="1"
+                                                   HorizontalAlignment="Center"
                                                    Padding="5" Text= "{Binding DispenserRiseTimeLabel}"/>
                                         <TextBox Grid.Column="1" Grid.Row="1"
                                                     TextAlignment="Center"
@@ -1572,6 +1574,7 @@
                                         <TextBlock Grid.Column="2" Grid.Row="1" Padding="0,3">μs</TextBlock>
 
                                         <TextBlock Grid.Column="0" Grid.Row="2" Padding="5" 
+                                                   HorizontalAlignment="Center"
                                                    Text="{Binding DispenserKeepTimeLabel}"/>
                                         <TextBox Grid.Column="1" Grid.Row="2"
                                                     TextAlignment="Center"
@@ -1581,6 +1584,7 @@
                                         <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
 
                                         <TextBlock Grid.Column="0" Grid.Row="3" Padding="5" 
+                                                   HorizontalAlignment="Center"
                                                    Text="{Binding DispenserFallTimeLabel}"/>
                                         <TextBox Grid.Column="1" Grid.Row="3"
                                                  TextAlignment="Center"
@@ -1590,6 +1594,7 @@
                                         <TextBlock Grid.Column="2" Grid.Row="3" Padding="0,3">μs</TextBlock>
 
                                         <TextBlock Grid.Column="0" Grid.Row="4" Padding="5"
+                                                   HorizontalAlignment="Center"
                                                    Text="{Binding DispenserLowTimeLabel}"/>
                                         <TextBox Grid.Column="1" Grid.Row="4" 
                                                  TextAlignment="Center"
@@ -1599,6 +1604,7 @@
                                         <TextBlock Grid.Column="2" Grid.Row="4" Padding="0,3">μs</TextBlock>
 
                                         <TextBlock Grid.Column="0" Grid.Row="5" Padding="5"
+                                                   HorizontalAlignment="Center"
                                                    Text="{Binding DispenserRiseTime2Label}"/>
                                         <TextBox Grid.Column="1" Grid.Row="5" 
                                                  TextAlignment="Center"
@@ -1607,7 +1613,8 @@
                                                  Text="{Binding DispenserRiseTime2}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="5" Padding="0,3">μs</TextBlock>
 
-                                        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center"
+                                        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" 
+                                                   HorizontalAlignment="Center"
                                                    Text="{Binding DispenserVoltageLabel}"/>
                                         <TextBlock Grid.Column="0" Grid.Row="7" Padding="5"
                                                    Text="{Binding DispenserWaitingLabel}"/>
@@ -1617,18 +1624,88 @@
                                                  Template="{StaticResource TextBoxBaseControlTemplate}"
                                                  Text="{Binding DispenserV0}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="7" Padding="0,3">V</TextBlock>
-                                        
-                                        <TextBlock Grid.Column="0" Grid.Row="8" Padding="5">Максимум</TextBlock>
-                                        <TextBox Grid.Column="1" Grid.Row="8" Margin="3"
-                                                 Style="{StaticResource PartTransparent}"/>
+
+                                        <TextBlock Grid.Column="0" Grid.Row="8" Padding="5"
+                                                   HorizontalAlignment="Center"
+                                                   Text="{Binding DispenserMaximumLabel}" />
+                                        <TextBox Grid.Column="1" Grid.Row="8" 
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"
+                                                 Text="{Binding DispenserV1}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="8" Padding="0,3">V</TextBlock>
-                                        <TextBlock Grid.Column="0" Grid.Row="9" Padding="5">Минимум</TextBlock>
-                                        <TextBox Grid.Column="1" Grid.Row="9" Margin="3" 
-                                                 Style="{StaticResource PartTransparent}"/>
+
+                                        <TextBlock Grid.Column="0" Grid.Row="9" Padding="5" 
+                                                   HorizontalAlignment="Center"
+                                                   Text="{Binding DispenserMinimumLabel}"/>
+                                        <TextBox Grid.Column="1" Grid.Row="9" 
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"
+                                                 Text="{Binding DispenserV2}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="9" Padding="0,3">V</TextBlock>
                                         <StackPanel Grid.Row="10" Grid.ColumnSpan="2"  HorizontalAlignment="Center">
                                             <Button Background="Transparent"
                                                 BorderThickness="0">
+                                                <Button.Content>
+                                                    <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                        <Path  Stroke="#FF000000">
+                                                            <Path.Data>
+                                                                <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                            </Path.Data>
+                                                        </Path>
+                                                        <Path Data="M8,19 L16,12 8,5" StrokeThickness="2" Stroke="#FF000000" Margin="0.667,0,-0.667,0" />
+                                                    </Grid>
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <!--Harmonyc Wave-->
+                                    <Grid Margin="20,5,1,5" 
+                                          Visibility="{Binding DispenserHarmonycalWaveVisible}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*" />
+                                            <ColumnDefinition Width="4*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Padding="5"
+                                                   Text="{Binding DispenserAverageLabel}"/>
+                                        <TextBox Grid.Column="1" Grid.Row="0" 
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"
+                                                 Text="{Binding DispenserHV0}"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Padding="0,3">V</TextBlock>
+
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Padding="5" 
+                                                   Text="{Binding DispenserPeakLabel}"/>
+                                        <TextBox Grid.Column="1" Grid.Row="1" 
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"
+                                                 Text="{Binding DispenserHVpeak}"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Padding="0,3">V</TextBlock>
+
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Padding="5"
+                                                   Text="{Binding DispenserPeriodLabel}"/>
+                                        <TextBox Grid.Column="1" Grid.Row="2" 
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"
+                                                 Text="{Binding DispenserHToverall}"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
+                                        <StackPanel Grid.Row="3" Grid.ColumnSpan="2"  HorizontalAlignment="Center">
+                                            <Button 
+                                        
+                                        Background="Transparent"
+                                        BorderThickness="0">
                                                 <Button.Content>
                                                     <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                                                         <Path  Stroke="#FF000000">

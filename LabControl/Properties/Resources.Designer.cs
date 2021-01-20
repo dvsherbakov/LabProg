@@ -61,6 +61,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Среднее значение.
+        /// </summary>
+        internal static string DispenserAverageLabel {
+            get {
+                return ResourceManager.GetString("DispenserAverageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Текущий канал.
         /// </summary>
         internal static string DispenserCurrentChannelLabel {
@@ -106,11 +115,47 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Максимум.
+        /// </summary>
+        internal static string DispenserMaximumLabel {
+            get {
+                return ResourceManager.GetString("DispenserMaximumLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Минимум.
+        /// </summary>
+        internal static string DispenserMinimumLabel {
+            get {
+                return ResourceManager.GetString("DispenserMinimumLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Управление диспенсером.
         /// </summary>
         internal static string DispenserOperationTitle {
             get {
                 return ResourceManager.GetString("DispenserOperationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пик.
+        /// </summary>
+        internal static string DispenserPeakLabel {
+            get {
+                return ResourceManager.GetString("DispenserPeakLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Период.
+        /// </summary>
+        internal static string DispenserPeriodLabel {
+            get {
+                return ResourceManager.GetString("DispenserPeriodLabel", resourceCulture);
             }
         }
         

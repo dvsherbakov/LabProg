@@ -807,6 +807,24 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_DispenserSignalType, value);
+                switch (value) {
+                    case 0:
+                        DispenserSingleWaveVisible = Visibility.Visible;
+                        DispenserHarmonycalWaveVisible = Visibility.Collapsed;
+                        break;
+                    case 1:
+                        DispenserHarmonycalWaveVisible = Visibility.Visible;
+                        DispenserSingleWaveVisible = Visibility.Collapsed;
+                        break;
+                    case 2:
+                        DispenserSingleWaveVisible = Visibility.Collapsed;
+                        DispenserHarmonycalWaveVisible = Visibility.Collapsed;
+                        break;
+                    default:
+                        DispenserSingleWaveVisible = Visibility.Collapsed;
+                        DispenserHarmonycalWaveVisible = Visibility.Collapsed;
+                        break;
+                }
             }
         }
 
@@ -867,6 +885,55 @@ namespace LabControl.ViewModels
         {
             get => f_DispenserV0;
             set => Set(ref f_DispenserV0, value);
+        }
+
+        private int f_DispenserV1;
+        public int DispenserV1
+        {
+            get => f_DispenserV1;
+            set => Set(ref f_DispenserV1, value);
+        }
+
+        private int f_DispenserV2;
+        public int DispenserV2
+        {
+            get => f_DispenserV2;
+            set => Set(ref f_DispenserV2, value);
+        }
+
+        private Visibility f_DispenserSingleWaveVisible;
+        public Visibility DispenserSingleWaveVisible
+        {
+            get => f_DispenserSingleWaveVisible;
+            set => Set(ref f_DispenserSingleWaveVisible, value);
+        }
+
+        private int f_DispenserHV0;
+        public int DispenserHV0
+        {
+            get => f_DispenserHV0;
+            set => Set(ref f_DispenserHV0, value);
+        }
+
+        private int f_DispenserHVpeak;
+        public int DispenserHVpeak
+        {
+            get => f_DispenserHVpeak;
+            set => Set(ref f_DispenserHVpeak, value);
+        }
+
+        private int f_DispenserHToverall;
+        public int DispenserHToverall
+        {
+            get => f_DispenserHToverall;
+            set => Set(ref f_DispenserHToverall, value);
+        }
+
+        private Visibility f_DispenserHarmonycalWaveVisible;
+        public Visibility DispenserHarmonycalWaveVisible
+        {
+            get=> f_DispenserHarmonycalWaveVisible;
+            set => Set(ref f_DispenserHarmonycalWaveVisible, value);
         }
         #endregion
 
@@ -945,6 +1012,11 @@ namespace LabControl.ViewModels
         public static string DispenserLowTimeLabel => Resources.DispenserLowTimeLabel;
         public static string DispenserWaitingLabel => Resources.DispenserWaitingLabel;
         public static string DispenserVoltageLabel => Resources.DispenserVoltageLabel;
+        public static string DispenserMaximumLabel => Resources.DispenserMaximumLabel;
+        public static string DispenserMinimumLabel => Resources.DispenserMinimumLabel;
+        public static string DispenserAverageLabel => Resources.DispenserAverageLabel;
+        public static string DispenserPeakLabel => Resources.DispenserPeakLabel;
+        public static string DispenserPeriodLabel => Resources.DispenserPeriodLabel;
         #endregion
 
 
@@ -1046,6 +1118,11 @@ namespace LabControl.ViewModels
             DispenserLowTime = Settings.Default.DispenserLowTime;
             DispenserRiseTime2 = Settings.Default.DispenserRiseTime2;
             DispenserV0 = Settings.Default.DispenserV0;
+            DispenserV1 = Settings.Default.DispenserV1;
+            DispenserV2 = Settings.Default.DispenserV2;
+            DispenserHV0 = Settings.Default.DispenserHV0;
+            DispenserHVpeak = Settings.Default.DispenserHVpeak;
+            DispenserHToverall = Settings.Default.DispenserHToverall;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -1175,6 +1252,11 @@ namespace LabControl.ViewModels
             Settings.Default.DispenserLowTime = DispenserLowTime;
             Settings.Default.DispenserRiseTime2 = DispenserRiseTime2;
             Settings.Default.DispenserV0 = DispenserV0;
+            Settings.Default.DispenserV1 = DispenserV1;
+            Settings.Default.DispenserV2 = DispenserV2;
+            Settings.Default.DispenserHV0 = DispenserHV0;
+            Settings.Default.DispenserHVpeak = DispenserHVpeak;
+            Settings.Default.DispenserHToverall = DispenserHToverall;
             Settings.Default.Save();
             f_DbContext.Dispose();
             Application.Current.Shutdown();
