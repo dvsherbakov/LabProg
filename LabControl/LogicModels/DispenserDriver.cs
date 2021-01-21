@@ -20,6 +20,7 @@ namespace LabControl.LogicModels
             f_DispenserSerial = new DispenserSerial(PortStr);
             PwrSerial.OpenPort();
             f_DispenserSerial.SetLogMessage += TestLog;
+            f_DispenserSerial.DispathRecieveData += DispatchData;
         }
 
         public void Disconnect()
@@ -29,6 +30,20 @@ namespace LabControl.LogicModels
         private void TestLog(string msg)
         {
             SetLogMessage?.Invoke(msg);
+        }
+
+        private void DispatchData(byte[] data)
+        {
+            SetLogMessage.Invoke($"Получено из порта диспенсера: {BitConverter.ToString(data)}");
+            if (data.Length > 2 & data[0] == 0x06)
+            {
+                switch (data[1])
+                {
+                    case 0x60:
+                        //SetDispOptions(data);
+                        break;
+                }
+            }
         }
     }
 }

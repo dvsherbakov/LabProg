@@ -11,8 +11,11 @@ namespace LabControl.PortModels
     public class DispenserSerial
     {
         private readonly SerialPort _mPort;
-        private readonly Action<string> f_AddLogBoxMessage;
-        private readonly Action<byte[]> f_DispatchData;
+        //private readonly Action<string> f_AddLogBoxMessage;
+        //private readonly Action<byte[]> f_DispatchData;
+
+        public delegate void DispatchDelegate(byte[] data);
+        public event DispatchDelegate DispathRecieveData;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -55,6 +58,7 @@ namespace LabControl.PortModels
         public void OpenPort()
         {
             _mPort.Open();
+            Init();
         }
 
         public void ClosePort()
@@ -80,42 +84,46 @@ namespace LabControl.PortModels
             try
             {
                 _mPort.Read(mRxData, 0, cnt);
+                mRxData = TrimReceivedData(mRxData);
             }
             catch (Exception ex)
             {
-                f_AddLogBoxMessage(ex.Message);
+                SetLogMessage(ex.Message);
             }
             var ascii = Encoding.ASCII;
-            f_DispatchData(TrimReceivedData(mRxData));
+            //f_DispatchData(TrimReceivedData(mRxData));
+            DispathRecieveData?.Invoke(mRxData);
         }
 
         public void GetVersion()
         {
             if (!_mPort.IsOpen)
             {
-                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
             var cmd = new byte[4] { 0x53, 0x02, 0xF0, 0xF2 };
             _mPort.Write(cmd, 0, 4);
+            System.Threading.Thread.Sleep(50);
         }
 
         public void SoftReset()
         {
             if (!_mPort.IsOpen)
             {
-                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
             var cmd = new byte[4] { 0x53, 0x02, 0x01, 0x03 };
             _mPort.Write(cmd, 0, 4);
+            System.Threading.Thread.Sleep(50);
         }
 
         public void GetNumberOfChannels()
         {
             if (!_mPort.IsOpen)
             {
-                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
             var cmd = new byte[4] { 0x53, 0x02, 0x0D, 0x0F };
@@ -136,7 +144,7 @@ namespace LabControl.PortModels
         {
             if (!_mPort.IsOpen)
             {
-                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
             var v0 = DivideData((short)data.V0);
@@ -159,7 +167,7 @@ namespace LabControl.PortModels
         {
             if (!_mPort.IsOpen)
             {
-                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
             var t1 = DivideData((short)data.TimeT1);
@@ -193,53 +201,106 @@ namespace LabControl.PortModels
 
         public void SetFrequency(int freq)
         {
-
+            var cFreq = DivideData((short)freq);
+            var cmd = new byte[]
+            {
+                0x53,
+                0x04,
+                0x12,
+                cFreq.Item1,
+                cFreq.Item1,
+                0xFF
+            };
+            cmd[5] = CheckSum(cmd);
+            _mPort.Write(cmd, 0, 6);
         }
 
         public void Start()
         {
             if (!_mPort.IsOpen)
             {
-                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
-            var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x01, 0x03 + 0x0A + 0x01 };
+            SetInternalSource();
+            SetDropsPerTrigger(1);
+            SetDiscreteMode();
+            TriggerAll(true);
+        }
+
+        private void TriggerAll(bool start)
+        {
+            var onOff = start ? (byte)0x01 : (byte)0x00;
+            var cmd = new byte[] { 
+                0x53,
+                0x03,
+                0x0A,
+                onOff,
+                0xFF
+            };
+            cmd[4] = CheckSum(cmd);
             _mPort.Write(cmd, 0, 5);
-            //Set source to internal
-            cmd = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B };
+            System.Threading.Thread.Sleep(50);
+        }
+
+        private void SetInternalSource()
+        {
+            var cmd = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B };
             _mPort.Write(cmd, 0, 5);
-            //Set mode to discrete
-            cmd = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 };
+            System.Threading.Thread.Sleep(50);
+        }
+
+        private void SetDropsPerTrigger(int drops)
+        {
+            var cDrops = DivideData((short)drops);
+            var cmd = new byte[] { 
+                0x53, 
+                0x04, 
+                0x03, 
+                cDrops.Item1, 
+                cDrops.Item2, 
+                0x08 };
+            cmd[5] = CheckSum(cmd);
             _mPort.Write(cmd, 0, 5);
+            System.Threading.Thread.Sleep(50);
+        }
+
+        private void SetDiscreteMode() {
+            var cmd = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 };
+            _mPort.Write(cmd, 0, 5);
+            System.Threading.Thread.Sleep(50);
         }
 
         public void Stop()
         {
             if (!_mPort.IsOpen)
             {
-                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
             var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x00, 0x03 + 0x0A + 0x00 };
             _mPort.Write(cmd, 0, 5);
+            System.Threading.Thread.Sleep(50);
         }
 
         public void SetChannel(byte channel)
         {
             if (!_mPort.IsOpen)
             {
-                f_AddLogBoxMessage("Порт диспенсера закрыт");
+                SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
             var cmd = new byte[] { 0x53, 0x03, 0x0C, channel, 0x62 };
             cmd[4] = (byte)(cmd[1] + cmd[2] + cmd[3]);
             _mPort.Write(cmd, 0, 5);
+            System.Threading.Thread.Sleep(50);
         }
 
         public void Dump()
         {
             var cmd = new byte[] { 0x53, 0x02, 0x60, 0x62 };
             _mPort.Write(cmd, 0, 4);
+            System.Threading.Thread.Sleep(50);
         }
 
         public void Dump(byte channel)
@@ -247,6 +308,7 @@ namespace LabControl.PortModels
             var cmd = new byte[5] { 0x53, 0x03, 0x60, channel, 0x0 };
             cmd[4] = (byte)(cmd[1] + cmd[2] + cmd[3]);
             _mPort.Write(cmd, 0, 5);
+            System.Threading.Thread.Sleep(50);
         }
 
         public void Init()
@@ -256,12 +318,9 @@ namespace LabControl.PortModels
             _mPort.Write("X2000");
             System.Threading.Thread.Sleep(50);
             SoftReset();
-            System.Threading.Thread.Sleep(50);
+            
             GetVersion();
-            System.Threading.Thread.Sleep(50);
-            //SetPulseWaveForm();
-            System.Threading.Thread.Sleep(50);
-
+           
         }
 
         //Вынести в отдельный класс
