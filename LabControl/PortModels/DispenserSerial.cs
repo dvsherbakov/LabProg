@@ -20,6 +20,8 @@ namespace LabControl.PortModels
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
+        private DispenserSineWaveData f_WaveData;
+
         private string f_PortName;
         public string PortName
         {
