@@ -20,7 +20,8 @@ namespace LabControl.PortModels
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
-        private DispenserSineWaveData f_WaveData;
+        private DispenserSineWaveData f_SineWaveData;
+        private DispenserPulseWaveData f_PulseWaveData;
 
         private string f_PortName;
         public string PortName
@@ -149,9 +150,9 @@ namespace LabControl.PortModels
                 SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
-            var v0 = DivideData((short)data.V0);
-            var vp = DivideData((short)data.VPeak);
-            var t = DivideData((short)data.TimeToverall);
+            var v0 = BytesUtility.DivideData((short)data.V0);
+            var vp = BytesUtility.DivideData((short)data.VPeak);
+            var t = BytesUtility.DivideData((short)data.TimeToverall);
             var cmd = new byte[] {
                 0x53,//Header ‘S’
                 0x08, 0x17, //Number of Bytes 08h //Command 17h 
@@ -172,14 +173,14 @@ namespace LabControl.PortModels
                 SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
-            var t1 = DivideData((short)data.TimeT1);
-            var t2 = DivideData((short)data.TimeT2);
-            var v0 = DivideData((short)(data.V0 * 10));
-            var v1 = DivideData((short)(data.V1 * 10));
-            var v2 = DivideData((short)(data.V2 * 10));
-            var tr1 = DivideData((short)data.TimeRise1);
-            var tf = DivideData((short)data.TimeFall);
-            var tr2 = DivideData((short)data.TimeRise2);
+            var t1 = BytesUtility.DivideData((short)data.TimeT1);
+            var t2 = BytesUtility.DivideData((short)data.TimeT2);
+            var v0 = BytesUtility.DivideData((short)(data.V0 * 10));
+            var v1 = BytesUtility.DivideData((short)(data.V1 * 10));
+            var v2 = BytesUtility.DivideData((short)(data.V2 * 10));
+            var tr1 = BytesUtility.DivideData((short)data.TimeRise1);
+            var tf = BytesUtility.DivideData((short)data.TimeFall);
+            var tr2 = BytesUtility.DivideData((short)data.TimeRise2);
 
             var cmd = new byte[] {
                 0x53,
@@ -203,7 +204,7 @@ namespace LabControl.PortModels
 
         public void SetFrequency(int freq)
         {
-            var cFreq = DivideData((short)freq);
+            var cFreq = BytesUtility.DivideData((short)freq);
             var cmd = new byte[]
             {
                 0x53,
@@ -254,7 +255,7 @@ namespace LabControl.PortModels
 
         private void SetDropsPerTrigger(int drops)
         {
-            var cDrops = DivideData((short)drops);
+            var cDrops = BytesUtility.DivideData((short)drops);
             var cmd = new byte[] { 
                 0x53, 
                 0x04, 
@@ -325,16 +326,14 @@ namespace LabControl.PortModels
            
         }
 
-        //Вынести в отдельный класс
-
-        private static short JoinByte(byte hiB, byte lowB)
+        public void SetSineWaveData(DispenserSineWaveData data)
         {
-            return (short)((hiB << 8) | lowB & 0x00FF);
+            f_SineWaveData = data;
         }
 
-        private static Tuple<byte, byte> DivideData(short number)
+        public void SetPulseWaveData(DispenserPulseWaveData data)
         {
-            return new Tuple<byte, byte>((byte)(number >> 8), (byte)(number & 0xff));
+            f_PulseWaveData = data;
         }
 
     }

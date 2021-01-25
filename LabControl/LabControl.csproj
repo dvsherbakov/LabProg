@@ -90,6 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClassHelpers\BytesUtility.cs" />
     <Compile Include="ClassHelpers\ConfocalDataItem.cs" />
     <Compile Include="ClassHelpers\DispenserPulseWaveData.cs" />
     <Compile Include="ClassHelpers\DispenserSineWaveData.cs" />

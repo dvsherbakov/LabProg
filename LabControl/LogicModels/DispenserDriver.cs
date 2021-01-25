@@ -1,4 +1,5 @@
-﻿using LabControl.PortModels;
+﻿using LabControl.ClassHelpers;
+using LabControl.PortModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace LabControl.LogicModels
         public void ConnectToPort()
         {
             f_DispenserSerial = new DispenserSerial(PortStr);
-            PwrSerial.OpenPort();
+            f_DispenserSerial.OpenPort();
             f_DispenserSerial.SetLogMessage += TestLog;
             f_DispenserSerial.DispathRecieveData += DispatchData;
         }
@@ -44,6 +45,16 @@ namespace LabControl.LogicModels
                         break;
                 }
             }
+        }
+
+        public void SetSineWaveData(DispenserSineWaveData data)
+        {
+            f_DispenserSerial.SetSineWaveData(data);
+        }
+
+        public void SetPulseWaveData(DispenserPulseWaveData data)
+        {
+            f_DispenserSerial.SetPulseWaveData(data);
         }
     }
 }

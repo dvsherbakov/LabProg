@@ -912,21 +912,33 @@ namespace LabControl.ViewModels
         public int DispenserHV0
         {
             get => f_DispenserHV0;
-            set => Set(ref f_DispenserHV0, value);
+            set
+            {
+                Set(ref f_DispenserHV0, value);
+                CollectSineData();
+            }
         }
 
         private int f_DispenserHVpeak;
         public int DispenserHVpeak
         {
             get => f_DispenserHVpeak;
-            set => Set(ref f_DispenserHVpeak, value);
+            set
+            {
+                Set(ref f_DispenserHVpeak, value);
+                CollectSineData();
+            }
         }
 
         private int f_DispenserHToverall;
         public int DispenserHToverall
         {
             get => f_DispenserHToverall;
-            set => Set(ref f_DispenserHToverall, value);
+            set
+            {
+                Set(ref f_DispenserHToverall, value);
+                CollectSineData();
+            }
         }
 
         private Visibility f_DispenserHarmonycalWaveVisible;
@@ -1299,6 +1311,12 @@ namespace LabControl.ViewModels
         private void SetOutcomingPumpSpeedLabel(string speed)
         {
             Application.Current.Dispatcher.Invoke(() => OutcomingPumpSpeed = speed);
+        }
+
+        private void CollectSineData()
+        {
+            var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHV0, VPeak= DispenserHVpeak };
+            f_DispenserDriver.SetSineWaveData(data);
         }
     }
 }

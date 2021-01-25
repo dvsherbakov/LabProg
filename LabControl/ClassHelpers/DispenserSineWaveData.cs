@@ -1,6 +1,6 @@
 ﻿namespace LabControl.ClassHelpers
 {
-    public abstract class DispenserSineWaveData
+    public class DispenserSineWaveData
     {
         public int V0 { get; set; }
         public int VPeak { get; set; }
