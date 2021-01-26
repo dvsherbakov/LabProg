@@ -23,6 +23,8 @@ namespace LabControl.PortModels
         private DispenserSineWaveData f_SineWaveData;
         private DispenserPulseWaveData f_PulseWaveData;
 
+        private int f_SignalType;
+
         private string f_PortName;
         public string PortName
         {
@@ -336,5 +338,9 @@ namespace LabControl.PortModels
             f_PulseWaveData = data;
         }
 
+        public void SetSignalType(int signalType)
+        {
+            f_SignalType = signalType;
+        }
     }
 }

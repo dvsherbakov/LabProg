@@ -807,6 +807,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_DispenserSignalType, value);
+                f_DispenserDriver.SetSignalType(f_DispenserSignalType);
                 switch (value) {
                     case 0:
                         DispenserSingleWaveVisible = Visibility.Visible;

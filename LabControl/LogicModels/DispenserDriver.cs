@@ -56,5 +56,10 @@ namespace LabControl.LogicModels
         {
             f_DispenserSerial.SetPulseWaveData(data);
         }
+
+        public void SetSignalType(int signalType)
+        {
+            f_DispenserSerial.SetSignalType(signalType);
+        }
     }
 }
