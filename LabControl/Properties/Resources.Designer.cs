@@ -187,6 +187,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Запуск.
+        /// </summary>
+        internal static string DispenserStartLabel {
+            get {
+                return ResourceManager.GetString("DispenserStartLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Время.
         /// </summary>
         internal static string DispenserTimeLabel {

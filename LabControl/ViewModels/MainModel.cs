@@ -250,7 +250,8 @@ namespace LabControl.ViewModels
         public string DispenserPortSelected
         {
             get => f_DispenserPortSelected;
-            set { 
+            set
+            {
                 Set(ref f_DispenserPortSelected, value);
                 if (f_DispenserDriver != null) f_DispenserDriver.PortStr = value;
             }
@@ -763,9 +764,12 @@ namespace LabControl.ViewModels
         }
 
         private bool f_IsDispenserPortConnected;
-        public bool IsDispenserPortConnected {
+        public bool IsDispenserPortConnected
+        {
             get => f_IsDispenserPortConnected;
-            set { Set(ref f_IsDispenserPortConnected, value);
+            set
+            {
+                Set(ref f_IsDispenserPortConnected, value);
                 if (value) f_DispenserDriver.ConnectToPort(); else f_DispenserDriver.Disconnect();
             }
         }
@@ -800,6 +804,17 @@ namespace LabControl.ViewModels
             set => Set(ref f_PyroTemperature, value);
         }
 
+        private bool f_IsDispenserActive;
+        public bool IsDispenserActive
+        {
+            get => f_IsDispenserActive;
+            set
+            {
+                Set(ref f_IsDispenserActive, value);
+                if (f_IsDispenserActive) f_DispenserDriver.Start(); else f_DispenserDriver.Stop();
+            }
+        }
+
         private int f_DispenserSignalType;
         public int DispenserSignalType
         {
@@ -808,7 +823,8 @@ namespace LabControl.ViewModels
             {
                 Set(ref f_DispenserSignalType, value);
                 f_DispenserDriver.SetSignalType(f_DispenserSignalType);
-                switch (value) {
+                switch (value)
+                {
                     case 0:
                         DispenserSingleWaveVisible = Visibility.Visible;
                         DispenserHarmonycalWaveVisible = Visibility.Collapsed;
@@ -816,10 +832,6 @@ namespace LabControl.ViewModels
                     case 1:
                         DispenserHarmonycalWaveVisible = Visibility.Visible;
                         DispenserSingleWaveVisible = Visibility.Collapsed;
-                        break;
-                    case 2:
-                        DispenserSingleWaveVisible = Visibility.Collapsed;
-                        DispenserHarmonycalWaveVisible = Visibility.Collapsed;
                         break;
                     default:
                         DispenserSingleWaveVisible = Visibility.Collapsed;
@@ -850,56 +862,88 @@ namespace LabControl.ViewModels
         public int DispenserRiseTime
         {
             get => f_DispenserRiseTime;
-            set => Set(ref f_DispenserRiseTime, value);
+            set
+            {
+                Set(ref f_DispenserRiseTime, value);
+                CollectPulseData();
+            }
         }
 
         private int f_DispenserKeepTime;
         public int DispenserKeepTime
         {
             get => f_DispenserKeepTime;
-            set => Set(ref f_DispenserKeepTime, value);
+            set
+            {
+                Set(ref f_DispenserKeepTime, value);
+                CollectPulseData();
+            }
         }
 
         private int f_DispenserFallTime;
         public int DispenserFallTime
         {
             get => f_DispenserFallTime;
-            set => Set(ref f_DispenserFallTime, value);
+            set
+            {
+                Set(ref f_DispenserFallTime, value);
+                CollectPulseData();
+            }
         }
 
         private int f_DispenserLowTime;
         public int DispenserLowTime
         {
             get => f_DispenserLowTime;
-            set => Set(ref f_DispenserLowTime, value);
+            set
+            {
+                Set(ref f_DispenserLowTime, value);
+                CollectPulseData();
+            }
         }
 
         private int f_DispenserRiseTime2;
         public int DispenserRiseTime2
         {
             get => f_DispenserRiseTime2;
-            set => Set(ref f_DispenserRiseTime2, value);
+            set
+            {
+                Set(ref f_DispenserRiseTime2, value);
+                CollectPulseData();
+            }
         }
 
         private int f_DispenserV0;
         public int DispenserV0
         {
             get => f_DispenserV0;
-            set => Set(ref f_DispenserV0, value);
+            set
+            {
+                Set(ref f_DispenserV0, value);
+                CollectPulseData();
+            }
         }
 
         private int f_DispenserV1;
         public int DispenserV1
         {
             get => f_DispenserV1;
-            set => Set(ref f_DispenserV1, value);
+            set
+            {
+                Set(ref f_DispenserV1, value);
+                CollectPulseData();
+            }
         }
 
         private int f_DispenserV2;
         public int DispenserV2
         {
             get => f_DispenserV2;
-            set => Set(ref f_DispenserV2, value);
+            set
+            {
+                Set(ref f_DispenserV2, value);
+                CollectPulseData();
+            }
         }
 
         private Visibility f_DispenserSingleWaveVisible;
@@ -945,7 +989,7 @@ namespace LabControl.ViewModels
         private Visibility f_DispenserHarmonycalWaveVisible;
         public Visibility DispenserHarmonycalWaveVisible
         {
-            get=> f_DispenserHarmonycalWaveVisible;
+            get => f_DispenserHarmonycalWaveVisible;
             set => Set(ref f_DispenserHarmonycalWaveVisible, value);
         }
         #endregion
@@ -1031,7 +1075,6 @@ namespace LabControl.ViewModels
         public static string DispenserPeakLabel => Resources.DispenserPeakLabel;
         public static string DispenserPeriodLabel => Resources.DispenserPeriodLabel;
         #endregion
-
 
         #region Commands
         public ICommand QuitCommand { get; }
@@ -1316,8 +1359,23 @@ namespace LabControl.ViewModels
 
         private void CollectSineData()
         {
-            var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHV0, VPeak= DispenserHVpeak };
+            var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHV0, VPeak = DispenserHVpeak };
             f_DispenserDriver.SetSineWaveData(data);
+        }
+        private void CollectPulseData()
+        {
+            var data = new DispenserPulseWaveData()
+            {
+                TimeRise1 = DispenserRiseTime,
+                TimeT1 = DispenserKeepTime,
+                TimeFall = DispenserFallTime,
+                TimeT2 = DispenserLowTime,
+                TimeRise2 = DispenserRiseTime2,
+                V0 = DispenserV0,
+                V1 = DispenserV1,
+                V2 = DispenserV2
+            };
+            f_DispenserDriver.SetPulseWaveData(data);
         }
     }
 }

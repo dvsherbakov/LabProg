@@ -339,4 +339,7 @@
   <data name="DispenserPeriodLabel" xml:space="preserve">
     <value>Период</value>
   </data>
+  <data name="DispenserStartLabel" xml:space="preserve">
+    <value>Запуск</value>
+  </data>
 </root>

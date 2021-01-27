@@ -61,5 +61,15 @@ namespace LabControl.LogicModels
         {
             f_DispenserSerial.SetSignalType(signalType);
         }
+
+        public void Start()
+        {
+            f_DispenserSerial.Start();
+        }
+
+        public void Stop()
+        {
+            f_DispenserSerial.Stop();
+        }
     }
 }

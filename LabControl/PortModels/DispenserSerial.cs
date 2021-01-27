@@ -230,13 +230,14 @@ namespace LabControl.PortModels
             SetInternalSource();
             SetDropsPerTrigger(1);
             SetDiscreteMode();
+            if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
             TriggerAll(true);
         }
 
         private void TriggerAll(bool start)
         {
             var onOff = start ? (byte)0x01 : (byte)0x00;
-            var cmd = new byte[] { 
+            var cmd = new byte[] {
                 0x53,
                 0x03,
                 0x0A,
@@ -258,19 +259,20 @@ namespace LabControl.PortModels
         private void SetDropsPerTrigger(int drops)
         {
             var cDrops = BytesUtility.DivideData((short)drops);
-            var cmd = new byte[] { 
-                0x53, 
-                0x04, 
-                0x03, 
-                cDrops.Item1, 
-                cDrops.Item2, 
+            var cmd = new byte[] {
+                0x53,
+                0x04,
+                0x03,
+                cDrops.Item1,
+                cDrops.Item2,
                 0x08 };
             cmd[5] = CheckSum(cmd);
             _mPort.Write(cmd, 0, 5);
             System.Threading.Thread.Sleep(50);
         }
 
-        private void SetDiscreteMode() {
+        private void SetDiscreteMode()
+        {
             var cmd = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 };
             _mPort.Write(cmd, 0, 5);
             System.Threading.Thread.Sleep(50);
@@ -323,9 +325,9 @@ namespace LabControl.PortModels
             _mPort.Write("X2000");
             System.Threading.Thread.Sleep(50);
             SoftReset();
-            
+
             GetVersion();
-           
+
         }
 
         public void SetSineWaveData(DispenserSineWaveData data)
