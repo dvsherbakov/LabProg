@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using LabControl.ClassHelpers;
 using LabControl.DataModels;
 using LabControl.LogicModels;
@@ -827,15 +828,15 @@ namespace LabControl.ViewModels
                 {
                     case 0:
                         DispenserSingleWaveVisible = Visibility.Visible;
-                        DispenserHarmonycalWaveVisible = Visibility.Collapsed;
+                        DispenserHarmonicallyWaveVisible = Visibility.Collapsed;
                         break;
                     case 1:
-                        DispenserHarmonycalWaveVisible = Visibility.Visible;
+                        DispenserHarmonicallyWaveVisible = Visibility.Visible;
                         DispenserSingleWaveVisible = Visibility.Collapsed;
                         break;
                     default:
                         DispenserSingleWaveVisible = Visibility.Collapsed;
-                        DispenserHarmonycalWaveVisible = Visibility.Collapsed;
+                        DispenserHarmonicallyWaveVisible = Visibility.Collapsed;
                         break;
                 }
             }
@@ -845,10 +846,7 @@ namespace LabControl.ViewModels
         public int DispenserChannel
         {
             get => f_DispenserChannel;
-            set
-            {
-                Set(ref f_DispenserChannel, value);
-            }
+            set => Set(ref f_DispenserChannel, value);
         }
 
         private int f_DispenserFrequency;
@@ -986,12 +984,14 @@ namespace LabControl.ViewModels
             }
         }
 
-        private Visibility f_DispenserHarmonycalWaveVisible;
-        public Visibility DispenserHarmonycalWaveVisible
+        private Visibility f_DispenserHarmonicWaveVisible;
+        public Visibility DispenserHarmonicallyWaveVisible
         {
-            get => f_DispenserHarmonycalWaveVisible;
-            set => Set(ref f_DispenserHarmonycalWaveVisible, value);
+            get => f_DispenserHarmonicWaveVisible;
+            set => Set(ref f_DispenserHarmonicWaveVisible, value);
         }
+
+        
         #endregion
 
         #region Collections
