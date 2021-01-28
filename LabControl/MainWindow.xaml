@@ -310,8 +310,6 @@
                                                 Style="{StaticResource PartTransparent}"
                                                 HorizontalAlignment="Center"/>
                                         </Border>
-                                        <TextBlock/>
-                                        <TextBlock />
                                         <Border Grid.Row="0" Grid.Column="3"
                                                 Margin="1"
                                                 BorderBrush="Aquamarine"
@@ -1677,7 +1675,7 @@
                                                  TextAlignment="Center"
                                                  Style="{StaticResource PartTransparent}"
                                                  Template="{StaticResource TextBoxBaseControlTemplate}"
-                                                 Text="{Binding DispenserHV0}"/>
+                                                 Text="{Binding DispenserHv0}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="0" Padding="0,3">V</TextBlock>
 
                                         <TextBlock Grid.Column="0" Grid.Row="1" Padding="5" 

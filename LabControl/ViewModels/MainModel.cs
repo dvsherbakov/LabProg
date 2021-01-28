@@ -822,7 +822,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_DispenserSignalType, value);
-                f_DispenserDriver.SetSignalType(f_DispenserSignalType);
+                f_DispenserDriver?.SetSignalType(f_DispenserSignalType);
                 switch (value)
                 {
                     case 0:
@@ -953,13 +953,13 @@ namespace LabControl.ViewModels
             set => Set(ref f_DispenserSingleWaveVisible, value);
         }
 
-        private int f_DispenserHV0;
-        public int DispenserHV0
+        private int f_DispenserHv0;
+        public int DispenserHv0
         {
-            get => f_DispenserHV0;
+            get => f_DispenserHv0;
             set
             {
-                Set(ref f_DispenserHV0, value);
+                Set(ref f_DispenserHv0, value);
                 CollectSineData();
             }
         }
@@ -1073,6 +1073,7 @@ namespace LabControl.ViewModels
         public static string DispenserMinimumLabel => Resources.DispenserMinimumLabel;
         public static string DispenserAverageLabel => Resources.DispenserAverageLabel;
         public static string DispenserPeakLabel => Resources.DispenserPeakLabel;
+        public static string DispenserStartLabel => Resources.DispenserStartLabel;
         public static string DispenserPeriodLabel => Resources.DispenserPeriodLabel;
         #endregion
 
@@ -1083,6 +1084,7 @@ namespace LabControl.ViewModels
         public ICommand StandardSizeCommand { get; }
         public ICommand SetLaserPwrCommand { get; }
         #endregion
+
         public MainModel()
         {
             // Data context
@@ -1176,7 +1178,7 @@ namespace LabControl.ViewModels
             DispenserV0 = Settings.Default.DispenserV0;
             DispenserV1 = Settings.Default.DispenserV1;
             DispenserV2 = Settings.Default.DispenserV2;
-            DispenserHV0 = Settings.Default.DispenserHV0;
+            DispenserHv0 = Settings.Default.DispenserHV0;
             DispenserHVpeak = Settings.Default.DispenserHVpeak;
             DispenserHToverall = Settings.Default.DispenserHToverall;
             //init command area
@@ -1310,7 +1312,7 @@ namespace LabControl.ViewModels
             Settings.Default.DispenserV0 = DispenserV0;
             Settings.Default.DispenserV1 = DispenserV1;
             Settings.Default.DispenserV2 = DispenserV2;
-            Settings.Default.DispenserHV0 = DispenserHV0;
+            Settings.Default.DispenserHV0 = DispenserHv0;
             Settings.Default.DispenserHVpeak = DispenserHVpeak;
             Settings.Default.DispenserHToverall = DispenserHToverall;
             Settings.Default.Save();
@@ -1359,8 +1361,8 @@ namespace LabControl.ViewModels
 
         private void CollectSineData()
         {
-            var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHV0, VPeak = DispenserHVpeak };
-            f_DispenserDriver.SetSineWaveData(data);
+            var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHv0, VPeak = DispenserHVpeak };
+            f_DispenserDriver?.SetSineWaveData(data);
         }
         private void CollectPulseData()
         {
@@ -1375,7 +1377,7 @@ namespace LabControl.ViewModels
                 V1 = DispenserV1,
                 V2 = DispenserV2
             };
-            f_DispenserDriver.SetPulseWaveData(data);
+            f_DispenserDriver?.SetPulseWaveData(data);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LabControl.LogicModels
 {
-    class DispenserDriver
+    internal class DispenserDriver
     {
         private DispenserSerial f_DispenserSerial;
 
@@ -35,15 +35,13 @@ namespace LabControl.LogicModels
 
         private void DispatchData(byte[] data)
         {
-            SetLogMessage.Invoke($"Получено из порта диспенсера: {BitConverter.ToString(data)}");
-            if (data.Length > 2 & data[0] == 0x06)
+            SetLogMessage?.Invoke($"Получено из порта диспенсера: {BitConverter.ToString(data)}");
+            if (!(data.Length > 2 & data[0] == 0x06)) return;
+            switch (data[1])
             {
-                switch (data[1])
-                {
-                    case 0x60:
-                        //SetDispOptions(data);
-                        break;
-                }
+                case 0x60:
+                    //SetDispOptions(data);
+                    break;
             }
         }
 

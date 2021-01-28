@@ -112,11 +112,11 @@ namespace LabControl.PortModels
             System.Threading.Thread.Sleep(50);
         }
 
-        public void SoftReset()
+        private void SoftReset()
         {
             if (!_mPort.IsOpen)
             {
-                SetLogMessage("Порт диспенсера закрыт");
+                SetLogMessage?.Invoke("Порт диспенсера закрыт");
                 return;
             }
             var cmd = new byte[4] { 0x53, 0x02, 0x01, 0x03 };
@@ -128,7 +128,7 @@ namespace LabControl.PortModels
         {
             if (!_mPort.IsOpen)
             {
-                SetLogMessage("Порт диспенсера закрыт");
+                SetLogMessage?.Invoke("Порт диспенсера закрыт");
                 return;
             }
             var cmd = new byte[4] { 0x53, 0x02, 0x0D, 0x0F };
