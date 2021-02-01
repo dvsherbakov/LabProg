@@ -26,7 +26,7 @@ namespace LabControl.LogicModels
 
         public void Disconnect()
         {
-            f_DispenserSerial.ClosePort();
+            f_DispenserSerial?.ClosePort();
         }
         private void TestLog(string msg)
         {
@@ -47,27 +47,27 @@ namespace LabControl.LogicModels
 
         public void SetSineWaveData(DispenserSineWaveData data)
         {
-            f_DispenserSerial.SetSineWaveData(data);
+            f_DispenserSerial?.SetSineWaveData(data);
         }
 
         public void SetPulseWaveData(DispenserPulseWaveData data)
         {
-            f_DispenserSerial.SetPulseWaveData(data);
+            f_DispenserSerial?.SetPulseWaveData(data);
         }
 
         public void SetSignalType(int signalType)
         {
-            f_DispenserSerial.SetSignalType(signalType);
+            f_DispenserSerial?.SetSignalType(signalType);
         }
 
         public void Start()
         {
-            f_DispenserSerial.Start();
+            f_DispenserSerial?.Start();
         }
 
         public void Stop()
         {
-            f_DispenserSerial.Stop();
+            f_DispenserSerial?.Stop();
         }
     }
 }

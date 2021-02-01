@@ -771,7 +771,9 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_IsDispenserPortConnected, value);
-                if (value) f_DispenserDriver.ConnectToPort(); else f_DispenserDriver.Disconnect();
+
+                if (value) f_DispenserDriver.ConnectToPort();
+                else f_DispenserDriver.Disconnect();
             }
         }
 
@@ -812,7 +814,12 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_IsDispenserActive, value);
-                if (f_IsDispenserActive) f_DispenserDriver.Start(); else f_DispenserDriver.Stop();
+                if (f_IsDispenserActive)
+                {
+                    if (!IsDispenserPortConnected) IsDispenserPortConnected = true;
+                    f_DispenserDriver.Start();
+                }
+                else f_DispenserDriver.Stop();
             }
         }
 
@@ -991,7 +998,7 @@ namespace LabControl.ViewModels
             set => Set(ref f_DispenserHarmonicWaveVisible, value);
         }
 
-        
+
         #endregion
 
         #region Collections

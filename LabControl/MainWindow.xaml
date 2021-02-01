@@ -94,9 +94,9 @@
             </Grid>
         </DockPanel>
 
-        <DockPanel DockPanel.Dock="Top" Height="52" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Style="{StaticResource TransparentButton}">
-                <Viewbox Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <DockPanel DockPanel.Dock="Top" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Style="{StaticResource TransparentButton}" Margin="5,0">
+                <Viewbox Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Grid >
                             <Path Data="m 5710,11643 c -528,-36 -961,-120 -1450,-283 -687,-228 -1338,-595 -1890,-1066 -156,-133 -503,-481 -632,-634 C 918,8686 451,7487 401,6228 343,4755 849,3341 1830,2235 1965,2083 2260,1796 2409,1671 3288,937 4324,501 5490,374 c 199,-21 701,-30 920,-15 1664,113 3178,935 4171,2266 618,829 1000,1834 1093,2875 75,836 -38,1683 -329,2464 -779,2092 -2679,3513 -4910,3676 -125,9 -610,11 -725,3 z m 763,-488 c 1254,-111 2393,-647 3262,-1536 410,-420 709,-843 961,-1364 546,-1127 666,-2364 348,-3575 -169,-646 -494,-1307 -894,-1825 C 9659,2220 9036,1710 8325,1360 7895,1149 7426,994 6965,911 6594,844 6350,826 5945,833 c -310,5 -449,18 -725,62 -1662,271 -3082,1326 -3820,2840 -644,1322 -699,2808 -153,4185 525,1326 1594,2381 2941,2904 451,176 922,286 1417,331 199,18 663,18 868,0 z" Fill="#ff7f2a" Opacity="1"/>
@@ -108,13 +108,38 @@
                     </ContentControl>
                 </Viewbox>
             </Button>
-            <Button Style="{StaticResource TransparentButton}">
-                <Viewbox Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Style="{StaticResource TransparentButton}" Margin="5,0">
+                <Viewbox Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Grid>
                             <Path Data="M2468 4890 c-78 -12 -200 -62 -278 -112 -83 -53 -240 -211 -306 -308 -91 -133 -1536 -2671 -1575 -2766 -65 -160 -84 -250 -83 -409 0 -126 3 -148 28 -220 32 -94 59 -143 118 -213 114 -136 293 -228 520 -267 80 -14 278 -16 1678 -16 1398 0 1598 2 1678 16 334 58 554 223 639 479 23 71 27 98 27 216 1 98 -4 157 -17 215 -25 108 -86 262 -145 365 -225 394 -1436 2493 -1476 2558 -139 225 -346 396 -541 447 -76 19 -195 26 -267 15z m243 -219 c173 -65 344 -243 497 -516 95 -170 1159 -2019 1254 -2179 157 -266 230 -441 251 -607 21 -167 -19 -296 -122 -399 -67 -67 -128 -102 -241 -140 -181 -61 -154 -60 -1771 -60 -1013 0 -1502 4 -1564 11 -353 43 -552 194 -588 445 -26 179 54 427 233 724 62 102 1145 1996 1230 2151 161 291 339 488 507 560 26 11 63 24 83 29 54 14 168 4 231 -19z" Fill="#ff7f2a" Opacity="1"/>
                             <Path Data="M2476 4505 c-105 -37 -221 -150 -337 -330 -70 -110 -839 -1453 -839 -1467 0 -5 140 -8 310 -8 171 0 310 3 310 8 0 4 -62 42 -138 85 -75 43 -143 81 -151 86 -11 7 -5 24 28 85 24 42 46 74 49 72 82 -50 496 -286 501 -286 4 0 17 10 29 23 l21 22 -145 250 c-79 137 -144 252 -144 256 0 3 10 11 23 17 12 6 45 24 73 41 l51 30 137 -239 c76 -131 143 -245 149 -253 8 -11 21 -14 40 -10 l27 5 0 299 0 299 90 0 90 0 0 -299 0 -299 31 -7 c17 -4 32 -5 34 -3 2 2 52 86 110 188 59 102 125 215 146 252 l39 67 73 -42 c39 -24 71 -47 70 -52 -2 -6 -66 -119 -143 -252 -77 -133 -140 -249 -140 -256 0 -8 8 -21 18 -30 17 -15 34 -7 277 133 l259 149 41 -72 c23 -40 40 -75 38 -79 -2 -3 -114 -70 -251 -148 -136 -79 -249 -144 -250 -146 -2 -1 -1 -16 3 -33 l7 -31 299 0 299 0 0 -90 0 -90 -300 0 -300 0 -6 -24 c-3 -14 -3 -29 0 -34 3 -5 118 -73 255 -152 l250 -144 -31 -56 c-58 -106 -24 -112 -314 54 -246 142 -257 147 -275 130 -10 -9 -19 -23 -19 -29 0 -10 54 -106 266 -471 l24 -42 -69 -41 c-38 -23 -73 -41 -78 -41 -4 0 -73 113 -152 250 -145 252 -152 261 -195 244 -14 -5 -16 -41 -16 -300 l0 -294 -90 0 -90 0 0 294 0 294 -27 6 c-16 5 -31 2 -38 -6 -7 -7 -72 -116 -145 -243 -72 -126 -135 -234 -140 -239 -8 -8 -134 56 -145 74 -3 5 60 122 141 261 l146 252 -24 23 -23 24 -245 -141 c-134 -78 -250 -143 -256 -146 -10 -4 -94 120 -94 139 0 4 65 44 145 89 80 46 145 87 145 91 0 4 -206 8 -458 8 l-458 0 -44 -77 c-24 -43 -78 -136 -121 -208 -101 -172 -153 -276 -191 -388 -28 -81 -32 -105 -33 -202 0 -95 3 -116 22 -151 54 -101 171 -161 376 -194 98 -15 3032 -15 3142 0 228 33 371 126 391 257 11 74 -2 192 -31 278 -33 97 -111 256 -192 390 -59 98 -1145 1983 -1255 2180 -168 298 -337 456 -488 455 -30 -1 -73 -7 -94 -15z" Fill="#ff7f2a" Opacity="1"/>
                             <Path Data="M2503 2720 c-88 -18 -162 -77 -208 -163 l-20 -38 -540 2 -540 2 -47 -82 c-27 -46 -48 -85 -48 -87 0 -2 267 -4 593 -4 l592 0 30 -51 c58 -98 146 -144 263 -137 78 5 132 28 182 78 59 59 75 102 75 205 0 80 -3 95 -27 136 -63 107 -187 163 -305 139z" Fill="#ff7f2a" Opacity="1"/>
+                        </Grid>
+                    </ContentControl>
+                </Viewbox>
+            </Button>
+            <Button Style="{StaticResource TransparentButton}" Margin="5,0">
+                <Viewbox Width="30" Height="30" >
+                    <ContentControl>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="7*"/>
+                                <RowDefinition Height="11*"/>
+                            </Grid.RowDefinitions>
+                            <Path Fill="#ff7f2a" Grid.RowSpan="2">
+                                <Path.Data>
+                                    <GeometryGroup>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="17,10"  />
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="21,13"/>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="21,7"/>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="25,4"/>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="25,10"/>
+                                        <EllipseGeometry RadiusX="2" RadiusY="2" Center="25,16"/>
+                                    </GeometryGroup>
+                                </Path.Data>
+                            </Path>
+                            <Path Grid.Row="0" Data="M1,3L10,3 14,8 14,12 10,16 1,16z" Stroke="#ff7f2a" StrokeThickness="2" Grid.RowSpan="2"/>
                         </Grid>
                     </ContentControl>
                 </Viewbox>
