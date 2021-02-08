@@ -1090,6 +1090,7 @@ namespace LabControl.ViewModels
         public ICommand MaximizedCommand { get; }
         public ICommand StandardSizeCommand { get; }
         public ICommand SetLaserPwrCommand { get; }
+        public ICommand StartPumpCommand { get; }
         #endregion
 
         public MainModel()
@@ -1194,6 +1195,7 @@ namespace LabControl.ViewModels
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
             StandardSizeCommand = new LambdaCommand(OnStandardSizeCommand);
             SetLaserPwrCommand = new LambdaCommand(OnSetLaserPower);
+            StartPumpCommand = new LambdaCommand(OnStartPump);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -1348,6 +1350,13 @@ namespace LabControl.ViewModels
             f_LaserDriver.SetPower(LaserPowerSetter);
             if (!LaserHistoryCollection.Contains(LaserPowerSetter))
                 LaserHistoryCollection.Insert(0, LaserPowerSetter);
+        }
+
+        private void OnStartPump(object sender)
+        {
+            if (!IsPumpPortsConnect) IsPumpPortsConnect = true;
+            IsConfocalActive = !IsPumpsActive;
+            IsPumpsActive = !IsPumpsActive;
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
