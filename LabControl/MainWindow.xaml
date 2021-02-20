@@ -165,6 +165,7 @@
                 Background="Transparent"
                 FontFamily="Tahoma" 
                 FontSize="16" >
+                <!-- Pump && confocal controls-->
                 <TabItem VerticalAlignment="Center" 
                          Style="{DynamicResource TabItemStyle}"
                          HorizontalAlignment="Center" >
@@ -376,6 +377,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <!-- Lasers controls -->
                 <TabItem VerticalAlignment="Center" 
                          Style="{DynamicResource TabItemStyle}"
                          HorizontalAlignment="Center" >
@@ -515,6 +517,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <!-- Power supply controls -->
                 <TabItem VerticalAlignment="Center" 
                          Style="{DynamicResource TabItemStyle}"
                          HorizontalAlignment="Center" >
@@ -1416,6 +1419,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <!-- Cam controls -->
                 <TabItem VerticalAlignment="Center" 
                          Style="{DynamicResource TabItemStyle}"
                          HorizontalAlignment="Center" >
@@ -1429,6 +1433,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <!-- Piro sensor -->
                 <TabItem VerticalAlignment="Center" 
                          Style="{DynamicResource TabItemStyle}"
                          HorizontalAlignment="Center" >
@@ -1508,6 +1513,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <!-- Dispenser -->
                 <TabItem VerticalAlignment="Center" 
                          Style="{DynamicResource TabItemStyle}"
                          HorizontalAlignment="Center" >
