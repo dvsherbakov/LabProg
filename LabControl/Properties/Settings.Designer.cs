@@ -790,5 +790,221 @@ namespace LabControl.Properties {
                 this["IsRevereSecondPump"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsLaserEmit {
+            get {
+                return ((bool)(this["IsLaserEmit"]));
+            }
+            set {
+                this["IsLaserEmit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPyroPortConnected {
+            get {
+                return ((bool)(this["IsPyroPortConnected"]));
+            }
+            set {
+                this["IsPyroPortConnected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPyroActive {
+            get {
+                return ((bool)(this["IsPyroActive"]));
+            }
+            set {
+                this["IsPyroActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DispenserPortSelected {
+            get {
+                return ((string)(this["DispenserPortSelected"]));
+            }
+            set {
+                this["DispenserPortSelected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserSignalType {
+            get {
+                return ((int)(this["DispenserSignalType"]));
+            }
+            set {
+                this["DispenserSignalType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserChannel {
+            get {
+                return ((int)(this["DispenserChannel"]));
+            }
+            set {
+                this["DispenserChannel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserFrequency {
+            get {
+                return ((int)(this["DispenserFrequency"]));
+            }
+            set {
+                this["DispenserFrequency"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserRiseTime {
+            get {
+                return ((int)(this["DispenserRiseTime"]));
+            }
+            set {
+                this["DispenserRiseTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserKeepTime {
+            get {
+                return ((int)(this["DispenserKeepTime"]));
+            }
+            set {
+                this["DispenserKeepTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserFallTime {
+            get {
+                return ((int)(this["DispenserFallTime"]));
+            }
+            set {
+                this["DispenserFallTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserLowTime {
+            get {
+                return ((int)(this["DispenserLowTime"]));
+            }
+            set {
+                this["DispenserLowTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserRiseTime2 {
+            get {
+                return ((int)(this["DispenserRiseTime2"]));
+            }
+            set {
+                this["DispenserRiseTime2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserV0 {
+            get {
+                return ((int)(this["DispenserV0"]));
+            }
+            set {
+                this["DispenserV0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserV1 {
+            get {
+                return ((int)(this["DispenserV1"]));
+            }
+            set {
+                this["DispenserV1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserV2 {
+            get {
+                return ((int)(this["DispenserV2"]));
+            }
+            set {
+                this["DispenserV2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserHV0 {
+            get {
+                return ((int)(this["DispenserHV0"]));
+            }
+            set {
+                this["DispenserHV0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserHVpeak {
+            get {
+                return ((int)(this["DispenserHVpeak"]));
+            }
+            set {
+                this["DispenserHVpeak"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DispenserHToverall {
+            get {
+                return ((int)(this["DispenserHToverall"]));
+            }
+            set {
+                this["DispenserHToverall"] = value;
+            }
+        }
     }
 }

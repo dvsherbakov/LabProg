@@ -8,20 +8,22 @@ namespace LabControl.PortModels
     internal class PyroSerial
     {
         private static SerialPort _port;
-        private byte[] _rxdata;
-        private long _rxidx;
-        private static readonly List<string> ErrList = new List<string>();
-        private readonly Dictionary<long, float> _tempLog = new Dictionary<long, float>();
-        private readonly Timer _aTimer = new Timer();
+        private byte[] f_RxData;
+        private long f_RxIdx;
+        private readonly Dictionary<long, float> f_TempLog = new Dictionary<long, float>();
+        private readonly Timer f_ATimer = new Timer();
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
+        public delegate void PyroEventHandler(float temperature);
+        public event PyroEventHandler EventHandler;
+
         public PyroSerial(string port)
         {
             
-            if (port == "") port = "COM4";
-            _rxidx = 0;
+            if (string.IsNullOrEmpty(port)) port = "COM4";
+            f_RxIdx = 0;
             SetLogMessage?.Invoke($"Try connected Pyro on port {port}");
             _port = new SerialPort(port)
             {
@@ -33,19 +35,28 @@ namespace LabControl.PortModels
                 RtsEnable = true
             };
             _port.DataReceived += DataReceivedHandler;
-            _aTimer.Elapsed += OnTimedEvent;
-            _aTimer.Interval = 300;
+            f_ATimer.Elapsed += OnTimedEvent;
+            f_ATimer.Interval = 300;
         }
 
-        public void OpenPort()
+        public static void OpenPort()
         {
             _port.Open();
-            _aTimer.Enabled = true;
+        }
+
+        public void StartMeasuring()
+        {
+            f_ATimer.Enabled = true;
+        }
+
+        public void StopMeasuring()
+        {
+            f_ATimer.Enabled = false;
         }
 
         public void ClosePort()
         {
-            _aTimer.Enabled = false;
+            StopMeasuring();
             _port.Close();
         }
 
@@ -55,24 +66,24 @@ namespace LabControl.PortModels
             try
             {
                 var cnt = sp.ReadBufferSize;
-                _rxdata = new byte[cnt + 1];
-                sp.Read(_rxdata, 0, cnt);
+                f_RxData = new byte[cnt + 1];
+                sp.Read(f_RxData, 0, cnt);
             }
             catch (Exception ex)
             {
-                ErrList.Add(ex.Message);
                 SetLogMessage?.Invoke(ex.Message);
             }
-            float t = RcConvert(_rxdata);
-            _tempLog.Add(_rxidx, t);
-            _rxidx++;
+            var t = RcConvert(f_RxData);
+            f_TempLog.Add(f_RxIdx, t);
+            f_RxIdx++;
+            EventHandler?.Invoke(t);
         }
 
         private static float RcConvert(byte[] rData)
         {
             while (rData[0] > 10)
             {
-                var tLst = new List<Byte>(rData);
+                var tLst = new List<byte>(rData);
                 tLst.RemoveAt(0);
                 rData = tLst.ToArray();
             }
@@ -85,7 +96,7 @@ namespace LabControl.PortModels
             return (res - 1000) / 10;
         }
 
-        private static void Write(byte[] buf)
+        private void Write(byte[] buf)
         {
             try
             {
@@ -93,11 +104,12 @@ namespace LabControl.PortModels
             }
             catch (Exception ex)
             {
-                ErrList.Add(ex.Message);
+                //ErrList.Add(ex.Message);
+                SetLogMessage?.Invoke(ex.Message);
             }
         }
 
-        private static void OnTimedEvent(object source, ElapsedEventArgs e)
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             byte[] buf = { 01 };
             Write(buf);
@@ -105,7 +117,7 @@ namespace LabControl.PortModels
 
         public float GetLastRes()
         {
-            _tempLog.TryGetValue(_rxidx - 1, out float val);
+            f_TempLog.TryGetValue(f_RxIdx - 1, out var val);
             return val;
         }
     }

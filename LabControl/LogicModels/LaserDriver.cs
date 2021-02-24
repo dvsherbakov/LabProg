@@ -41,5 +41,14 @@ namespace LabControl.LogicModels
         {
             if (f_Port!=null) f_Port.SetLaserType(tp);
         }
+
+        public void EmitOn(bool isEmit)
+        {
+            if (f_Port != null) {
+                if (isEmit) f_Port.SetOn();
+                else f_Port.SetOff();
+            }
+        }
+
     }
 }

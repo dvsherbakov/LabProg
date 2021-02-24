@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using LabControl.ClassHelpers;
+using LabControl.DataModels;
 using LabControl.LogicModels;
 using LabControl.Properties;
 
@@ -10,12 +13,14 @@ namespace LabControl.ViewModels
 {
     internal class MainModel : ViewModel
     {
+        private readonly ApplicationContext f_DbContext;
         #region drivers
         private readonly PumpDriver f_PumpDriver;
         private readonly ConfocalDriver f_ConfocalDriver;
         private readonly PwrDriver f_PwrDriver;
         private readonly LaserDriver f_LaserDriver;
         private readonly PyroDriver f_PyroDriver;
+        private readonly DispenserDriver f_DispenserDriver;
         #endregion
 
         #region ModelFields
@@ -208,6 +213,18 @@ namespace LabControl.ViewModels
             }
         }
 
+        private bool f_IsLaserEmit;
+        public bool IsLaserEmit
+        {
+            get => f_IsLaserEmit;
+            set
+            {
+                if (!IsLaserPortConnected) IsLaserPortConnected = true;
+                Set(ref f_IsLaserEmit, value);
+                if (f_LaserDriver != null) f_LaserDriver.EmitOn(value);
+            }
+        }
+
         private string f_LaserPortSelected;
         public string LaserPortSelected
         {
@@ -223,7 +240,22 @@ namespace LabControl.ViewModels
         public string PyroPortSelected
         {
             get => f_PyroPortSelected;
-            set => Set(ref f_PyroPortSelected, value);
+            set
+            {
+                Set(ref f_PyroPortSelected, value);
+                if (f_PyroDriver != null) f_PyroDriver.PortStr = value;
+            }
+        }
+
+        private string f_DispenserPortSelected;
+        public string DispenserPortSelected
+        {
+            get => f_DispenserPortSelected;
+            set
+            {
+                Set(ref f_DispenserPortSelected, value);
+                if (f_DispenserDriver != null) f_DispenserDriver.PortStr = value;
+            }
         }
 
         private string f_PwrPortSelected;
@@ -241,7 +273,8 @@ namespace LabControl.ViewModels
         public int LaserTypeSelectedIndex
         {
             get => f_LaserTypeSelectedIndex;
-            set { 
+            set
+            {
                 Set(ref f_LaserTypeSelectedIndex, value);
                 if (f_LaserDriver != null) f_LaserDriver.SetLaserType(value);
             }
@@ -730,6 +763,242 @@ namespace LabControl.ViewModels
             get => f_ConfocalLog;
             set => Set(ref f_ConfocalLog, value);
         }
+
+        private bool f_IsDispenserPortConnected;
+        public bool IsDispenserPortConnected
+        {
+            get => f_IsDispenserPortConnected;
+            set
+            {
+                Set(ref f_IsDispenserPortConnected, value);
+
+                if (value) f_DispenserDriver.ConnectToPort();
+                else f_DispenserDriver.Disconnect();
+            }
+        }
+
+        private bool f_IsPyroPortConnected;
+        public bool IsPyroPortConnected
+        {
+            get => f_IsPyroPortConnected;
+            set
+            {
+                Set(ref f_IsPyroPortConnected, value);
+                if (value) f_PyroDriver.ConnectToPort();
+                else f_PyroDriver.Disconnect();
+            }
+        }
+
+        private bool f_IsPyroActive;
+        public bool IsPyroActive
+        {
+            get => f_IsPyroActive;
+            set
+            {
+                Set(ref f_IsPyroActive, value);
+                f_PyroDriver.SetMeasuring(value);
+            }
+        }
+
+        private float f_PyroTemperature;
+        public float PyroTemperature
+        {
+            get => f_PyroTemperature;
+            set => Set(ref f_PyroTemperature, value);
+        }
+
+        private bool f_IsDispenserActive;
+        public bool IsDispenserActive
+        {
+            get => f_IsDispenserActive;
+            set
+            {
+                Set(ref f_IsDispenserActive, value);
+                if (f_IsDispenserActive)
+                {
+                    if (!IsDispenserPortConnected) IsDispenserPortConnected = true;
+                    f_DispenserDriver.Start();
+                }
+                else f_DispenserDriver.Stop();
+            }
+        }
+
+        private int f_DispenserSignalType;
+        public int DispenserSignalType
+        {
+            get => f_DispenserSignalType;
+            set
+            {
+                Set(ref f_DispenserSignalType, value);
+                f_DispenserDriver?.SetSignalType(f_DispenserSignalType);
+                switch (value)
+                {
+                    case 0:
+                        DispenserSingleWaveVisible = Visibility.Visible;
+                        DispenserHarmonicallyWaveVisible = Visibility.Collapsed;
+                        break;
+                    case 1:
+                        DispenserHarmonicallyWaveVisible = Visibility.Visible;
+                        DispenserSingleWaveVisible = Visibility.Collapsed;
+                        break;
+                    default:
+                        DispenserSingleWaveVisible = Visibility.Collapsed;
+                        DispenserHarmonicallyWaveVisible = Visibility.Collapsed;
+                        break;
+                }
+            }
+        }
+
+        private int f_DispenserChannel;
+        public int DispenserChannel
+        {
+            get => f_DispenserChannel;
+            set => Set(ref f_DispenserChannel, value);
+        }
+
+        private int f_DispenserFrequency;
+        public int DispenserFrequency
+        {
+            get => f_DispenserFrequency;
+            set => Set(ref f_DispenserFrequency, value);
+        }
+
+        private int f_DispenserRiseTime;
+        public int DispenserRiseTime
+        {
+            get => f_DispenserRiseTime;
+            set
+            {
+                Set(ref f_DispenserRiseTime, value);
+                CollectPulseData();
+            }
+        }
+
+        private int f_DispenserKeepTime;
+        public int DispenserKeepTime
+        {
+            get => f_DispenserKeepTime;
+            set
+            {
+                Set(ref f_DispenserKeepTime, value);
+                CollectPulseData();
+            }
+        }
+
+        private int f_DispenserFallTime;
+        public int DispenserFallTime
+        {
+            get => f_DispenserFallTime;
+            set
+            {
+                Set(ref f_DispenserFallTime, value);
+                CollectPulseData();
+            }
+        }
+
+        private int f_DispenserLowTime;
+        public int DispenserLowTime
+        {
+            get => f_DispenserLowTime;
+            set
+            {
+                Set(ref f_DispenserLowTime, value);
+                CollectPulseData();
+            }
+        }
+
+        private int f_DispenserRiseTime2;
+        public int DispenserRiseTime2
+        {
+            get => f_DispenserRiseTime2;
+            set
+            {
+                Set(ref f_DispenserRiseTime2, value);
+                CollectPulseData();
+            }
+        }
+
+        private int f_DispenserV0;
+        public int DispenserV0
+        {
+            get => f_DispenserV0;
+            set
+            {
+                Set(ref f_DispenserV0, value);
+                CollectPulseData();
+            }
+        }
+
+        private int f_DispenserV1;
+        public int DispenserV1
+        {
+            get => f_DispenserV1;
+            set
+            {
+                Set(ref f_DispenserV1, value);
+                CollectPulseData();
+            }
+        }
+
+        private int f_DispenserV2;
+        public int DispenserV2
+        {
+            get => f_DispenserV2;
+            set
+            {
+                Set(ref f_DispenserV2, value);
+                CollectPulseData();
+            }
+        }
+
+        private Visibility f_DispenserSingleWaveVisible;
+        public Visibility DispenserSingleWaveVisible
+        {
+            get => f_DispenserSingleWaveVisible;
+            set => Set(ref f_DispenserSingleWaveVisible, value);
+        }
+
+        private int f_DispenserHv0;
+        public int DispenserHv0
+        {
+            get => f_DispenserHv0;
+            set
+            {
+                Set(ref f_DispenserHv0, value);
+                CollectSineData();
+            }
+        }
+
+        private int f_DispenserHVpeak;
+        public int DispenserHVpeak
+        {
+            get => f_DispenserHVpeak;
+            set
+            {
+                Set(ref f_DispenserHVpeak, value);
+                CollectSineData();
+            }
+        }
+
+        private int f_DispenserHToverall;
+        public int DispenserHToverall
+        {
+            get => f_DispenserHToverall;
+            set
+            {
+                Set(ref f_DispenserHToverall, value);
+                CollectSineData();
+            }
+        }
+
+        private Visibility f_DispenserHarmonicWaveVisible;
+        public Visibility DispenserHarmonicallyWaveVisible
+        {
+            get => f_DispenserHarmonicWaveVisible;
+            set => Set(ref f_DispenserHarmonicWaveVisible, value);
+        }
+
+
         #endregion
 
         #region Collections
@@ -741,6 +1010,8 @@ namespace LabControl.ViewModels
         public ObservableCollection<string> PyroPortCollection { get; set; }
         public ObservableCollection<string> PwrPortCollection { get; set; }
         public ObservableCollection<int> LaserHistoryCollection { get; set; }
+        public ObservableCollection<string> DispenserPortCollection { get; set; }
+        public ObservableCollection<string> DispenserModeCollection { get; set; }
         #endregion
 
         #region StaticLabels
@@ -763,11 +1034,11 @@ namespace LabControl.ViewModels
         public static string LabelPyroPort => Resources.LabelPyroPort;
         public static string LabelLaserType => Resources.LabelLaserType;
         public static string PowerSupplyTitle => Resources.PowerSuplyTitle;
+        public static string PyroOperationTitle => Resources.PyroOperationTitle;
         public static string LabelUfLed1 => Resources.LabelUfLed1;
         public static string LabelUfLed2 => Resources.LabelUfLed2;
         public static string LabelChannelsSwitch => Resources.LabelChanelsSwitch;
         public static string LabelPwrChannelMode => Resources.LabelPwrChannelMode;
-        // public static string LabelPwrChannelBias => Resources.LabelPwrChannelBias;
         public static string LabelPwrChannelAmplitude => Resources.LabelPwrChannelAmplitude;
         public static string LabelPwrChannelFreq => Resources.LabelPwrChannelFreq;
         public static string LabelPwrChannelPhase => Resources.LabelPwrChannelPhase;
@@ -792,8 +1063,26 @@ namespace LabControl.ViewModels
         public static string LabelMicroCompressor => Resources.LabelMicroCompressor;
         public static string LabelGlassHeating => Resources.LabelGlassHeating;
         public static string LaserPowerHistory => Resources.LaserPowerHistory;
+        public static string LabelTemperature => Resources.LabelTemperature;
+        public static string DispenserOperationTitle => Resources.DispenserOperationTitle;
+        public static string DispenserSignalTypeLabel => Resources.DispenserSignalTypeLabel;
+        public static string DispenserCurrentChannelLabel => Resources.DispenserCurrentChannelLabel;
+        public static string DispenserFrequencyLabel => Resources.DispenserFrequencyLabel;
+        public static string DispenserTimeLabel => Resources.DispenserTimeLabel;
+        public static string DispenserRiseTimeLabel => Resources.DispenserRiseTimeLabel;
+        public static string DispenserRiseTime2Label => Resources.DispenserRiseTime2Label;
+        public static string DispenserKeepTimeLabel => Resources.DispenserKeepTimeLabel;
+        public static string DispenserFallTimeLabel => Resources.DispenserFallTimeLabel;
+        public static string DispenserLowTimeLabel => Resources.DispenserLowTimeLabel;
+        public static string DispenserWaitingLabel => Resources.DispenserWaitingLabel;
+        public static string DispenserVoltageLabel => Resources.DispenserVoltageLabel;
+        public static string DispenserMaximumLabel => Resources.DispenserMaximumLabel;
+        public static string DispenserMinimumLabel => Resources.DispenserMinimumLabel;
+        public static string DispenserAverageLabel => Resources.DispenserAverageLabel;
+        public static string DispenserPeakLabel => Resources.DispenserPeakLabel;
+        public static string DispenserStartLabel => Resources.DispenserStartLabel;
+        public static string DispenserPeriodLabel => Resources.DispenserPeriodLabel;
         #endregion
-
 
         #region Commands
         public ICommand QuitCommand { get; }
@@ -801,9 +1090,15 @@ namespace LabControl.ViewModels
         public ICommand MaximizedCommand { get; }
         public ICommand StandardSizeCommand { get; }
         public ICommand SetLaserPwrCommand { get; }
+        public ICommand ToggleLaserEmit { get; }
+        public ICommand StartPumpCommand { get; }
         #endregion
+
         public MainModel()
         {
+            // Data context
+            f_DbContext = new ApplicationContext();
+            //f_DbContext.Logs.Load();
             // init collections
             ConfocalLog = new[] { 0d, .40d, .3d };
             LogCollection = new ObservableCollection<LogItem>();
@@ -815,10 +1110,14 @@ namespace LabControl.ViewModels
             LaserPortSelected = Settings.Default.LaserPortSelected;
             LaserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(LaserPortSelected));
             PyroPortSelected = Settings.Default.PyroPortSelected;
+            DispenserPortSelected = Settings.Default.DispenserPortSelected;
             PyroPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             PwrPortSelected = Settings.Default.PwrPortSelected;
             PwrPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             LaserHistoryCollection = new ObservableCollection<int>() { 100, 200, 300 };
+            DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
+            DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
+            //Other
             CurWindowState = WindowState.Normal;
             //load params from settings
             WindowHeight = Settings.Default.WindowHeight == 0 ? 550 : Settings.Default.WindowHeight;
@@ -826,7 +1125,6 @@ namespace LabControl.ViewModels
             IsTwoPump = Settings.Default.IsTwoPump;
             ConfocalLevelSetter = Settings.Default.ConfocalLevelSetter;
             LaserPowerSetter = Settings.Default.LaserPowerSetter;
-            
             PwrCh0Mode = Settings.Default.PwrCh0Mode;
             PwrCh0Bias = Settings.Default.PwrCh0Bias;
             PwrCh0Amplitude = Settings.Default.PwrCh0Amplitude;
@@ -878,12 +1176,28 @@ namespace LabControl.ViewModels
             PwrCh5MaxAmps = Settings.Default.PwrCh5MaxAmps;
             IsRevereFirstPump = Settings.Default.IsRevereFirstPump;
             IsRevereSecondPump = Settings.Default.IsRevereSecondPump;
+            DispenserSignalType = Settings.Default.DispenserSignalType;
+            DispenserChannel = Settings.Default.DispenserChannel;
+            DispenserFrequency = Settings.Default.DispenserFrequency;
+            DispenserRiseTime = Settings.Default.DispenserRiseTime;
+            DispenserKeepTime = Settings.Default.DispenserKeepTime;
+            DispenserFallTime = Settings.Default.DispenserFallTime;
+            DispenserLowTime = Settings.Default.DispenserLowTime;
+            DispenserRiseTime2 = Settings.Default.DispenserRiseTime2;
+            DispenserV0 = Settings.Default.DispenserV0;
+            DispenserV1 = Settings.Default.DispenserV1;
+            DispenserV2 = Settings.Default.DispenserV2;
+            DispenserHv0 = Settings.Default.DispenserHV0;
+            DispenserHVpeak = Settings.Default.DispenserHVpeak;
+            DispenserHToverall = Settings.Default.DispenserHToverall;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
             StandardSizeCommand = new LambdaCommand(OnStandardSizeCommand);
             SetLaserPwrCommand = new LambdaCommand(OnSetLaserPower);
+            ToggleLaserEmit = new LambdaCommand(OnToggleLaserEmit);
+            StartPumpCommand = new LambdaCommand(OnStartPump);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -909,18 +1223,33 @@ namespace LabControl.ViewModels
 
             f_PyroDriver = new PyroDriver();
             f_PyroDriver.SetLogMessage += AddLogMessage;
+            f_PyroDriver.EventHandler += PyroHandler;
             f_PyroDriver.PortStr = Settings.Default.PyroPortSelected;
+
+            f_DispenserDriver = new DispenserDriver();
+            f_DispenserDriver.SetLogMessage += AddLogMessage;
+            f_DispenserDriver.PortStr = Settings.Default.DispenserPortSelected;
 
             AddLogMessage("Application Started");
         }
 
         private void AddLogMessage(string message)
         {
-            Application.Current.Dispatcher.Invoke(() => LogCollection.Insert(0, new LogItem(DateTime.Now, message)));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                LogCollection.Insert(0, new LogItem(DateTime.Now, message));
+                f_DbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
+            });
+        }
+
+        private void PyroHandler(float temperature)
+        {
+            Application.Current.Dispatcher.Invoke(() => { PyroTemperature = temperature; });
         }
 
         private void OnQuitApp(object p)
         {
+            f_DbContext.SaveChanges();
             Settings.Default.WindowHeight = WindowHeight;
             Settings.Default.WindowWidth = WindowWidth;
             Settings.Default.IsTwoPump = IsTwoPump;
@@ -930,6 +1259,7 @@ namespace LabControl.ViewModels
             Settings.Default.LaserPowerSetter = LaserPowerSetter;
             Settings.Default.LaserPortSelected = LaserPortSelected;
             Settings.Default.PyroPortSelected = PyroPortSelected;
+            Settings.Default.DispenserPortSelected = DispenserPortSelected;
             Settings.Default.PwrPortSelected = PwrPortSelected;
             Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
             Settings.Default.PwrCh0Mode = PwrCh0Mode;
@@ -982,7 +1312,22 @@ namespace LabControl.ViewModels
             Settings.Default.PwrCh5MaxAmps = PwrCh5MaxAmps;
             Settings.Default.IsRevereFirstPump = IsRevereFirstPump;
             Settings.Default.IsRevereSecondPump = IsRevereSecondPump;
+            Settings.Default.DispenserSignalType = DispenserSignalType;
+            Settings.Default.DispenserChannel = DispenserChannel;
+            Settings.Default.DispenserFrequency = DispenserFrequency;
+            Settings.Default.DispenserRiseTime = DispenserRiseTime;
+            Settings.Default.DispenserKeepTime = DispenserKeepTime;
+            Settings.Default.DispenserFallTime = DispenserFallTime;
+            Settings.Default.DispenserLowTime = DispenserLowTime;
+            Settings.Default.DispenserRiseTime2 = DispenserRiseTime2;
+            Settings.Default.DispenserV0 = DispenserV0;
+            Settings.Default.DispenserV1 = DispenserV1;
+            Settings.Default.DispenserV2 = DispenserV2;
+            Settings.Default.DispenserHV0 = DispenserHv0;
+            Settings.Default.DispenserHVpeak = DispenserHVpeak;
+            Settings.Default.DispenserHToverall = DispenserHToverall;
             Settings.Default.Save();
+            f_DbContext.Dispose();
             Application.Current.Shutdown();
         }
 
@@ -1009,6 +1354,18 @@ namespace LabControl.ViewModels
                 LaserHistoryCollection.Insert(0, LaserPowerSetter);
         }
 
+        private void OnToggleLaserEmit(object sender)
+        {
+            IsLaserEmit = !IsLaserEmit;
+        }
+
+        private void OnStartPump(object sender)
+        {
+            if (!IsPumpPortsConnect) IsPumpPortsConnect = true;
+            IsConfocalActive = !IsPumpsActive;
+            IsPumpsActive = !IsPumpsActive;
+        }
+
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
         {
             ConfocalLevel = Math.Round(lvl.Dist, 5);
@@ -1023,6 +1380,27 @@ namespace LabControl.ViewModels
         private void SetOutcomingPumpSpeedLabel(string speed)
         {
             Application.Current.Dispatcher.Invoke(() => OutcomingPumpSpeed = speed);
+        }
+
+        private void CollectSineData()
+        {
+            var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHv0, VPeak = DispenserHVpeak };
+            f_DispenserDriver?.SetSineWaveData(data);
+        }
+        private void CollectPulseData()
+        {
+            var data = new DispenserPulseWaveData()
+            {
+                TimeRise1 = DispenserRiseTime,
+                TimeT1 = DispenserKeepTime,
+                TimeFall = DispenserFallTime,
+                TimeT2 = DispenserLowTime,
+                TimeRise2 = DispenserRiseTime2,
+                V0 = DispenserV0,
+                V1 = DispenserV1,
+                V2 = DispenserV2
+            };
+            f_DispenserDriver?.SetPulseWaveData(data);
         }
     }
 }

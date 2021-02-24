@@ -18,13 +18,13 @@ namespace LabControl.LogicModels
         public void ConnectToPort()
         {
             f_pwrSerial = new PwrSerial(PortStr);
-            f_pwrSerial?.OpenPort();
+            PwrSerial.OpenPort();
             f_pwrSerial.SetLogMessage += TestLog;
         }
 
         public void Disconnect()
         {
-            f_pwrSerial?.ClosePort();
+            PwrSerial.ClosePort();
         }
 
         private void TestLog(string msg)

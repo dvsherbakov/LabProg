@@ -282,4 +282,64 @@
   <data name="LaserPowerHistory" xml:space="preserve">
     <value>История мощности</value>
   </data>
+  <data name="PyroOperationTitle" xml:space="preserve">
+    <value>Управление пирометром</value>
+  </data>
+  <data name="DispenserOperationTitle" xml:space="preserve">
+    <value>Управление диспенсером</value>
+  </data>
+  <data name="LabelTemperature" xml:space="preserve">
+    <value>Температура</value>
+  </data>
+  <data name="DispenserCurrentChannelLabel" xml:space="preserve">
+    <value>Текущий канал</value>
+  </data>
+  <data name="DispenserFrequencyLabel" xml:space="preserve">
+    <value>Частота</value>
+  </data>
+  <data name="DispenserSignalTypeLabel" xml:space="preserve">
+    <value>Тип сигнала</value>
+  </data>
+  <data name="DispenserFallTimeLabel" xml:space="preserve">
+    <value>Время спада</value>
+  </data>
+  <data name="DispenserKeepTimeLabel" xml:space="preserve">
+    <value>Удержание максимума</value>
+  </data>
+  <data name="DispenserLowTimeLabel" xml:space="preserve">
+    <value>Удержание минимума</value>
+  </data>
+  <data name="DispenserRiseTime2Label" xml:space="preserve">
+    <value>Время накопления 2</value>
+  </data>
+  <data name="DispenserRiseTimeLabel" xml:space="preserve">
+    <value>Время накопления</value>
+  </data>
+  <data name="DispenserTimeLabel" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="DispenserVoltageLabel" xml:space="preserve">
+    <value>Напряжение</value>
+  </data>
+  <data name="DispenserWaitingLabel" xml:space="preserve">
+    <value>Ожидание</value>
+  </data>
+  <data name="DispenserAverageLabel" xml:space="preserve">
+    <value>Среднее значение</value>
+  </data>
+  <data name="DispenserMaximumLabel" xml:space="preserve">
+    <value>Максимум</value>
+  </data>
+  <data name="DispenserMinimumLabel" xml:space="preserve">
+    <value>Минимум</value>
+  </data>
+  <data name="DispenserPeakLabel" xml:space="preserve">
+    <value>Пик</value>
+  </data>
+  <data name="DispenserPeriodLabel" xml:space="preserve">
+    <value>Период</value>
+  </data>
+  <data name="DispenserStartLabel" xml:space="preserve">
+    <value>Запуск</value>
+  </data>
 </root>
