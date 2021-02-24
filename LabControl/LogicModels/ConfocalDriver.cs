@@ -11,7 +11,7 @@ namespace LabControl.LogicModels
 {
     internal class ConfocalDriver
     {
-        private readonly bool f_IsFakeData = true;
+        private readonly bool f_IsFakeData = false;
         private readonly Random f_FakeRnd;
 
         private readonly Timer f_ConfocalTimer;
