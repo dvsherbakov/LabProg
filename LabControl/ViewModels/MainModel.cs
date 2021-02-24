@@ -1092,6 +1092,8 @@ namespace LabControl.ViewModels
         public ICommand SetLaserPwrCommand { get; }
         public ICommand ToggleLaserEmit { get; }
         public ICommand StartPumpCommand { get; }
+        public ICommand TogglePumpCommand { get; }
+        public ICommand ToggleDispenserCommand { get; }
         #endregion
 
         public MainModel()
@@ -1198,6 +1200,8 @@ namespace LabControl.ViewModels
             SetLaserPwrCommand = new LambdaCommand(OnSetLaserPower);
             ToggleLaserEmit = new LambdaCommand(OnToggleLaserEmit);
             StartPumpCommand = new LambdaCommand(OnStartPump);
+            TogglePumpCommand = new LambdaCommand(OnTogglePump);
+            ToggleDispenserCommand = new LambdaCommand(OnToggleDispenserActive);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -1364,6 +1368,16 @@ namespace LabControl.ViewModels
             if (!IsPumpPortsConnect) IsPumpPortsConnect = true;
             IsConfocalActive = !IsPumpsActive;
             IsPumpsActive = !IsPumpsActive;
+        }
+
+        private void OnTogglePump(object sender)
+        {
+            IsPumpsActive = !IsPumpsActive;
+        }
+
+        private void OnToggleDispenserActive(object sender)
+        {
+            IsDispenserActive = !IsDispenserActive;
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
