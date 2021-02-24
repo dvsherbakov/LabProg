@@ -1090,6 +1090,7 @@ namespace LabControl.ViewModels
         public ICommand MaximizedCommand { get; }
         public ICommand StandardSizeCommand { get; }
         public ICommand SetLaserPwrCommand { get; }
+        public ICommand ToggleLaserEmit { get; }
         public ICommand StartPumpCommand { get; }
         #endregion
 
@@ -1195,6 +1196,7 @@ namespace LabControl.ViewModels
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
             StandardSizeCommand = new LambdaCommand(OnStandardSizeCommand);
             SetLaserPwrCommand = new LambdaCommand(OnSetLaserPower);
+            ToggleLaserEmit = new LambdaCommand(OnToggleLaserEmit);
             StartPumpCommand = new LambdaCommand(OnStartPump);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
@@ -1350,6 +1352,11 @@ namespace LabControl.ViewModels
             f_LaserDriver.SetPower(LaserPowerSetter);
             if (!LaserHistoryCollection.Contains(LaserPowerSetter))
                 LaserHistoryCollection.Insert(0, LaserPowerSetter);
+        }
+
+        private void OnToggleLaserEmit(object sender)
+        {
+            IsLaserEmit = !IsLaserEmit;
         }
 
         private void OnStartPump(object sender)

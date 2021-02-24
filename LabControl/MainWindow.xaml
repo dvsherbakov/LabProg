@@ -95,7 +95,7 @@
         </DockPanel>
 
         <DockPanel DockPanel.Dock="Top" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Style="{StaticResource TransparentButton}" Margin="5,0">
+            <Button Style="{StaticResource TransparentButton}" Margin="5,0" Command="{Binding StartPumpCommand}">
                 <Viewbox Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Grid >
