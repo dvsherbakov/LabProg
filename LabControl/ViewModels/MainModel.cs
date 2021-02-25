@@ -860,7 +860,9 @@ namespace LabControl.ViewModels
         public int DispenserFrequency
         {
             get => f_DispenserFrequency;
-            set => Set(ref f_DispenserFrequency, value);
+            set {
+                if (f_DispenserDriver != null) f_DispenserDriver.SetFrequency(value);
+                Set(ref f_DispenserFrequency, value); }
         }
 
         private int f_DispenserRiseTime;

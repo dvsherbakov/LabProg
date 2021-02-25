@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,9 @@ namespace LabControl.PortModels
         private DispenserPulseWaveData f_PulseWaveData;
 
         private int f_SignalType;
+
+        private int f_Frequency;
+        public int Frequency { get => f_Frequency; set => f_Frequency = value; }
 
         private string f_PortName;
         public string PortName
@@ -175,25 +179,31 @@ namespace LabControl.PortModels
                 SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
-            var t1 = BytesUtility.DivideData((short)data.TimeT1);
-            var t2 = BytesUtility.DivideData((short)data.TimeT2);
-            var v0 = BytesUtility.DivideData((short)(data.V0 * 10));
-            var v1 = BytesUtility.DivideData((short)(data.V1 * 10));
-            var v2 = BytesUtility.DivideData((short)(data.V2 * 10));
-            var tr1 = BytesUtility.DivideData((short)data.TimeRise1);
-            var tf = BytesUtility.DivideData((short)data.TimeFall);
-            var tr2 = BytesUtility.DivideData((short)data.TimeRise2);
+
+            if (data == null)
+            {
+                SetLogMessage("Нет информации о форме сигнала");
+                return;
+            }
+            var t1 = BytesUtility.DivideData((short)(data.TimeT1*10));
+            var t2 = BytesUtility.DivideData((short)(data.TimeT2*10));
+            var v0 = BytesUtility.DivideData((short)(data.V0 ));
+            var v1 = BytesUtility.DivideData((short)(data.V1 ));
+            var v2 = BytesUtility.DivideData((short)(data.V2 ));
+            var tr1 = BytesUtility.DivideData((short)(data.TimeRise1*10));
+            var tf = BytesUtility.DivideData((short)(data.TimeFall*10));
+            var tr2 = BytesUtility.DivideData((short)(data.TimeRise2*10));
 
             var cmd = new byte[] {
                 0x53,
-                0x15, 0x06, //len, command
-                0xFF, 0xFF, //unused, 
-                t1.Item1, t1.Item2, //0x00, 0xC8, t1, 200
-                0xFF,//unused 
-                t2.Item1, t2.Item2, //0x01,0x90,//t2, 400
-                v0.Item1, v0.Item2, //0x00, 0x00, //v0, 0
-                v1.Item1, v1.Item2, //0x00,0x0A, //v1, 10
-                v2.Item1, v2.Item2, //0xFF,0xF6, //v2, -10
+                0x15, 0x06, //len, command, 1-2
+                0xFF, 0xFF, //unused, 3-4
+                t1.Item1, t1.Item2, //0x00, 0xC8, t1, 200, 5-6
+                0xFF,//unused, 7
+                t2.Item1, t2.Item2, //0x01,0x90,//t2, 400 ,8-9
+                v0.Item1, v0.Item2, //0x00, 0x00, //v0, 0, 10-11
+                v1.Item1, v1.Item2, //0x00,0x0A, //v1, 10, 12-13
+                v2.Item1, v2.Item2, //0xFF,0xF6, //v2, -10, 14-15
                 tr1.Item1, tr1.Item2, //0x00, 0x1E, //tr1, 30
                 tf.Item1, tf.Item2, //0x00, 0x1E, //tf, 30
                 tr2.Item1, tr2.Item2,//0x00, 0x1E, //tr2,30
@@ -220,6 +230,26 @@ namespace LabControl.PortModels
             _mPort.Write(cmd, 0, 6);
         }
 
+        public void SetPeriod()
+        {
+            var bytes = BitConverter.GetBytes(f_Frequency);
+            //Debug.WriteLine(bytes[0].ToString(), bytes[1].ToString(), bytes[2].ToString());
+            var cmd = new byte[]
+            {
+                0x53,
+                0x05,
+                0x19,
+                bytes[2],
+                bytes[1],
+                bytes[0],
+                0xFF
+            };
+            cmd[6] = CheckSum(cmd);
+            _mPort.Write(cmd, 0, 7);
+            System.Threading.Thread.Sleep(50);
+        }
+
+
         public void Start()
         {
             if (!_mPort.IsOpen)
@@ -230,6 +260,8 @@ namespace LabControl.PortModels
             SetInternalSource();
             SetDropsPerTrigger(1);
             SetDiscreteMode();
+            SetPeriod();
+            SetFrequency(1);
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
             TriggerAll(true);
         }

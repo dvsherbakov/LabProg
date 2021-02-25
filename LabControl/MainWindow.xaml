@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LabControl.ViewModels" xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         WindowStyle="None"
-        MouseLeftButtonDown="WindowMouseLeftButtonDown"
+        
         WindowState="{Binding CurWindowState, Mode=TwoWay}"
         ResizeMode="CanResizeWithGrip"
         Style="{DynamicResource MyWindowStyle}"
@@ -45,7 +45,9 @@
     </x:Code>
 
     <DockPanel Margin="5">
-        <DockPanel DockPanel.Dock="Top" Height="35">
+        <DockPanel DockPanel.Dock="Top" 
+                   MouseLeftButtonDown="WindowMouseLeftButtonDown"
+                   Height="35">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="35"/>

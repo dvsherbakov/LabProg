@@ -69,5 +69,10 @@ namespace LabControl.LogicModels
         {
             f_DispenserSerial?.Stop();
         }
+
+        public void SetFrequency(int freq)
+        {
+            f_DispenserSerial.Frequency = freq;
+        }
     }
 }

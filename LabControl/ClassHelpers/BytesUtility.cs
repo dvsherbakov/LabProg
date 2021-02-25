@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,5 +18,22 @@ namespace LabControl.ClassHelpers
         {
             return new Tuple<byte, byte>((byte)(number >> 8), (byte)(number & 0xff));
         }
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    struct FooUnion
+    {
+        [FieldOffset(0)]
+        public byte byte0;
+        [FieldOffset(1)]
+        public byte byte1;
+        [FieldOffset(2)]
+        public byte byte2;
+        [FieldOffset(3)]
+        public byte byte3;
+
+        [FieldOffset(0)]
+        public uint integer;
+
     }
 }
