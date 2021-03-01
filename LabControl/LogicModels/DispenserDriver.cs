@@ -35,13 +35,48 @@ namespace LabControl.LogicModels
 
         private void DispatchData(byte[] data)
         {
-            SetLogMessage?.Invoke($"Получено из порта диспенсера: {BitConverter.ToString(data)}");
-            if (!(data.Length > 2 & data[0] == 0x06)) return;
+
+            if (!(data.Length > 2 & data[0] == 0x06))
+            {
+                SetLogMessage?.Invoke($"Вероятная ошибка из порта диспенсера: {BitConverter.ToString(data)}");
+                return;
+            }
             switch (data[1])
             {
+                case 0x01:
+                    SetLogMessage?.Invoke($"Успешный сброс параметров диспенсера");
+                    break;
+                case 0x03:
+                    SetLogMessage?.Invoke($"Число капель на импульс установлено");
+                    break;
+                case 0x04:
+                    SetLogMessage?.Invoke($"Дискретный режим установлен");
+                    break;
+                case 0x06:
+                    SetLogMessage?.Invoke($"Параметры сигнала установлены");
+                    break;
+                case 0x08:
+                    SetLogMessage?.Invoke($"Внутренний источник импульсов установлен");
+                    break;
+                case 0x0A:
+                    SetLogMessage?.Invoke($"Запущен процесс");
+                    break;
+                case 0x19:
+                    SetLogMessage?.Invoke($"Частота установлена");
+                    break;
+                case 0xF0:
+                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[5]}");
+                    break;
+                case 0x0C:
+                    SetLogMessage?.Invoke($"Канал установлен");
+                    break;
+                case 0x0D:
+                    SetLogMessage?.Invoke($"Доступно каналов: {data[5]}");
+                    break;
                 case 0x60:
                     //SetDispOptions(data);
                     break;
+
             }
         }
 
@@ -70,9 +105,14 @@ namespace LabControl.LogicModels
             f_DispenserSerial?.Stop();
         }
 
+        public void SetChannel(int channel)
+        {
+            f_DispenserSerial?.SetChannel((byte)channel);
+        }
+
         public void SetFrequency(int freq)
         {
-            f_DispenserSerial.Frequency = freq;
+            if (f_DispenserSerial != null) f_DispenserSerial.Frequency = freq;
         }
     }
 }

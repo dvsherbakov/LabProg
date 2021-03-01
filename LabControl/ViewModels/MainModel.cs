@@ -772,7 +772,11 @@ namespace LabControl.ViewModels
             {
                 Set(ref f_IsDispenserPortConnected, value);
 
-                if (value) f_DispenserDriver.ConnectToPort();
+                if (value)
+                {
+                    f_DispenserDriver.ConnectToPort();
+                    CollectDispenserData();
+                }
                 else f_DispenserDriver.Disconnect();
             }
         }
@@ -853,16 +857,22 @@ namespace LabControl.ViewModels
         public int DispenserChannel
         {
             get => f_DispenserChannel;
-            set => Set(ref f_DispenserChannel, value);
+            set
+            {
+                f_DispenserDriver?.SetChannel(value);
+                Set(ref f_DispenserChannel, value);
+            }
         }
 
         private int f_DispenserFrequency;
         public int DispenserFrequency
         {
             get => f_DispenserFrequency;
-            set {
+            set
+            {
                 if (f_DispenserDriver != null) f_DispenserDriver.SetFrequency(value);
-                Set(ref f_DispenserFrequency, value); }
+                Set(ref f_DispenserFrequency, value);
+            }
         }
 
         private int f_DispenserRiseTime;
@@ -1123,6 +1133,10 @@ namespace LabControl.ViewModels
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             //Other
             CurWindowState = WindowState.Normal;
+            //Exclude
+            f_DispenserDriver = new DispenserDriver();
+            f_DispenserDriver.SetLogMessage += AddLogMessage;
+            f_DispenserDriver.PortStr = Settings.Default.DispenserPortSelected;
             //load params from settings
             WindowHeight = Settings.Default.WindowHeight == 0 ? 550 : Settings.Default.WindowHeight;
             WindowWidth = Settings.Default.WindowWidth == 0 ? 850 : Settings.Default.WindowWidth;
@@ -1231,10 +1245,6 @@ namespace LabControl.ViewModels
             f_PyroDriver.SetLogMessage += AddLogMessage;
             f_PyroDriver.EventHandler += PyroHandler;
             f_PyroDriver.PortStr = Settings.Default.PyroPortSelected;
-
-            f_DispenserDriver = new DispenserDriver();
-            f_DispenserDriver.SetLogMessage += AddLogMessage;
-            f_DispenserDriver.PortStr = Settings.Default.DispenserPortSelected;
 
             AddLogMessage("Application Started");
         }
@@ -1417,6 +1427,14 @@ namespace LabControl.ViewModels
                 V2 = DispenserV2
             };
             f_DispenserDriver?.SetPulseWaveData(data);
+        }
+
+        private void CollectDispenserData()
+        {
+            CollectSineData();
+            CollectPulseData();
+            f_DispenserDriver?.SetChannel(f_DispenserChannel);
+            f_DispenserDriver?.SetFrequency(f_DispenserFrequency);
         }
     }
 }

@@ -125,7 +125,7 @@ namespace LabControl.PortModels
             }
             var cmd = new byte[4] { 0x53, 0x02, 0x01, 0x03 };
             _mPort.Write(cmd, 0, 4);
-            System.Threading.Thread.Sleep(50);
+            System.Threading.Thread.Sleep(150);
         }
 
         public void GetNumberOfChannels()
@@ -257,9 +257,8 @@ namespace LabControl.PortModels
                 SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
-            SetInternalSource();
             SetDropsPerTrigger(1);
-            SetDiscreteMode();
+            
             SetPeriod();
             SetFrequency(1);
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
@@ -359,6 +358,9 @@ namespace LabControl.PortModels
             SoftReset();
 
             GetVersion();
+            SetInternalSource();
+            GetNumberOfChannels();
+            SetDiscreteMode();
 
         }
 
