@@ -239,13 +239,15 @@ namespace LabControl.PortModels
         public void Start()
         {
          
-            SetInternalSource();
+           
             SetDiscreteMode();
             SetDropsPerTrigger(1);
-
+            GroupTriggerSource(0);
+            
             SetPeriod();
             SetFrequency(1);
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
+            SetInternalSource();
             TriggerAll(true);
             Dump();
             StartNext();
@@ -288,7 +290,14 @@ namespace LabControl.PortModels
 
         private void SetDiscreteMode()
         {
-            var cmd = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 };
+            var cmd = new byte[] { 0x53, 0x03, 0x04, 0x01, 0x08 };
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
+        }
+
+        private void GroupTriggerSource(byte src)
+        {
+            var cmd = new byte[] {0x53, 0x03, 0x0E, src, 0xFF };
+            cmd[4] = CheckSum(cmd);
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
