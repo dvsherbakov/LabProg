@@ -25,9 +25,7 @@ namespace LabControl.PortModels
         private DispenserPulseWaveData f_PulseWaveData;
 
         private int f_SignalType;
-
-        private int f_Frequency;
-        public int Frequency { get => f_Frequency; set => f_Frequency = value; }
+        public int Frequency { get; set; }
 
         private string f_PortName;
         public string PortName
@@ -87,7 +85,7 @@ namespace LabControl.PortModels
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            //System.Threading.Thread.Sleep(30);
+            PortSleep(50);
             var cnt = _mPort.ReadBufferSize;
             var mRxData = new byte[cnt + 1];
             try
@@ -125,7 +123,7 @@ namespace LabControl.PortModels
             }
             var cmd = new byte[4] { 0x53, 0x02, 0x01, 0x03 };
             _mPort.Write(cmd, 0, 4);
-            System.Threading.Thread.Sleep(150);
+            System.Threading.Thread.Sleep(1000);
         }
 
         public void GetNumberOfChannels()
@@ -137,6 +135,7 @@ namespace LabControl.PortModels
             }
             var cmd = new byte[4] { 0x53, 0x02, 0x0D, 0x0F };
             _mPort.Write(cmd, 0, 4);
+            PortSleep(300);
         }
 
         private static byte CheckSum(IReadOnlyList<byte> data)
@@ -232,7 +231,7 @@ namespace LabControl.PortModels
 
         public void SetPeriod()
         {
-            var bytes = BitConverter.GetBytes(f_Frequency);
+            var bytes = BitConverter.GetBytes(Frequency);
             //Debug.WriteLine(bytes[0].ToString(), bytes[1].ToString(), bytes[2].ToString());
             var cmd = new byte[]
             {
@@ -249,6 +248,20 @@ namespace LabControl.PortModels
            PortSleep();
         }
 
+        public void Init()
+        {
+           // _mPort.Write("Q");
+           // PortSleep();
+           // _mPort.Write("X2000");
+           // PortSleep();
+            SoftReset();
+
+             GetVersion();
+            // SetInternalSource();
+             GetNumberOfChannels();
+            // SetDiscreteMode();
+
+        }
 
         public void Start()
         {
@@ -257,12 +270,16 @@ namespace LabControl.PortModels
                 SetLogMessage("Порт диспенсера закрыт");
                 return;
             }
+           // GetVersion();
+           // GetNumberOfChannels();
+            SetInternalSource();
+            SetDiscreteMode();
             SetDropsPerTrigger(1);
-            
+
             //SetPeriod();
-            //SetFrequency(1);
-            if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
-            TriggerAll(true);
+            // SetFrequency(1);
+            // if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
+            // TriggerAll(true);
         }
 
         private void TriggerAll(bool start)
@@ -284,7 +301,7 @@ namespace LabControl.PortModels
         {
             var cmd = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B };
             _mPort.Write(cmd, 0, 5);
-           PortSleep();
+           PortSleep(500);
         }
 
         private void SetDropsPerTrigger(int drops)
@@ -306,7 +323,7 @@ namespace LabControl.PortModels
         {
             var cmd = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 };
             _mPort.Write(cmd, 0, 5);
-           PortSleep();
+           PortSleep(1000);
         }
 
         public void Stop()
@@ -349,20 +366,7 @@ namespace LabControl.PortModels
            PortSleep();
         }
 
-        public void Init()
-        {
-            _mPort.Write("Q");
-           PortSleep();
-            _mPort.Write("X2000");
-           PortSleep();
-            SoftReset();
-
-            GetVersion();
-            SetInternalSource();
-            GetNumberOfChannels();
-            SetDiscreteMode();
-
-        }
+       
 
         public void SetSineWaveData(DispenserSineWaveData data)
         {
@@ -382,6 +386,11 @@ namespace LabControl.PortModels
         public void PortSleep()
         {
             System.Threading.Thread.Sleep(100);
+        }
+
+        public void PortSleep(int ms)
+        {
+            System.Threading.Thread.Sleep(ms);
         }
     }
 }

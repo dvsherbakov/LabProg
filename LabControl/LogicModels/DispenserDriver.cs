@@ -1,10 +1,6 @@
 ﻿using LabControl.ClassHelpers;
 using LabControl.PortModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LabControl.LogicModels
 {
@@ -41,6 +37,8 @@ namespace LabControl.LogicModels
                 SetLogMessage?.Invoke($"Вероятная ошибка из порта диспенсера: {BitConverter.ToString(data)}");
                 return;
             }
+            SetLogMessage?.Invoke($"Answer:{BitConverter.ToString(data)}");
+            SetLogMessage?.Invoke($"Status byte:{data[2]}");
             switch (data[1])
             {
                 case 0x01:
@@ -59,19 +57,20 @@ namespace LabControl.LogicModels
                     SetLogMessage?.Invoke($"Внутренний источник импульсов установлен");
                     break;
                 case 0x0A:
-                    SetLogMessage?.Invoke($"Запущен процесс");
+                    var tmpStr = data[3] == 38 ?  "Запущен" : "Остановлен";
+                    SetLogMessage?.Invoke($"{tmpStr} процесс");
                     break;
                 case 0x19:
                     SetLogMessage?.Invoke($"Частота установлена");
                     break;
                 case 0xF0:
-                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[5]}");
+                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}");
                     break;
                 case 0x0C:
                     SetLogMessage?.Invoke($"Канал установлен");
                     break;
                 case 0x0D:
-                    SetLogMessage?.Invoke($"Доступно каналов: {data[5]}");
+                    SetLogMessage?.Invoke($"Доступно каналов: {data[4]}");
                     break;
                 case 0x60:
                     SetLogMessage?.Invoke($"Port srnded 0n x60: {BitConverter.ToString(data)}");
