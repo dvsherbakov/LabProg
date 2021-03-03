@@ -68,8 +68,9 @@ namespace LabControl.PortModels
             {
                 return;
             }
-            var cmd = f_CommandList.FirstOrDefault().CommandString;
-            _mPort.Write(cmd, 0, cmd.Length);
+            var cmd = f_CommandList.FirstOrDefault();
+            _mPort.Write(cmd.CommandString, 0, cmd.CommandString.Length);
+            f_CommandList.Remove(cmd);
         }
 
         public void OpenPort()

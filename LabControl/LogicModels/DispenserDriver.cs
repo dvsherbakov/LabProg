@@ -37,43 +37,43 @@ namespace LabControl.LogicModels
                 SetLogMessage?.Invoke($"Вероятная ошибка из порта диспенсера: {BitConverter.ToString(data)}");
                 return;
             }
-            SetLogMessage?.Invoke($"Answer:{BitConverter.ToString(data)}");
-            SetLogMessage?.Invoke($"Status byte:{data[2]}");
+            //SetLogMessage?.Invoke($"Answer:{BitConverter.ToString(data)}");
+            //SetLogMessage?.Invoke($"Status byte:{data[2]}");
             switch (data[1])
             {
                 case 0x01:
-                    SetLogMessage?.Invoke($"Успешный сброс параметров диспенсера");
+                    SetLogMessage?.Invoke($"Успешный сброс параметров диспенсера, Status byte:{data[2]}");
                     break;
                 case 0x03:
-                    SetLogMessage?.Invoke($"Число капель на импульс установлено");
+                    SetLogMessage?.Invoke($"Число капель на импульс установлено, Status byte:{data[2]}");
                     break;
                 case 0x04:
-                    SetLogMessage?.Invoke($"Дискретный режим установлен");
+                    SetLogMessage?.Invoke($"Дискретный режим установлен, Status byte:{data[2]}");
                     break;
                 case 0x06:
-                    SetLogMessage?.Invoke($"Параметры сигнала установлены");
+                    SetLogMessage?.Invoke($"Параметры сигнала установлены, Status byte:{data[2]}");
                     break;
                 case 0x08:
-                    SetLogMessage?.Invoke($"Внутренний источник импульсов установлен");
+                    SetLogMessage?.Invoke($"Внутренний источник импульсов установлен, Status byte:{data[2]}");
                     break;
                 case 0x0A:
                     var tmpStr = data[3] == 38 ?  "Запущен" : "Остановлен";
-                    SetLogMessage?.Invoke($"{tmpStr} процесс");
+                    SetLogMessage?.Invoke($"{tmpStr} процесс, Status byte:{data[2]}");
                     break;
                 case 0x19:
-                    SetLogMessage?.Invoke($"Частота установлена");
+                    SetLogMessage?.Invoke($"Частота установлена, Status byte:{data[2]}");
                     break;
                 case 0xF0:
-                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}");
+                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[2]}");
                     break;
                 case 0x0C:
-                    SetLogMessage?.Invoke($"Канал установлен");
+                    SetLogMessage?.Invoke($"Канал установлен, Status byte:{data[2]}");
                     break;
                 case 0x0D:
-                    SetLogMessage?.Invoke($"Доступно каналов: {data[4]}");
+                    SetLogMessage?.Invoke($"Доступно каналов: {data[4]}, Status byte:{data[2]}");
                     break;
                 case 0x60:
-                    SetLogMessage?.Invoke($"Port srnded 0n x60: {BitConverter.ToString(data)}");
+                    SetLogMessage?.Invoke($"Port srnded 0n x60: {BitConverter.ToString(data)}, Status byte:{data[2]}");
                     break;
 
             }
