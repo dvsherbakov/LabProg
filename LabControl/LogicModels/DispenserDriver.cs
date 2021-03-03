@@ -74,7 +74,7 @@ namespace LabControl.LogicModels
                     SetLogMessage?.Invoke($"Доступно каналов: {data[5]}");
                     break;
                 case 0x60:
-                    //SetDispOptions(data);
+                    SetLogMessage?.Invoke($"Port srnded 0n x60: {BitConverter.ToString(data)}");
                     break;
 
             }

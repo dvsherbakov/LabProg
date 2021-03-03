@@ -113,7 +113,7 @@ namespace LabControl.PortModels
             }
             var cmd = new byte[4] { 0x53, 0x02, 0xF0, 0xF2 };
             _mPort.Write(cmd, 0, 4);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         private void SoftReset()
@@ -246,7 +246,7 @@ namespace LabControl.PortModels
             };
             cmd[6] = CheckSum(cmd);
             _mPort.Write(cmd, 0, 7);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
 
@@ -277,14 +277,14 @@ namespace LabControl.PortModels
             };
             cmd[4] = CheckSum(cmd);
             _mPort.Write(cmd, 0, 5);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         private void SetInternalSource()
         {
             var cmd = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B };
             _mPort.Write(cmd, 0, 5);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         private void SetDropsPerTrigger(int drops)
@@ -299,14 +299,14 @@ namespace LabControl.PortModels
                 0x08 };
             cmd[5] = CheckSum(cmd);
             _mPort.Write(cmd, 0, 5);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         private void SetDiscreteMode()
         {
             var cmd = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 };
             _mPort.Write(cmd, 0, 5);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         public void Stop()
@@ -318,7 +318,7 @@ namespace LabControl.PortModels
             }
             var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x00, 0x03 + 0x0A + 0x00 };
             _mPort.Write(cmd, 0, 5);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         public void SetChannel(byte channel)
@@ -331,14 +331,14 @@ namespace LabControl.PortModels
             var cmd = new byte[] { 0x53, 0x03, 0x0C, channel, 0x62 };
             cmd[4] = (byte)(cmd[1] + cmd[2] + cmd[3]);
             _mPort.Write(cmd, 0, 5);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         public void Dump()
         {
             var cmd = new byte[] { 0x53, 0x02, 0x60, 0x62 };
             _mPort.Write(cmd, 0, 4);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         public void Dump(byte channel)
@@ -346,15 +346,15 @@ namespace LabControl.PortModels
             var cmd = new byte[5] { 0x53, 0x03, 0x60, channel, 0x0 };
             cmd[4] = (byte)(cmd[1] + cmd[2] + cmd[3]);
             _mPort.Write(cmd, 0, 5);
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
         }
 
         public void Init()
         {
             _mPort.Write("Q");
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
             _mPort.Write("X2000");
-            System.Threading.Thread.Sleep(50);
+           PortSleep();
             SoftReset();
 
             GetVersion();
@@ -377,6 +377,11 @@ namespace LabControl.PortModels
         public void SetSignalType(int signalType)
         {
             f_SignalType = signalType;
+        }
+
+        public void PortSleep()
+        {
+            System.Threading.Thread.Sleep(150);
         }
     }
 }
