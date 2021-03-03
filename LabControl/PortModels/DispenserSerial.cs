@@ -259,8 +259,8 @@ namespace LabControl.PortModels
             }
             SetDropsPerTrigger(1);
             
-            SetPeriod();
-            SetFrequency(1);
+            //SetPeriod();
+            //SetFrequency(1);
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
             TriggerAll(true);
         }
@@ -381,7 +381,7 @@ namespace LabControl.PortModels
 
         public void PortSleep()
         {
-            System.Threading.Thread.Sleep(150);
+            System.Threading.Thread.Sleep(100);
         }
     }
 }
