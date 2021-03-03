@@ -64,7 +64,7 @@ namespace LabControl.PortModels
 
         private void StartNext()
         {
-            if (!(f_CommandList.Count > 0))
+            if (!(f_CommandList.Count > 0) || !_mPort.IsOpen)
             {
                 return;
             }
@@ -118,28 +118,18 @@ namespace LabControl.PortModels
         {
             
             var cmd = new byte[4] { 0x53, 0x02, 0xF0, 0xF2 };
-            //_mPort.Write(cmd, 0, 4);
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         private void SoftReset()
         {
-            if (!_mPort.IsOpen)
-            {
-                SetLogMessage?.Invoke("Порт диспенсера закрыт");
-                return;
-            }
             var cmd = new byte[4] { 0x53, 0x02, 0x01, 0x03 };
-            //_mPort.Write(cmd, 0, 4);
-            //System.Threading.Thread.Sleep(1000);
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         public void GetNumberOfChannels()
         {
-            
             var cmd = new byte[4] { 0x53, 0x02, 0x0D, 0x0F };
-            //_mPort.Write(cmd, 0, 4);
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
@@ -172,23 +162,13 @@ namespace LabControl.PortModels
                 0x0A//Check Sum XXh
             };
             cmd[9] = CheckSum(cmd);
-            _mPort.Write(cmd, 0, 10);
+            //_mPort.Write(cmd, 0, 10);
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
 
         }
 
         public void SetPulseWaveForm(DispenserPulseWaveData data)
         {
-            if (!_mPort.IsOpen)
-            {
-                SetLogMessage("Порт диспенсера закрыт");
-                return;
-            }
-
-            if (data == null)
-            {
-                SetLogMessage("Нет информации о форме сигнала");
-                return;
-            }
             var t1 = BytesUtility.DivideData((short)(data.TimeT1 * 10));
             var t2 = BytesUtility.DivideData((short)(data.TimeT2 * 10));
             var v0 = BytesUtility.DivideData((short)(data.V0));
@@ -215,7 +195,8 @@ namespace LabControl.PortModels
             };
 
             cmd[22] = CheckSum(cmd);
-            _mPort.Write(cmd, 0, 23);
+            //_mPort.Write(cmd, 0, 23);
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         public void SetFrequency(int freq)
@@ -231,7 +212,8 @@ namespace LabControl.PortModels
                 0xFF
             };
             cmd[5] = CheckSum(cmd);
-            _mPort.Write(cmd, 0, 6);
+            //_mPort.Write(cmd, 0, 6);
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         public void SetPeriod()
@@ -249,8 +231,8 @@ namespace LabControl.PortModels
                 0xFF
             };
             cmd[6] = CheckSum(cmd);
-            _mPort.Write(cmd, 0, 7);
-            PortSleep();
+            //_mPort.Write(cmd, 0, 7);
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         public void Init()
@@ -262,21 +244,17 @@ namespace LabControl.PortModels
 
         public void Start()
         {
-            if (!_mPort.IsOpen)
-            {
-                SetLogMessage("Порт диспенсера закрыт");
-                return;
-            }
-            // GetVersion();
-            // GetNumberOfChannels();
+         
             SetInternalSource();
             SetDiscreteMode();
             SetDropsPerTrigger(1);
 
-            //SetPeriod();
-            // SetFrequency(1);
-            // if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
-            // TriggerAll(true);
+            SetPeriod();
+            SetFrequency(1);
+            if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
+            TriggerAll(true);
+            Dump();
+            StartNext();
         }
 
         private void TriggerAll(bool start)
@@ -290,15 +268,14 @@ namespace LabControl.PortModels
                 0xFF
             };
             cmd[4] = CheckSum(cmd);
-            _mPort.Write(cmd, 0, 5);
-            PortSleep();
+            //_mPort.Write(cmd, 0, 5);
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         private void SetInternalSource()
         {
             var cmd = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B };
-            _mPort.Write(cmd, 0, 5);
-            PortSleep(500);
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         private void SetDropsPerTrigger(int drops)
@@ -312,55 +289,41 @@ namespace LabControl.PortModels
                 cDrops.Item2,
                 0x08 };
             cmd[5] = CheckSum(cmd);
-            _mPort.Write(cmd, 0, 5);
-            PortSleep();
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         private void SetDiscreteMode()
         {
             var cmd = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 };
-            _mPort.Write(cmd, 0, 5);
-            PortSleep(1000);
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         public void Stop()
         {
-            if (!_mPort.IsOpen)
-            {
-                SetLogMessage("Порт диспенсера закрыт");
-                return;
-            }
             var cmd = new byte[] { 0x53, 0x03, 0x0A, 0x00, 0x03 + 0x0A + 0x00 };
             _mPort.Write(cmd, 0, 5);
-            PortSleep();
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         public void SetChannel(byte channel)
         {
-            if (!_mPort.IsOpen)
-            {
-                SetLogMessage("Порт диспенсера закрыт");
-                return;
-            }
+            
             var cmd = new byte[] { 0x53, 0x03, 0x0C, channel, 0x62 };
             cmd[4] = (byte)(cmd[1] + cmd[2] + cmd[3]);
-            _mPort.Write(cmd, 0, 5);
-            PortSleep();
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         public void Dump()
         {
             var cmd = new byte[] { 0x53, 0x02, 0x60, 0x62 };
-            _mPort.Write(cmd, 0, 4);
-            PortSleep();
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         public void Dump(byte channel)
         {
             var cmd = new byte[5] { 0x53, 0x03, 0x60, channel, 0x0 };
             cmd[4] = (byte)(cmd[1] + cmd[2] + cmd[3]);
-            _mPort.Write(cmd, 0, 5);
-            PortSleep();
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
 
@@ -378,11 +341,6 @@ namespace LabControl.PortModels
         public void SetSignalType(int signalType)
         {
             f_SignalType = signalType;
-        }
-
-        public void PortSleep()
-        {
-            System.Threading.Thread.Sleep(100);
         }
 
         public void PortSleep(int ms)
