@@ -239,9 +239,9 @@ namespace LabControl.PortModels
                 0x53,
                 0x05,
                 0x19,
-                bytes[2],
-                bytes[1],
-                bytes[0],
+                0x00,
+                0x27,
+                0x11,
                 0xFF
             };
             cmd[6] = CheckSum(cmd);
