@@ -145,11 +145,6 @@ namespace LabControl.PortModels
 
         public void SetSineWaveForm(DispenserSineWaveData data)
         {
-            if (!_mPort.IsOpen)
-            {
-                SetLogMessage("Порт диспенсера закрыт");
-                return;
-            }
             var v0 = BytesUtility.DivideData((short)data.V0);
             var vp = BytesUtility.DivideData((short)data.VPeak);
             var t = BytesUtility.DivideData((short)data.TimeToverall);
@@ -231,7 +226,6 @@ namespace LabControl.PortModels
                 0xFF
             };
             cmd[6] = CheckSum(cmd);
-            //_mPort.Write(cmd, 0, 7);
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
