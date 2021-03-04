@@ -221,9 +221,9 @@ namespace LabControl.PortModels
                 0x05,
                 0x19,
                 0x00,
-                0x27,
-                0x11,
-                0xFF
+                0x02,
+                0x9B,
+                0xBB
             };
             cmd[6] = CheckSum(cmd);
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
