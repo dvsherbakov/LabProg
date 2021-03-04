@@ -62,12 +62,7 @@ namespace LabControl.LogicModels
                     var tmpStr = data[3] == 38 ? "Запущен" : "Остановлен";
                     SetLogMessage?.Invoke($"{tmpStr} процесс, Status byte:{data[st]}");
                     break;
-                case 0x19:
-                    SetLogMessage?.Invoke($"Частота установлена, Status byte:{data[st]}");
-                    break;
-                case 0xF0:
-                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[2]}");
-                    break;
+               
                 case 0x0C:
                     SetLogMessage?.Invoke($"Канал установлен, Status byte:{data[st]}");
                     break;
@@ -75,8 +70,12 @@ namespace LabControl.LogicModels
                     SetLogMessage?.Invoke($"Доступно каналов: {data[4]}, Status byte:{data[2]}");
                     break;
                 case 0x0E:
-                    SetLogMessage?.Invoke($"Группировка каналов: {data[4]}, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Группировка каналов: {data[3]}, Status byte:{data[st]}");
                     break;
+                case 0x19:
+                    SetLogMessage?.Invoke($"Частота установлена, Status byte:{data[st]}");
+                    break;
+
                 case 0xF0:
                     SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[st]}");
                     break;
@@ -124,24 +123,24 @@ namespace LabControl.LogicModels
             // 19 - Number of Drops(low byte) XXh
             Debug.WriteLine($"Number of Drops: {BytesUtility.JoinByte(data[18], data[19])}");
             // 20 - Strobe Divider XXh
-            Debug.WriteLine($"Number of Drops: {data[20]}");
+            Debug.WriteLine($"Strobe Divider: {data[20]}");
             // 21 - Pulse Period(µs; high byte) XXh
             // 22 - Pulse Period(µs; middle byte) XXh
             // 23 - Pulse Period(µs; low byte) XXh
             FooUnion fu;
             fu.integer = 0;
-            fu.byte0 = 0;
-            fu.byte1 = data[21];
-            fu.byte2 = data[22];
-            fu.byte3 = data[23];
+            fu.byte0 = data[23];
+            fu.byte1 = data[22];
+            fu.byte2 = data[21];
+            fu.byte3 = 0;
             Debug.WriteLine($"Pulse Period: {fu.integer}");
             // 24 - Strobe Delay(µs; high byte) XXh
             // 25 - Strobe Delay(µs; low byte) XXh
             Debug.WriteLine($"Number of Drops: {BytesUtility.JoinByte(data[24], data[25])}");
             // 26 - Status XXh
-            Debug.WriteLine($"Number of Drops: {data[26]}");
+            Debug.WriteLine($"Status: {data[26]}");
             // 27 - Version XXh
-            Debug.WriteLine($"Number of Drops: {data[27]}");
+            Debug.WriteLine($"Version: {data[27]}");
         }
 
         public void SetSineWaveData(DispenserSineWaveData data)
