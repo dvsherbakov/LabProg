@@ -66,13 +66,13 @@ namespace LabControl.LogicModels
                     SetLogMessage?.Invoke($"Частота установлена, Status byte:{data[st]}");
                     break;
                 case 0xF0:
-                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[2]}");
                     break;
                 case 0x0C:
                     SetLogMessage?.Invoke($"Канал установлен, Status byte:{data[st]}");
                     break;
                 case 0x0D:
-                    SetLogMessage?.Invoke($"Доступно каналов: {data[4]}, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Доступно каналов: {data[4]}, Status byte:{data[2]}");
                     break;
                 case 0x60:
                     SetLogMessage?.Invoke($"Port was sent {data.Length}, x60: {BitConverter.ToString(data)}");
