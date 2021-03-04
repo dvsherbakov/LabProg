@@ -40,7 +40,7 @@ namespace LabControl.LogicModels
             }
             //SetLogMessage?.Invoke($"Answer:{BitConverter.ToString(data)}");
             //SetLogMessage?.Invoke($"Status byte:{data[2]}");
-            var st = data.Length - 2;
+            var st =  2;
             switch (data[1])
             {
                 case 0x01:
@@ -59,7 +59,7 @@ namespace LabControl.LogicModels
                     SetLogMessage?.Invoke($"Внутренний источник импульсов установлен, Status byte:{data[st]}");
                     break;
                 case 0x0A:
-                    var tmpStr = data[3] == 38 ?  "Запущен" : "Остановлен";
+                    var tmpStr = data[3] == 38 ? "Запущен" : "Остановлен";
                     SetLogMessage?.Invoke($"{tmpStr} процесс, Status byte:{data[st]}");
                     break;
                 case 0x19:
@@ -74,6 +74,12 @@ namespace LabControl.LogicModels
                 case 0x0D:
                     SetLogMessage?.Invoke($"Доступно каналов: {data[4]}, Status byte:{data[2]}");
                     break;
+                case 0x0E:
+                    SetLogMessage?.Invoke($"Группировка каналов: {data[4]}, Status byte:{data[st]}");
+                    break;
+                case 0xF0:
+                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[st]}");
+                    break;
                 case 0x60:
                     SetLogMessage?.Invoke($"Port was sent {data.Length}, x60: {BitConverter.ToString(data)}");
                     SetDispOptions(data);
@@ -87,22 +93,55 @@ namespace LabControl.LogicModels
 
         private void SetDispOptions(byte[] data)
         {
-            var v0 = BitConverter.ToInt16(data, 1);
-            Debug.Write($"v0:{v0}, ");
-            var rt1 = BitConverter.ToInt16(data, 2);
-            Debug.Write($"rt1:{rt1}, ");
-            var v1 = BitConverter.ToInt16(data, 3);
-            Debug.Write($"v1:{v1}, ");
-            var t1 = BitConverter.ToInt16(data, 4);
-            Debug.Write($"t1:{t1}, ");
-            var ft = BitConverter.ToInt16(data, 5);
-            Debug.Write($"ft:{ft}, ");
-            var v2 = BitConverter.ToInt16(data, 6);
-            Debug.Write($"v2:{v2}, ");
-            var t2 = BitConverter.ToInt16(data, 7);
-            Debug.Write($"t2:{t2}, ");
-            var rt2 = BitConverter.ToInt16(data, 8);
-            Debug.Write($"rt2:{rt2}, ");
+            // 0 - header
+            // 1 - command
+
+            // 2 - Voltage V0(high byte) XXh
+            // 3 - Voltage V0(low byte) XXh
+            Debug.WriteLine($"Voltage V0: {BytesUtility.JoinByte(data[2], data[3])}");
+            // 4 - Rise Time trise1(µs; high byte) XXh
+            // 5 - Rise Time trise1(µs; low byte) XXh
+            Debug.WriteLine($"Rise Time: {BytesUtility.JoinByte(data[4], data[5])}");
+            // 6 - Voltage V1(high byte) XXh
+            // 7 - Voltage V1(low byte) XXh
+            Debug.WriteLine($"Voltage V1: {BytesUtility.JoinByte(data[6], data[7])}");
+            // 8 - Time t1(µs; high byte) XXh
+            // 9 - Time t1(µs; low byte) XXh
+            Debug.WriteLine($"Time t1: {BytesUtility.JoinByte(data[8], data[9])}");
+            // 10 - Fall Time tfall(µs; high byte) XXh
+            // 11 - Fall Time tfall(µs; low byte) XXh
+            Debug.WriteLine($"Fall Time: {BytesUtility.JoinByte(data[10], data[11])}");
+            // 12 - Voltage V2(high byte) XXh
+            // 13 - Voltage V2(low byte) XXh
+            Debug.WriteLine($"Voltage V2: {BytesUtility.JoinByte(data[12], data[13])}");
+            // 14 - Time t2(µs; high byte) XXh
+            // 15 - Time t2(µs; low byte) XXh
+            Debug.WriteLine($"Time t2: {BytesUtility.JoinByte(data[14], data[15])}");
+            // 16 - Final Rise trise2(µs; high byte) XXh
+            // 17 - Final Rise trise2(µs; low byte) XXh
+            Debug.WriteLine($"Final Rise: {BytesUtility.JoinByte(data[16], data[17])}");
+            // 18 - Number of Drops(high byte) XXh
+            // 19 - Number of Drops(low byte) XXh
+            Debug.WriteLine($"Number of Drops: {BytesUtility.JoinByte(data[18], data[19])}");
+            // 20 - Strobe Divider XXh
+            Debug.WriteLine($"Number of Drops: {data[20]}");
+            // 21 - Pulse Period(µs; high byte) XXh
+            // 22 - Pulse Period(µs; middle byte) XXh
+            // 23 - Pulse Period(µs; low byte) XXh
+            FooUnion fu;
+            fu.integer = 0;
+            fu.byte0 = 0;
+            fu.byte1 = data[21];
+            fu.byte2 = data[22];
+            fu.byte3 = data[23];
+            Debug.WriteLine($"Pulse Period: {fu.integer}");
+            // 24 - Strobe Delay(µs; high byte) XXh
+            // 25 - Strobe Delay(µs; low byte) XXh
+            Debug.WriteLine($"Number of Drops: {BytesUtility.JoinByte(data[24], data[25])}");
+            // 26 - Status XXh
+            Debug.WriteLine($"Number of Drops: {data[26]}");
+            // 27 - Version XXh
+            Debug.WriteLine($"Number of Drops: {data[27]}");
         }
 
         public void SetSineWaveData(DispenserSineWaveData data)

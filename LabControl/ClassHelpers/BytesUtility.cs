@@ -21,7 +21,7 @@ namespace LabControl.ClassHelpers
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    struct FooUnion
+    public struct FooUnion
     {
         [FieldOffset(0)]
         public byte byte0;
