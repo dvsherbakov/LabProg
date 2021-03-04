@@ -245,7 +245,7 @@ namespace LabControl.PortModels
             GroupTriggerSource(0);
             
             SetPeriod();
-            SetFrequency(1);
+            //SetFrequency(1);
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
             SetInternalSource();
             TriggerAll(true);

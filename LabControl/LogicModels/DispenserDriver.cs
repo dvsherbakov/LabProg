@@ -1,6 +1,7 @@
 ﻿using LabControl.ClassHelpers;
 using LabControl.PortModels;
 using System;
+using System.Diagnostics;
 
 namespace LabControl.LogicModels
 {
@@ -39,44 +40,66 @@ namespace LabControl.LogicModels
             }
             //SetLogMessage?.Invoke($"Answer:{BitConverter.ToString(data)}");
             //SetLogMessage?.Invoke($"Status byte:{data[2]}");
+            var st = data.Length - 2;
             switch (data[1])
             {
                 case 0x01:
-                    SetLogMessage?.Invoke($"Успешный сброс параметров диспенсера, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Успешный сброс параметров диспенсера, Status byte:{data[st]}");
                     break;
                 case 0x03:
-                    SetLogMessage?.Invoke($"Число капель на импульс установлено, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Число капель на импульс установлено, Status byte:{data[st]}");
                     break;
                 case 0x04:
-                    SetLogMessage?.Invoke($"Дискретный режим установлен, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Дискретный режим установлен, Status byte:{data[st]}");
                     break;
                 case 0x06:
-                    SetLogMessage?.Invoke($"Параметры сигнала установлены, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Параметры сигнала установлены, Status byte:{data[st]}");
                     break;
                 case 0x08:
-                    SetLogMessage?.Invoke($"Внутренний источник импульсов установлен, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Внутренний источник импульсов установлен, Status byte:{data[st]}");
                     break;
                 case 0x0A:
                     var tmpStr = data[3] == 38 ?  "Запущен" : "Остановлен";
-                    SetLogMessage?.Invoke($"{tmpStr} процесс, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"{tmpStr} процесс, Status byte:{data[st]}");
                     break;
                 case 0x19:
-                    SetLogMessage?.Invoke($"Частота установлена, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Частота установлена, Status byte:{data[st]}");
                     break;
                 case 0xF0:
-                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[st]}");
                     break;
                 case 0x0C:
-                    SetLogMessage?.Invoke($"Канал установлен, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Канал установлен, Status byte:{data[st]}");
                     break;
                 case 0x0D:
-                    SetLogMessage?.Invoke($"Доступно каналов: {data[4]}, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Доступно каналов: {data[4]}, Status byte:{data[st]}");
                     break;
                 case 0x60:
-                    SetLogMessage?.Invoke($"Port srnded 0n x60: {BitConverter.ToString(data)}, Status byte:{data[2]}");
+                    SetLogMessage?.Invoke($"Port srnded 0n x60: {BitConverter.ToString(data)}, Status byte:{data[st]}");
+                    SetDispOptions(data);
                     break;
 
             }
+        }
+
+        private void SetDispOptions(byte[] data)
+        {
+            var v0 = BitConverter.ToInt16(data, 1);
+            Debug.Write($"v0:{v0}, ");
+            var rt1 = BitConverter.ToInt16(data, 2);
+            Debug.Write($"rt1:{rt1}, ");
+            var v1 = BitConverter.ToInt16(data, 3);
+            Debug.Write($"v1:{v1}, ");
+            var t1 = BitConverter.ToInt16(data, 4);
+            Debug.Write($"t1:{t1}, ");
+            var ft = BitConverter.ToInt16(data, 5);
+            Debug.Write($"ft:{ft}, ");
+            var v2 = BitConverter.ToInt16(data, 6);
+            Debug.Write($"v2:{v2}, ");
+            var t2 = BitConverter.ToInt16(data, 7);
+            Debug.Write($"t2:{t2}, ");
+            var rt2 = BitConverter.ToInt16(data, 8);
+            Debug.Write($"rt2:{rt2}, ");
         }
 
         public void SetSineWaveData(DispenserSineWaveData data)
