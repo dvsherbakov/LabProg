@@ -117,7 +117,7 @@ namespace LabControl.PortModels
 
         public void GetVersion()
         {
-            
+
             var cmd = new byte[4] { 0x53, 0x02, 0xF0, 0xF2 };
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
@@ -190,7 +190,7 @@ namespace LabControl.PortModels
             //    0xCA //checksumm
             //};
             //cmd[22] = CheckSum(cmd);
-            var cmd = new byte[] { 0x53, 0x15,0x06, 0xFF, 0xFF, 0x01, 0x4A, 0xFF, 0x02, 0x8A, 0x00, 0x00, 0x00, 0x23, 0xFF, 0xDD, 0x00, 0x28, 0x00, 0x28, 0x00, 0x14, 0x52 };
+            var cmd = new byte[] { 0x53, 0x15, 0x06, 0xFF, 0xFF, 0x01, 0x4A, 0xFF, 0x02, 0x8A, 0x00, 0x00, 0x00, 0x23, 0xFF, 0xDD, 0x00, 0x28, 0x00, 0x28, 0x00, 0x14, 0x52 };
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
@@ -238,17 +238,22 @@ namespace LabControl.PortModels
 
         public void Start()
         {
-         
-           
+            f_Channel = 0;
+            SetChannel();
+            SetInternalSource(0);
+            if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
             SetDiscreteMode();
             SetDropsPerTrigger(1);
-            SetInternalSource();
-            GroupTriggerSource(0);
-            
             SetPeriod();
-            //SetFrequency(1);
+
+            f_Channel = 1;
+            SetChannel();
+            SetInternalSource(1);
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
-           
+            SetDiscreteMode();
+            SetDropsPerTrigger(1);
+            SetPeriod();
+
             TriggerAll(true);
             Dump();
             StartNext();
@@ -269,9 +274,10 @@ namespace LabControl.PortModels
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
-        private void SetInternalSource()
+        private void SetInternalSource(byte src)
         {
-            var cmd = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B };
+            var cmd = new byte[] { 0x53, 0x03, 0x08, src, 0x0C };
+            cmd[4] = CheckSum(cmd);
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
@@ -297,7 +303,7 @@ namespace LabControl.PortModels
 
         private void GroupTriggerSource(byte src)
         {
-            var cmd = new byte[] {0x53, 0x03, 0x0E, src, 0xFF };
+            var cmd = new byte[] { 0x53, 0x03, 0x0E, src, 0xFF };
             cmd[4] = CheckSum(cmd);
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
