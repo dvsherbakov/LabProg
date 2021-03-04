@@ -174,24 +174,23 @@ namespace LabControl.PortModels
             var tf = BytesUtility.DivideData((short)(data.TimeFall * 10));
             var tr2 = BytesUtility.DivideData((short)(data.TimeRise2 * 10));
 
-            var cmd = new byte[] {
-                0x53,
-                0x15, 0x06, //len, command, 1-2
-                0xFF, 0xFF, //unused, 3-4
-                t1.Item1, t1.Item2, //0x00, 0xC8, t1, 200, 5-6
-                0xFF,//unused, 7
-                t2.Item1, t2.Item2, //0x01,0x90,//t2, 400 ,8-9
-                v0.Item1, v0.Item2, //0x00, 0x00, //v0, 0, 10-11
-                v1.Item1, v1.Item2, //0x00,0x0A, //v1, 10, 12-13
-                v2.Item1, v2.Item2, //0xFF,0xF6, //v2, -10, 14-15
-                tr1.Item1, tr1.Item2, //0x00, 0x1E, //tr1, 30
-                tf.Item1, tf.Item2, //0x00, 0x1E, //tf, 30
-                tr2.Item1, tr2.Item2,//0x00, 0x1E, //tr2,30
-                0xCA //checksumm
-            };
-
-            cmd[22] = CheckSum(cmd);
-            //_mPort.Write(cmd, 0, 23);
+            //var cmd = new byte[] {
+            //    0x53,
+            //    0x15, 0x06, //len, command, 1-2
+            //    0xFF, 0xFF, //unused, 3-4
+            //    t1.Item1, t1.Item2, //0x00, 0xC8, t1, 200, 5-6
+            //    0xFF,//unused, 7
+            //    t2.Item1, t2.Item2, //0x01,0x90,//t2, 400 ,8-9
+            //    v0.Item1, v0.Item2, //0x00, 0x00, //v0, 0, 10-11
+            //    v1.Item1, v1.Item2, //0x00,0x0A, //v1, 10, 12-13
+            //    v2.Item1, v2.Item2, //0xFF,0xF6, //v2, -10, 14-15
+            //    tr1.Item1, tr1.Item2, //0x00, 0x1E, //tr1, 30
+            //    tf.Item1, tf.Item2, //0x00, 0x1E, //tf, 30
+            //    tr2.Item1, tr2.Item2,//0x00, 0x1E, //tr2,30
+            //    0xCA //checksumm
+            //};
+            //cmd[22] = CheckSum(cmd);
+            var cmd = new byte[] { 0x53, 0x15,0x06, 0xFF, 0xFF, 0x01, 0x4A, 0xFF, 0x02, 0x8A, 0x00, 0x00, 0x00, 0x23, 0xFF, 0xDD, 0x00, 0x28, 0x00, 0x28, 0x00, 0x14, 0x52 };
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
