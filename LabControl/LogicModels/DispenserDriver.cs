@@ -189,12 +189,12 @@ namespace LabControl.LogicModels
         {
             var res = new List<string>();
             var bts = BytesUtility.GetBytes(status);
-            res.Add(bts[0] ? "Jetting" : "Jetting complete");
-            res.Add(bts[1] ? "Continuous jetting" : "Finite number of drops are being jetted");
-            res.Add(bts[2] ? "External trigger input is used" : "Internal trigger is used");
-            res.Add(bts[3] ? "Strobe is enabled" : "Strobe is disabled");
-            res.Add(bts[4] ? "One of the input parameters is invalid, inconsistent or out of range" : "All input parameters are valid");
-            res.Add(bts[5] ? "The active channel is part of the Group Trigger" : "The active channel is not part of the Group Trigger");
+            res.Add(bts[7] ? "Jetting" : "Jetting complete");
+            res.Add(bts[6] ? "Continuous jetting" : "Finite number of drops are being jetted");
+            res.Add(bts[5] ? "External trigger input is used" : "Internal trigger is used");
+            res.Add(bts[4] ? "Strobe is enabled" : "Strobe is disabled");
+            res.Add(bts[3] ? "One of the input parameters is invalid, inconsistent or out of range" : "All input parameters are valid");
+            res.Add(bts[2] ? "The active channel is part of the Group Trigger" : "The active channel is not part of the Group Trigger");
 
             return res;
         }

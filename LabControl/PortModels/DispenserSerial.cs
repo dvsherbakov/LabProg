@@ -253,15 +253,16 @@ namespace LabControl.PortModels
             SetChannel();
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
             SetDiscreteMode();
-            SetDropsPerTrigger(65534);
+            SetDropsPerTrigger(50);
             SetPeriod(10000);
-            SetFrequency(10000);
+            SetFrequency(2500);
             //SetStrobleDivider();
             SetEnableStrobe();
             //SetStrobeDelay();
-            
+            GroupTriggerSource(1);
             //GenerateFromLog();
-            StartTrigger(0);
+            StartTrigger(1);
+            TriggerAll(true);
             Dump(0);
             Dump(1);
             StartNext();
