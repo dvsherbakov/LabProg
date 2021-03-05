@@ -1,6 +1,7 @@
 ﻿using LabControl.ClassHelpers;
 using LabControl.PortModels;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace LabControl.LogicModels
@@ -40,7 +41,10 @@ namespace LabControl.LogicModels
             }
             //SetLogMessage?.Invoke($"Answer:{BitConverter.ToString(data)}");
             //SetLogMessage?.Invoke($"Status byte:{data[2]}");
+
             var st =  2;
+            var TxtStatus = GetStatusText(data[st]);
+            Debug.WriteLine(string.Join(":", TxtStatus));
             switch (data[1])
             {
                 case 0x01:
@@ -91,6 +95,10 @@ namespace LabControl.LogicModels
 
         private void SetDispOptions(byte[] data)
         {
+            if (data.Length <= 27)
+            {
+                return;
+            }
             // 0 - header
             // 1 - command
 
@@ -175,6 +183,20 @@ namespace LabControl.LogicModels
         public void SetFrequency(int freq)
         {
             if (f_DispenserSerial != null) f_DispenserSerial.Frequency = freq;
+        }
+
+        private List<string> GetStatusText(uint status)
+        {
+            var res = new List<string>();
+            var bts = BytesUtility.GetBytes(status);
+            res.Add(bts[0] ? "Jetting" : "Jetting complete");
+            res.Add(bts[1] ? "Continuous jetting" : "Finite number of drops are being jetted");
+            res.Add(bts[2] ? "External trigger input is used" : "Internal trigger is used");
+            res.Add(bts[3] ? "Strobe is enabled" : "Strobe is disabled");
+            res.Add(bts[4] ? "One of the input parameters is invalid, inconsistent or out of range" : "All input parameters are valid");
+            res.Add(bts[5] ? "The active channel is part of the Group Trigger" : "The active channel is not part of the Group Trigger");
+
+            return res;
         }
     }
 }

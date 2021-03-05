@@ -18,6 +18,18 @@ namespace LabControl.ClassHelpers
         {
             return new Tuple<byte, byte>((byte)(number >> 8), (byte)(number & 0xff));
         }
+
+        public static bool[] GetBytes(uint val)
+        {
+            List<bool> listB = new List<bool>();
+
+            for (int i = 7; i > -1; i--)
+            {
+                listB.Add((val >> i & 1) == 1);
+            }
+
+            return listB.ToArray();
+        }
     }
 
     [StructLayout(LayoutKind.Explicit)]

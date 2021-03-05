@@ -238,16 +238,16 @@ namespace LabControl.PortModels
 
         public void Start()
         {
-            f_Channel = 0;
-            SetChannel();
-            if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
-            SetDiscreteMode();
-            SetDropsPerTrigger(65534);
-            SetPeriod(10000);
-            SetFrequency(10000);
-            SetStrobleDivider();
-            SetEnableStrobe();
-            SetStrobeDelay();
+            //f_Channel = 0;
+            //SetChannel();
+            //if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
+            //SetDiscreteMode();
+            //SetDropsPerTrigger(65534);
+            //SetPeriod(10000);
+            //SetFrequency(10000);
+            //SetStrobleDivider();
+            //SetEnableStrobe();
+            //SetStrobeDelay();
 
             f_Channel = 1;
             SetChannel();
@@ -262,7 +262,8 @@ namespace LabControl.PortModels
             
             //GenerateFromLog();
             StartTrigger(0);
-            Dump();
+            Dump(0);
+            Dump(1);
             StartNext();
         }
 
@@ -298,10 +299,6 @@ namespace LabControl.PortModels
             f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x08, 0x01, 0x0C }, StartData = DateTime.Now });
             f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x0A, 0x00, 0x0D }, StartData = DateTime.Now });
             f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x0A, 0x01, 0x0E }, StartData = DateTime.Now });
-
-
-
-
         }
 
         private void TriggerAll(bool start)
@@ -397,7 +394,9 @@ namespace LabControl.PortModels
 
         private void SetEnableStrobe()
         {
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x10, 0x01, 0x14 }, StartData = DateTime.Now });
+            var cmd = new byte[] { 0x53, 0x03, 0x10, 0x00, 0x13 };
+            cmd[4] = CheckSum(cmd);
+            f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
         private void SetStrobeDelay()
