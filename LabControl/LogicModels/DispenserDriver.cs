@@ -60,9 +60,8 @@ namespace LabControl.LogicModels
                     break;
                 case 0x0A:
                     var tmpStr = data[3] == 38 ? "Запущен" : "Остановлен";
-                    SetLogMessage?.Invoke($"{tmpStr} процесс, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"{tmpStr} процесс, Status byte:{data[st]}, data:  {BitConverter.ToString(data)}");
                     break;
-               
                 case 0x0C:
                     SetLogMessage?.Invoke($"Канал установлен, Status byte:{data[st]}");
                     break;

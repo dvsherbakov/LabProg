@@ -211,18 +211,18 @@ namespace LabControl.PortModels
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
-        public void SetPeriod()
+        public void SetPeriod(uint period)
         {
-            var bytes = BitConverter.GetBytes(Frequency);
-            //Debug.WriteLine(bytes[0].ToString(), bytes[1].ToString(), bytes[2].ToString());
+            FooUnion v = new FooUnion { integer = 0, byte0 = 0x0, byte1 = 0x0, byte2 = 0, byte3 = 0 };
+            v.integer = period+1;
             var cmd = new byte[]
             {
                 0x53,
                 0x05,
                 0x19,
-                0x00,
-                0x02,
-                0x9B,
+                v.byte2,
+                v.byte1,
+                v.byte0,
                 0xBB
             };
             cmd[6] = CheckSum(cmd);
@@ -238,27 +238,31 @@ namespace LabControl.PortModels
 
         public void Start()
         {
-            //f_Channel = 0;
-            //SetChannel();
-            //SetInternalSource(0);
-            //if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
-            //SetDiscreteMode();
-            //SetDropsPerTrigger(1);
-            //SetPeriod();
+            f_Channel = 0;
+            SetChannel();
+            if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
+            SetDiscreteMode();
+            SetDropsPerTrigger(65534);
+            SetPeriod(10000);
+            SetFrequency(10000);
+            SetStrobleDivider();
+            SetEnableStrobe();
+            SetStrobeDelay();
 
-            //f_Channel = 1;
-            //SetChannel();
-            //SetInternalSource(1);
-            //if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
-            //SetDiscreteMode();
-            //SetDropsPerTrigger(1);
-            //SetPeriod();
-
-            //TriggerAll(true);
-            //Dump();
-
-            GenerateFromLog();
-
+            f_Channel = 1;
+            SetChannel();
+            if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
+            SetDiscreteMode();
+            SetDropsPerTrigger(65534);
+            SetPeriod(10000);
+            SetFrequency(10000);
+            SetStrobleDivider();
+            SetEnableStrobe();
+            SetStrobeDelay();
+            
+            //GenerateFromLog();
+            StartTrigger(0);
+            Dump();
             StartNext();
         }
 
@@ -315,7 +319,12 @@ namespace LabControl.PortModels
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
-        private void SetInternalSource(byte src)
+        private void SoftTrigger()
+        {
+            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x02, 0x09, 0x0B }, StartData = DateTime.Now });
+        }
+
+        private void StartTrigger(byte src)
         {
             var cmd = new byte[] { 0x53, 0x03, 0x08, src, 0x0C };
             cmd[4] = CheckSum(cmd);
@@ -381,7 +390,20 @@ namespace LabControl.PortModels
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
+        private void SetStrobleDivider()
+        {
+            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x07, 0x01, 0x0B }, StartData = DateTime.Now });
+        }
 
+        private void SetEnableStrobe()
+        {
+            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x10, 0x01, 0x14 }, StartData = DateTime.Now });
+        }
+
+        private void SetStrobeDelay()
+        {
+            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x05, 0x13, 0x01, 0x00, 0x00, 0x19 }, StartData = DateTime.Now });
+        }
 
         public void SetSineWaveData(DispenserSineWaveData data)
         {
