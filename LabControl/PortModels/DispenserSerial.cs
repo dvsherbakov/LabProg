@@ -256,9 +256,9 @@ namespace LabControl.PortModels
             SetDropsPerTrigger(65534);
             SetPeriod(10000);
             SetFrequency(10000);
-            SetStrobleDivider();
+            //SetStrobleDivider();
             SetEnableStrobe();
-            SetStrobeDelay();
+            //SetStrobeDelay();
             
             //GenerateFromLog();
             StartTrigger(0);
