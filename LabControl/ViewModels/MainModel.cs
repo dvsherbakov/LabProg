@@ -870,7 +870,7 @@ namespace LabControl.ViewModels
             get => f_DispenserFrequency;
             set
             {
-                if (f_DispenserDriver != null) f_DispenserDriver.SetFrequency(value);
+                f_DispenserDriver?.SetFrequency(value);
                 Set(ref f_DispenserFrequency, value);
             }
         }

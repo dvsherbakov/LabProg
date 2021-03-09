@@ -174,29 +174,31 @@ namespace LabControl.PortModels
             var tf = BytesUtility.DivideData((short)(data.TimeFall * 10));
             var tr2 = BytesUtility.DivideData((short)(data.TimeRise2 * 10));
 
-            //var cmd = new byte[] {
-            //    0x53,
-            //    0x15, 0x06, //len, command, 1-2
-            //    0xFF, 0xFF, //unused, 3-4
-            //    t1.Item1, t1.Item2, //0x00, 0xC8, t1, 200, 5-6
-            //    0xFF,//unused, 7
-            //    t2.Item1, t2.Item2, //0x01,0x90,//t2, 400 ,8-9
-            //    v0.Item1, v0.Item2, //0x00, 0x00, //v0, 0, 10-11
-            //    v1.Item1, v1.Item2, //0x00,0x0A, //v1, 10, 12-13
-            //    v2.Item1, v2.Item2, //0xFF,0xF6, //v2, -10, 14-15
-            //    tr1.Item1, tr1.Item2, //0x00, 0x1E, //tr1, 30
-            //    tf.Item1, tf.Item2, //0x00, 0x1E, //tf, 30
-            //    tr2.Item1, tr2.Item2,//0x00, 0x1E, //tr2,30
-            //    0xCA //checksumm
-            //};
-            //cmd[22] = CheckSum(cmd);
-            var cmd = new byte[] { 0x53, 0x15, 0x06, 0xFF, 0xFF, 0x01, 0x4A, 0xFF, 0x02, 0x8A, 0x00, 0x00, 0x00, 0x23, 0xFF, 0xDD, 0x00, 0x28, 0x00, 0x28, 0x00, 0x14, 0x52 };
+            var cmd = new byte[] {
+                0x53,
+                0x15, 0x06, //len, command, 1-2
+                0xFF, 0xFF, //unused, 3-4
+                t1.Item1, t1.Item2, //0x00, 0xC8, t1, 200, 5-6
+                0xFF,//unused, 7
+                t2.Item1, t2.Item2, //0x01,0x90,//t2, 400 ,8-9
+                v0.Item1, v0.Item2, //0x00, 0x00, //v0, 0, 10-11
+                v1.Item1, v1.Item2, //0x00,0x0A, //v1, 10, 12-13
+                v2.Item1, v2.Item2, //0xFF,0xF6, //v2, -10, 14-15
+                tr1.Item1, tr1.Item2, //0x00, 0x1E, //tr1, 30
+                tf.Item1, tf.Item2, //0x00, 0x1E, //tf, 30
+                tr2.Item1, tr2.Item2,//0x00, 0x1E, //tr2,30
+                0xCA //checksumm
+            };
+            cmd[22] = CheckSum(cmd);
+
+
+            var cmd1 = new byte[] { 0x53, 0x15, 0x06, 0xFF, 0xFF, 0x01, 0x4A, 0xFF, 0x02, 0x8A, 0x00, 0x00, 0x00, 0x23, 0xFF, 0xDD, 0x00, 0x28, 0x00, 0x28, 0x00, 0x14, 0x52 };
             f_CommandList.Add(new DispenserCommandData { CommandString = cmd, StartData = DateTime.Now });
         }
 
-        public void SetFrequency(int freq)
+        public void SetFrequency()
         {
-            var cFreq = BytesUtility.DivideData((short)freq);
+            var cFreq = BytesUtility.DivideData((short)Frequency);
             var cmd = new byte[]
             {
                 0x53,
@@ -238,24 +240,14 @@ namespace LabControl.PortModels
 
         public void Start()
         {
-            //f_Channel = 0;
-            //SetChannel();
-            //if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
-            //SetDiscreteMode();
-            //SetDropsPerTrigger(65534);
-            //SetPeriod(10000);
-            //SetFrequency(10000);
-            //SetStrobleDivider();
-            //SetEnableStrobe();
-            //SetStrobeDelay();
-
-            f_Channel = 1;
+            
+            //f_Channel = 1;
             SetChannel();
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
             SetDiscreteMode();
             SetDropsPerTrigger(50);
             SetPeriod(10000);
-            SetFrequency(2500);
+            SetFrequency();
             //SetStrobleDivider();
             SetEnableStrobe();
             //SetStrobeDelay();
@@ -266,40 +258,6 @@ namespace LabControl.PortModels
             Dump(0);
             Dump(1);
             StartNext();
-        }
-
-        private void GenerateFromLog()
-        {
-            //Channel0
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x0C, 0x00, 0x0F }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x15, 0x06, 0xFF, 0xFF, 0x00, 0xC8, 0xFF, 0x01, 0x90, 0x00, 0x00, 0x00, 0x0A, 0xFF, 0xF6, 0x00, 0x1E, 0x00, 0x1E, 0x00, 0x1E, 0xCA }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x04, 0x03, 0x00, 0x01, 0x08 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x05, 0x19, 0x00, 0x27, 0x11, 0x56 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x10, 0x01, 0x14 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x05, 0x13, 0x01, 0x00, 0x00, 0x19 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x07, 0x01, 0x0B }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x05, 0x13, 0x01, 0x00, 0x00, 0x19 }, StartData = DateTime.Now });
-            //Channel1
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x0C, 0x01, 0x10 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x08, 0x00, 0x0B }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x15, 0x06, 0xFF, 0xFF, 0x00, 0xC8, 0xFF, 0x01, 0x90, 0x00, 0x00, 0x00, 0x0A, 0xFF, 0xF6, 0x00, 0x1E, 0x00, 0x1E, 0x00, 0x1E, 0xCA }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x04, 0x00, 0x07 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x04, 0x03, 0x00, 0x01, 0x08 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x05, 0x19, 0x00, 0x27, 0x11, 0x56 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x10, 0x01, 0x14 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x05, 0x13, 0x01, 0x00, 0x00, 0x19 }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x07, 0x01, 0x0B }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x05, 0x13, 0x01, 0x00, 0x00, 0x19 }, StartData = DateTime.Now });
-            //to ch0
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x0C, 0x00, 0x0F }, StartData = DateTime.Now });
-            //to ch1
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x0C, 0x01, 0x10 }, StartData = DateTime.Now });
-            //grouped
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x08, 0x01, 0x0C }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x0A, 0x00, 0x0D }, StartData = DateTime.Now });
-            f_CommandList.Add(new DispenserCommandData { CommandString = new byte[] { 0x53, 0x03, 0x0A, 0x01, 0x0E }, StartData = DateTime.Now });
         }
 
         private void TriggerAll(bool start)
