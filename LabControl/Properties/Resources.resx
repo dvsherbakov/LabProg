@@ -342,4 +342,7 @@
   <data name="DispenserStartLabel" xml:space="preserve">
     <value>Запуск</value>
   </data>
+  <data name="LabelAirSupportPort" xml:space="preserve">
+    <value>Порт воздушного насоса</value>
+  </data>
 </root>
