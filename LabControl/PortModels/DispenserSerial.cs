@@ -241,7 +241,7 @@ namespace LabControl.PortModels
         public void Start()
         {
             
-            f_Channel = 1;
+            //f_Channel = 1;
             SetChannel();
             if (f_SignalType == 0) { SetPulseWaveForm(f_PulseWaveData); } else { SetSineWaveForm(f_SineWaveData); }
             SetDiscreteMode();
