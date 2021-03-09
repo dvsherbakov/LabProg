@@ -48,39 +48,39 @@ namespace LabControl.LogicModels
             switch (data[1])
             {
                 case 0x01:
-                    SetLogMessage?.Invoke($"Успешный сброс параметров диспенсера, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Успешный сброс параметров диспенсера, {GetStatusText(data[st])}");
                     break;
                 case 0x03:
-                    SetLogMessage?.Invoke($"Число капель на импульс установлено, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Число капель на импульс установлено, {GetStatusText(data[st])}");
                     break;
                 case 0x04:
-                    SetLogMessage?.Invoke($"Дискретный режим установлен, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Дискретный режим установлен, {GetStatusText(data[st])}");
                     break;
                 case 0x06:
-                    SetLogMessage?.Invoke($"Параметры сигнала установлены, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Параметры сигнала установлены, {GetStatusText(data[st])}");
                     break;
                 case 0x08:
-                    SetLogMessage?.Invoke($"Внутренний источник импульсов установлен, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Внутренний источник импульсов установлен, {GetStatusText(data[st])}");
                     break;
                 case 0x0A:
                     var tmpStr = data[3] == 38 ? "Запущен" : "Остановлен";
-                    SetLogMessage?.Invoke($"{tmpStr} процесс, Status byte:{data[st]}, data:  {BitConverter.ToString(data)}");
+                    SetLogMessage?.Invoke($"{tmpStr} процесс, {GetStatusText(data[st])}, data:  {BitConverter.ToString(data)}");
                     break;
                 case 0x0C:
-                    SetLogMessage?.Invoke($"Канал установлен, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Канал установлен, {GetStatusText(data[st])}");
                     break;
                 case 0x0D:
                     SetLogMessage?.Invoke($"Доступно каналов: {data[4]}, Status byte:{data[2]}");
                     break;
                 case 0x0E:
-                    SetLogMessage?.Invoke($"Группировка каналов: {data[3]}, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Группировка каналов: {data[3]}, {GetStatusText(data[st])}");
                     break;
                 case 0x19:
-                    SetLogMessage?.Invoke($"Частота установлена, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Частота установлена, {GetStatusText(data[st])}");
                     break;
 
                 case 0xF0:
-                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, Status byte:{data[st]}");
+                    SetLogMessage?.Invoke($"Успешный запрос версии: {data[4]}, {GetStatusText(data[st])}");
                     break;
                 case 0x60:
                     SetLogMessage?.Invoke($"Port was sent {data.Length}, x60: {BitConverter.ToString(data)}");
@@ -185,7 +185,7 @@ namespace LabControl.LogicModels
             if (f_DispenserSerial != null) f_DispenserSerial.Frequency = freq;
         }
 
-        private List<string> GetStatusText(uint status)
+        private String GetStatusText(uint status)
         {
             var res = new List<string>();
             var bts = BytesUtility.GetBytes(status);
@@ -195,8 +195,8 @@ namespace LabControl.LogicModels
             res.Add(bts[4] ? "Strobe is enabled" : "Strobe is disabled");
             res.Add(bts[3] ? "One of the input parameters is invalid, inconsistent or out of range" : "All input parameters are valid");
             res.Add(bts[2] ? "The active channel is part of the Group Trigger" : "The active channel is not part of the Group Trigger");
-
-            return res;
+            Debug.WriteLine(string.Join(":", res.ToArray()));
+            return string.Join(":",res.ToArray());
         }
     }
 }
