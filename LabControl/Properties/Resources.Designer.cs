@@ -223,6 +223,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт воздушного насоса.
+        /// </summary>
+        internal static string LabelAirSupportPort {
+            get {
+                return ResourceManager.GetString("LabelAirSupportPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Включение каналов:.
         /// </summary>
         internal static string LabelChanelsSwitch {

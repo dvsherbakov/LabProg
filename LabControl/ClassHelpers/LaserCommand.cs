@@ -70,14 +70,14 @@ namespace LabControl.ClassHelpers
     public class LCommand
     {
         public readonly int Id;
-        public readonly string Description;
+        private readonly string f_Description;
         public readonly string SCommand;
         public readonly string SAnswer;
 
         public LCommand(int i, string cmd, string descr, string ans)
         {
             Id = i;
-            Description = descr;
+            f_Description = descr;
             SCommand = cmd;
             SAnswer = ans;
         }

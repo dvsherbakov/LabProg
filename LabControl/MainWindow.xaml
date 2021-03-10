@@ -1557,6 +1557,7 @@
                                     <Grid Margin="15,0,0,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="6*" />
@@ -1570,11 +1571,18 @@
                                               ItemsSource="{Binding DispenserPortCollection}"
                                               SelectedItem="{Binding DispenserPortSelected}"
                                               Margin="0,1"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                                   Foreground="SandyBrown"
+                                                   Text="{Binding LabelAirSupportPort}"/>
+                                        <ComboBox Grid.Row="1" Grid.Column="1"
+                                                  ItemsSource="{Binding AirSupportPortCollection}"
+                                                  SelectedIndex="{Binding AirSupportPortSelected}"/>
                                     </Grid>
                                     <Grid Margin="15,0,0,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="6*" />
-                                            <ColumnDefinition Width="4*" />
+                                            <ColumnDefinition Width="58*" />
+                                            <ColumnDefinition Width="23*" />
+                                            <ColumnDefinition Width="15*"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="28"/>
@@ -1583,27 +1591,27 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Padding="0,0,5,0" 
                                                    VerticalAlignment="Center" 
-                                                   Text="{Binding DispenserSignalTypeLabel}"/>
-                                        <ComboBox  Grid.Column="1"  
+                                                   Text="{Binding DispenserSignalTypeLabel}" Margin="0,4"/>
+                                        <ComboBox Grid.Row="0" Grid.Column="1"  
                                                    ItemsSource="{Binding DispenserModeCollection}"
-                                                   SelectedIndex="{Binding DispenserSignalType}"
+                                                   SelectedIndex="{Binding DispenserSignalType}" Grid.ColumnSpan="2"
                                                    />
                                         <TextBlock Grid.Column="0" Grid.Row="1" Padding="0,0,5,0" 
                                                    VerticalAlignment="Center" 
-                                                   Text="{Binding DispenserCurrentChannelLabel }"/>
+                                                   Text="{Binding DispenserCurrentChannelLabel }" Margin="0,4"/>
                                         <ComboBox Grid.Column="1" Grid.Row="1"
-                                                  SelectedIndex="{Binding DispenserChannel}">
+                                                  SelectedIndex="{Binding DispenserChannel}" Grid.ColumnSpan="2">
                                             <TextBlock>1</TextBlock>
                                             <TextBlock>2</TextBlock>
                                         </ComboBox>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Padding="0,0,5,0" 
                                                    VerticalAlignment="Center" 
-                                                   Text="{Binding DispenserFrequencyLabel}"/>
+                                                   Text="{Binding DispenserFrequencyLabel}" Margin="0,4"/>
                                         <TextBox Grid.Row="2" Grid.Column="1"
                                                 Text="{Binding DispenserFrequency}"
                                                Style="{StaticResource PartTransparent}"
                                                Template="{StaticResource TextBoxBaseControlTemplate}"
-                                               TextAlignment="Center"/>
+                                               TextAlignment="Center" Grid.ColumnSpan="2"/>
                                     </Grid>
                                     <!--Single Wave-->
                                     <Grid Margin="20,5,1,5" 

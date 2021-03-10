@@ -19,15 +19,16 @@ namespace LabControl.ClassHelpers
             return SerialPort.GetPortNames().ToList();
         }
 
-        public List<string> GetPortList()
+        private List<string> GetPortList()
         {
             return pList;
         }
 
-        public List<string> GetPortList(string initialport)
+        public List<string> GetPortList(string initialPort)
         {
-            if (initialport.Length < 2 || pList.Contains(initialport)) return pList;
-            pList.Add(initialport);
+            if (initialPort == null) return GetPortList();
+            if (initialPort.Length < 2 || pList.Contains(initialPort)) return pList;
+            pList.Add(initialPort);
             return pList;
         }
 

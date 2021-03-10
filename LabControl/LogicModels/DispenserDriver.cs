@@ -19,7 +19,7 @@ namespace LabControl.LogicModels
             f_DispenserSerial = new DispenserSerial(PortStr);
             f_DispenserSerial.OpenPort();
             f_DispenserSerial.SetLogMessage += TestLog;
-            f_DispenserSerial.DispathRecieveData += DispatchData;
+            f_DispenserSerial.DispatchReceivedData += DispatchData;
         }
 
         public void Disconnect()
