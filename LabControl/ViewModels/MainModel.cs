@@ -258,6 +258,13 @@ namespace LabControl.ViewModels
             }
         }
 
+        private string f_AirSupportPortSelected;
+        public string AirSupportPortSelected
+        {
+            get => f_AirSupportPortSelected;
+            set => Set(ref f_AirSupportPortSelected, value);
+        }
+
         private string f_PwrPortSelected;
         public string PwrPortSelected
         {
@@ -1022,6 +1029,7 @@ namespace LabControl.ViewModels
         public ObservableCollection<string> PyroPortCollection { get; set; }
         public ObservableCollection<string> PwrPortCollection { get; set; }
         public ObservableCollection<int> LaserHistoryCollection { get; set; }
+        public ObservableCollection<string> AirSupportPortCollection { get; set; }
         public ObservableCollection<string> DispenserPortCollection { get; set; }
         public ObservableCollection<string> DispenserModeCollection { get; set; }
         #endregion
@@ -1044,6 +1052,7 @@ namespace LabControl.ViewModels
         public static string LabelCurrentTemperature => Resources.LabelCurrentTemperature;
         public static string LabelLaserPort => Resources.LabelLaserPort;
         public static string LabelPyroPort => Resources.LabelPyroPort;
+        public static string LabelAirSupportPort => Resources.LabelAirSupportPort;
         public static string LabelLaserType => Resources.LabelLaserType;
         public static string PowerSupplyTitle => Resources.PowerSuplyTitle;
         public static string PyroOperationTitle => Resources.PyroOperationTitle;
@@ -1130,6 +1139,7 @@ namespace LabControl.ViewModels
             PwrPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             LaserHistoryCollection = new ObservableCollection<int>() { 100, 200, 300 };
             DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
+            AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             //Other
             CurWindowState = WindowState.Normal;
