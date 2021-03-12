@@ -129,6 +129,13 @@ namespace LabControl.ViewModels
             }
         }
 
+        private float f_PumpingSpeedSelected;
+        public float PumpingSpeedSelected
+        {
+            get => f_PumpingSpeedSelected;
+            set { Set(ref f_PumpingSpeedSelected, value); }
+        }
+
         private string f_IncomingPumpSpeed;
         public string IncomingPumpSpeed
         {
@@ -1032,6 +1039,7 @@ namespace LabControl.ViewModels
         public ObservableCollection<string> AirSupportPortCollection { get; set; }
         public ObservableCollection<string> DispenserPortCollection { get; set; }
         public ObservableCollection<string> DispenserModeCollection { get; set; }
+        public ObservableCollection<float> PumpingSpeedCollection { get; set; }
         #endregion
 
         #region StaticLabels
@@ -1141,6 +1149,7 @@ namespace LabControl.ViewModels
             DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
             AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
+            PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 5f, 15f, 25f };
             //Other
             CurWindowState = WindowState.Normal;
             //Exclude
