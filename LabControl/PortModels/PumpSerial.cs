@@ -63,7 +63,7 @@ namespace LabControl.PortModels
             if (f_CmdQueue.Count > 0)
             {
                 var itm = f_CmdQueue.FirstOrDefault();
-                f_CmdQueue.Remove(itm);
+                if (f_CmdQueue.Count > 0) { f_CmdQueue.Remove(itm); }
                 WriteAnyCommand(itm);
             }
 
@@ -97,7 +97,8 @@ namespace LabControl.PortModels
             try
             {
                 f_MPort.Open();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 SetLogMessage?.Invoke(ex.Message);
             }
