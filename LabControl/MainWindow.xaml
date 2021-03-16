@@ -617,6 +617,7 @@
                             <TabControl
                                 TabStripPlacement="Left" 
                                 Background="Transparent"
+                                SelectedIndex="{Binding SelectedPowerPage}"
                                 Margin="0,0,5,5">
                                 <TabItem 
                                     Style="{DynamicResource TabItemStyle}"

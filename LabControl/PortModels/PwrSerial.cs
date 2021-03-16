@@ -8,7 +8,7 @@ namespace LabControl.PortModels
 {
     internal class PwrSerial
     {
-        private static int CurChannel { get; set; }
+        public static int CurChannel { get; set; }
         private static SerialPort _port;
         private byte[] RxData { get; set; }
         private static byte ChCommand { get; set; }
@@ -92,7 +92,7 @@ namespace LabControl.PortModels
             ChCommand = channel;
         }
 
-        public static void SetChannelOn(int channel)
+        public void SetChannelOn(int channel)
         {
             if (!_port.IsOpen) return;
             switch (channel)

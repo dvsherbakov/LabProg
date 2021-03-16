@@ -1024,6 +1024,15 @@ namespace LabControl.ViewModels
             set => Set(ref f_DispenserHarmonicWaveVisible, value);
         }
 
+        #region PwrTab
+        private int f_SelectedPowerPage;
+        public int SelectedPowerPage
+        {
+            get => f_SelectedPowerPage;
+            set => Set(ref f_SelectedPowerPage, value);
+        }
+        #endregion
+
 
         #endregion
 
@@ -1123,6 +1132,7 @@ namespace LabControl.ViewModels
         public ICommand StartPumpCommand { get; }
         public ICommand TogglePumpCommand { get; }
         public ICommand ToggleDispenserCommand { get; }
+        public ICommand TogglePowerChannel0Command { get; }
         #endregion
 
         public MainModel()
@@ -1237,6 +1247,7 @@ namespace LabControl.ViewModels
             StartPumpCommand = new LambdaCommand(OnStartPump);
             TogglePumpCommand = new LambdaCommand(OnTogglePump);
             ToggleDispenserCommand = new LambdaCommand(OnToggleDispenserActive);
+            TogglePowerChannel0Command = new LambdaCommand(onTogglePowerChannel0);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -1409,6 +1420,11 @@ namespace LabControl.ViewModels
         private void OnToggleDispenserActive(object sender)
         {
             IsDispenserActive = !IsDispenserActive;
+        }
+
+        private void onTogglePowerChannel0(object sender)
+        {
+            f_PwrDriver?.SetChannelOn(0);
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
