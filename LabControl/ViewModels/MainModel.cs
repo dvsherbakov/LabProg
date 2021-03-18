@@ -309,7 +309,11 @@ namespace LabControl.ViewModels
         public bool PwrSwitchCh0
         {
             get => f_PwrSwitchCh0;
-            set => Set(ref f_PwrSwitchCh0, value);
+            set
+            {
+                Set(ref f_PwrSwitchCh0, value);
+                if (value) f_PwrDriver?.SetChannelOn(0);
+            }
         }
 
         private string f_LabelPwrChannel0Bias;
@@ -1133,6 +1137,11 @@ namespace LabControl.ViewModels
         public ICommand TogglePumpCommand { get; }
         public ICommand ToggleDispenserCommand { get; }
         public ICommand TogglePowerChannel0Command { get; }
+        public ICommand TogglePowerChannel1Command { get; }
+        public ICommand TogglePowerChannel2Command { get; }
+        public ICommand TogglePowerChannel3Command { get; }
+        public ICommand TogglePowerChannel4Command { get; }
+        public ICommand TogglePowerChannel5Command { get; }
         #endregion
 
         public MainModel()
@@ -1248,6 +1257,11 @@ namespace LabControl.ViewModels
             TogglePumpCommand = new LambdaCommand(OnTogglePump);
             ToggleDispenserCommand = new LambdaCommand(OnToggleDispenserActive);
             TogglePowerChannel0Command = new LambdaCommand(onTogglePowerChannel0);
+            TogglePowerChannel1Command = new LambdaCommand(onTogglePowerChannel1);
+            TogglePowerChannel2Command = new LambdaCommand(onTogglePowerChannel2);
+            TogglePowerChannel3Command = new LambdaCommand(onTogglePowerChannel3);
+            TogglePowerChannel4Command = new LambdaCommand(onTogglePowerChannel4);
+            TogglePowerChannel5Command = new LambdaCommand(onTogglePowerChannel5);
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -1422,9 +1436,25 @@ namespace LabControl.ViewModels
             IsDispenserActive = !IsDispenserActive;
         }
 
-        private void onTogglePowerChannel0(object sender)
+        private void onTogglePowerChannel1(object sender)
         {
-            f_PwrDriver?.SetChannelOn(0);
+            f_PwrDriver?.SetChannelOn(1);
+        }
+        private void onTogglePowerChannel2(object sender)
+        {
+            f_PwrDriver?.SetChannelOn(2);
+        }
+        private void onTogglePowerChannel3(object sender)
+        {
+            f_PwrDriver?.SetChannelOn(3);
+        }
+        private void onTogglePowerChannel4(object sender)
+        {
+            f_PwrDriver?.SetChannelOn(4);
+        }
+        private void onTogglePowerChannel5(object sender)
+        {
+            f_PwrDriver?.SetChannelOn(5);
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)

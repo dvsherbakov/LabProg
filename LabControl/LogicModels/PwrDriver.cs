@@ -117,7 +117,12 @@ namespace LabControl.LogicModels
 
         public void SetChannelOn(int channel)
         {
-            f_pwrSerial.SetChannelOn(channel);
+            f_pwrSerial?.SetChannelOn(channel);
+        }
+
+        public void SetChannelOff(int channel)
+        {
+            f_pwrSerial?.SetChannelOff(channel);
         }
     }
 }

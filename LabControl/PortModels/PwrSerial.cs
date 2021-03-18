@@ -136,7 +136,7 @@ namespace LabControl.PortModels
             }
         }
 
-        public static void SetChannelOff(int channel)
+        public  void SetChannelOff(int channel)
         {
             if (!_port.IsOpen) return;
             switch (channel)
