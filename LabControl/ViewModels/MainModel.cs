@@ -739,7 +739,9 @@ namespace LabControl.ViewModels
                     LabelPwrChannel5Bias = Resources.LabelElectricFlow;
                     f_PwrDriver?.SetChannelOn(5);
                 }
-                else { LabelPwrChannel5Bias = Resources.LabelOffsetVoltage; }
+                else { LabelPwrChannel5Bias = Resources.LabelOffsetVoltage;
+                    f_PwrDriver?.SetChannelOff(5);
+                }
             }
         }
 
