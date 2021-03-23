@@ -330,7 +330,13 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrCh0Mode, value);
-                LabelPwrChannel0Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
+                if (value == 1)
+                {
+                    LabelPwrChannel0Bias = Resources.LabelElectricFlow;
+                    f_PwrDriver?.SetChannelOn(0);
+                }
+                else { LabelPwrChannel0Bias = Resources.LabelOffsetVoltage; }
+
             }
         }
 
@@ -397,7 +403,14 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrCh1Mode, value);
-                LabelPwrChannel1Bias = value == 1 ? Resources.LabelElectricFlow : Resources.LabelOffsetVoltage;
+                if (value == 1)
+                {
+                    LabelPwrChannel1Bias = Resources.LabelElectricFlow;
+                }
+                else
+                {
+                    LabelPwrChannel1Bias = Resources.LabelOffsetVoltage;
+                }
             }
         }
 
@@ -1435,7 +1448,10 @@ namespace LabControl.ViewModels
         {
             IsDispenserActive = !IsDispenserActive;
         }
-
+        private void onTogglePowerChannel0(object sender)
+        {
+            f_PwrDriver?.SetChannelOn(0);
+        }
         private void onTogglePowerChannel1(object sender)
         {
             f_PwrDriver?.SetChannelOn(1);
