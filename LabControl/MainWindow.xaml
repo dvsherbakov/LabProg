@@ -223,6 +223,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="28"/>
                                     <RowDefinition Height="28"/>
+                                    <RowDefinition Height="28"/>
 
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
@@ -251,6 +252,15 @@
                                      Text="{Binding ConfocalLevelSetter}"
                                      Style="{StaticResource PartTransparent}"
                                      Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" 
+                                           Text="Скорость парокачки"
+                                           VerticalAlignment="Center"
+                                           Foreground="SandyBrown"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1"
+                                          Grid.ColumnSpan="2"
+                                          ItemsSource="{Binding PumpingSpeedCollection}"
+                                              SelectedItem="{Binding PumpingSpeedSelected}"    
+                                              Margin="0,1"/>
                             </Grid>
 
                             <Expander Padding="5"
@@ -607,6 +617,7 @@
                             <TabControl
                                 TabStripPlacement="Left" 
                                 Background="Transparent"
+                                SelectedIndex="{Binding SelectedPowerPage}"
                                 Margin="0,0,5,5">
                                 <TabItem 
                                     Style="{DynamicResource TabItemStyle}"
