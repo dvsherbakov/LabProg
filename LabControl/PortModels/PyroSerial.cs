@@ -36,7 +36,7 @@ namespace LabControl.PortModels
             };
             _port.DataReceived += DataReceivedHandler;
             f_ATimer.Elapsed += OnTimedEvent;
-            f_ATimer.Interval = 300;
+            f_ATimer.Interval = 1200;
         }
 
         public static void OpenPort()
@@ -81,12 +81,12 @@ namespace LabControl.PortModels
 
         private static float RcConvert(byte[] rData)
         {
-            while (rData[0] > 10)
-            {
-                var tLst = new List<byte>(rData);
-                tLst.RemoveAt(0);
-                rData = tLst.ToArray();
-            }
+            //while (rData[0] > 10)
+            //{
+            //    var tLst = new List<byte>(rData);
+            //    tLst.Remove(0);
+            //    rData = tLst.ToArray();
+            //}
             var tmp = new byte[4];
             tmp[0] = 0;
             tmp[1] = 0;
