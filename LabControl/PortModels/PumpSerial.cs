@@ -20,6 +20,8 @@ namespace LabControl.PortModels
         private readonly ObservableCollection<string> f_CmdQueue;
         private readonly Timer f_QueueTimer;
 
+        public bool Active { get; private set; }
+
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
@@ -77,7 +79,7 @@ namespace LabControl.PortModels
                 try
                 {
                     f_MPort.Write(cmd);
-                    SetLogMessage?.Invoke($"Pump start command {cmd}");
+                    //SetLogMessage?.Invoke($"Pump start command {cmd}");
                 }
                 catch (Exception ex)
                 {
@@ -88,6 +90,7 @@ namespace LabControl.PortModels
             else
             {
                 SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
+                f_CmdQueue.Clear();
             }
         }
 
@@ -109,13 +112,11 @@ namespace LabControl.PortModels
 
         public void ClosePort()
         {
+            f_CmdQueue.Clear();
+            StopPump();
             f_MPort.Close();
             Active = false;
-            StopPump();
         }
-
-        public bool Active { get; private set; }
-
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
@@ -132,37 +133,9 @@ namespace LabControl.PortModels
             }
             var ascii = Encoding.ASCII;
             f_RecievedData.Add(ascii.GetString(mRxData));
+            SetLogMessage($"{f_ComId}:{ascii.GetString(mRxData)}");
         }
 
-        public string ReadPortData()
-        {
-            var cnt = f_MPort.ReadBufferSize;
-            var mRxData = new byte[cnt + 1];
-            try
-            {
-                f_MPort.Read(mRxData, 0, cnt);
-            }
-            catch (Exception ex)
-            {
-                SetLogMessage?.Invoke(ex.Message);
-            }
-            var ascii = Encoding.ASCII;
-            return ascii.GetString(mRxData);
-        }
-
-
-        public void StartPump()
-        {
-            if (f_MPort.IsOpen)
-            {
-                f_MPort.Write("s");
-                SetLogMessage?.Invoke("Pump  start");
-            }
-            else
-            {
-                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
-            }
-        }
 
         public void AddStartPump()
         {
@@ -174,7 +147,7 @@ namespace LabControl.PortModels
             if (f_MPort.IsOpen)
             {
                 f_MPort.Write("t");
-                SetLogMessage?.Invoke("Pump  stop");
+                SetLogMessage?.Invoke($"Pump  stop: {f_ComId}");
             }
             else
             {
@@ -185,19 +158,6 @@ namespace LabControl.PortModels
         public void AddStopPump()
         {
             f_CmdQueue.Add("t");
-        }
-
-        public void SetClockwiseDirection()
-        {
-            if (f_MPort.IsOpen)
-            {
-                if (PumpReverse) f_MPort.Write("l");
-                else f_MPort.Write("r");
-            }
-            else
-            {
-                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
-            }
         }
 
         public void AddClockwiseDirection()
@@ -224,27 +184,6 @@ namespace LabControl.PortModels
         {
             if (PumpReverse) f_CmdQueue.Add("r");
             else f_CmdQueue.Add("l");
-        }
-
-        public void Reverce()
-        {
-            f_Direction = !f_Direction;
-            if (f_Direction) SetClockwiseDirection(); else SetCounterClockwiseDirection();
-            System.Threading.Thread.Sleep(30);
-        }
-
-        public void SetSpeed(string speed)
-        {
-            if (f_MPort.IsOpen)
-            {
-                f_MPort.Write(speed);
-                System.Threading.Thread.Sleep(130);
-                SetLogMessage?.Invoke($"Порт насоса {f_ComId}, меняем скорость: '{speed}'");
-            }
-            else
-            {
-                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
-            }
         }
 
         public void AddSpeed(string speed)
