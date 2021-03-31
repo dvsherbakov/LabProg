@@ -868,7 +868,9 @@ namespace LabControl.ViewModels
         public float PyroTemperature
         {
             get => f_PyroTemperature;
-            set => Set(ref f_PyroTemperature, value);
+            set { Set(ref f_PyroTemperature, value);
+                { Set(ref f_CurrentTemperature, value * 1.1 + 3); }
+            }
         }
 
         private bool f_IsDispenserActive;

@@ -476,7 +476,8 @@
                                            VerticalAlignment="Center" 
                                            Foreground="SandyBrown"
                                            Text="{Binding LaserPowerHistory}"/>
-                                <ComboBox Grid.Row="2" Grid.Column="1"
+                                <ComboBox Grid.Row="2" Grid.Column="1" 
+                                          Style="{StaticResource ComboTr}"
                                           Grid.ColumnSpan="2"
                                               ItemsSource="{Binding LaserHistoryCollection}"
                                               SelectedItem="{Binding LaserPowerHistorySelectedItem}"
