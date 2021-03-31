@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Linq;
+using System.Threading;
 using System.Timers;
 
 namespace LabControl.PortModels
@@ -11,7 +13,7 @@ namespace LabControl.PortModels
         private byte[] f_RxData;
         private long f_RxIdx;
         private readonly Dictionary<long, float> f_TempLog = new Dictionary<long, float>();
-        private readonly Timer f_ATimer = new Timer();
+        private readonly System.Timers.Timer f_ATimer = new System.Timers.Timer();
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -27,7 +29,7 @@ namespace LabControl.PortModels
             SetLogMessage?.Invoke($"Try connected Pyro on port {port}");
             _port = new SerialPort(port)
             {
-                BaudRate = 115200,
+                BaudRate = 57600,
                 Parity = Parity.None,
                 StopBits = StopBits.One,
                 DataBits = 8,
@@ -87,11 +89,13 @@ namespace LabControl.PortModels
             //    tLst.Remove(0);
             //    rData = tLst.ToArray();
             //}
+            byte[] newData = TrimReceivedData(rData);
+            if (newData.Length < 2) return 0;
             var tmp = new byte[4];
             tmp[0] = 0;
             tmp[1] = 0;
-            tmp[2] = rData[0];
-            tmp[3] = rData[1];
+            tmp[2] = newData[0];
+            tmp[3] = newData[1];
             float res = tmp[0] << 24 | tmp[1] << 16 | tmp[2] << 8 | tmp[3];
             return (res - 1000) / 10;
         }
@@ -113,12 +117,23 @@ namespace LabControl.PortModels
         {
             byte[] buf = { 01 };
             Write(buf);
+            Thread.Sleep(100);
         }
 
         public float GetLastRes()
         {
             f_TempLog.TryGetValue(f_RxIdx - 1, out var val);
             return val;
+        }
+
+        private static byte[] TrimReceivedData(IEnumerable<byte> src)
+        {
+            var res = new List<byte>(src);
+            while (res.LastOrDefault() == 0)
+            {
+                res.RemoveAt(res.Count - 1);
+            }
+            return res.ToArray();
         }
     }
 }
