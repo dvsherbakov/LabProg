@@ -739,7 +739,9 @@ namespace LabControl.ViewModels
                     LabelPwrChannel5Bias = Resources.LabelElectricFlow;
                     f_PwrDriver?.SetChannelOn(5);
                 }
-                else { LabelPwrChannel5Bias = Resources.LabelOffsetVoltage;
+                else
+                {
+                    LabelPwrChannel5Bias = Resources.LabelOffsetVoltage;
                     f_PwrDriver?.SetChannelOff(5);
                 }
             }
@@ -868,8 +870,10 @@ namespace LabControl.ViewModels
         public float PyroTemperature
         {
             get => f_PyroTemperature;
-            set { Set(ref f_PyroTemperature, value);
-                { Set(ref f_CurrentTemperature, value * 1.1 + 3); }
+            set
+            {
+                Set(ref f_PyroTemperature, value);
+                Set(ref f_CurrentTemperature, value * value * (-0.0048) + value * 1.7941 - 13.109);
             }
         }
 
