@@ -16,7 +16,7 @@ namespace LabControl.PortModels
         //readonly Timer _aTimer = new Timer();
         private static ModBus _modBus;
 
-        public delegate void RecievedData(object sender, EventArgs e);
+        public delegate void RecievedData(byte[] data);
         public event RecievedData OnRecieve;
 
         public delegate void LogMessage(string msg);
@@ -61,7 +61,7 @@ namespace LabControl.PortModels
                 if (cnt > 3 && RxData[0] == 1 && RxData[1] == 3 && RxData[2] == 18)
                 {
                     // EventArgs ea = new EventArgs();
-                    OnRecieve?.Invoke(this, e);
+                    OnRecieve?.Invoke(RxData);
                 }
             }
             catch (Exception ex)
@@ -83,7 +83,7 @@ namespace LabControl.PortModels
             }
         }
 
-        public static void GetChanelData(byte channel)
+        public void GetChanelData(byte channel)
         {
             CurChannel = channel;
             var dt = _modBus.GetQueryChannel(channel);
@@ -115,45 +115,21 @@ namespace LabControl.PortModels
         public void SetChannelOff(int channel)
         {
             if (!_port.IsOpen) return;
-            switch (channel)
+            byte[] dt = channel switch
             {
-                case 0:
-                    {
-                        byte[] dt = { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0x0 };
-                        Write(dt);
-                        break;
-                    }
-                case 1:
-                    {
-                        byte[] dt = { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0xAA };
-                        Write(dt);
-                        break;
-                    }
-                case 2:
-                    {
-                        byte[] dt = { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0x74 };
-                        Write(dt);
-                        break;
-                    }
-                case 3:
-                    {
-                        byte[] dt = { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0xDE };
-                        Write(dt);
-                        break;
-                    }
-                case 4:
-                    {
-                        byte[] dt = { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC5, 0x28 };
-                        Write(dt);
-                        break;
-                    }
-                case 5:
-                    {
-                        byte[] dt = { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x0, 0x2E, 0x72 };
-                        Write(dt);
-                        break;
-                    }
+                0 => new byte[] { 0x1, 0x10, 0x7, 0xD0, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0x0 },
+                1 => new byte[] { 0x1, 0x10, 0x7, 0xDA, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC3, 0xAA },
+                2 => new byte[] { 0x1, 0x10, 0x7, 0xE4, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0x74 },
+                3 => new byte[] { 0x1, 0x10, 0x7, 0xEE, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC7, 0xDE },
+                4 => new byte[] { 0x1, 0x10, 0x7, 0xF8, 0x0, 0x1, 0x2, 0x0, 0x0, 0xC5, 0x28 },
+                5 => new byte[] { 0x1, 0x10, 0x8, 0x2, 0x0, 0x1, 0x2, 0x0, 0x0, 0x2E, 0x72 },
+                _ => null
+            };
+            if (dt is null)
+            {
+                return;
             }
+            Write(dt);
         }
 
         public void SetMode(int chanel, int mode)

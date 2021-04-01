@@ -738,6 +738,8 @@
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
+                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag0}"
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
                                                     Foreground="SandyBrown"/>
@@ -870,6 +872,8 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
+                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag0}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -1003,6 +1007,8 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
+                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag0}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -1135,6 +1141,8 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
+                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag0}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -1267,6 +1275,8 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
+                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag0}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -1399,6 +1409,8 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
+                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag0}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"

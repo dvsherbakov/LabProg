@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using LabControl.ClassHelpers;
@@ -1172,6 +1174,7 @@ namespace LabControl.ViewModels
         public static string DispenserPeakLabel => Resources.DispenserPeakLabel;
         public static string DispenserStartLabel => Resources.DispenserStartLabel;
         public static string DispenserPeriodLabel => Resources.DispenserPeriodLabel;
+        public static int ChannelTag0 => 0;
         #endregion
 
         #region Commands
@@ -1184,12 +1187,7 @@ namespace LabControl.ViewModels
         public ICommand StartPumpCommand { get; }
         public ICommand TogglePumpCommand { get; }
         public ICommand ToggleDispenserCommand { get; }
-        public ICommand TogglePowerChannel0Command { get; }
-        public ICommand TogglePowerChannel1Command { get; }
-        public ICommand TogglePowerChannel2Command { get; }
-        public ICommand TogglePowerChannel3Command { get; }
-        public ICommand TogglePowerChannel4Command { get; }
-        public ICommand TogglePowerChannel5Command { get; }
+        public ICommand ReadChanellParamsCommand { get; }
         #endregion
 
         public MainModel()
@@ -1304,12 +1302,8 @@ namespace LabControl.ViewModels
             StartPumpCommand = new LambdaCommand(OnStartPump);
             TogglePumpCommand = new LambdaCommand(OnTogglePump);
             ToggleDispenserCommand = new LambdaCommand(OnToggleDispenserActive);
-            TogglePowerChannel0Command = new LambdaCommand(onTogglePowerChannel0);
-            TogglePowerChannel1Command = new LambdaCommand(onTogglePowerChannel1);
-            TogglePowerChannel2Command = new LambdaCommand(onTogglePowerChannel2);
-            TogglePowerChannel3Command = new LambdaCommand(onTogglePowerChannel3);
-            TogglePowerChannel4Command = new LambdaCommand(onTogglePowerChannel4);
-            TogglePowerChannel5Command = new LambdaCommand(onTogglePowerChannel5);
+            ReadChanellParamsCommand = new LambdaCommand(OnReadChanellParamsCommand);
+
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
             f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -1326,6 +1320,7 @@ namespace LabControl.ViewModels
 
             f_PwrDriver = new PwrDriver();
             f_PwrDriver.SetLogMessage += AddLogMessage;
+            f_PwrDriver.SetChannelParameters += SetChanellParams;
             f_PwrDriver.PortStr = Settings.Default.PwrPortSelected;
 
             f_LaserDriver = new LaserDriver();
@@ -1483,29 +1478,13 @@ namespace LabControl.ViewModels
         {
             IsDispenserActive = !IsDispenserActive;
         }
-        private void onTogglePowerChannel0(object sender)
+        
+        private void OnReadChanellParamsCommand(object sender)
         {
-            f_PwrDriver?.SetChannelOn(0);
-        }
-        private void onTogglePowerChannel1(object sender)
-        {
-            f_PwrDriver?.SetChannelOn(1);
-        }
-        private void onTogglePowerChannel2(object sender)
-        {
-            f_PwrDriver?.SetChannelOn(2);
-        }
-        private void onTogglePowerChannel3(object sender)
-        {
-            f_PwrDriver?.SetChannelOn(3);
-        }
-        private void onTogglePowerChannel4(object sender)
-        {
-            f_PwrDriver?.SetChannelOn(4);
-        }
-        private void onTogglePowerChannel5(object sender)
-        {
-            f_PwrDriver?.SetChannelOn(5);
+            var ch = (int)sender;
+            f_PwrDriver?.GetChanelData(Convert.ToByte(ch));
+
+
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
@@ -1551,6 +1530,73 @@ namespace LabControl.ViewModels
             CollectPulseData();
             f_DispenserDriver?.SetChannel(f_DispenserChannel);
             f_DispenserDriver?.SetFrequency(f_DispenserFrequency);
+        }
+
+        private void SetChanellParams(int channel, DataModels.PwrItem pi)
+        {
+            switch (channel)
+            {
+                case 0:
+                    PwrCh0Mode = pi.Mode;
+                    PwrCh0Bias = pi.Bias;
+                    PwrCh0Amplitude = pi.Amplitude;
+                    PwrCh0Freq = pi.Frequency;
+                    PwrCh0Duty = pi.Duty;
+                    PwrCh0Phase = pi.Phase;
+                    PwrCh0MaxVoltage = pi.MaxVolts;
+                    PwrCh0MaxAmps = pi.MaxAmps;
+                    break;
+                case 1:
+                    PwrCh1Mode = pi.Mode;
+                    PwrCh1Bias = pi.Bias;
+                    PwrCh1Amplitude = pi.Amplitude;
+                    PwrCh1Freq = pi.Frequency;
+                    PwrCh1Duty = pi.Duty;
+                    PwrCh1Phase = pi.Phase;
+                    PwrCh1MaxVoltage = pi.MaxVolts;
+                    PwrCh1MaxAmps = pi.MaxAmps;
+                    break;
+                case 2:
+                    PwrCh2Mode = pi.Mode;
+                    PwrCh2Bias = pi.Bias;
+                    PwrCh2Amplitude = pi.Amplitude;
+                    PwrCh2Freq = pi.Frequency;
+                    PwrCh2Duty = pi.Duty;
+                    PwrCh2Phase = pi.Phase;
+                    PwrCh2MaxVoltage = pi.MaxVolts;
+                    PwrCh2MaxAmps = pi.MaxAmps;
+                    break;
+                case 3:
+                    PwrCh3Mode = pi.Mode;
+                    PwrCh3Bias = pi.Bias;
+                    PwrCh3Amplitude = pi.Amplitude;
+                    PwrCh3Freq = pi.Frequency;
+                    PwrCh3Duty = pi.Duty;
+                    PwrCh3Phase = pi.Phase;
+                    PwrCh3MaxVoltage = pi.MaxVolts;
+                    PwrCh3MaxAmps = pi.MaxAmps;
+                    break;
+                case 4:
+                    PwrCh4Mode = pi.Mode;
+                    PwrCh4Bias = pi.Bias;
+                    PwrCh4Amplitude = pi.Amplitude;
+                    PwrCh4Freq = pi.Frequency;
+                    PwrCh4Duty = pi.Duty;
+                    PwrCh4Phase = pi.Phase;
+                    PwrCh4MaxVoltage = pi.MaxVolts;
+                    PwrCh4MaxAmps = pi.MaxAmps;
+                    break;
+                case 5:
+                    PwrCh5Mode = pi.Mode;
+                    PwrCh5Bias = pi.Bias;
+                    PwrCh5Amplitude = pi.Amplitude;
+                    PwrCh5Freq = pi.Frequency;
+                    PwrCh5Duty = pi.Duty;
+                    PwrCh5Phase = pi.Phase;
+                    PwrCh5MaxVoltage = pi.MaxVolts;
+                    PwrCh5MaxAmps = pi.MaxAmps;
+                    break;
+            }
         }
     }
 }
