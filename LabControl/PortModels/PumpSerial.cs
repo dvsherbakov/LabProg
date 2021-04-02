@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,8 @@ namespace LabControl.PortModels
     public class PumpSerial
     {
         private readonly SerialPort f_MPort;
-        private readonly List<string> f_RecievedData;
-        private bool f_Direction;
+        //private readonly List<string> f_RecievedData;
+        //private bool f_Direction;
         private readonly string f_ComId;
         public bool PumpReverse { private get; set; }
         private readonly ObservableCollection<string> f_CmdQueue;
@@ -27,7 +28,7 @@ namespace LabControl.PortModels
 
         public PumpSerial(string portStr, bool startDirection)
         {
-            f_RecievedData = new List<string>();
+            //f_RecievedData = new List<string>();
             if (portStr == "") portStr = "COM7";
             PumpReverse = startDirection;
             f_ComId = portStr;
@@ -57,7 +58,7 @@ namespace LabControl.PortModels
         {
             if (e.Action != NotifyCollectionChangedAction.Add) return;
             await Task.Delay(1150);
-            f_QueueTimer.Enabled = true; ;
+            f_QueueTimer.Enabled = true;
         }
 
         void TimerEvent(object source, ElapsedEventArgs e)
@@ -112,6 +113,7 @@ namespace LabControl.PortModels
 
         public void ClosePort()
         {
+            f_QueueTimer.Enabled = false;
             f_CmdQueue.Clear();
             StopPump();
             f_MPort.Close();
@@ -126,19 +128,24 @@ namespace LabControl.PortModels
             try
             {
                 f_MPort.Read(mRxData, 0, cnt);
+                mRxData = TrimReceivedData(mRxData);
             }
             catch (Exception ex)
             {
                 SetLogMessage?.Invoke(ex.Message);
             }
             var ascii = Encoding.ASCII;
-            f_RecievedData.Add(ascii.GetString(mRxData));
-            SetLogMessage($"{f_ComId}:{ascii.GetString(mRxData)}");
+            if (mRxData.Length > 0)
+            {
+                //f_RecievedData.Add(ascii.GetString(mRxData));
+                Debug.WriteLine($"{f_ComId}:{ascii.GetString(mRxData)}");
+            }
         }
 
 
         public void AddStartPump()
         {
+            if (!f_MPort.IsOpen) return;
             f_CmdQueue.Add("s");
         }
 
@@ -157,11 +164,13 @@ namespace LabControl.PortModels
 
         public void AddStopPump()
         {
-            f_CmdQueue.Add("t");
+            if (f_MPort.IsOpen)
+                f_CmdQueue.Add("t");
         }
 
         public void AddClockwiseDirection()
         {
+            if (!f_MPort.IsOpen) return;
             if (PumpReverse) f_CmdQueue.Add("l");
             else f_CmdQueue.Add("r");
         }
@@ -182,13 +191,25 @@ namespace LabControl.PortModels
 
         public void AddCounterClockwiseDirection()
         {
+            if (!f_MPort.IsOpen) return;
             if (PumpReverse) f_CmdQueue.Add("r");
             else f_CmdQueue.Add("l");
         }
 
         public void AddSpeed(string speed)
         {
+            if (!f_MPort.IsOpen) return;
             f_CmdQueue.Add(speed);
+        }
+
+        private static byte[] TrimReceivedData(IEnumerable<byte> src)
+        {
+            var res = new List<byte>(src);
+            while (res.LastOrDefault() == 0)
+            {
+                res.RemoveAt(res.Count - 1);
+            }
+            return res.ToArray();
         }
     }
 }
