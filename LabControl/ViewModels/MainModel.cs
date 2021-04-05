@@ -1175,6 +1175,9 @@ namespace LabControl.ViewModels
         public static string DispenserStartLabel => Resources.DispenserStartLabel;
         public static string DispenserPeriodLabel => Resources.DispenserPeriodLabel;
         public static int ChannelTag0 => 0;
+        public static int ChannelTag1 => 1;
+        public static int ChannelTag2 => 2;
+        public static int ChannelTag3 => 3;
         #endregion
 
         #region Commands
