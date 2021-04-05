@@ -296,6 +296,8 @@ namespace LabControl.ViewModels
             }
         }
 
+        private DataModels.PwrItem[] f_PwrParams;
+
         private bool f_IsPwrPortConnect;
         public bool IsPwrPortConnect
         {
@@ -323,6 +325,7 @@ namespace LabControl.ViewModels
         {
             get => f_LabelPwrChannel0Bias;
             set => Set(ref f_LabelPwrChannel0Bias, value);
+
         }
 
         private int f_PwrCh0Mode;
@@ -338,7 +341,7 @@ namespace LabControl.ViewModels
                     f_PwrDriver?.SetChannelOn(0);
                 }
                 else { LabelPwrChannel0Bias = Resources.LabelOffsetVoltage; }
-
+                f_PwrParams[0].Mode = value;
             }
         }
 
@@ -346,49 +349,77 @@ namespace LabControl.ViewModels
         public int PwrCh0Bias
         {
             get => f_PwrCh0Bias;
-            set => Set(ref f_PwrCh0Bias, value);
+            set
+            {
+                Set(ref f_PwrCh0Bias, value);
+                f_PwrParams[0].Bias = value;
+            }
         }
 
         private int f_PwrCh0Amplitude;
         public int PwrCh0Amplitude
         {
             get => f_PwrCh0Amplitude;
-            set => Set(ref f_PwrCh0Amplitude, value);
+            set
+            {
+                Set(ref f_PwrCh0Amplitude, value);
+                f_PwrParams[0].Amplitude = value;
+            }
         }
 
         private int f_PwrCh0Duty;
         public int PwrCh0Duty
         {
             get => f_PwrCh0Duty;
-            set => Set(ref f_PwrCh0Duty, value);
+            set
+            {
+                Set(ref f_PwrCh0Duty, value);
+                f_PwrParams[0].Duty = value;
+            }
         }
 
         private int f_PwrCh0Freq;
         public int PwrCh0Freq
         {
             get => f_PwrCh0Freq;
-            set => Set(ref f_PwrCh0Freq, value);
+            set
+            {
+                Set(ref f_PwrCh0Freq, value);
+                f_PwrParams[0].Frequency = value;
+            }
         }
 
         private int f_PwrCh0Phase;
         public int PwrCh0Phase
         {
             get => f_PwrCh0Phase;
-            set => Set(ref f_PwrCh0Phase, value);
+            set
+            {
+                Set(ref f_PwrCh0Phase, value);
+                f_PwrParams[0].Phase = value;
+            }
         }
 
         private int f_PwrCh0MaxAmps;
         public int PwrCh0MaxAmps
         {
             get => f_PwrCh0MaxAmps;
-            set => Set(ref f_PwrCh0MaxAmps, value);
+            set
+            {
+                Set(ref f_PwrCh0MaxAmps, value);
+                f_PwrParams[0].MaxAmps = value;
+            }
         }
 
         private int f_PwrCh0MaxVoltage;
         public int PwrCh0MaxVoltage
         {
             get => f_PwrCh0MaxVoltage;
-            set => Set(ref f_PwrCh0MaxVoltage, value);
+            set
+            {
+                Set(ref f_PwrCh0MaxVoltage, value);
+                f_PwrParams[0].MaxVolts = value;
+            }
         }
 
         private string f_LabelPwrChannel1Bias;
@@ -414,6 +445,7 @@ namespace LabControl.ViewModels
                 {
                     LabelPwrChannel1Bias = Resources.LabelOffsetVoltage;
                 }
+                f_PwrParams[1].Mode = value;
             }
         }
 
@@ -428,48 +460,76 @@ namespace LabControl.ViewModels
         public int PwrCh1Bias
         {
             get => f_PwrCh1Bias;
-            set => Set(ref f_PwrCh1Bias, value);
+            set
+            {
+                Set(ref f_PwrCh1Bias, value);
+                f_PwrParams[1].Bias = value;
+            }
         }
 
         private int f_PwrCh1Amplitude;
         public int PwrCh1Amplitude
         {
             get => f_PwrCh1Amplitude;
-            set => Set(ref f_PwrCh1Amplitude, value);
+            set
+            {
+                Set(ref f_PwrCh1Amplitude, value);
+                f_PwrParams[1].Amplitude = value;
+            }
         }
 
         private int f_PwrCh1Freq;
         public int PwrCh1Freq
         {
             get => f_PwrCh1Freq;
-            set => Set(ref f_PwrCh1Freq, value);
+            set
+            {
+                Set(ref f_PwrCh1Freq, value);
+                f_PwrParams[1].Frequency = value;
+            }
         }
 
         private int f_PwrCh1Duty;
         public int PwrCh1Duty
         {
             get => f_PwrCh1Duty;
-            set => Set(ref f_PwrCh1Duty, value);
+            set
+            {
+                Set(ref f_PwrCh1Duty, value);
+                f_PwrParams[1].Duty = value;
+            }
         }
 
         private int f_PwrCh1Phase;
         public int PwrCh1Phase
         {
             get => f_PwrCh1Phase;
-            set => Set(ref f_PwrCh1Phase, value);
+            set
+            {
+                Set(ref f_PwrCh1Phase, value);
+                f_PwrParams[1].Phase = value;
+            }
         }
         private int f_PwrCh1MaxVoltage;
         public int PwrCh1MaxVoltage
         {
             get => f_PwrCh1MaxVoltage;
-            set => Set(ref f_PwrCh1MaxVoltage, value);
+            set
+            {
+                Set(ref f_PwrCh1MaxVoltage, value);
+                f_PwrParams[1].MaxVolts = value;
+            }
         }
 
         private int f_PwrCh1MaxAmps;
         public int PwrCh1MaxAmps
         {
             get => f_PwrCh1MaxAmps;
-            set => Set(ref f_PwrCh1MaxAmps, value);
+            set
+            {
+                Set(ref f_PwrCh1MaxAmps, value);
+                f_PwrParams[1].MaxAmps = value;
+            }
         }
 
         private bool f_PwrSwitchCh2;
@@ -502,6 +562,7 @@ namespace LabControl.ViewModels
                 {
                     LabelPwrChannel2Bias = Resources.LabelOffsetVoltage;
                 }
+                f_PwrParams[2].Mode = value;
             }
         }
 
@@ -509,49 +570,65 @@ namespace LabControl.ViewModels
         public int PwrCh2Bias
         {
             get => f_PwrCh2Bias;
-            set => Set(ref f_PwrCh2Bias, value);
+            set
+            {
+                Set(ref f_PwrCh2Bias, value);
+                f_PwrParams[2].Bias = value;
+            }
         }
 
         private int f_PwrCh2Amplitude;
         public int PwrCh2Amplitude
         {
             get => f_PwrCh2Amplitude;
-            set => Set(ref f_PwrCh2Amplitude, value);
+            set
+            {
+                Set(ref f_PwrCh2Amplitude, value);
+                f_PwrParams[2].Amplitude = value;
+            }
         }
 
         private int f_PwrCh2Freq;
         public int PwrCh2Freq
         {
             get => f_PwrCh2Freq;
-            set => Set(ref f_PwrCh2Freq, value);
+            set
+            {
+                Set(ref f_PwrCh2Freq, value);
+                f_PwrParams[2].Frequency = value;
+            }
         }
 
         private int f_PwrCh2Duty;
         public int PwrCh2Duty
         {
             get => f_PwrCh2Duty;
-            set => Set(ref f_PwrCh2Duty, value);
+            set { Set(ref f_PwrCh2Duty, value); f_PwrParams[2].Duty = value; }
         }
 
         private int f_PwrCh2Phase;
         public int PwrCh2Phase
         {
             get => f_PwrCh2Phase;
-            set => Set(ref f_PwrCh2Phase, value);
+            set { Set(ref f_PwrCh2Phase, value); f_PwrParams[2].Phase = value; }
         }
 
         private int f_PwrCh2MaxVoltage;
         public int PwrCh2MaxVoltage
         {
             get => f_PwrCh2MaxVoltage;
-            set => Set(ref f_PwrCh2MaxVoltage, value);
+            set { Set(ref f_PwrCh2MaxVoltage, value); f_PwrParams[2].MaxVolts = value; }
         }
 
         private int f_PwrCh2MaxAmps;
         public int PwrCh2MaxAmps
         {
             get => f_PwrCh2MaxAmps;
-            set => Set(ref f_PwrCh2MaxAmps, value);
+            set
+            {
+                Set(ref f_PwrCh2MaxAmps, value);
+                f_PwrParams[2].MaxAmps = value;
+            }
         }
 
         private bool f_PwrSwitchCh3;
@@ -581,6 +658,7 @@ namespace LabControl.ViewModels
                     f_PwrDriver?.SetChannelOn(3);
                 }
                 else { LabelPwrChannel3Bias = Resources.LabelOffsetVoltage; }
+                f_PwrParams[3].Mode = value;
             }
         }
 
@@ -607,6 +685,7 @@ namespace LabControl.ViewModels
                 {
                     LabelPwrChannel4Bias = Resources.LabelOffsetVoltage;
                 }
+                f_PwrParams[4].Mode = value;
             }
         }
 
@@ -614,49 +693,72 @@ namespace LabControl.ViewModels
         public int PwrCh3Bias
         {
             get => f_PwrCh3Bias;
-            set => Set(ref f_PwrCh3Bias, value);
+            set {
+                Set(ref f_PwrCh3Bias, value);
+                f_PwrParams[3].Bias = value;
+            }
         }
 
         private int f_PwrCh3Amplitude;
         public int PwrCh3Amplitude
         {
             get => f_PwrCh3Amplitude;
-            set => Set(ref f_PwrCh3Amplitude, value);
+            set {
+                Set(ref f_PwrCh3Amplitude, value);
+                f_PwrParams[3].Amplitude = value;
+            }
         }
 
         private int f_PwrCh3Freq;
         public int PwrCh3Freq
         {
             get => f_PwrCh3Freq;
-            set => Set(ref f_PwrCh3Freq, value);
+            set {
+                Set(ref f_PwrCh3Freq, value);
+                f_PwrParams[3].Frequency = value;
+            }
         }
 
         private int f_PwrCh3Duty;
         public int PwrCh3Duty
         {
             get => f_PwrCh3Duty;
-            set => Set(ref f_PwrCh3Duty, value);
+            set {
+                Set(ref f_PwrCh3Duty, value);
+                f_PwrParams[3].Duty = value;
+            }
         }
 
         private int f_PwrCh3Phase;
         public int PwrCh3Phase
         {
             get => f_PwrCh3Phase;
-            set => Set(ref f_PwrCh3Phase, value);
+            set {
+                Set(ref f_PwrCh3Phase, value);
+                f_PwrParams[3].Phase = value;
+            }
         }
 
         private int f_PwrCh3MaxVoltage;
         public int PwrCh3MaxVoltage
         {
             get => f_PwrCh3MaxVoltage;
-            set => Set(ref f_PwrCh3MaxVoltage, value);
+            set
+            {
+                Set(ref f_PwrCh3MaxVoltage, value);
+                f_PwrParams[3].MaxVolts = value;
+            }
         }
 
         private int f_PwrCh3MaxAmps;
         public int PwrCh3MaxAmps
         {
             get => f_PwrCh3MaxAmps;
-            set => Set(ref f_PwrCh3MaxAmps, value);
+            set
+            {
+                Set(ref f_PwrCh3MaxAmps, value);
+                f_PwrParams[3].MaxAmps = value;
+            }
         }
 
         private bool f_PwrSwitchCh4;
@@ -670,49 +772,77 @@ namespace LabControl.ViewModels
         public int PwrCh4Bias
         {
             get => f_PwrCh4Bias;
-            set => Set(ref f_PwrCh4Bias, value);
+            set
+            {
+                Set(ref f_PwrCh4Bias, value);
+                f_PwrParams[4].Bias = value;
+            }
         }
 
         private int f_PwrCh4Amplitude;
         public int PwrCh4Amplitude
         {
             get => f_PwrCh4Amplitude;
-            set => Set(ref f_PwrCh4Amplitude, value);
+            set
+            {
+                Set(ref f_PwrCh4Amplitude, value);
+                f_PwrParams[4].Amplitude = value;
+            }
         }
 
         private int f_PwrCh4Freq;
         public int PwrCh4Freq
         {
             get => f_PwrCh4Freq;
-            set => Set(ref f_PwrCh4Freq, value);
+            set
+            {
+                Set(ref f_PwrCh4Freq, value);
+                f_PwrParams[4].Frequency = value;
+            }
         }
 
         private int f_PwrCh4Duty;
         public int PwrCh4Duty
         {
             get => f_PwrCh4Duty;
-            set => Set(ref f_PwrCh4Duty, value);
+            set
+            {
+                Set(ref f_PwrCh4Duty, value);
+                f_PwrParams[4].Duty = value;
+            }
         }
 
         private int f_PwrCh4Phase;
         public int PwrCh4Phase
         {
             get => f_PwrCh4Phase;
-            set => Set(ref f_PwrCh4Phase, value);
+            set
+            {
+                Set(ref f_PwrCh4Phase, value);
+                f_PwrParams[4].Phase = value;
+            }
         }
 
         private int f_PwrCh4MaxVoltage;
         public int PwrCh4MaxVoltage
         {
             get => f_PwrCh4MaxVoltage;
-            set => Set(ref f_PwrCh4MaxVoltage, value);
+            set
+            {
+                Set(ref f_PwrCh4MaxVoltage, value);
+                f_PwrParams[4].MaxVolts = value;
+            }
         }
 
         private int f_PwrCh4MaxAmps;
         public int PwrCh4MaxAmps
         {
             get => f_PwrCh4MaxAmps;
-            set => Set(ref f_PwrCh4MaxAmps, value);
+            set
+            {
+                Set(ref f_PwrCh4MaxAmps, value);
+                f_PwrParams[4].MaxAmps = value;
+            }
         }
 
         private int f_PwrSwitchCh5;
@@ -746,6 +876,7 @@ namespace LabControl.ViewModels
                     LabelPwrChannel5Bias = Resources.LabelOffsetVoltage;
                     f_PwrDriver?.SetChannelOff(5);
                 }
+                f_PwrParams[5].Mode = value;
             }
         }
 
@@ -753,50 +884,80 @@ namespace LabControl.ViewModels
         public int PwrCh5Bias
         {
             get => f_PwrCh5Bias;
-            set => Set(ref f_PwrCh5Bias, value);
+            set
+            {
+                Set(ref f_PwrCh5Bias, value);
+                f_PwrParams[5].Bias = value;
+            }
         }
 
         private int f_PwrCh5Amplitude;
         public int PwrCh5Amplitude
         {
             get => f_PwrCh5Amplitude;
-            set => Set(ref f_PwrCh5Amplitude, value);
+            set
+            {
+                Set(ref f_PwrCh5Amplitude, value);
+                f_PwrParams[5].Amplitude = value;
+            }
         }
 
         private int f_PwrCh5Freq;
         public int PwrCh5Freq
         {
             get => f_PwrCh5Freq;
-            set => Set(ref f_PwrCh5Freq, value);
+            set
+            {
+                Set(ref f_PwrCh5Freq, value);
+                f_PwrParams[5].Frequency = value;
+            }
         }
 
         private int f_PwrCh5Duty;
         public int PwrCh5Duty
         {
             get => f_PwrCh5Duty;
-            set => Set(ref f_PwrCh5Duty, value);
+            set
+            {
+                Set(ref f_PwrCh5Duty, value);
+                f_PwrParams[5].Duty = value;
+            }
         }
 
         private int f_PwrCh5Phase;
         public int PwrCh5Phase
         {
             get => f_PwrCh5Phase;
-            set => Set(ref f_PwrCh5Phase, value);
+            set
+            {
+                Set(ref f_PwrCh5Phase, value);
+                f_PwrParams[5].Phase = value;
+            }
         }
 
         private int f_PwrCh5MaxVoltage;
         public int PwrCh5MaxVoltage
         {
             get => f_PwrCh5MaxVoltage;
-            set => Set(ref f_PwrCh5MaxVoltage, value);
+            set
+            {
+                Set(ref f_PwrCh5MaxVoltage, value);
+                f_PwrParams[5].MaxVolts = value;
+            }
         }
 
         private int f_PwrCh5MaxAmps;
         public int PwrCh5MaxAmps
         {
             get => f_PwrCh5MaxAmps;
-            set => Set(ref f_PwrCh5MaxAmps, value);
+            set
+            {
+                Set(ref f_PwrCh5MaxAmps, value);
+                f_PwrParams[5].MaxAmps = value;
+            }
         }
+
+
 
         private bool f_IsPumpsActive;
         public bool IsPumpsActive
@@ -1204,6 +1365,11 @@ namespace LabControl.ViewModels
             //f_DbContext.Logs.Load();
             // init collections
             ConfocalLog = new[] { 0d, .40d, .3d };
+            f_PwrParams = new DataModels.PwrItem[6];
+            for (byte i = 0; i < 6; i++)
+            {
+                f_PwrParams[i] = new DataModels.PwrItem();
+            }
             LogCollection = new ObservableCollection<LogItem>();
             IncomingPumpPortSelected = Settings.Default.IncomingPumpPortSelected;
             PowerSupplyTypes = new ObservableCollection<string>(new PowerSuplyTupesList().GetTypesList());
@@ -1486,7 +1652,7 @@ namespace LabControl.ViewModels
         {
             IsDispenserActive = !IsDispenserActive;
         }
-        
+
         private void OnReadChanellParamsCommand(object sender)
         {
             var ch = (int)sender;

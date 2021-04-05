@@ -19,6 +19,18 @@ namespace LabControl.DataModels
 
         public bool IsCorrect { get; set; }
 
+        public PwrItem()
+        {
+            Mode = 0;
+            Amplitude = 0;
+            Bias = 0;
+            Frequency = 0;
+            Duty = 0;
+            Phase = 0;
+            MaxVolts = 0;
+            MaxAmps = 0;
+            IsCorrect = true;
+        }
         public PwrItem(byte[] raw)
         {
             IsCorrect = true;
