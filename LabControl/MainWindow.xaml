@@ -752,6 +752,8 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
+                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag0}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
                                             </Border>
@@ -873,7 +875,7 @@
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
                                                     Command="{Binding ReadChanellParamsCommand}"
-                                                    CommandParameter="{Binding ChannelTag0}"
+                                                    CommandParameter="{Binding ChannelTag1}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -887,6 +889,8 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
+                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag1}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
                                             </Border>
@@ -1008,7 +1012,7 @@
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
                                                     Command="{Binding ReadChanellParamsCommand}"
-                                                    CommandParameter="{Binding ChannelTag0}"
+                                                    CommandParameter="{Binding ChannelTag2}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -1022,6 +1026,8 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
+                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag2}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
                                             </Border>
@@ -1142,7 +1148,7 @@
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
                                                     Command="{Binding ReadChanellParamsCommand}"
-                                                    CommandParameter="{Binding ChannelTag0}"
+                                                    CommandParameter="{Binding ChannelTag3}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -1156,6 +1162,8 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
+                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag3}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
                                             </Border>
@@ -1276,7 +1284,7 @@
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
                                                     Command="{Binding ReadChanellParamsCommand}"
-                                                    CommandParameter="{Binding ChannelTag0}"
+                                                    CommandParameter="{Binding ChannelTag4}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -1290,6 +1298,8 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
+                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag4}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
                                             </Border>
@@ -1410,7 +1420,7 @@
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
                                                     Command="{Binding ReadChanellParamsCommand}"
-                                                    CommandParameter="{Binding ChannelTag0}"
+                                                    CommandParameter="{Binding ChannelTag5}"
                                                     Margin="5" 
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -1424,6 +1434,8 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
+                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    CommandParameter="{Binding ChannelTag5}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
                                             </Border>

@@ -45,9 +45,9 @@ namespace LabControl.LogicModels
             PwrItem pi = new PwrItem(rxData);
             if (pi.IsCorrect)
             {
-                SetChannelParameters.Invoke(PwrSerial.CurChannel, pi);
+                SetChannelParameters?.Invoke(f_pwrSerial.CurChannel, pi);
                 
-                SetLogMessage?.Invoke($"Чтение из бп, канал {PwrSerial.CurChannel}, успешно");
+                SetLogMessage?.Invoke($"Чтение из бп, канал {f_pwrSerial.CurChannel}, успешно");
             }
             else
             {
@@ -68,7 +68,20 @@ namespace LabControl.LogicModels
 
         public void GetChanelData(byte channel)
         {
+            f_pwrSerial.CurChannel = channel;
             f_pwrSerial?.GetChanelData(channel);
+        }
+
+        public void WriteChannelData(int channel, PwrItem pi)
+        {
+            f_pwrSerial?.SetMode(channel, pi.Mode);
+            if (pi.Amplitude> 0) f_pwrSerial.SetAmplitude(channel, pi.Amplitude);
+            if ((pi.Bias <= 10000) && (pi.Bias > 0)) f_pwrSerial.SetBias(channel, pi.Bias);
+            if (pi.Frequency> 0) f_pwrSerial.SetFreq(channel, pi.Frequency);
+            if (pi.Duty > 0) f_pwrSerial.SetDuty(channel, pi.Duty);
+            if (pi.Phase> 0) f_pwrSerial.SetPhase(channel, pi.Phase);
+            if ((pi.MaxVolts <= 10000) && (pi.MaxVolts > 0)) f_pwrSerial.SetMaxVolts(channel, pi.MaxVolts);
+            if (pi.MaxAmps > 0) f_pwrSerial.SetMaxAmps(channel, pi.MaxAmps);
         }
 
     }

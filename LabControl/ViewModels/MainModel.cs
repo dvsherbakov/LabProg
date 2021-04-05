@@ -1178,6 +1178,8 @@ namespace LabControl.ViewModels
         public static int ChannelTag1 => 1;
         public static int ChannelTag2 => 2;
         public static int ChannelTag3 => 3;
+        public static int ChannelTag4 => 4;
+        public static int ChannelTag5 => 5;
         #endregion
 
         #region Commands
@@ -1191,6 +1193,8 @@ namespace LabControl.ViewModels
         public ICommand TogglePumpCommand { get; }
         public ICommand ToggleDispenserCommand { get; }
         public ICommand ReadChanellParamsCommand { get; }
+        public ICommand WriteChanellParamsCommand { get; }
+
         #endregion
 
         public MainModel()
@@ -1306,6 +1310,7 @@ namespace LabControl.ViewModels
             TogglePumpCommand = new LambdaCommand(OnTogglePump);
             ToggleDispenserCommand = new LambdaCommand(OnToggleDispenserActive);
             ReadChanellParamsCommand = new LambdaCommand(OnReadChanellParamsCommand);
+            WriteChanellParamsCommand = new LambdaCommand(OnWriteChanellParamsCommand);
 
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
@@ -1486,8 +1491,13 @@ namespace LabControl.ViewModels
         {
             var ch = (int)sender;
             f_PwrDriver?.GetChanelData(Convert.ToByte(ch));
+        }
 
-
+        private void OnWriteChanellParamsCommand(object sender)
+        {
+            var ch = (int)sender;
+            DataModels.PwrItem pi = null;
+            f_PwrDriver?.WriteChannelData(ch, pi);
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)

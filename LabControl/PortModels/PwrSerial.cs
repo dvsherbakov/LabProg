@@ -8,7 +8,7 @@ namespace LabControl.PortModels
 {
     internal class PwrSerial
     {
-        public static int CurChannel { get; set; }
+        public int CurChannel { get; set; }
         private static SerialPort _port;
         private byte[] RxData { get; set; }
         private static byte ChCommand { get; set; }
