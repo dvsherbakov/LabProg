@@ -316,7 +316,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrSwitchCh0, value);
-                if (value) f_PwrDriver?.SetChannelOn(0);
+                if (value) f_PwrDriver?.SetChannelOn(0); else f_PwrDriver?.SetChannelOff(0);
             }
         }
 
@@ -453,7 +453,11 @@ namespace LabControl.ViewModels
         public bool PwrSwitchCh1
         {
             get => f_PwrSwitchCh1;
-            set => Set(ref f_PwrSwitchCh1, value);
+            set
+            {
+                Set(ref f_PwrSwitchCh1, value);
+                if (value) f_PwrDriver?.SetChannelOn(1); else f_PwrDriver?.SetChannelOff(1);
+            }
         }
 
         private int f_PwrCh1Bias;
@@ -536,7 +540,11 @@ namespace LabControl.ViewModels
         public bool PwrSwitchCh2
         {
             get => f_PwrSwitchCh2;
-            set => Set(ref f_PwrSwitchCh2, value);
+            set
+            {
+                Set(ref f_PwrSwitchCh2, value);
+                if (value) f_PwrDriver?.SetChannelOn(0); else f_PwrDriver?.SetChannelOff(0);
+            }
         }
 
         private string f_LabelPwrChannel2Bias;
@@ -635,7 +643,11 @@ namespace LabControl.ViewModels
         public bool PwrSwitchCh3
         {
             get => f_PwrSwitchCh3;
-            set => Set(ref f_PwrSwitchCh3, value);
+            set
+            {
+                Set(ref f_PwrSwitchCh3, value);
+                if (value) f_PwrDriver?.SetChannelOn(3); else f_PwrDriver?.SetChannelOff(3);
+            }
         }
 
         private string f_LabelPwrChannel3Bias;
@@ -693,7 +705,8 @@ namespace LabControl.ViewModels
         public int PwrCh3Bias
         {
             get => f_PwrCh3Bias;
-            set {
+            set
+            {
                 Set(ref f_PwrCh3Bias, value);
                 f_PwrParams[3].Bias = value;
             }
@@ -703,7 +716,8 @@ namespace LabControl.ViewModels
         public int PwrCh3Amplitude
         {
             get => f_PwrCh3Amplitude;
-            set {
+            set
+            {
                 Set(ref f_PwrCh3Amplitude, value);
                 f_PwrParams[3].Amplitude = value;
             }
@@ -713,7 +727,8 @@ namespace LabControl.ViewModels
         public int PwrCh3Freq
         {
             get => f_PwrCh3Freq;
-            set {
+            set
+            {
                 Set(ref f_PwrCh3Freq, value);
                 f_PwrParams[3].Frequency = value;
             }
@@ -723,7 +738,8 @@ namespace LabControl.ViewModels
         public int PwrCh3Duty
         {
             get => f_PwrCh3Duty;
-            set {
+            set
+            {
                 Set(ref f_PwrCh3Duty, value);
                 f_PwrParams[3].Duty = value;
             }
@@ -733,7 +749,8 @@ namespace LabControl.ViewModels
         public int PwrCh3Phase
         {
             get => f_PwrCh3Phase;
-            set {
+            set
+            {
                 Set(ref f_PwrCh3Phase, value);
                 f_PwrParams[3].Phase = value;
             }
@@ -765,7 +782,14 @@ namespace LabControl.ViewModels
         public bool PwrSwitchCh4
         {
             get => f_PwrSwitchCh4;
-            set => Set(ref f_PwrSwitchCh4, value);
+            set
+            {
+                Set(ref f_PwrSwitchCh4, value);
+                if (value)
+                    f_PwrDriver?.SetChannelOn(4);
+                else
+                    f_PwrDriver?.SetChannelOff(4);
+            }
         }
 
         private int f_PwrCh4Bias;
@@ -845,11 +869,15 @@ namespace LabControl.ViewModels
             }
         }
 
-        private int f_PwrSwitchCh5;
-        public int PwrSwitchCh5
+        private bool f_PwrSwitchCh5;
+        public bool PwrSwitchCh5
         {
             get => f_PwrSwitchCh5;
-            set => Set(ref f_PwrSwitchCh5, value);
+            set
+            {
+                Set(ref f_PwrSwitchCh5, value);
+                if (value) f_PwrDriver?.SetChannelOn(5); else f_PwrDriver?.SetChannelOff(5);
+            }
         }
 
         private string f_LabelPwrChannel5Bias;
@@ -1036,7 +1064,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PyroTemperature, value);
-                Set(ref f_CurrentTemperature, value * value * (-0.0048) + value * 1.7941 - 13.109);
+                CurrentTemperature = (value * value * (-0.0048)) + (value * 1.7941) - 13.109;
             }
         }
 
@@ -1662,7 +1690,7 @@ namespace LabControl.ViewModels
         private void OnWriteChanellParamsCommand(object sender)
         {
             var ch = (int)sender;
-            DataModels.PwrItem pi = null;
+            DataModels.PwrItem pi = GetChannelParams(ch);
             f_PwrDriver?.WriteChannelData(ch, pi);
         }
 
@@ -1776,6 +1804,12 @@ namespace LabControl.ViewModels
                     PwrCh5MaxAmps = pi.MaxAmps;
                     break;
             }
+        }
+
+        private DataModels.PwrItem GetChannelParams(int channel)
+        {
+            if (channel < 0 || channel >= f_PwrParams.Length) return null;
+            return f_PwrParams[channel];
         }
     }
 }
