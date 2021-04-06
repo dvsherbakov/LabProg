@@ -543,7 +543,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PwrSwitchCh2, value);
-                if (value) f_PwrDriver?.SetChannelOn(0); else f_PwrDriver?.SetChannelOff(0);
+                if (value) f_PwrDriver?.SetChannelOn(2); else f_PwrDriver?.SetChannelOff(2);
             }
         }
 
@@ -1064,7 +1064,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PyroTemperature, value);
-                CurrentTemperature = (value * value * (-0.0048)) + (value * 1.7941) - 13.109;
+                CurrentTemperature = Math.Round((value * value * (-0.0048)) + (value * 1.7941) - 13.109, 3);
             }
         }
 
