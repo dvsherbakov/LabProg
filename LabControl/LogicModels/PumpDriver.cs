@@ -28,17 +28,17 @@ namespace LabControl.LogicModels
         public event LogMessage SetOutputSpeed;
 
         private readonly List<SpeedGradeItem> f_SpeedGrades = new List<SpeedGradeItem> {
-            new SpeedGradeItem{Different=3.00, Speed="250 "},
-            new SpeedGradeItem{Different=2.00, Speed="150 "},
-                new SpeedGradeItem{Different=1.00, Speed="65.0"},
-                new SpeedGradeItem{Different=0.50, Speed="45.0"},
-                new SpeedGradeItem{Different=0.30, Speed="35.0"},
-                new SpeedGradeItem{Different=0.10, Speed="25.0"},
-                new SpeedGradeItem{Different=0.08, Speed="20.0"},
-                new SpeedGradeItem{Different=0.04, Speed="11.0"},
-                new SpeedGradeItem{Different=0.01, Speed="2.5 "},
-                new SpeedGradeItem{Different=0.005, Speed="0.5 "},
-                new SpeedGradeItem{Different=0.00, Speed="0.0 "}
+            new SpeedGradeItem{Different=2.00, Speed="250 "},
+            new SpeedGradeItem{Different=1.00, Speed="150 "},
+            new SpeedGradeItem{Different=0.70, Speed="65.0"},
+            new SpeedGradeItem{Different=0.30, Speed="45.0"},
+            new SpeedGradeItem{Different=0.20, Speed="35.0"},
+            new SpeedGradeItem{Different=0.10, Speed="25.0"},
+            new SpeedGradeItem{Different=0.08, Speed="20.0"},
+            new SpeedGradeItem{Different=0.04, Speed="11.0"},
+            new SpeedGradeItem{Different=0.01, Speed="2.5 "},
+            new SpeedGradeItem{Different=0.005, Speed="0.5 "},
+            new SpeedGradeItem{Different=0.00, Speed="0.0 "}
         };
 
         public PumpDriver()

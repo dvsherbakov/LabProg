@@ -56,22 +56,20 @@ namespace LabControl.LogicModels
             timestamp++;
             while (Math.Abs(x.Dist) < 0.000001)
             {
-                using (var wc = new WebClient())
+                using var wc = new WebClient();
+                try
                 {
-                    try
-                    {
-                        var json = wc.DownloadString(
-                            "http://169.254.168.150/datagen.php?type=Meas&callback=callback&_=" +
-                            timestamp);
-                        x = GetTemp(json);
-                    }
-                    catch (Exception ex)
-                    {
-                        SetLogMessage?.Invoke(ex.Message);
-                    }
-                    
-                    ObtainedDataEvent?.Invoke(x);
+                    var json = wc.DownloadString(
+                        "http://169.254.168.150/datagen.php?type=Meas&callback=callback&_=" +
+                        timestamp);
+                    x = GetTemp(json);
                 }
+                catch (Exception ex)
+                {
+                    SetLogMessage?.Invoke(ex.Message);
+                }
+
+                ObtainedDataEvent?.Invoke(x);
             }
         }
 

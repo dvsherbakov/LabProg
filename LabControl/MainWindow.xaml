@@ -257,6 +257,7 @@
                                            VerticalAlignment="Center"
                                            Foreground="SandyBrown"/>
                                 <ComboBox Grid.Row="2" Grid.Column="1"
+                                          Style="{StaticResource RoundComboBox}"
                                           Grid.ColumnSpan="2"
                                           ItemsSource="{Binding PumpingSpeedCollection}"
                                               SelectedItem="{Binding PumpingSpeedSelected}"    
@@ -276,15 +277,16 @@
                                                    Margin="0,5"/>
                                             <DockPanel HorizontalAlignment="Stretch">
                                                 <TextBlock 
-                                               Foreground="SandyBrown"
-                                               VerticalAlignment="Center"
-                                                       Padding="0,0,15,0"
-                                               Text="{Binding LabelInputPumpPort}"
-                                               />
+                                                    Foreground="SandyBrown"
+                                                    VerticalAlignment="Center"
+                                                    Padding="0,0,15,0"
+                                                    Text="{Binding LabelInputPumpPort}"
+                                                    />
                                                 <ComboBox 
-                                              ItemsSource="{Binding IncomingPumpPortCollection}"
-                                              SelectedItem="{Binding IncomingPumpPortSelected}"
-                                              Margin="1"/>
+                                                    Style="{StaticResource RoundComboBox}"
+                                                    ItemsSource="{Binding IncomingPumpPortCollection}"
+                                                    SelectedItem="{Binding IncomingPumpPortSelected}"
+                                                    Margin="1"/>
                                             </DockPanel>
                                             <DockPanel>
                                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
@@ -477,7 +479,7 @@
                                            Foreground="SandyBrown"
                                            Text="{Binding LaserPowerHistory}"/>
                                 <ComboBox Grid.Row="2" Grid.Column="1" 
-                                          Style="{StaticResource ComboTr}"
+                                          Style="{StaticResource RoundComboBox}"
                                           Grid.ColumnSpan="2"
                                               ItemsSource="{Binding LaserHistoryCollection}"
                                               SelectedItem="{Binding LaserPowerHistorySelectedItem}"
@@ -651,16 +653,19 @@
                                                    Foreground="SandyBrown"
                                                    TextAlignment="Center" 
                                                    Text="{Binding LabelChannel0}"/>
-                                            <CheckBox Grid.Column="0" Grid.Row="1" 
-                                                  Foreground="SandyBrown"
-                                                  IsChecked="{Binding PwrSwitchCh0}"
-                                                  VerticalAlignment="Center"
-                                                  Content="{Binding LabelOn}" />
+                                            <ToggleButton 
+                                                Grid.Column="0" Grid.Row="1" 
+                                                Grid.ColumnSpan="2"
+                                                Width="40" Height="20" 
+                                                IsChecked="{Binding PwrSwitchCh0}"
+                                                Style="{StaticResource AnimatedSwitch}" />
+                                            
                                             <TextBlock Grid.Column="0" Grid.Row="2" 
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"
                                                    Text="{Binding LabelPwrChannelMode}" />
                                             <ComboBox  Grid.Column="1" Grid.Row="2" 
+                                                       Style="{StaticResource RoundComboBox}"
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh0Mode}"
                                                    Margin="5,5,5,5"/>
@@ -799,6 +804,7 @@
                                                         Foreground="SandyBrown"
                                                         VerticalAlignment="Center"/>
                                             <ComboBox Grid.Column="1" Grid.Row="2" 
+                                                      Style="{StaticResource RoundComboBox}"
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh1Mode}"
                                                    Margin="5,5,5,5"/>
@@ -936,6 +942,7 @@
                                                     Foreground="SandyBrown"
                                                    VerticalAlignment="Center" />
                                             <ComboBox  Grid.Column="1" Grid.Row="2" 
+                                                       Style="{StaticResource RoundComboBox}"
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh2Mode}"
                                                    Margin="5,5,5,5"/>
@@ -1072,6 +1079,7 @@
                                                     Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                             <ComboBox  Grid.Column="1" Grid.Row="2" 
+                                                       Style="{StaticResource RoundComboBox}"
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh3Mode}"
                                                    Margin="5,5,5,5"/>
@@ -1208,6 +1216,7 @@
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                             <ComboBox  Grid.Column="1" Grid.Row="2" 
+                                                       Style="{StaticResource RoundComboBox}"
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh4Mode}"
                                                    Margin="5,5,5,5"/>
@@ -1344,6 +1353,7 @@
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"/>
                                             <ComboBox  Grid.Column="1" Grid.Row="2" 
+                                                       Style="{StaticResource RoundComboBox}"
                                                    ItemsSource="{Binding PowerSupplyTypes}"
                                                    SelectedIndex="{Binding PwrCh5Mode}"
                                                    Margin="5,5,5,5"/>
@@ -1449,6 +1459,7 @@
                                 <StackPanel>
                                     <TextBlock Text="{Binding LabelPwrPort}"/>
                                     <ComboBox 
+                                        Style="{StaticResource RoundComboBox}"
                                         ItemsSource="{Binding PwrPortCollection}"
                                         SelectedItem="{Binding PwrPortSelected}"
                                         Margin="0,1"/>
@@ -1543,6 +1554,7 @@
                                                Foreground="SandyBrown"
                                                Text="{Binding LabelPyroPort}"/>
                                     <ComboBox Grid.Row="0" Grid.Column="1"
+                                              Style="{StaticResource RoundComboBox}"
                                               ItemsSource="{Binding PyroPortCollection}"
                                               SelectedItem="{Binding PyroPortSelected}"
                                               Margin="0,1"/>
@@ -1604,6 +1616,7 @@
                                                Foreground="SandyBrown"
                                                Text="{Binding LabelPyroPort}"/>
                                         <ComboBox Grid.Row="0" Grid.Column="1"
+                                                  Style="{StaticResource RoundComboBox}"
                                               ItemsSource="{Binding DispenserPortCollection}"
                                               SelectedItem="{Binding DispenserPortSelected}"
                                               Margin="0,1"/>
@@ -1611,6 +1624,7 @@
                                                    Foreground="SandyBrown"
                                                    Text="{Binding LabelAirSupportPort}"/>
                                         <ComboBox Grid.Row="1" Grid.Column="1"
+                                                  Style="{StaticResource RoundComboBox}"
                                                   ItemsSource="{Binding AirSupportPortCollection}"
                                                   SelectedIndex="{Binding AirSupportPortSelected}"/>
                                     </Grid>
@@ -1629,6 +1643,7 @@
                                                    VerticalAlignment="Center" 
                                                    Text="{Binding DispenserSignalTypeLabel}" Margin="0,4"/>
                                         <ComboBox Grid.Row="0" Grid.Column="1"  
+                                                  Style="{StaticResource RoundComboBox}"
                                                    ItemsSource="{Binding DispenserModeCollection}"
                                                    SelectedIndex="{Binding DispenserSignalType}" Grid.ColumnSpan="2"
                                                    />
@@ -1636,6 +1651,7 @@
                                                    VerticalAlignment="Center" 
                                                    Text="{Binding DispenserCurrentChannelLabel }" Margin="0,4"/>
                                         <ComboBox Grid.Column="1" Grid.Row="1"
+                                                  Style="{StaticResource RoundComboBox}"
                                                   SelectedIndex="{Binding DispenserChannel}" Grid.ColumnSpan="2">
                                             <TextBlock>1</TextBlock>
                                             <TextBlock>2</TextBlock>
