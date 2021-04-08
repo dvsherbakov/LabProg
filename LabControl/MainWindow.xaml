@@ -1620,7 +1620,7 @@
                                               ItemsSource="{Binding DispenserPortCollection}"
                                               SelectedItem="{Binding DispenserPortSelected}"
                                               Margin="0,1"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                        <TextBlock Grid.Row="1" Grid.Column="0"
                                                    Foreground="SandyBrown"
                                                    Text="{Binding LabelAirSupportPort}"/>
                                         <ComboBox Grid.Row="1" Grid.Column="1"
