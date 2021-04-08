@@ -10,6 +10,7 @@ using LabControl.ClassHelpers;
 using LabControl.DataModels;
 using LabControl.LogicModels;
 using LabControl.Properties;
+using LabControl.Wrappers;
 
 namespace LabControl.ViewModels
 {
@@ -1388,6 +1389,15 @@ namespace LabControl.ViewModels
 
         public MainModel()
         {
+
+            int p_Id = -1;
+            var err = ElvWrapper.AF1_Initialization("Dev1", 1, 1, out p_Id);
+
+            double[] Calibration = new double[1000];
+
+            err = ElvWrapper.AF1_Calib(p_Id, out Calibration, 1000);
+
+
             // Data context
             f_DbContext = new ApplicationContext();
             //f_DbContext.Logs.Load();
