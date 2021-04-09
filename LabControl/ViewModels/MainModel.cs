@@ -1391,12 +1391,17 @@ namespace LabControl.ViewModels
         {
 
             int p_Id = -1;
-            var err = ElvWrapper.AF1_Initialization("Dev1", 1, 1, out p_Id);
+            var err = ElvWrapper.AF1_Initialization("Dev1", 2, 5, out p_Id);
 
             double[] Calibration = new double[1000];
 
-            err = ElvWrapper.AF1_Calib(p_Id, out Calibration, 1000);
+            //err = ElvWrapper.AF1_Calib(p_Id, Calibration, 1000);
+           // err = ElvWrapper.Elveflow_Calibration_Save($"{System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\calibrate.arr", Calibration, 1000);
+            err = ElvWrapper.Elveflow_Calibration_Load($"{System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\calibrate.arr", Calibration, 1000);
 
+            err = ElvWrapper.AF1_Set_Press(p_Id, 2000d, Calibration, 1000);
+
+            err = ElvWrapper.AF1_Get_Press(p_Id, 1000, Calibration, out double pressure, 1000);
 
             // Data context
             f_DbContext = new ApplicationContext();
