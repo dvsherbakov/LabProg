@@ -24,6 +24,7 @@ namespace LabControl.ViewModels
         private readonly LaserDriver f_LaserDriver;
         private readonly PyroDriver f_PyroDriver;
         private readonly DispenserDriver f_DispenserDriver;
+        private readonly PressurePumpDriver f_PressurePumpDriver;
         #endregion
 
         #region ModelFields
@@ -1069,6 +1070,18 @@ namespace LabControl.ViewModels
             }
         }
 
+        private bool f_IsPressurePumpConnected;
+        public bool IsPressurePumpConnected
+        {
+            get => f_IsPressurePumpConnected;
+            set
+            {
+                Set(ref f_IsPressurePumpConnected, value);
+                //FIX_ME add connect function
+            }
+        }
+
+
         private bool f_IsDispenserActive;
         public bool IsDispenserActive
         {
@@ -1364,6 +1377,7 @@ namespace LabControl.ViewModels
         public static string DispenserPeakLabel => Resources.DispenserPeakLabel;
         public static string DispenserStartLabel => Resources.DispenserStartLabel;
         public static string DispenserPeriodLabel => Resources.DispenserPeriodLabel;
+        public static string LabelPressurePump => Resources.LabelPressurePump;
         public static int ChannelTag0 => 0;
         public static int ChannelTag1 => 1;
         public static int ChannelTag2 => 2;
@@ -1535,6 +1549,9 @@ namespace LabControl.ViewModels
             f_PyroDriver.SetLogMessage += AddLogMessage;
             f_PyroDriver.EventHandler += PyroHandler;
             f_PyroDriver.PortStr = Settings.Default.PyroPortSelected;
+
+            f_PressurePumpDriver = new PressurePumpDriver();
+
 
             AddLogMessage("Application Started");
         }

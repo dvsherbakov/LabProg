@@ -345,4 +345,7 @@
   <data name="LabelAirSupportPort" xml:space="preserve">
     <value>Порт воздушного насоса</value>
   </data>
+  <data name="LabelPressurePump" xml:space="preserve">
+    <value>Соедениться с насосом подкачки</value>
+  </data>
 </root>

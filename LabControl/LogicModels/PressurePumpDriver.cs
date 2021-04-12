@@ -13,6 +13,10 @@ namespace LabControl.LogicModels
         private readonly int p_Id = -1;
         private int err;
         private double[] Calibration;
+
+        public delegate void LogMessage(string msg);
+        public event LogMessage SetLogMessage;
+
         public PressurePumpDriver()
         {
             err = ElvWrapper.AF1_Initialization("Dev1", 2, 5, out p_Id);
@@ -26,11 +30,14 @@ namespace LabControl.LogicModels
             if (File.Exists(fName))
             {
                 err = ElvWrapper.Elveflow_Calibration_Load($"{System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\calibrate.arr", Calibration, 1000);
+                SetLogMessage?.Invoke("Калибровочный массив загружен");
             }
             else
             {
+                SetLogMessage?.Invoke("Производиться калибровки, подождите около 2х минут");
                 err = ElvWrapper.AF1_Calib(p_Id, Calibration, 1000);
                 err = ElvWrapper.Elveflow_Calibration_Save($"{System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\calibrate.arr", Calibration, 1000);
+                SetLogMessage?.Invoke("Калибровка окончена");
             }
         }
 

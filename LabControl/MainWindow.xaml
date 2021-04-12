@@ -1581,12 +1581,21 @@
                             <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                               Width="40" Height="20"  
-                                              Margin="1,6,1,6"
+                                              Margin="1 6"
                                               IsChecked="{Binding IsDispenserPortConnected}"
                                 />
                                 <TextBlock Padding="15,5" 
                                            Foreground="SandyBrown"
                                            Text="{Binding LabelPortConnection}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}"
+                                              Width="40" Height="20"
+                                              Margin="1 6" />
+                                <TextBlock Padding="15 5" 
+                                           Foreground="SandyBrown"
+                                           Text="{Binding LabelPressurePump}"
+                                           />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 

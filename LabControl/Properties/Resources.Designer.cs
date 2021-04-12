@@ -475,6 +475,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Соедениться с насосом подкачки.
+        /// </summary>
+        internal static string LabelPressurePump {
+            get {
+                return ResourceManager.GetString("LabelPressurePump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Насос.
         /// </summary>
         internal static string LabelPump {
