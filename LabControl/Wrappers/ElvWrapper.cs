@@ -20,7 +20,7 @@ namespace LabControl.Wrappers
 
         [DllImport("Elveflow32.dll", EntryPoint = "Elveflow_Calibration_Load",
        ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int Elveflow_Calibration_Load(string Path,  double[] Calib_Array_out, int len);
+        public static extern int Elveflow_Calibration_Load(string Path, double[] Calib_Array_out, int len);
 
         [DllImport("Elveflow32.dll", EntryPoint = "AF1_Get_Press",
        ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]

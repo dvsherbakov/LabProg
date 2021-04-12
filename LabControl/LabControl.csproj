@@ -118,6 +118,7 @@
     <Compile Include="LogicModels\ConfocalDriver.cs" />
     <Compile Include="LogicModels\DispenserDriver.cs" />
     <Compile Include="LogicModels\LaserDriver.cs" />
+    <Compile Include="LogicModels\PressurePumpDriver.cs" />
     <Compile Include="LogicModels\PumpDriver.cs" />
     <Compile Include="LogicModels\PwrDriver.cs" />
     <Compile Include="LogicModels\PyroDriver.cs" />
