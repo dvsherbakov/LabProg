@@ -466,6 +466,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Скорость парокачки.
+        /// </summary>
+        internal static string LabelOverPumpSpeed {
+            get {
+                return ResourceManager.GetString("LabelOverPumpSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Соедениться с портом.
         /// </summary>
         internal static string LabelPortConnection {

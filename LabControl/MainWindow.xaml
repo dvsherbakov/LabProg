@@ -253,7 +253,7 @@
                                      Style="{StaticResource PartTransparent}"
                                      Template="{StaticResource TextBoxBaseControlTemplate}"/>
                                 <TextBlock Grid.Row="2" Grid.Column="0" 
-                                           Text="Скорость парокачки"
+                                           Text="{Binding LabelOverPumpSpeed}"
                                            VerticalAlignment="Center"
                                            Foreground="SandyBrown"/>
                                 <ComboBox Grid.Row="2" Grid.Column="1"
@@ -742,7 +742,7 @@
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
-                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    Command="{Binding ReadChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag0}"
                                                     Padding="5" 
                                                     Content="{Binding LabelRead}"
@@ -756,7 +756,7 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
-                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    Command="{Binding WriteChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag0}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
@@ -879,7 +879,7 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
-                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    Command="{Binding ReadChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag1}"
                                                     Margin="5" 
                                                     Padding="5" 
@@ -894,7 +894,7 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
-                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    Command="{Binding WriteChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag1}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
@@ -1017,7 +1017,7 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
-                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    Command="{Binding ReadChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag2}"
                                                     Margin="5" 
                                                     Padding="5" 
@@ -1032,7 +1032,7 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
-                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    Command="{Binding WriteChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag2}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
@@ -1154,7 +1154,7 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
-                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    Command="{Binding ReadChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag3}"
                                                     Margin="5" 
                                                     Padding="5" 
@@ -1169,7 +1169,7 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
-                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    Command="{Binding WriteChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag3}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
@@ -1291,7 +1291,7 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
-                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    Command="{Binding ReadChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag4}"
                                                     Margin="5" 
                                                     Padding="5" 
@@ -1306,7 +1306,7 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
-                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    Command="{Binding WriteChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag4}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
@@ -1428,7 +1428,7 @@
                                                     BorderThickness="1">
                                                 <Button 
                                                     Style="{StaticResource TransparentButton}"
-                                                    Command="{Binding ReadChanellParamsCommand}"
+                                                    Command="{Binding ReadChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag5}"
                                                     Margin="5" 
                                                     Padding="5" 
@@ -1443,7 +1443,7 @@
                                                     Style="{StaticResource TransparentButton}"
                                                     Margin="5" 
                                                     Padding="5" 
-                                                    Command="{Binding WriteChanellParamsCommand}"
+                                                    Command="{Binding WriteChannelParamsCommand}"
                                                     CommandParameter="{Binding ChannelTag5}"
                                                     Content="{Binding LabelWrite}"
                                                     Foreground="SandyBrown"/>
@@ -1590,6 +1590,7 @@
                             <StackPanel Orientation="Horizontal" Margin="5 5 0 0">
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}"
                                               Width="40" Height="20"
+                                              IsChecked="{Binding IsPressurePumpConnected}"
                                               Margin="1 6" />
                                 <TextBlock Padding="15 5" 
                                            Foreground="SandyBrown"

@@ -348,4 +348,7 @@
   <data name="LabelPressurePump" xml:space="preserve">
     <value>Соедениться с насосом подкачки</value>
   </data>
+  <data name="LabelOverPumpSpeed" xml:space="preserve">
+    <value>Скорость парокачки</value>
+  </data>
 </root>

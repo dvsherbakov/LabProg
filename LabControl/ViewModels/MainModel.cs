@@ -294,7 +294,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_LaserTypeSelectedIndex, value);
-                if (f_LaserDriver != null) f_LaserDriver.SetLaserType(value);
+                f_LaserDriver?.SetLaserType(value);
             }
         }
 
@@ -1077,6 +1077,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_IsPressurePumpConnected, value);
+                if (value) f_PressurePumpDriver?.Calibrate();
                 //FIX_ME add connect function
             }
         }
@@ -1384,6 +1385,7 @@ namespace LabControl.ViewModels
         public static int ChannelTag3 => 3;
         public static int ChannelTag4 => 4;
         public static int ChannelTag5 => 5;
+        public static string LabelOverPumpSpeed => Resources.LabelOverPumpSpeed;
         #endregion
 
         #region Commands
@@ -1396,8 +1398,8 @@ namespace LabControl.ViewModels
         public ICommand StartPumpCommand { get; }
         public ICommand TogglePumpCommand { get; }
         public ICommand ToggleDispenserCommand { get; }
-        public ICommand ReadChanellParamsCommand { get; }
-        public ICommand WriteChanellParamsCommand { get; }
+        public ICommand ReadChannelParamsCommand { get; }
+        public ICommand WriteChannelParamsCommand { get; }
 
         #endregion
 
@@ -1518,8 +1520,8 @@ namespace LabControl.ViewModels
             StartPumpCommand = new LambdaCommand(OnStartPump);
             TogglePumpCommand = new LambdaCommand(OnTogglePump);
             ToggleDispenserCommand = new LambdaCommand(OnToggleDispenserActive);
-            ReadChanellParamsCommand = new LambdaCommand(OnReadChanellParamsCommand);
-            WriteChanellParamsCommand = new LambdaCommand(OnWriteChanellParamsCommand);
+            ReadChannelParamsCommand = new LambdaCommand(OnReadChannelParamsCommand);
+            WriteChannelParamsCommand = new LambdaCommand(OnWriteChannelParamsCommand);
 
             //Drivers area
             f_ConfocalDriver = new ConfocalDriver();
@@ -1537,7 +1539,7 @@ namespace LabControl.ViewModels
 
             f_PwrDriver = new PwrDriver();
             f_PwrDriver.SetLogMessage += AddLogMessage;
-            f_PwrDriver.SetChannelParameters += SetChanellParams;
+            f_PwrDriver.SetChannelParameters += SetChannelParams;
             f_PwrDriver.PortStr = Settings.Default.PwrPortSelected;
 
             f_LaserDriver = new LaserDriver();
@@ -1699,16 +1701,16 @@ namespace LabControl.ViewModels
             IsDispenserActive = !IsDispenserActive;
         }
 
-        private void OnReadChanellParamsCommand(object sender)
+        private void OnReadChannelParamsCommand(object sender)
         {
             var ch = (int)sender;
             f_PwrDriver?.GetChanelData(Convert.ToByte(ch));
         }
 
-        private void OnWriteChanellParamsCommand(object sender)
+        private void OnWriteChannelParamsCommand(object sender)
         {
             var ch = (int)sender;
-            DataModels.PwrItem pi = GetChannelParams(ch);
+            var pi = GetChannelParams(ch);
             f_PwrDriver?.WriteChannelData(ch, pi);
         }
 
@@ -1757,7 +1759,7 @@ namespace LabControl.ViewModels
             f_DispenserDriver?.SetFrequency(f_DispenserFrequency);
         }
 
-        private void SetChanellParams(int channel, DataModels.PwrItem pi)
+        private void SetChannelParams(int channel, DataModels.PwrItem pi)
         {
             switch (channel)
             {
