@@ -258,7 +258,6 @@
                                            Foreground="SandyBrown"/>
                                 <ComboBox Grid.Row="2" Grid.Column="1"
                                           Style="{StaticResource RoundComboBox}"
-                                          Grid.ColumnSpan="2"
                                           ItemsSource="{Binding PumpingSpeedCollection}"
                                               SelectedItem="{Binding PumpingSpeedSelected}"    
                                               Margin="0,1"/>
