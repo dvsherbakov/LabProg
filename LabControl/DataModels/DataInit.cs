@@ -18,15 +18,13 @@ namespace LabControl.DataModels
             var commands = new List<SQLiteCommand> {GetLogTable(con), GetTemperatureTable(con)};
 
             con.Open();
-            using (var transaction = con.BeginTransaction())
+            using var transaction = con.BeginTransaction();
+            foreach (var command in commands)
             {
-                foreach (var command in commands)
-                {
-                    command.ExecuteNonQuery();
-                }
-
-                transaction.Commit();
+                command.ExecuteNonQuery();
             }
+
+            transaction.Commit();
         }
 
         private static SQLiteCommand GetLogTable(SQLiteConnection con)
