@@ -354,4 +354,7 @@
   <data name="LabelOverPumpSpeed" xml:space="preserve">
     <value>Скорость парокачки</value>
   </data>
+  <data name="LabelAirSupportPressure" xml:space="preserve">
+    <value>Установить давление</value>
+  </data>
 </root>

@@ -658,7 +658,7 @@
                                                 Width="40" Height="20" 
                                                 IsChecked="{Binding PwrSwitchCh0}"
                                                 Style="{StaticResource AnimatedSwitch}" />
-                                            
+
                                             <TextBlock Grid.Column="0" Grid.Row="2" 
                                                    Foreground="SandyBrown"
                                                    VerticalAlignment="Center"
@@ -1607,13 +1607,22 @@
                                            Foreground="SandyBrown"
                                            Text="{Binding DispenserStartLabel}" />
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                              Width="40" Height="20"  
+                                              Margin="1,6,1,6"
+                                              IsChecked="{Binding PressurePumpActive}"
+                                />
+                                <TextBlock Padding="15,5" 
+                                           Foreground="SandyBrown"
+                                           Text="{Binding LabelPressurePumpStart}" />
+                            </StackPanel>
                             <Expander Padding="5"
                                   Header="{Binding LabelSettings}"
                                   Foreground="SandyBrown">
                                 <StackPanel>
                                     <Grid Margin="15,0,0,0">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="28"/>
                                             <RowDefinition Height="28"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
@@ -1629,13 +1638,6 @@
                                               ItemsSource="{Binding DispenserPortCollection}"
                                               SelectedItem="{Binding DispenserPortSelected}"
                                               Margin="0,1"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="0"
-                                                   Foreground="SandyBrown"
-                                                   Text="{Binding LabelAirSupportPort}"/>
-                                        <ComboBox Grid.Row="1" Grid.Column="1"
-                                                  Style="{StaticResource RoundComboBox}"
-                                                  ItemsSource="{Binding AirSupportPortCollection}"
-                                                  SelectedIndex="{Binding AirSupportPortSelected}"/>
                                     </Grid>
                                     <Grid Margin="15,0,0,0">
                                         <Grid.ColumnDefinitions>
@@ -1826,7 +1828,31 @@
                                         <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
                                     </Grid>
                                     <Grid Margin="20,5,1,5">
-                                        
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*" />
+                                            <ColumnDefinition Width="4*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0"
+                                                   Padding="5"
+                                                   Text="Установить давление"/>
+                                        <TextBox Grid.Column="1" Grid.Row="0" 
+                                                 TextAlignment="Center"
+                                                 Style="{StaticResource PartTransparent}"
+                                                 Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                        <ComboBox 
+                                            Grid.Row="1" Grid.Column="1" 
+                                            Style="{StaticResource RoundComboBox}"
+                                            Grid.ColumnSpan="2"
+                                            Height="28"
+                                            ItemsSource="{Binding AirSupportPressureCollection}"
+                                            SelectedItem="{Binding LaserPowerHistorySelectedItem}"
+                                            Margin="0,1"/>
                                     </Grid>
                                 </StackPanel>
                             </Expander>

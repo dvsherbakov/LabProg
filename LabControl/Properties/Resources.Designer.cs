@@ -232,6 +232,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Установить давление.
+        /// </summary>
+        internal static string LabelAirSupportPressure {
+            get {
+                return ResourceManager.GetString("LabelAirSupportPressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Включение каналов:.
         /// </summary>
         internal static string LabelChanelsSwitch {
