@@ -351,4 +351,7 @@
   <data name="LabelPressurePumpStart" xml:space="preserve">
     <value>Запуск насоса подкачки</value>
   </data>
+  <data name="LabelOverPumpSpeed" xml:space="preserve">
+    <value>Скорость парокачки</value>
+  </data>
 </root>
