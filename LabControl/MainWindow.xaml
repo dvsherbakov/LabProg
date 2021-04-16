@@ -1824,7 +1824,9 @@
                                                  Template="{StaticResource TextBoxBaseControlTemplate}"
                                                  Text="{Binding DispenserHToverall}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="2" Padding="0,3">μs</TextBlock>
-
+                                    </Grid>
+                                    <Grid Margin="20,5,1,5">
+                                        
                                     </Grid>
                                 </StackPanel>
                             </Expander>
