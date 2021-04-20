@@ -1289,6 +1289,13 @@ namespace LabControl.ViewModels
             set => Set(ref f_PressurePumpActive, value);
         }
 
+        private int f_AirSupportPressure;
+        public int AirSupportPressure
+        {
+            get => f_AirSupportPressure;
+            set => Set(ref f_AirSupportPressure, value);
+        }
+
         #region PwrTab
         private int f_SelectedPowerPage;
         public int SelectedPowerPage

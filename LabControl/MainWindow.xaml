@@ -1841,7 +1841,7 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0"
                                                    Padding="5"
-                                                   Text="Установить давление"/>
+                                                   Text="{Binding LabelAirSupportPressure}"/>
                                         <TextBox Grid.Column="1" Grid.Row="0" 
                                                  TextAlignment="Center"
                                                  Style="{StaticResource PartTransparent}"
