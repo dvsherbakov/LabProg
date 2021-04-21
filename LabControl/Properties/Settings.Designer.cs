@@ -1006,5 +1006,17 @@ namespace LabControl.Properties {
                 this["DispenserHToverall"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int AirSupportPressure {
+            get {
+                return ((int)(this["AirSupportPressure"]));
+            }
+            set {
+                this["AirSupportPressure"] = value;
+            }
+        }
     }
 }

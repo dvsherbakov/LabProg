@@ -1296,6 +1296,17 @@ namespace LabControl.ViewModels
             set => Set(ref f_AirSupportPressure, value);
         }
 
+        private int f_AirSupportPressureSelectedItem;
+        public int AirSupportPressureSelectedItem
+        {
+            get => f_AirSupportPressureSelectedItem;
+            set
+            {
+                Set(ref f_AirSupportPressureSelectedItem, value);
+                AirSupportPressure = value;
+            }
+        }
+
         #region PwrTab
         private int f_SelectedPowerPage;
         public int SelectedPowerPage
@@ -1528,6 +1539,7 @@ namespace LabControl.ViewModels
             DispenserHv0 = Settings.Default.DispenserHV0;
             DispenserHVpeak = Settings.Default.DispenserHVpeak;
             DispenserHToverall = Settings.Default.DispenserHToverall;
+            AirSupportPressure = Settings.Default.AirSupportPressure;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -1669,6 +1681,7 @@ namespace LabControl.ViewModels
             Settings.Default.DispenserHV0 = DispenserHv0;
             Settings.Default.DispenserHVpeak = DispenserHVpeak;
             Settings.Default.DispenserHToverall = DispenserHToverall;
+            Settings.Default.AirSupportPressure = AirSupportPressure;
             Settings.Default.Save();
             f_DbContext.Dispose();
             Application.Current.Shutdown();
