@@ -1286,7 +1286,11 @@ namespace LabControl.ViewModels
         public bool PressurePumpActive
         {
             get => f_PressurePumpActive;
-            set => Set(ref f_PressurePumpActive, value);
+            set
+            {
+                Set(ref f_PressurePumpActive, value);
+
+            }
         }
 
         private int f_AirSupportPressure;
