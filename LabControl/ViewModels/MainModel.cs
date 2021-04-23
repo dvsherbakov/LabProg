@@ -1289,7 +1289,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PressurePumpActive, value);
-
+                f_PressurePumpDriver?.SetTrigger(value);
             }
         }
 
