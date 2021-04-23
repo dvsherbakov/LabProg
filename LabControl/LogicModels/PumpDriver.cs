@@ -201,8 +201,8 @@ namespace LabControl.LogicModels
             var tmpDirection = (currentDifferent > 0);
             if (f_MeasuredLvl.IsSingle) tmpDirection = !tmpDirection;
 
-            return !tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
-            //return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
+            //return !tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
+            return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
         }
     }
 
