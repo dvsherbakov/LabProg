@@ -298,7 +298,7 @@ namespace LabControl.ViewModels
             }
         }
 
-        private DataModels.PwrItem[] f_PwrParams;
+        private readonly DataModels.PwrItem[] f_PwrParams;
 
         private bool f_IsPwrPortConnect;
         public bool IsPwrPortConnect
