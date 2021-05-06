@@ -1282,6 +1282,35 @@ namespace LabControl.ViewModels
             set => Set(ref f_DispenserHarmonicWaveVisible, value);
         }
 
+        private bool f_PressurePumpActive;
+        public bool PressurePumpActive
+        {
+            get => f_PressurePumpActive;
+            set
+            {
+                Set(ref f_PressurePumpActive, value);
+                f_PressurePumpDriver?.SetTrigger(value);
+            }
+        }
+
+        private int f_AirSupportPressure;
+        public int AirSupportPressure
+        {
+            get => f_AirSupportPressure;
+            set => Set(ref f_AirSupportPressure, value);
+        }
+
+        private int f_AirSupportPressureSelectedItem;
+        public int AirSupportPressureSelectedItem
+        {
+            get => f_AirSupportPressureSelectedItem;
+            set
+            {
+                Set(ref f_AirSupportPressureSelectedItem, value);
+                AirSupportPressure = value;
+            }
+        }
+
         #region PwrTab
         private int f_SelectedPowerPage;
         public int SelectedPowerPage
@@ -1307,6 +1336,7 @@ namespace LabControl.ViewModels
         public ObservableCollection<string> DispenserPortCollection { get; set; }
         public ObservableCollection<string> DispenserModeCollection { get; set; }
         public ObservableCollection<float> PumpingSpeedCollection { get; set; }
+        public ObservableCollection<int> AirSupportPressureCollection { get; set; }
         #endregion
 
         #region StaticLabels
@@ -1386,6 +1416,8 @@ namespace LabControl.ViewModels
         public static int ChannelTag4 => 4;
         public static int ChannelTag5 => 5;
         public static string LabelOverPumpSpeed => Resources.LabelOverPumpSpeed;
+        public static string LabelPressurePumpStart => Resources.LabelPressurePumpStart;
+        public static string LabelAirSupportPressure => Resources.LabelAirSupportPressure;
         #endregion
 
         #region Commands
@@ -1433,6 +1465,7 @@ namespace LabControl.ViewModels
             AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 5f, 15f, 25f };
+            AirSupportPressureCollection = new ObservableCollection<int> { 2, 10, 20, 50, 150, 200 };
             //Other
             CurWindowState = WindowState.Normal;
             //Exclude
@@ -1510,6 +1543,7 @@ namespace LabControl.ViewModels
             DispenserHv0 = Settings.Default.DispenserHV0;
             DispenserHVpeak = Settings.Default.DispenserHVpeak;
             DispenserHToverall = Settings.Default.DispenserHToverall;
+            AirSupportPressure = Settings.Default.AirSupportPressure;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -1651,6 +1685,7 @@ namespace LabControl.ViewModels
             Settings.Default.DispenserHV0 = DispenserHv0;
             Settings.Default.DispenserHVpeak = DispenserHVpeak;
             Settings.Default.DispenserHToverall = DispenserHToverall;
+            Settings.Default.AirSupportPressure = AirSupportPressure;
             Settings.Default.Save();
             f_DbContext.Dispose();
             Application.Current.Shutdown();

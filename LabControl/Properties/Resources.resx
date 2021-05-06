@@ -340,7 +340,7 @@
     <value>Период</value>
   </data>
   <data name="DispenserStartLabel" xml:space="preserve">
-    <value>Запуск</value>
+    <value>Запуск  диспенсера</value>
   </data>
   <data name="LabelAirSupportPort" xml:space="preserve">
     <value>Порт воздушного насоса</value>
@@ -348,7 +348,13 @@
   <data name="LabelPressurePump" xml:space="preserve">
     <value>Соедениться с насосом подкачки</value>
   </data>
+  <data name="LabelPressurePumpStart" xml:space="preserve">
+    <value>Запуск насоса подкачки</value>
+  </data>
   <data name="LabelOverPumpSpeed" xml:space="preserve">
     <value>Скорость парокачки</value>
+  </data>
+  <data name="LabelAirSupportPressure" xml:space="preserve">
+    <value>Установить давление</value>
   </data>
 </root>

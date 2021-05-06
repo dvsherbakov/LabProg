@@ -187,7 +187,7 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Запуск.
+        ///   Ищет локализованную строку, похожую на Запуск  диспенсера.
         /// </summary>
         internal static string DispenserStartLabel {
             get {
@@ -228,6 +228,15 @@ namespace LabControl.Properties {
         internal static string LabelAirSupportPort {
             get {
                 return ResourceManager.GetString("LabelAirSupportPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Установить давление.
+        /// </summary>
+        internal static string LabelAirSupportPressure {
+            get {
+                return ResourceManager.GetString("LabelAirSupportPressure", resourceCulture);
             }
         }
         
@@ -489,6 +498,15 @@ namespace LabControl.Properties {
         internal static string LabelPressurePump {
             get {
                 return ResourceManager.GetString("LabelPressurePump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Запуск насоса подкачки.
+        /// </summary>
+        internal static string LabelPressurePumpStart {
+            get {
+                return ResourceManager.GetString("LabelPressurePumpStart", resourceCulture);
             }
         }
         
