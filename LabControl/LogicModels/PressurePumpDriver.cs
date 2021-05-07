@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LabControl.LogicModels
 {
-    class PressurePumpDriver
+    internal class PressurePumpDriver
     {
         private readonly int p_Id = -1;
         private int err;

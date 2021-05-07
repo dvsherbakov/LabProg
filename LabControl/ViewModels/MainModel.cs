@@ -1297,7 +1297,11 @@ namespace LabControl.ViewModels
         public int AirSupportPressure
         {
             get => f_AirSupportPressure;
-            set => Set(ref f_AirSupportPressure, value);
+            set
+            {
+                Set(ref f_AirSupportPressure, value);
+                f_PressurePumpDriver?.SetPressure(value);
+            }
         }
 
         private int f_AirSupportPressureSelectedItem;
@@ -1332,7 +1336,7 @@ namespace LabControl.ViewModels
         public ObservableCollection<string> PyroPortCollection { get; set; }
         public ObservableCollection<string> PwrPortCollection { get; set; }
         public ObservableCollection<int> LaserHistoryCollection { get; set; }
-        public ObservableCollection<string> AirSupportPortCollection { get; set; }
+        
         public ObservableCollection<string> DispenserPortCollection { get; set; }
         public ObservableCollection<string> DispenserModeCollection { get; set; }
         public ObservableCollection<float> PumpingSpeedCollection { get; set; }
@@ -1462,7 +1466,7 @@ namespace LabControl.ViewModels
             PwrPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             LaserHistoryCollection = new ObservableCollection<int>() { 100, 200, 300 };
             DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
-            AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
+            // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 5f, 15f, 25f };
             AirSupportPressureCollection = new ObservableCollection<int> { 2, 10, 20, 50, 150, 200 };
