@@ -44,7 +44,7 @@ namespace LabControl.LogicModels
 
             var st =  2;
             var TxtStatus = GetStatusText(data[st]);
-            Debug.WriteLine(string.Join(":", TxtStatus));
+            // Debug.WriteLine(string.Join(":", TxtStatus));
             switch (data[1])
             {
                 case 0x01:
@@ -185,7 +185,7 @@ namespace LabControl.LogicModels
             if (f_DispenserSerial != null) f_DispenserSerial.Frequency = freq;
         }
 
-        private String GetStatusText(uint status)
+        private string GetStatusText(uint status)
         {
             var res = new List<string>();
             var bts = BytesUtility.GetBytes(status);
@@ -195,7 +195,7 @@ namespace LabControl.LogicModels
             res.Add(bts[4] ? "Strobe is enabled" : "Strobe is disabled");
             res.Add(bts[3] ? "One of the input parameters is invalid, inconsistent or out of range" : "All input parameters are valid");
             res.Add(bts[2] ? "The active channel is part of the Group Trigger" : "The active channel is not part of the Group Trigger");
-            Debug.WriteLine(string.Join(":", res.ToArray()));
+            // Debug.WriteLine(string.Join(":", res.ToArray()));
             return string.Join(":",res.ToArray());
         }
     }

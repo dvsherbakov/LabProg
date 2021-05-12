@@ -1469,7 +1469,7 @@ namespace LabControl.ViewModels
             // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 5f, 15f, 25f };
-            AirSupportPressureCollection = new ObservableCollection<int> { 2, 10, 20, 50, 150, 200 };
+            AirSupportPressureCollection = new ObservableCollection<int> { 0,1, 2, 5, 10, 20, 30, 50, 150, 200 };
             //Other
             CurWindowState = WindowState.Normal;
             //Exclude

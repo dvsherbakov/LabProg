@@ -138,7 +138,7 @@ namespace LabControl.PortModels
             if (mRxData.Length > 0)
             {
                 //f_RecievedData.Add(ascii.GetString(mRxData));
-                Debug.WriteLine($"{f_ComId}:{ascii.GetString(mRxData)}");
+                // Debug.WriteLine($"{f_ComId}:{ascii.GetString(mRxData)}");
             }
         }
 
