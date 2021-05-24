@@ -4,5 +4,6 @@
     {
         public double Different;
         public string Speed;
+        public float value;
     }
 }

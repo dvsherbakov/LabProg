@@ -15,6 +15,7 @@ namespace LabControl.LogicModels
         public string PortStrOutput { get; set; }
         public bool DirectionInput { get; set; }
         public bool DirectionOutput { get; set; }
+        public float PumpingSpeed { get; set; }
 
         private DistMeasureRes f_MeasuredLvl;
         private double f_RequiredLvl;
@@ -28,22 +29,23 @@ namespace LabControl.LogicModels
         public event LogMessage SetOutputSpeed;
 
         private readonly List<SpeedGradeItem> f_SpeedGrades = new List<SpeedGradeItem> {
-            new SpeedGradeItem{Different=2.00, Speed="250 "},
-            new SpeedGradeItem{Different=1.00, Speed="150 "},
-            new SpeedGradeItem{Different=0.70, Speed="65.0"},
-            new SpeedGradeItem{Different=0.30, Speed="45.0"},
-            new SpeedGradeItem{Different=0.20, Speed="35.0"},
-            new SpeedGradeItem{Different=0.10, Speed="25.0"},
-            new SpeedGradeItem{Different=0.08, Speed="20.0"},
-            new SpeedGradeItem{Different=0.04, Speed="11.0"},
-            new SpeedGradeItem{Different=0.01, Speed="2.5 "},
-            new SpeedGradeItem{Different=0.005, Speed="0.5 "},
-            new SpeedGradeItem{Different=0.00, Speed="0.0 "}
+            new SpeedGradeItem{Different=2.00, Speed="250 ", value=250},
+            new SpeedGradeItem{Different=1.00, Speed="150 ", value = 150},
+            new SpeedGradeItem{Different=0.70, Speed="65.0", value = 65},
+            new SpeedGradeItem{Different=0.30, Speed="45.0", value = 45},
+            new SpeedGradeItem{Different=0.20, Speed="35.0", value = 35},
+            new SpeedGradeItem{Different=0.10, Speed="25.0", value = 25},
+            new SpeedGradeItem{Different=0.08, Speed="20.0", value = 20},
+            new SpeedGradeItem{Different=0.04, Speed="11.0", value = 11},
+            new SpeedGradeItem{Different=0.01, Speed="2.5 ", value = 2.5f},
+            new SpeedGradeItem{Different=0.005, Speed="0.5 ", value=0.5f},
+            new SpeedGradeItem{Different=0.00, Speed="0.0 ", value=0}
         };
 
         public PumpDriver()
         {
             f_IsPumpActive = false;
+            PumpingSpeed = 0f;
         }
 
         public void ConnectToPorts()
@@ -156,6 +158,15 @@ namespace LabControl.LogicModels
 
         private void OperateTwoPump()
         {
+            if (PumpingSpeed != 0 && f_IsTwoPump)
+            {
+                var sp = f_SpeedGrades.Where(x => Math.Abs(PumpingSpeed - x.value) < 0.05).OrderByDescending(y => y.value).FirstOrDefault();
+                _portInput.AddSpeed(sp.Speed);
+                _portOutput.AddSpeed(sp.Speed);
+                StartPump(true);
+                StartPump(false);
+                return;
+            }
             var speed = GetPumpSpeed();
             var direction = GetDirection();
 
@@ -203,7 +214,7 @@ namespace LabControl.LogicModels
 
             if (f_MeasuredLvl.IsSingle)
                 return !tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
-            else 
+            else
                 return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
         }
     }
