@@ -137,7 +137,10 @@ namespace LabControl.ViewModels
         public float PumpingSpeedSelected
         {
             get => f_PumpingSpeedSelected;
-            set { Set(ref f_PumpingSpeedSelected, value); }
+            set { 
+                Set(ref f_PumpingSpeedSelected, value);
+                if (f_PumpDriver != null)  f_PumpDriver.PumpingSpeed = value;
+            }
         }
 
         private string f_IncomingPumpSpeed;
@@ -1464,12 +1467,12 @@ namespace LabControl.ViewModels
             PyroPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             PwrPortSelected = Settings.Default.PwrPortSelected;
             PwrPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
-            LaserHistoryCollection = new ObservableCollection<int>() { 100, 200, 300 };
+            LaserHistoryCollection = new ObservableCollection<int>() { 100, 150, 200, 250, 300, 350, 400 };
             DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
             // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 5f, 15f, 25f };
-            AirSupportPressureCollection = new ObservableCollection<int> { 0,1, 2, 5, 10, 20, 30, 50, 150, 200 };
+            AirSupportPressureCollection = new ObservableCollection<int> { 2, 10, 20, 50, 150, 200 };
             //Other
             CurWindowState = WindowState.Normal;
             //Exclude
