@@ -1066,7 +1066,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PyroTemperature, value);
-                CurrentTemperature = Math.Round((value * value * (-0.0048)) + (value * 1.7941) - 13.109, 3);
+                CurrentTemperature = Math.Round((value * value * (-0.007)) + (value * 2.1476) - 21.948, 3);
             }
         }
 
