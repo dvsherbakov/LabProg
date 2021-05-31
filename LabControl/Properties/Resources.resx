@@ -357,6 +357,9 @@
   <data name="LabelAirSupportPressure" xml:space="preserve">
     <value>Установить давление</value>
   </data>
+  <data name="LabelPressure" xml:space="preserve">
+    <value>Давление</value>
+  </data>
   <data name="LabelPressureSensorPort" xml:space="preserve">
     <value>Порт датчика давления</value>
   </data>

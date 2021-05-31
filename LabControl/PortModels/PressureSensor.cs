@@ -31,6 +31,12 @@ namespace LabControl.PortModels
             ModBus = ModbusSerialMaster.CreateRtu(f_Port);
         }
 
+        public void Close()
+        {
+            ModBus.Dispose();
+            f_Port.Close();
+        }
+
         private float ConvertToFloat(ushort[] buf)
         {
             byte[] bytes = new byte[4];

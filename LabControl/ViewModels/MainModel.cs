@@ -25,6 +25,7 @@ namespace LabControl.ViewModels
         private readonly PyroDriver f_PyroDriver;
         private readonly DispenserDriver f_DispenserDriver;
         private readonly PressurePumpDriver f_PressurePumpDriver;
+        private readonly PressureSensorDriver f_PressureSensorDriver;
         #endregion
 
         #region ModelFields
@@ -137,9 +138,10 @@ namespace LabControl.ViewModels
         public float PumpingSpeedSelected
         {
             get => f_PumpingSpeedSelected;
-            set { 
+            set
+            {
                 Set(ref f_PumpingSpeedSelected, value);
-                if (f_PumpDriver != null)  f_PumpDriver.PumpingSpeed = value;
+                if (f_PumpDriver != null) f_PumpDriver.PumpingSpeed = value;
             }
         }
 
@@ -297,6 +299,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PressureSensorPortSelected, value);
+                if (f_PressureSensorDriver != null) f_PressureSensorDriver.PortStr = value;
             }
         }
 
@@ -1049,6 +1052,28 @@ namespace LabControl.ViewModels
             }
         }
 
+        private bool f_IsPressureSensorPortConnected;
+        public bool IsPressureSensorPortConnected
+        {
+            get => f_IsPressureSensorPortConnected;
+            set
+            {
+                Set(ref f_IsPressureSensorPortConnected, value);
+                f_PressureSensorDriver?.ConnectToPort();
+            }
+        }
+
+        private bool f_IsPressureSensorActive;
+        public bool IsPressureSensorActive
+        {
+            get => f_IsPressureSensorActive;
+            set
+            {
+                Set(ref f_IsPressureSensorActive, value);
+                f_PressureSensorDriver?.SetMeasuring(value);
+            }
+        }
+
         private bool f_IsPyroPortConnected;
         public bool IsPyroPortConnected
         {
@@ -1081,6 +1106,20 @@ namespace LabControl.ViewModels
                 Set(ref f_PyroTemperature, value);
                 CurrentTemperature = Math.Round((value * value * (-0.007)) + (value * 2.1476) - 21.948, 3);
             }
+        }
+
+        private float f_PressureSensorValue;
+        public float PressureSensorValue
+        {
+            get => f_PressureSensorValue;
+            set => Set(ref f_PressureSensorValue, value);
+        }
+
+        private float f_PressureSensorTemperature;
+        public float PressureSensorTemperature
+        {
+            get => f_PressureSensorTemperature;
+            set => Set(ref f_PressureSensorTemperature, value);
         }
 
         private bool f_IsPressurePumpConnected;
@@ -1408,6 +1447,7 @@ namespace LabControl.ViewModels
         public static string LabelGlassHeating => Resources.LabelGlassHeating;
         public static string LaserPowerHistory => Resources.LaserPowerHistory;
         public static string LabelTemperature => Resources.LabelTemperature;
+        public static string LabelPressure => Resources.LabelPressure;
         public static string DispenserOperationTitle => Resources.DispenserOperationTitle;
         public static string DispenserSignalTypeLabel => Resources.DispenserSignalTypeLabel;
         public static string DispenserCurrentChannelLabel => Resources.DispenserCurrentChannelLabel;
@@ -1610,6 +1650,8 @@ namespace LabControl.ViewModels
 
             f_PressurePumpDriver = new PressurePumpDriver();
 
+            f_PressureSensorDriver = new PressureSensorDriver(PressureSensorPortSelected);
+            f_PressureSensorDriver.EventHandler += PressureSensorHandler;
 
             AddLogMessage("Application Started");
         }
@@ -1628,6 +1670,12 @@ namespace LabControl.ViewModels
             Application.Current.Dispatcher.Invoke(() => { PyroTemperature = temperature; });
         }
 
+        private void PressureSensorHandler(float pressure, float temperature)
+        {
+            Application.Current.Dispatcher.Invoke(() => { PressureSensorTemperature = temperature; });
+            Application.Current.Dispatcher.Invoke(() => { PressureSensorValue= pressure; });
+        }
+
         private void OnQuitApp(object p)
         {
             f_DbContext.SaveChanges();
@@ -1641,7 +1689,7 @@ namespace LabControl.ViewModels
             Settings.Default.LaserPortSelected = LaserPortSelected;
             Settings.Default.PyroPortSelected = PyroPortSelected;
             Settings.Default.DispenserPortSelected = DispenserPortSelected;
-            Settings.Default.PressureSensorPortSelected =PressureSensorPortSelected;
+            Settings.Default.PressureSensorPortSelected = PressureSensorPortSelected;
             Settings.Default.PwrPortSelected = PwrPortSelected;
             Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
             Settings.Default.PwrCh0Mode = PwrCh0Mode;

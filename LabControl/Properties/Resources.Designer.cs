@@ -493,6 +493,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Давление.
+        /// </summary>
+        internal static string LabelPressure {
+            get {
+                return ResourceManager.GetString("LabelPressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Соедениться с насосом подкачки.
         /// </summary>
         internal static string LabelPressurePump {
