@@ -1069,7 +1069,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref f_PyroTemperature, value);
-                CurrentTemperature = Math.Round((value * value * (-0.0048)) + (value * 1.7941) - 13.109, 3);
+                CurrentTemperature = Math.Round((value * value * (-0.007)) + (value * 2.1476) - 21.948, 3);
             }
         }
 
@@ -1471,7 +1471,7 @@ namespace LabControl.ViewModels
             DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
             // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
-            PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 5f, 15f, 25f };
+            PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 2.5f, 11f, 25f };
             AirSupportPressureCollection = new ObservableCollection<int> { 2, 10, 20, 50, 150, 200 };
             //Other
             CurWindowState = WindowState.Normal;
