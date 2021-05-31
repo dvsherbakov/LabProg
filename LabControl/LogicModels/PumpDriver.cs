@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace LabControl.LogicModels
 {
-    class PumpDriver
+    internal class PumpDriver
     {
         private PumpSerial _portInput;
         private PumpSerial _portOutput;
@@ -165,7 +165,7 @@ namespace LabControl.LogicModels
             if (PumpingSpeed != 0)
             {
                 var sp = f_SpeedGrades.Where(x => Math.Abs(PumpingSpeed - x.value) < 0.05).OrderByDescending(y => y.value).FirstOrDefault();
-                _portInput.AddSpeed(direction == Direction.Clockwise? GetPumpSpeed(PumpingSpeed): sp.Speed);
+                _portInput.AddSpeed(direction == Direction.Clockwise ? GetPumpSpeed(PumpingSpeed) : sp.Speed);
                 _portOutput.AddSpeed(direction == Direction.CounterClockwise ? GetPumpSpeed(PumpingSpeed) : sp.Speed);
                 StartPump(true);
                 StartPump(false);
