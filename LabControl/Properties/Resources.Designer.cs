@@ -511,6 +511,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт датчика давления.
+        /// </summary>
+        internal static string LabelPressureSensorPort {
+            get {
+                return ResourceManager.GetString("LabelPressureSensorPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Насос.
         /// </summary>
         internal static string LabelPump {

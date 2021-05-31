@@ -290,6 +290,16 @@ namespace LabControl.ViewModels
             }
         }
 
+        private string f_PressureSensorPortSelected;
+        public string PressureSensorPortSelected
+        {
+            get => f_PressureSensorPortSelected;
+            set
+            {
+                Set(ref f_PressureSensorPortSelected, value);
+            }
+        }
+
         private int f_LaserTypeSelectedIndex;
         public int LaserTypeSelectedIndex
         {
@@ -1339,11 +1349,11 @@ namespace LabControl.ViewModels
         public ObservableCollection<string> PyroPortCollection { get; set; }
         public ObservableCollection<string> PwrPortCollection { get; set; }
         public ObservableCollection<int> LaserHistoryCollection { get; set; }
-        
         public ObservableCollection<string> DispenserPortCollection { get; set; }
         public ObservableCollection<string> DispenserModeCollection { get; set; }
         public ObservableCollection<float> PumpingSpeedCollection { get; set; }
         public ObservableCollection<int> AirSupportPressureCollection { get; set; }
+        public ObservableCollection<string> PressureSensorPortCollection { get; set; }
         #endregion
 
         #region StaticLabels
@@ -1364,6 +1374,7 @@ namespace LabControl.ViewModels
         public static string LabelCurrentTemperature => Resources.LabelCurrentTemperature;
         public static string LabelLaserPort => Resources.LabelLaserPort;
         public static string LabelPyroPort => Resources.LabelPyroPort;
+        public static string LabelPressureSensorPort => Resources.LabelPressureSensorPort;
         public static string LabelAirSupportPort => Resources.LabelAirSupportPort;
         public static string LabelLaserType => Resources.LabelLaserType;
         public static string PowerSupplyTitle => Resources.PowerSuplyTitle;
@@ -1464,21 +1475,25 @@ namespace LabControl.ViewModels
             LaserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(LaserPortSelected));
             PyroPortSelected = Settings.Default.PyroPortSelected;
             DispenserPortSelected = Settings.Default.DispenserPortSelected;
+            PressureSensorPortSelected = Settings.Default.PressureSensorPortSelected;
             PyroPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             PwrPortSelected = Settings.Default.PwrPortSelected;
             PwrPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             LaserHistoryCollection = new ObservableCollection<int>() { 100, 150, 200, 250, 300, 350, 400 };
             DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
+            PressureSensorPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PressureSensorPortSelected));
             // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 2.5f, 11f, 25f };
             AirSupportPressureCollection = new ObservableCollection<int> { 2, 10, 20, 50, 150, 200 };
+
             //Other
             CurWindowState = WindowState.Normal;
             //Exclude
             f_DispenserDriver = new DispenserDriver();
             f_DispenserDriver.SetLogMessage += AddLogMessage;
             f_DispenserDriver.PortStr = Settings.Default.DispenserPortSelected;
+            //f_PressureSensorPortSelected = Settings.Default.PressureSensorPortSelected;
             //load params from settings
             WindowHeight = Settings.Default.WindowHeight == 0 ? 550 : Settings.Default.WindowHeight;
             WindowWidth = Settings.Default.WindowWidth == 0 ? 850 : Settings.Default.WindowWidth;
@@ -1626,6 +1641,7 @@ namespace LabControl.ViewModels
             Settings.Default.LaserPortSelected = LaserPortSelected;
             Settings.Default.PyroPortSelected = PyroPortSelected;
             Settings.Default.DispenserPortSelected = DispenserPortSelected;
+            Settings.Default.PressureSensorPortSelected =PressureSensorPortSelected;
             Settings.Default.PwrPortSelected = PwrPortSelected;
             Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
             Settings.Default.PwrCh0Mode = PwrCh0Mode;

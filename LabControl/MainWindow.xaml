@@ -1862,6 +1862,43 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem VerticalAlignment="Center" 
+                         Style="{DynamicResource TabItemStyle}"
+                         HorizontalAlignment="Center" >
+                    <TabItem.Header>
+                        <Viewbox Width="50" Height="50">
+                            <TextBlock Foreground="SandyBrown">P</TextBlock>
+                        </Viewbox>
+                    </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Expander Padding="5"
+                                  Header="{Binding LabelSettings}"
+                                  Foreground="SandyBrown">
+                                <StackPanel>
+                                    <Grid Margin="15,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*" />
+                                            <ColumnDefinition Width="4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                               VerticalAlignment="Center"
+                                               Foreground="SandyBrown"
+                                               Text="{Binding LabelPressureSensorPort}"/>
+                                        <ComboBox Grid.Row="0" Grid.Column="1"
+                                                  Style="{StaticResource RoundComboBox}"
+                                              ItemsSource="{Binding PressureSensorPortCollection}"
+                                              SelectedItem="{Binding PressureSensorPortSelected}"
+                                              Margin="0,1"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
             </TabControl>
             <GridSplitter 
                 ResizeDirection="Columns" 
