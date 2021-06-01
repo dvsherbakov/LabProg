@@ -29,9 +29,10 @@ namespace LabControl.LogicModels
         public event LogMessage SetOutputSpeed;
 
         private readonly List<SpeedGradeItem> f_SpeedGrades = new List<SpeedGradeItem> {
-            new SpeedGradeItem{Different=2.00, Speed="250 ", value=250},
-            new SpeedGradeItem{Different=1.00, Speed="150 ", value = 150},
-            new SpeedGradeItem{Different=0.70, Speed="65.0", value = 65},
+            new SpeedGradeItem{Different=1.00, Speed="250 ", value=250},
+            new SpeedGradeItem{Different=0.85, Speed="150 ", value = 150},
+            new SpeedGradeItem{Different=0.70, Speed="100 ", value = 100},
+            new SpeedGradeItem{Different=0.45, Speed="65.0", value = 65},
             new SpeedGradeItem{Different=0.30, Speed="45.0", value = 45},
             new SpeedGradeItem{Different=0.20, Speed="35.0", value = 35},
             new SpeedGradeItem{Different=0.10, Speed="25.0", value = 25},
