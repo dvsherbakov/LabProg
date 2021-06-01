@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace LabControl.LogicModels
 {
-    class PumpDriver
+    internal class PumpDriver
     {
         private PumpSerial _portInput;
         private PumpSerial _portOutput;
@@ -106,12 +106,13 @@ namespace LabControl.LogicModels
             else _portOutput?.AddStartPump();
         }
 
-        private string GetPumpSpeed()
+        private string GetPumpSpeed(float add = 0)
         {
-            var subLevel = Math.Abs(f_RequiredLvl - f_MeasuredLvl.Dist);
+            var subLevel = Math.Abs(f_RequiredLvl - f_MeasuredLvl.Dist) + add;
 
             return f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
         }
+
 
         private void OperatePump()
         {
@@ -159,17 +160,18 @@ namespace LabControl.LogicModels
 
         private void OperateTwoPump()
         {
-            if (PumpingSpeed != 0 && f_IsTwoPump)
+            var speed = GetPumpSpeed();
+            var direction = GetDirection();
+
+            if (PumpingSpeed != 0)
             {
                 var sp = f_SpeedGrades.Where(x => Math.Abs(PumpingSpeed - x.value) < 0.05).OrderByDescending(y => y.value).FirstOrDefault();
-                _portInput.AddSpeed(sp.Speed);
-                _portOutput.AddSpeed(sp.Speed);
+                _portInput.AddSpeed(direction == Direction.Clockwise ? GetPumpSpeed(PumpingSpeed) : sp.Speed);
+                _portOutput.AddSpeed(direction == Direction.CounterClockwise ? GetPumpSpeed(PumpingSpeed) : sp.Speed);
                 StartPump(true);
                 StartPump(false);
                 return;
             }
-            var speed = GetPumpSpeed();
-            var direction = GetDirection();
 
             if (!f_IsPumpActive || speed.Equals("0.0 ") || (direction == Direction.Stop))
             {

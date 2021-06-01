@@ -66,6 +66,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="NModbus4, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -119,11 +122,13 @@
     <Compile Include="LogicModels\DispenserDriver.cs" />
     <Compile Include="LogicModels\LaserDriver.cs" />
     <Compile Include="LogicModels\PressurePumpDriver.cs" />
+    <Compile Include="LogicModels\PressureSensorDriver.cs" />
     <Compile Include="LogicModels\PumpDriver.cs" />
     <Compile Include="LogicModels\PwrDriver.cs" />
     <Compile Include="LogicModels\PyroDriver.cs" />
     <Compile Include="PortModels\DispenserSerial.cs" />
     <Compile Include="PortModels\LaserSerial.cs" />
+    <Compile Include="PortModels\PressureSensor.cs" />
     <Compile Include="PortModels\PumpSerial.cs" />
     <Compile Include="PortModels\PwrSerial.cs" />
     <Compile Include="PortModels\PyroSerial.cs" />
