@@ -83,13 +83,7 @@ namespace LabControl.PortModels
 
         private static float RcConvert(byte[] rData)
         {
-            //while (rData[0] > 10)
-            //{
-            //    var tLst = new List<byte>(rData);
-            //    tLst.Remove(0);
-            //    rData = tLst.ToArray();
-            //}
-            byte[] newData = TrimReceivedData(rData);
+            var newData = TrimReceivedData(rData);
             if (newData.Length < 2) return 0;
             var tmp = new byte[4];
             tmp[0] = 0;

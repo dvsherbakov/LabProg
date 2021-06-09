@@ -315,7 +315,7 @@
                                                 />
                                                 <ComboBox
                                                     ItemsSource="{Binding OutcomingPumpPortCollection}"
-                                                    SelectedItem="{Binding OutloginPumpPortSelected}"
+                                                    SelectedItem="{Binding OutgoingPumpPortSelected}"
                                                     Margin="1"/>
                                             </DockPanel>
                                             <DockPanel>
@@ -380,7 +380,7 @@
                                                 Margin="1"
                                                 BorderBrush="Aquamarine"
                                                 CornerRadius="5" BorderThickness="1">
-                                            <TextBlock Text="{Binding OutcomingPumpSpeed}"
+                                            <TextBlock Text="{Binding OutgoingPumpSpeed}"
                                                 Style="{StaticResource PartTransparent}"
                                                 HorizontalAlignment="Center"/>
                                         </Border>
@@ -455,9 +455,14 @@
                                            Text ="{Binding LabelSetterPower}" />
                                 <TextBox Grid.Row="1" Grid.Column="1"
                                      TextAlignment="Center"
-                                     Text="{Binding LaserPowerSetter}"
+                                     Text="{Binding LaserPowerSetter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      Style="{StaticResource PartTransparent}"
-                                     Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                     Template="{StaticResource TextBoxBaseControlTemplate}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Command="{Binding SetLaserPwrCommand}"
+                                                    Key="Enter"/>
+                                    </TextBox.InputBindings>
+                                </TextBox>
                                 <Button 
                                     Grid.Row="1" Grid.Column="2"
                                     Command="{Binding SetLaserPwrCommand}"
