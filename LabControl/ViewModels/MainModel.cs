@@ -187,18 +187,18 @@ namespace LabControl.ViewModels
             set => Set(ref _fCurrentTemperature, value);
         }
 
-        private Visibility _fSecondPumpPanelVisibility;
+        private Visibility _secondPumpPanelVisibility;
         public Visibility SecondPumpPanelVisibility
         {
-            get => _fSecondPumpPanelVisibility;
-            set => Set(ref _fSecondPumpPanelVisibility, value);
+            get => _secondPumpPanelVisibility;
+            set => Set(ref _secondPumpPanelVisibility, value);
         }
 
-        private bool _fIsRevereFirstPump;
+        private bool _isRevereFirstPump;
         public bool IsRevereFirstPump
         {
-            get => _fIsRevereFirstPump;
-            set => Set(ref _fIsRevereFirstPump, value);
+            get => _isRevereFirstPump;
+            set => Set(ref _isRevereFirstPump, value);
         }
 
         private bool _fIsRevereSecondPump;
