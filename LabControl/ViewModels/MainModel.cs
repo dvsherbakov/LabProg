@@ -1664,7 +1664,7 @@ namespace LabControl.ViewModels
         private void PyroHandler(float temperature)
         {
             Application.Current.Dispatcher.Invoke(() => { PyroTemperature = temperature; });
-            f_DbContext.Temperatures.Add(new Temperature { Dt = DateTime.Now, Tmp = temperature, CurTmp=CurrentTemperature });
+            _fDbContext.Temperatures.Add(new Temperature { Dt = DateTime.Now, Tmp = temperature, CurTmp=CurrentTemperature });
         }
 
         private void PressureSensorHandler(float pressure, float temperature)
