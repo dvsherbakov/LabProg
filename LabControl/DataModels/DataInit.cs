@@ -43,7 +43,8 @@ namespace LabControl.DataModels
             const string sql = @"CREATE TABLE Temperatures(
                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                Dt datetime default current_timestamp,
-                               Tmp real
+                               Tmp real,
+                               CurTmp real
                             );";
             return new SQLiteCommand(sql, con);
         }

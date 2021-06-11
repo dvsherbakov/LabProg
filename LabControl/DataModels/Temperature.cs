@@ -14,5 +14,6 @@ namespace LabControl.DataModels
         public int Id { get; set; }
         public DateTime Dt { get; set; }
         public float Tmp { get; set; }
+        public double CurTmp { get; set; }
     }
 }

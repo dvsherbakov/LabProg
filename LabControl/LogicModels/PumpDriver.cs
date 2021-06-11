@@ -108,7 +108,7 @@ namespace LabControl.LogicModels
 
         private string GetPumpSpeed(float add = 0)
         {
-            var subLevel = Math.Abs(f_RequiredLvl - f_MeasuredLvl.Dist) + add;
+            var subLevel = Math.Abs(f_RequiredLvl - f_MeasuredLvl.Dist) + add / 20;
 
             return f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
         }
