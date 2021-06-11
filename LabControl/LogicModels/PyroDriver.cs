@@ -1,34 +1,29 @@
 ﻿using LabControl.PortModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LabControl.LogicModels
 {
     internal class PyroDriver
     {
         public string PortStr { get; set; }
-        private PyroSerial f_Port;
+        private PyroSerial _fPort;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
-        public delegate void PyroEventHandler(float temperature);
+        // public delegate void PyroEventHandler(float temperature);
         public event PyroSerial.PyroEventHandler EventHandler;
 
         public void ConnectToPort()
         {
-            f_Port = new PyroSerial(PortStr);
-            f_Port.SetLogMessage += TestLog;
-            f_Port.EventHandler += HandleEvent;
+            _fPort = new PyroSerial(PortStr);
+            _fPort.SetLogMessage += TestLog;
+            _fPort.EventHandler += HandleEvent;
             PyroSerial.OpenPort();
         }
 
         public void Disconnect()
         {
-            f_Port.ClosePort();
+            _fPort.ClosePort();
         }
 
         private void TestLog(string msg)
@@ -43,7 +38,7 @@ namespace LabControl.LogicModels
 
         public void SetMeasuring(bool isMeasuring)
         {
-            if (isMeasuring) f_Port.StartMeasuring(); else f_Port.StopMeasuring();
+            if (isMeasuring) _fPort.StartMeasuring(); else _fPort.StopMeasuring();
         }
 
     }

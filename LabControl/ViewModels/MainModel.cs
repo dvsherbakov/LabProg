@@ -1,1164 +1,1160 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Shapes;
 using LabControl.ClassHelpers;
 using LabControl.DataModels;
 using LabControl.LogicModels;
 using LabControl.Properties;
-using LabControl.Wrappers;
 
 namespace LabControl.ViewModels
 {
     internal class MainModel : ViewModel
     {
-        private readonly ApplicationContext f_DbContext;
+        private readonly ApplicationContext _fDbContext;
         #region drivers
-        private readonly PumpDriver f_PumpDriver;
-        private readonly ConfocalDriver f_ConfocalDriver;
-        private readonly PwrDriver f_PwrDriver;
-        private readonly LaserDriver f_LaserDriver;
-        private readonly PyroDriver f_PyroDriver;
-        private readonly DispenserDriver f_DispenserDriver;
-        private readonly PressurePumpDriver f_PressurePumpDriver;
-        private readonly PressureSensorDriver f_PressureSensorDriver;
+        private readonly PumpDriver _fPumpDriver;
+        private readonly ConfocalDriver _fConfocalDriver;
+        private readonly PwrDriver _fPwrDriver;
+        private readonly LaserDriver _fLaserDriver;
+        private readonly PyroDriver _fPyroDriver;
+        private readonly DispenserDriver _fDispenserDriver;
+        private readonly PressurePumpDriver _fPressurePumpDriver;
+        private readonly PressureSensorDriver _fPressureSensorDriver;
         #endregion
 
         #region ModelFields
-        private WindowState f_CurWindowState;
+        private WindowState _curWindowState;
         public WindowState CurWindowState
         {
-            get => f_CurWindowState;
-            set => Set(ref f_CurWindowState, value);
+            get => _curWindowState;
+            set => Set(ref _curWindowState, value);
         }
 
         public static string WindowTitle => Resources.MainWindowTitle;
 
-        private int f_WindowHeight;
+        private int _windowHeight;
         public int WindowHeight
         {
-            get => f_WindowHeight;
-            set => Set(ref f_WindowHeight, value);
+            get => _windowHeight;
+            set => Set(ref _windowHeight, value);
         }
 
-        private int f_WindowWidth;
+        private int _windowWidth;
         public int WindowWidth
         {
-            get => f_WindowWidth;
-            set => Set(ref f_WindowWidth, value);
+            get => _windowWidth;
+            set => Set(ref _windowWidth, value);
         }
 
-        private bool f_IsPumpPortsConnect;
+        private bool _isPumpPortsConnect;
         public bool IsPumpPortsConnect
         {
-            get => f_IsPumpPortsConnect;
+            get => _isPumpPortsConnect;
             set
             {
-                Set(ref f_IsPumpPortsConnect, value);
+                _ = Set(ref _isPumpPortsConnect, value);
                 if (value)
-                    f_PumpDriver.ConnectToPorts();
+                    _fPumpDriver.ConnectToPorts();
                 else
-                    f_PumpDriver.Disconnect();
+                    _fPumpDriver.Disconnect();
             }
         }
 
-        private bool f_IsTwoPump;
+        private bool _isTwoPump;
         public bool IsTwoPump
         {
-            get => f_IsTwoPump;
+            get => _isTwoPump;
             set
             {
                 LabelPumpCount = value ? Resources.LabelTwoPump : Resources.LabelOnePump;
                 SecondPumpPanelVisibility = value ? Visibility.Visible : Visibility.Collapsed;
                 LabelPump = value ? Resources.LabelPumpIn : Resources.LabelPump;
-                f_PumpDriver?.TogleTwoPump(value);
-                Set(ref f_IsTwoPump, value);
+                _fPumpDriver?.TogleTwoPump(value);
+                _ = Set(ref _isTwoPump, value);
             }
         }
 
-        private string f_LabelPump;
+        private string _labelPump;
         public string LabelPump
         {
-            get => f_LabelPump;
-            set => Set(ref f_LabelPump, value);
+            get => _labelPump;
+            set => Set(ref _labelPump, value);
         }
 
-        private string f_LabelPumpCount;
+        private string _labelPumpCount;
         public string LabelPumpCount
         {
-            get => f_LabelPumpCount;
-            set => Set(ref f_LabelPumpCount, value);
+            get => _labelPumpCount;
+            set => Set(ref _labelPumpCount, value);
         }
 
-        private double f_ConfocalLevel;
+        private double _confocalLevel;
         public double ConfocalLevel
         {
-            get => f_ConfocalLevel;
-            set => Set(ref f_ConfocalLevel, value);
+            get => _confocalLevel;
+            set => Set(ref _confocalLevel, value);
         }
 
-        private double f_ConfocalLevelSetter;
+        private double _confocalLevelSetter;
         public double ConfocalLevelSetter
         {
-            get => f_ConfocalLevelSetter;
+            get => _confocalLevelSetter;
             set
             {
-                Set(ref f_ConfocalLevelSetter, value);
-                if (f_PumpDriver != null) f_PumpDriver.SetRequiredLvl(value);
+                _ = Set(ref _confocalLevelSetter, value);
+                _fPumpDriver?.SetRequiredLvl(value);
             }
         }
 
-        private string f_IncomingPumpPortSelected;
+        private string _fIncomingPumpPortSelected;
         public string IncomingPumpPortSelected
         {
-            get => f_IncomingPumpPortSelected;
+            get => _fIncomingPumpPortSelected;
             set
             {
-                Set(ref f_IncomingPumpPortSelected, value);
-                if (f_PumpDriver != null) f_PumpDriver.PortStrInput = value;
+                _ = Set(ref _fIncomingPumpPortSelected, value);
+                if (_fPumpDriver != null) _fPumpDriver.PortStrInput = value;
             }
         }
 
-        private string f_OutcomingPumpPortSelected;
-        public string OutloginPumpPortSelected
+        private string _outgoingPumpPortSelected;
+        public string OutgoingPumpPortSelected
         {
-            get => f_OutcomingPumpPortSelected;
+            get => _outgoingPumpPortSelected;
             set
             {
-                Set(ref f_OutcomingPumpPortSelected, value);
-                if (f_PumpDriver != null) f_PumpDriver.PortStrOutput = value;
+                Set(ref _outgoingPumpPortSelected, value);
+                if (_fPumpDriver != null) _fPumpDriver.PortStrOutput = value;
             }
         }
 
-        private float f_PumpingSpeedSelected;
+        private float _fPumpingSpeedSelected;
         public float PumpingSpeedSelected
         {
-            get => f_PumpingSpeedSelected;
+            get => _fPumpingSpeedSelected;
             set
             {
-                Set(ref f_PumpingSpeedSelected, value);
-                if (f_PumpDriver != null) f_PumpDriver.PumpingSpeed = value;
+                _ = Set(ref _fPumpingSpeedSelected, value);
+                if (_fPumpDriver != null) _fPumpDriver.PumpingSpeed = value;
             }
         }
 
-        private string f_IncomingPumpSpeed;
+        private string _incomingPumpSpeed;
         public string IncomingPumpSpeed
         {
-            get => f_IncomingPumpSpeed;
-            set => Set(ref f_IncomingPumpSpeed, value);
+            get => _incomingPumpSpeed;
+            set => Set(ref _incomingPumpSpeed, value);
         }
 
-        private string f_OutcomingPumpSpeed;
-        public string OutcomingPumpSpeed
+        private string _outgoingPumpSpeed;
+        public string OutgoingPumpSpeed
         {
-            get => f_OutcomingPumpSpeed;
-            set => Set(ref f_OutcomingPumpSpeed, value);
+            get => _outgoingPumpSpeed;
+            set => Set(ref _outgoingPumpSpeed, value);
         }
 
-        private int f_CurrentLaserPower;
+        private int _currentLaserPower;
         public int CurrentLaserPower
         {
-            get => f_CurrentLaserPower;
-            set => Set(ref f_CurrentLaserPower, value);
+            get => _currentLaserPower;
+            set => Set(ref _currentLaserPower, value);
         }
 
-        private int f_LaserPowerSetter;
+        private int _laserPowerSetter;
         public int LaserPowerSetter
         {
-            get => f_LaserPowerSetter;
-            set => Set(ref f_LaserPowerSetter, value);
+            get => _laserPowerSetter;
+            set => Set(ref _laserPowerSetter, value);
         }
 
-        private int f_LaserPowerHistorySelectedItem;
+        private int _laserPowerHistorySelectedItem;
         public int LaserPowerHistorySelectedItem
         {
-            get => f_LaserPowerHistorySelectedItem;
+            get => _laserPowerHistorySelectedItem;
             set
             {
-                Set(ref f_LaserPowerHistorySelectedItem, value);
+                _ = Set(ref _laserPowerHistorySelectedItem, value);
                 LaserPowerSetter = value;
+                OnSetLaserPower(null);
             }
         }
 
-        private double f_CurrentTemperature;
+        private double _fCurrentTemperature;
         public double CurrentTemperature
         {
-            get => f_CurrentTemperature;
-            set => Set(ref f_CurrentTemperature, value);
+            get => _fCurrentTemperature;
+            set => Set(ref _fCurrentTemperature, value);
         }
 
-        private Visibility f_SecondPumpPanelVisibility;
+        private Visibility _secondPumpPanelVisibility;
         public Visibility SecondPumpPanelVisibility
         {
-            get => f_SecondPumpPanelVisibility;
-            set => Set(ref f_SecondPumpPanelVisibility, value);
+            get => _secondPumpPanelVisibility;
+            set => Set(ref _secondPumpPanelVisibility, value);
         }
 
-        private bool f_IsRevereFirstPump;
+        private bool _isRevereFirstPump;
         public bool IsRevereFirstPump
         {
-            get => f_IsRevereFirstPump;
-            set => Set(ref f_IsRevereFirstPump, value);
+            get => _isRevereFirstPump;
+            set => Set(ref _isRevereFirstPump, value);
         }
 
-        private bool f_IsRevereSecondPump;
+        private bool _fIsRevereSecondPump;
         public bool IsRevereSecondPump
         {
-            get => f_IsRevereSecondPump;
-            set => Set(ref f_IsRevereSecondPump, value);
+            get => _fIsRevereSecondPump;
+            set => Set(ref _fIsRevereSecondPump, value);
         }
 
-        private bool f_IsLaserPortConnected;
+        private bool _isLaserPortConnected;
         public bool IsLaserPortConnected
         {
-            get => f_IsLaserPortConnected;
+            get => _isLaserPortConnected;
             set
             {
-                Set(ref f_IsLaserPortConnected, value);
+                _ = Set(ref _isLaserPortConnected, value);
                 if (value)
                 {
-                    f_LaserDriver.ConnectToPort();
-                    f_LaserDriver.SetLaserType(LaserTypeSelectedIndex);
+                    _fLaserDriver.ConnectToPort();
+                    _fLaserDriver.SetLaserType(LaserTypeSelectedIndex);
 
                 }
-                else f_LaserDriver.Disconnect();
+                else _fLaserDriver.Disconnect();
             }
         }
 
-        private bool f_IsLaserEmit;
+        private bool _isLaserEmit;
         public bool IsLaserEmit
         {
-            get => f_IsLaserEmit;
+            get => _isLaserEmit;
             set
             {
                 if (!IsLaserPortConnected) IsLaserPortConnected = true;
-                Set(ref f_IsLaserEmit, value);
-                if (f_LaserDriver != null) f_LaserDriver.EmitOn(value);
+                _ = Set(ref _isLaserEmit, value);
+                _fLaserDriver?.EmitOn(value);
             }
         }
 
-        private string f_LaserPortSelected;
+        private string _fLaserPortSelected;
         public string LaserPortSelected
         {
-            get => f_LaserPortSelected;
+            get => _fLaserPortSelected;
             set
             {
-                Set(ref f_LaserPortSelected, value);
-                if (f_LaserDriver != null) f_LaserDriver.PortString = value;
+                _ = Set(ref _fLaserPortSelected, value);
+                if (_fLaserDriver != null) _fLaserDriver.PortString = value;
             }
         }
 
-        private string f_PyroPortSelected;
+        private string _pyroPortSelected;
         public string PyroPortSelected
         {
-            get => f_PyroPortSelected;
+            get => _pyroPortSelected;
             set
             {
-                Set(ref f_PyroPortSelected, value);
-                if (f_PyroDriver != null) f_PyroDriver.PortStr = value;
+                _ = Set(ref _pyroPortSelected, value);
+                if (_fPyroDriver != null) _fPyroDriver.PortStr = value;
             }
         }
 
-        private string f_DispenserPortSelected;
+        private string _dispenserPortSelected;
         public string DispenserPortSelected
         {
-            get => f_DispenserPortSelected;
+            get => _dispenserPortSelected;
             set
             {
-                Set(ref f_DispenserPortSelected, value);
-                if (f_DispenserDriver != null) f_DispenserDriver.PortStr = value;
+                _ = Set(ref _dispenserPortSelected, value);
+                if (_fDispenserDriver != null) _fDispenserDriver.PortStr = value;
             }
         }
 
-        private string f_AirSupportPortSelected;
+        private string _fAirSupportPortSelected;
         public string AirSupportPortSelected
         {
-            get => f_AirSupportPortSelected;
-            set => Set(ref f_AirSupportPortSelected, value);
+            get => _fAirSupportPortSelected;
+            set => Set(ref _fAirSupportPortSelected, value);
         }
 
-        private string f_PwrPortSelected;
+        private string _fPwrPortSelected;
         public string PwrPortSelected
         {
-            get => f_PwrPortSelected;
+            get => _fPwrPortSelected;
             set
             {
-                Set(ref f_PwrPortSelected, value);
-                if (f_PwrDriver != null) f_PwrDriver.PortStr = value;
+                _ = Set(ref _fPwrPortSelected, value);
+                if (_fPwrDriver != null) _fPwrDriver.PortStr = value;
             }
         }
 
-        private string f_PressureSensorPortSelected;
+        private string _fPressureSensorPortSelected;
         public string PressureSensorPortSelected
         {
-            get => f_PressureSensorPortSelected;
+            get => _fPressureSensorPortSelected;
             set
             {
-                Set(ref f_PressureSensorPortSelected, value);
-                if (f_PressureSensorDriver != null) f_PressureSensorDriver.PortStr = value;
+                _ = Set(ref _fPressureSensorPortSelected, value);
+                if (_fPressureSensorDriver != null) _fPressureSensorDriver.PortStr = value;
             }
         }
 
-        private int f_LaserTypeSelectedIndex;
+        private int _laserTypeSelectedIndex;
         public int LaserTypeSelectedIndex
         {
-            get => f_LaserTypeSelectedIndex;
+            get => _laserTypeSelectedIndex;
             set
             {
-                Set(ref f_LaserTypeSelectedIndex, value);
-                f_LaserDriver?.SetLaserType(value);
+                _ = Set(ref _laserTypeSelectedIndex, value);
+                _fLaserDriver?.SetLaserType(value);
             }
         }
 
-        private readonly DataModels.PwrItem[] f_PwrParams;
+        private readonly DataModels.PwrItem[] _pwrParams;
 
-        private bool f_IsPwrPortConnect;
+        private bool _fIsPwrPortConnect;
         public bool IsPwrPortConnect
         {
-            get => f_IsPwrPortConnect;
+            get => _fIsPwrPortConnect;
             set
             {
-                Set(ref f_IsPwrPortConnect, value);
-                f_PwrDriver.ConnectToPort();
+                _ = Set(ref _fIsPwrPortConnect, value);
+                _fPwrDriver.ConnectToPort();
             }
         }
 
-        private bool f_PwrSwitchCh0;
+        private bool _fPwrSwitchCh0;
         public bool PwrSwitchCh0
         {
-            get => f_PwrSwitchCh0;
+            get => _fPwrSwitchCh0;
             set
             {
-                Set(ref f_PwrSwitchCh0, value);
-                if (value) f_PwrDriver?.SetChannelOn(0); else f_PwrDriver?.SetChannelOff(0);
+                _ = Set(ref _fPwrSwitchCh0, value);
+                if (value) _fPwrDriver?.SetChannelOn(0); else _fPwrDriver?.SetChannelOff(0);
             }
         }
 
-        private string f_LabelPwrChannel0Bias;
+        private string _fLabelPwrChannel0Bias;
         public string LabelPwrChannel0Bias
         {
-            get => f_LabelPwrChannel0Bias;
-            set => Set(ref f_LabelPwrChannel0Bias, value);
+            get => _fLabelPwrChannel0Bias;
+            set => Set(ref _fLabelPwrChannel0Bias, value);
 
         }
 
-        private int f_PwrCh0Mode;
+        private int _pwrCh0Mode;
         public int PwrCh0Mode
         {
-            get => f_PwrCh0Mode;
+            get => _pwrCh0Mode;
             set
             {
-                Set(ref f_PwrCh0Mode, value);
+                _ = Set(ref _pwrCh0Mode, value);
                 if (value == 1)
                 {
                     LabelPwrChannel0Bias = Resources.LabelElectricFlow;
-                    f_PwrDriver?.SetChannelOn(0);
+                    _fPwrDriver?.SetChannelOn(0);
                 }
                 else { LabelPwrChannel0Bias = Resources.LabelOffsetVoltage; }
-                f_PwrParams[0].Mode = value;
+                _pwrParams[0].Mode = value;
             }
         }
 
-        private int f_PwrCh0Bias;
+        private int _pwrCh0Bias;
         public int PwrCh0Bias
         {
-            get => f_PwrCh0Bias;
+            get => _pwrCh0Bias;
             set
             {
-                Set(ref f_PwrCh0Bias, value);
-                f_PwrParams[0].Bias = value;
+                _ = Set(ref _pwrCh0Bias, value);
+                _pwrParams[0].Bias = value;
             }
         }
 
-        private int f_PwrCh0Amplitude;
+        private int _pwrCh0Amplitude;
         public int PwrCh0Amplitude
         {
-            get => f_PwrCh0Amplitude;
+            get => _pwrCh0Amplitude;
             set
             {
-                Set(ref f_PwrCh0Amplitude, value);
-                f_PwrParams[0].Amplitude = value;
+                _ = Set(ref _pwrCh0Amplitude, value);
+                _pwrParams[0].Amplitude = value;
             }
         }
 
-        private int f_PwrCh0Duty;
+        private int _pwrCh0Duty;
         public int PwrCh0Duty
         {
-            get => f_PwrCh0Duty;
+            get => _pwrCh0Duty;
             set
             {
-                Set(ref f_PwrCh0Duty, value);
-                f_PwrParams[0].Duty = value;
+                _ = Set(ref _pwrCh0Duty, value);
+                _pwrParams[0].Duty = value;
             }
         }
 
-        private int f_PwrCh0Freq;
+        private int _fPwrCh0Freq;
         public int PwrCh0Freq
         {
-            get => f_PwrCh0Freq;
+            get => _fPwrCh0Freq;
             set
             {
-                Set(ref f_PwrCh0Freq, value);
-                f_PwrParams[0].Frequency = value;
+                Set(ref _fPwrCh0Freq, value);
+                _pwrParams[0].Frequency = value;
             }
         }
 
-        private int f_PwrCh0Phase;
+        private int _fPwrCh0Phase;
         public int PwrCh0Phase
         {
-            get => f_PwrCh0Phase;
+            get => _fPwrCh0Phase;
             set
             {
-                Set(ref f_PwrCh0Phase, value);
-                f_PwrParams[0].Phase = value;
+                Set(ref _fPwrCh0Phase, value);
+                _pwrParams[0].Phase = value;
             }
         }
 
-        private int f_PwrCh0MaxAmps;
+        private int _fPwrCh0MaxAmps;
         public int PwrCh0MaxAmps
         {
-            get => f_PwrCh0MaxAmps;
+            get => _fPwrCh0MaxAmps;
             set
             {
-                Set(ref f_PwrCh0MaxAmps, value);
-                f_PwrParams[0].MaxAmps = value;
+                Set(ref _fPwrCh0MaxAmps, value);
+                _pwrParams[0].MaxAmps = value;
             }
         }
 
-        private int f_PwrCh0MaxVoltage;
+        private int _fPwrCh0MaxVoltage;
         public int PwrCh0MaxVoltage
         {
-            get => f_PwrCh0MaxVoltage;
+            get => _fPwrCh0MaxVoltage;
             set
             {
-                Set(ref f_PwrCh0MaxVoltage, value);
-                f_PwrParams[0].MaxVolts = value;
+                Set(ref _fPwrCh0MaxVoltage, value);
+                _pwrParams[0].MaxVolts = value;
             }
         }
 
-        private string f_LabelPwrChannel1Bias;
+        private string _fLabelPwrChannel1Bias;
         public string LabelPwrChannel1Bias
         {
-            get => f_LabelPwrChannel1Bias;
-            set => Set(ref f_LabelPwrChannel1Bias, value);
+            get => _fLabelPwrChannel1Bias;
+            set => Set(ref _fLabelPwrChannel1Bias, value);
         }
 
-        private int f_PwrCh1Mode;
+        private int _fPwrCh1Mode;
         public int PwrCh1Mode
         {
-            get => f_PwrCh1Mode;
+            get => _fPwrCh1Mode;
             set
             {
-                Set(ref f_PwrCh1Mode, value);
+                Set(ref _fPwrCh1Mode, value);
                 if (value == 1)
                 {
                     LabelPwrChannel1Bias = Resources.LabelElectricFlow;
-                    f_PwrDriver?.SetChannelOn(1);
+                    _fPwrDriver?.SetChannelOn(1);
                 }
                 else
                 {
                     LabelPwrChannel1Bias = Resources.LabelOffsetVoltage;
                 }
-                f_PwrParams[1].Mode = value;
+                _pwrParams[1].Mode = value;
             }
         }
 
-        private bool f_PwrSwitchCh1;
+        private bool _fPwrSwitchCh1;
         public bool PwrSwitchCh1
         {
-            get => f_PwrSwitchCh1;
+            get => _fPwrSwitchCh1;
             set
             {
-                Set(ref f_PwrSwitchCh1, value);
-                if (value) f_PwrDriver?.SetChannelOn(1); else f_PwrDriver?.SetChannelOff(1);
+                Set(ref _fPwrSwitchCh1, value);
+                if (value) _fPwrDriver?.SetChannelOn(1); else _fPwrDriver?.SetChannelOff(1);
             }
         }
 
-        private int f_PwrCh1Bias;
+        private int _fPwrCh1Bias;
         public int PwrCh1Bias
         {
-            get => f_PwrCh1Bias;
+            get => _fPwrCh1Bias;
             set
             {
-                Set(ref f_PwrCh1Bias, value);
-                f_PwrParams[1].Bias = value;
+                Set(ref _fPwrCh1Bias, value);
+                _pwrParams[1].Bias = value;
             }
         }
 
-        private int f_PwrCh1Amplitude;
+        private int _fPwrCh1Amplitude;
         public int PwrCh1Amplitude
         {
-            get => f_PwrCh1Amplitude;
+            get => _fPwrCh1Amplitude;
             set
             {
-                Set(ref f_PwrCh1Amplitude, value);
-                f_PwrParams[1].Amplitude = value;
+                Set(ref _fPwrCh1Amplitude, value);
+                _pwrParams[1].Amplitude = value;
             }
         }
 
-        private int f_PwrCh1Freq;
+        private int _fPwrCh1Freq;
         public int PwrCh1Freq
         {
-            get => f_PwrCh1Freq;
+            get => _fPwrCh1Freq;
             set
             {
-                Set(ref f_PwrCh1Freq, value);
-                f_PwrParams[1].Frequency = value;
+                Set(ref _fPwrCh1Freq, value);
+                _pwrParams[1].Frequency = value;
             }
         }
 
-        private int f_PwrCh1Duty;
+        private int _fPwrCh1Duty;
         public int PwrCh1Duty
         {
-            get => f_PwrCh1Duty;
+            get => _fPwrCh1Duty;
             set
             {
-                Set(ref f_PwrCh1Duty, value);
-                f_PwrParams[1].Duty = value;
+                Set(ref _fPwrCh1Duty, value);
+                _pwrParams[1].Duty = value;
             }
         }
 
-        private int f_PwrCh1Phase;
+        private int _fPwrCh1Phase;
         public int PwrCh1Phase
         {
-            get => f_PwrCh1Phase;
+            get => _fPwrCh1Phase;
             set
             {
-                Set(ref f_PwrCh1Phase, value);
-                f_PwrParams[1].Phase = value;
+                Set(ref _fPwrCh1Phase, value);
+                _pwrParams[1].Phase = value;
             }
         }
-        private int f_PwrCh1MaxVoltage;
+        private int _fPwrCh1MaxVoltage;
         public int PwrCh1MaxVoltage
         {
-            get => f_PwrCh1MaxVoltage;
+            get => _fPwrCh1MaxVoltage;
             set
             {
-                Set(ref f_PwrCh1MaxVoltage, value);
-                f_PwrParams[1].MaxVolts = value;
+                Set(ref _fPwrCh1MaxVoltage, value);
+                _pwrParams[1].MaxVolts = value;
             }
         }
 
-        private int f_PwrCh1MaxAmps;
+        private int _fPwrCh1MaxAmps;
         public int PwrCh1MaxAmps
         {
-            get => f_PwrCh1MaxAmps;
+            get => _fPwrCh1MaxAmps;
             set
             {
-                Set(ref f_PwrCh1MaxAmps, value);
-                f_PwrParams[1].MaxAmps = value;
+                Set(ref _fPwrCh1MaxAmps, value);
+                _pwrParams[1].MaxAmps = value;
             }
         }
 
-        private bool f_PwrSwitchCh2;
+        private bool _fPwrSwitchCh2;
         public bool PwrSwitchCh2
         {
-            get => f_PwrSwitchCh2;
+            get => _fPwrSwitchCh2;
             set
             {
-                Set(ref f_PwrSwitchCh2, value);
-                if (value) f_PwrDriver?.SetChannelOn(2); else f_PwrDriver?.SetChannelOff(2);
+                Set(ref _fPwrSwitchCh2, value);
+                if (value) _fPwrDriver?.SetChannelOn(2); else _fPwrDriver?.SetChannelOff(2);
             }
         }
 
-        private string f_LabelPwrChannel2Bias;
+        private string _fLabelPwrChannel2Bias;
         public string LabelPwrChannel2Bias
         {
-            get => f_LabelPwrChannel2Bias;
-            set => Set(ref f_LabelPwrChannel2Bias, value);
+            get => _fLabelPwrChannel2Bias;
+            set => Set(ref _fLabelPwrChannel2Bias, value);
         }
 
-        private int f_PwrCh2Mode;
+        private int _fPwrCh2Mode;
         public int PwrCh2Mode
         {
-            get => f_PwrCh2Mode;
+            get => _fPwrCh2Mode;
             set
             {
-                Set(ref f_PwrCh2Mode, value);
+                Set(ref _fPwrCh2Mode, value);
                 if (value == 1)
                 {
                     LabelPwrChannel2Bias = Resources.LabelElectricFlow;
-                    f_PwrDriver?.SetChannelOn(2);
+                    _fPwrDriver?.SetChannelOn(2);
                 }
                 else
                 {
                     LabelPwrChannel2Bias = Resources.LabelOffsetVoltage;
                 }
-                f_PwrParams[2].Mode = value;
+                _pwrParams[2].Mode = value;
             }
         }
 
-        private int f_PwrCh2Bias;
+        private int _fPwrCh2Bias;
         public int PwrCh2Bias
         {
-            get => f_PwrCh2Bias;
+            get => _fPwrCh2Bias;
             set
             {
-                Set(ref f_PwrCh2Bias, value);
-                f_PwrParams[2].Bias = value;
+                Set(ref _fPwrCh2Bias, value);
+                _pwrParams[2].Bias = value;
             }
         }
 
-        private int f_PwrCh2Amplitude;
+        private int _fPwrCh2Amplitude;
         public int PwrCh2Amplitude
         {
-            get => f_PwrCh2Amplitude;
+            get => _fPwrCh2Amplitude;
             set
             {
-                Set(ref f_PwrCh2Amplitude, value);
-                f_PwrParams[2].Amplitude = value;
+                Set(ref _fPwrCh2Amplitude, value);
+                _pwrParams[2].Amplitude = value;
             }
         }
 
-        private int f_PwrCh2Freq;
+        private int _fPwrCh2Freq;
         public int PwrCh2Freq
         {
-            get => f_PwrCh2Freq;
+            get => _fPwrCh2Freq;
             set
             {
-                Set(ref f_PwrCh2Freq, value);
-                f_PwrParams[2].Frequency = value;
+                Set(ref _fPwrCh2Freq, value);
+                _pwrParams[2].Frequency = value;
             }
         }
 
-        private int f_PwrCh2Duty;
+        private int _fPwrCh2Duty;
         public int PwrCh2Duty
         {
-            get => f_PwrCh2Duty;
-            set { Set(ref f_PwrCh2Duty, value); f_PwrParams[2].Duty = value; }
+            get => _fPwrCh2Duty;
+            set { Set(ref _fPwrCh2Duty, value); _pwrParams[2].Duty = value; }
         }
 
-        private int f_PwrCh2Phase;
+        private int _fPwrCh2Phase;
         public int PwrCh2Phase
         {
-            get => f_PwrCh2Phase;
-            set { Set(ref f_PwrCh2Phase, value); f_PwrParams[2].Phase = value; }
+            get => _fPwrCh2Phase;
+            set { Set(ref _fPwrCh2Phase, value); _pwrParams[2].Phase = value; }
         }
 
-        private int f_PwrCh2MaxVoltage;
+        private int _fPwrCh2MaxVoltage;
         public int PwrCh2MaxVoltage
         {
-            get => f_PwrCh2MaxVoltage;
-            set { Set(ref f_PwrCh2MaxVoltage, value); f_PwrParams[2].MaxVolts = value; }
+            get => _fPwrCh2MaxVoltage;
+            set { Set(ref _fPwrCh2MaxVoltage, value); _pwrParams[2].MaxVolts = value; }
         }
 
-        private int f_PwrCh2MaxAmps;
+        private int _fPwrCh2MaxAmps;
         public int PwrCh2MaxAmps
         {
-            get => f_PwrCh2MaxAmps;
+            get => _fPwrCh2MaxAmps;
             set
             {
-                Set(ref f_PwrCh2MaxAmps, value);
-                f_PwrParams[2].MaxAmps = value;
+                Set(ref _fPwrCh2MaxAmps, value);
+                _pwrParams[2].MaxAmps = value;
             }
         }
 
-        private bool f_PwrSwitchCh3;
+        private bool _fPwrSwitchCh3;
         public bool PwrSwitchCh3
         {
-            get => f_PwrSwitchCh3;
+            get => _fPwrSwitchCh3;
             set
             {
-                Set(ref f_PwrSwitchCh3, value);
-                if (value) f_PwrDriver?.SetChannelOn(3); else f_PwrDriver?.SetChannelOff(3);
+                Set(ref _fPwrSwitchCh3, value);
+                if (value) _fPwrDriver?.SetChannelOn(3); else _fPwrDriver?.SetChannelOff(3);
             }
         }
 
-        private string f_LabelPwrChannel3Bias;
+        private string _fLabelPwrChannel3Bias;
         public string LabelPwrChannel3Bias
         {
-            get => f_LabelPwrChannel3Bias;
-            set => Set(ref f_LabelPwrChannel3Bias, value);
+            get => _fLabelPwrChannel3Bias;
+            set => Set(ref _fLabelPwrChannel3Bias, value);
         }
 
-        private int f_PwrCh3Mode;
+        private int _fPwrCh3Mode;
         public int PwrCh3Mode
         {
-            get => f_PwrCh3Mode;
+            get => _fPwrCh3Mode;
             set
             {
-                Set(ref f_PwrCh3Mode, value);
+                Set(ref _fPwrCh3Mode, value);
                 if (value == 1)
                 {
                     LabelPwrChannel3Bias = Resources.LabelElectricFlow;
-                    f_PwrDriver?.SetChannelOn(3);
+                    _fPwrDriver?.SetChannelOn(3);
                 }
                 else { LabelPwrChannel3Bias = Resources.LabelOffsetVoltage; }
-                f_PwrParams[3].Mode = value;
+                _pwrParams[3].Mode = value;
             }
         }
 
-        private string f_LabelPwrChannel4Bias;
+        private string _fLabelPwrChannel4Bias;
         public string LabelPwrChannel4Bias
         {
-            get => f_LabelPwrChannel4Bias;
-            set => Set(ref f_LabelPwrChannel4Bias, value);
+            get => _fLabelPwrChannel4Bias;
+            set => Set(ref _fLabelPwrChannel4Bias, value);
         }
 
-        private int f_PwrCh4Mode;
+        private int _fPwrCh4Mode;
         public int PwrCh4Mode
         {
-            get => f_PwrCh4Mode;
+            get => _fPwrCh4Mode;
             set
             {
-                Set(ref f_PwrCh4Mode, value);
+                Set(ref _fPwrCh4Mode, value);
                 if (value == 1)
                 {
                     LabelPwrChannel4Bias = Resources.LabelElectricFlow;
-                    f_PwrDriver?.SetChannelOn(4);
+                    _fPwrDriver?.SetChannelOn(4);
                 }
                 else
                 {
                     LabelPwrChannel4Bias = Resources.LabelOffsetVoltage;
                 }
-                f_PwrParams[4].Mode = value;
+                _pwrParams[4].Mode = value;
             }
         }
 
-        private int f_PwrCh3Bias;
+        private int _fPwrCh3Bias;
         public int PwrCh3Bias
         {
-            get => f_PwrCh3Bias;
+            get => _fPwrCh3Bias;
             set
             {
-                Set(ref f_PwrCh3Bias, value);
-                f_PwrParams[3].Bias = value;
+                Set(ref _fPwrCh3Bias, value);
+                _pwrParams[3].Bias = value;
             }
         }
 
-        private int f_PwrCh3Amplitude;
+        private int _fPwrCh3Amplitude;
         public int PwrCh3Amplitude
         {
-            get => f_PwrCh3Amplitude;
+            get => _fPwrCh3Amplitude;
             set
             {
-                Set(ref f_PwrCh3Amplitude, value);
-                f_PwrParams[3].Amplitude = value;
+                Set(ref _fPwrCh3Amplitude, value);
+                _pwrParams[3].Amplitude = value;
             }
         }
 
-        private int f_PwrCh3Freq;
+        private int _fPwrCh3Freq;
         public int PwrCh3Freq
         {
-            get => f_PwrCh3Freq;
+            get => _fPwrCh3Freq;
             set
             {
-                Set(ref f_PwrCh3Freq, value);
-                f_PwrParams[3].Frequency = value;
+                Set(ref _fPwrCh3Freq, value);
+                _pwrParams[3].Frequency = value;
             }
         }
 
-        private int f_PwrCh3Duty;
+        private int _fPwrCh3Duty;
         public int PwrCh3Duty
         {
-            get => f_PwrCh3Duty;
+            get => _fPwrCh3Duty;
             set
             {
-                Set(ref f_PwrCh3Duty, value);
-                f_PwrParams[3].Duty = value;
+                Set(ref _fPwrCh3Duty, value);
+                _pwrParams[3].Duty = value;
             }
         }
 
-        private int f_PwrCh3Phase;
+        private int _fPwrCh3Phase;
         public int PwrCh3Phase
         {
-            get => f_PwrCh3Phase;
+            get => _fPwrCh3Phase;
             set
             {
-                Set(ref f_PwrCh3Phase, value);
-                f_PwrParams[3].Phase = value;
+                Set(ref _fPwrCh3Phase, value);
+                _pwrParams[3].Phase = value;
             }
         }
 
-        private int f_PwrCh3MaxVoltage;
+        private int _fPwrCh3MaxVoltage;
         public int PwrCh3MaxVoltage
         {
-            get => f_PwrCh3MaxVoltage;
+            get => _fPwrCh3MaxVoltage;
             set
             {
-                Set(ref f_PwrCh3MaxVoltage, value);
-                f_PwrParams[3].MaxVolts = value;
+                Set(ref _fPwrCh3MaxVoltage, value);
+                _pwrParams[3].MaxVolts = value;
             }
         }
 
-        private int f_PwrCh3MaxAmps;
+        private int _fPwrCh3MaxAmps;
         public int PwrCh3MaxAmps
         {
-            get => f_PwrCh3MaxAmps;
+            get => _fPwrCh3MaxAmps;
             set
             {
-                Set(ref f_PwrCh3MaxAmps, value);
-                f_PwrParams[3].MaxAmps = value;
+                Set(ref _fPwrCh3MaxAmps, value);
+                _pwrParams[3].MaxAmps = value;
             }
         }
 
-        private bool f_PwrSwitchCh4;
+        private bool _fPwrSwitchCh4;
         public bool PwrSwitchCh4
         {
-            get => f_PwrSwitchCh4;
+            get => _fPwrSwitchCh4;
             set
             {
-                Set(ref f_PwrSwitchCh4, value);
+                Set(ref _fPwrSwitchCh4, value);
                 if (value)
-                    f_PwrDriver?.SetChannelOn(4);
+                    _fPwrDriver?.SetChannelOn(4);
                 else
-                    f_PwrDriver?.SetChannelOff(4);
+                    _fPwrDriver?.SetChannelOff(4);
             }
         }
 
-        private int f_PwrCh4Bias;
+        private int _fPwrCh4Bias;
         public int PwrCh4Bias
         {
-            get => f_PwrCh4Bias;
+            get => _fPwrCh4Bias;
             set
             {
-                Set(ref f_PwrCh4Bias, value);
-                f_PwrParams[4].Bias = value;
+                Set(ref _fPwrCh4Bias, value);
+                _pwrParams[4].Bias = value;
             }
         }
 
-        private int f_PwrCh4Amplitude;
+        private int _fPwrCh4Amplitude;
         public int PwrCh4Amplitude
         {
-            get => f_PwrCh4Amplitude;
+            get => _fPwrCh4Amplitude;
             set
             {
-                Set(ref f_PwrCh4Amplitude, value);
-                f_PwrParams[4].Amplitude = value;
+                Set(ref _fPwrCh4Amplitude, value);
+                _pwrParams[4].Amplitude = value;
             }
         }
 
-        private int f_PwrCh4Freq;
+        private int _fPwrCh4Freq;
         public int PwrCh4Freq
         {
-            get => f_PwrCh4Freq;
+            get => _fPwrCh4Freq;
             set
             {
-                Set(ref f_PwrCh4Freq, value);
-                f_PwrParams[4].Frequency = value;
+                Set(ref _fPwrCh4Freq, value);
+                _pwrParams[4].Frequency = value;
             }
         }
 
-        private int f_PwrCh4Duty;
+        private int _fPwrCh4Duty;
         public int PwrCh4Duty
         {
-            get => f_PwrCh4Duty;
+            get => _fPwrCh4Duty;
             set
             {
-                Set(ref f_PwrCh4Duty, value);
-                f_PwrParams[4].Duty = value;
+                Set(ref _fPwrCh4Duty, value);
+                _pwrParams[4].Duty = value;
             }
         }
 
-        private int f_PwrCh4Phase;
+        private int _fPwrCh4Phase;
         public int PwrCh4Phase
         {
-            get => f_PwrCh4Phase;
+            get => _fPwrCh4Phase;
             set
             {
-                Set(ref f_PwrCh4Phase, value);
-                f_PwrParams[4].Phase = value;
+                Set(ref _fPwrCh4Phase, value);
+                _pwrParams[4].Phase = value;
             }
         }
 
-        private int f_PwrCh4MaxVoltage;
+        private int _fPwrCh4MaxVoltage;
         public int PwrCh4MaxVoltage
         {
-            get => f_PwrCh4MaxVoltage;
+            get => _fPwrCh4MaxVoltage;
             set
             {
-                Set(ref f_PwrCh4MaxVoltage, value);
-                f_PwrParams[4].MaxVolts = value;
+                Set(ref _fPwrCh4MaxVoltage, value);
+                _pwrParams[4].MaxVolts = value;
             }
         }
 
-        private int f_PwrCh4MaxAmps;
+        private int _fPwrCh4MaxAmps;
         public int PwrCh4MaxAmps
         {
-            get => f_PwrCh4MaxAmps;
+            get => _fPwrCh4MaxAmps;
             set
             {
-                Set(ref f_PwrCh4MaxAmps, value);
-                f_PwrParams[4].MaxAmps = value;
+                Set(ref _fPwrCh4MaxAmps, value);
+                _pwrParams[4].MaxAmps = value;
             }
         }
 
-        private bool f_PwrSwitchCh5;
+        private bool _fPwrSwitchCh5;
         public bool PwrSwitchCh5
         {
-            get => f_PwrSwitchCh5;
+            get => _fPwrSwitchCh5;
             set
             {
-                Set(ref f_PwrSwitchCh5, value);
-                if (value) f_PwrDriver?.SetChannelOn(5); else f_PwrDriver?.SetChannelOff(5);
+                Set(ref _fPwrSwitchCh5, value);
+                if (value) _fPwrDriver?.SetChannelOn(5); else _fPwrDriver?.SetChannelOff(5);
             }
         }
 
-        private string f_LabelPwrChannel5Bias;
+        private string _fLabelPwrChannel5Bias;
         public string LabelPwrChannel5Bias
         {
-            get => f_LabelPwrChannel5Bias;
-            set => Set(ref f_LabelPwrChannel5Bias, value);
+            get => _fLabelPwrChannel5Bias;
+            set => Set(ref _fLabelPwrChannel5Bias, value);
         }
 
-        private int f_PwrCh5Mode;
+        private int _fPwrCh5Mode;
         public int PwrCh5Mode
         {
-            get => f_PwrCh5Mode;
+            get => _fPwrCh5Mode;
             set
             {
-                Set(ref f_PwrCh5Mode, value);
+                Set(ref _fPwrCh5Mode, value);
                 if (value == 1)
                 {
                     LabelPwrChannel5Bias = Resources.LabelElectricFlow;
-                    f_PwrDriver?.SetChannelOn(5);
+                    _fPwrDriver?.SetChannelOn(5);
                 }
                 else
                 {
                     LabelPwrChannel5Bias = Resources.LabelOffsetVoltage;
-                    f_PwrDriver?.SetChannelOff(5);
+                    _fPwrDriver?.SetChannelOff(5);
                 }
-                f_PwrParams[5].Mode = value;
+                _pwrParams[5].Mode = value;
             }
         }
 
-        private int f_PwrCh5Bias;
+        private int _fPwrCh5Bias;
         public int PwrCh5Bias
         {
-            get => f_PwrCh5Bias;
+            get => _fPwrCh5Bias;
             set
             {
-                Set(ref f_PwrCh5Bias, value);
-                f_PwrParams[5].Bias = value;
+                Set(ref _fPwrCh5Bias, value);
+                _pwrParams[5].Bias = value;
             }
         }
 
-        private int f_PwrCh5Amplitude;
+        private int _fPwrCh5Amplitude;
         public int PwrCh5Amplitude
         {
-            get => f_PwrCh5Amplitude;
+            get => _fPwrCh5Amplitude;
             set
             {
-                Set(ref f_PwrCh5Amplitude, value);
-                f_PwrParams[5].Amplitude = value;
+                Set(ref _fPwrCh5Amplitude, value);
+                _pwrParams[5].Amplitude = value;
             }
         }
 
-        private int f_PwrCh5Freq;
+        private int _fPwrCh5Freq;
         public int PwrCh5Freq
         {
-            get => f_PwrCh5Freq;
+            get => _fPwrCh5Freq;
             set
             {
-                Set(ref f_PwrCh5Freq, value);
-                f_PwrParams[5].Frequency = value;
+                Set(ref _fPwrCh5Freq, value);
+                _pwrParams[5].Frequency = value;
             }
         }
 
-        private int f_PwrCh5Duty;
+        private int _fPwrCh5Duty;
         public int PwrCh5Duty
         {
-            get => f_PwrCh5Duty;
+            get => _fPwrCh5Duty;
             set
             {
-                Set(ref f_PwrCh5Duty, value);
-                f_PwrParams[5].Duty = value;
+                Set(ref _fPwrCh5Duty, value);
+                _pwrParams[5].Duty = value;
             }
         }
 
-        private int f_PwrCh5Phase;
+        private int _fPwrCh5Phase;
         public int PwrCh5Phase
         {
-            get => f_PwrCh5Phase;
+            get => _fPwrCh5Phase;
             set
             {
-                Set(ref f_PwrCh5Phase, value);
-                f_PwrParams[5].Phase = value;
+                Set(ref _fPwrCh5Phase, value);
+                _pwrParams[5].Phase = value;
             }
         }
 
-        private int f_PwrCh5MaxVoltage;
+        private int _fPwrCh5MaxVoltage;
         public int PwrCh5MaxVoltage
         {
-            get => f_PwrCh5MaxVoltage;
+            get => _fPwrCh5MaxVoltage;
             set
             {
-                Set(ref f_PwrCh5MaxVoltage, value);
-                f_PwrParams[5].MaxVolts = value;
+                Set(ref _fPwrCh5MaxVoltage, value);
+                _pwrParams[5].MaxVolts = value;
             }
         }
 
-        private int f_PwrCh5MaxAmps;
+        private int _fPwrCh5MaxAmps;
         public int PwrCh5MaxAmps
         {
-            get => f_PwrCh5MaxAmps;
+            get => _fPwrCh5MaxAmps;
             set
             {
-                Set(ref f_PwrCh5MaxAmps, value);
-                f_PwrParams[5].MaxAmps = value;
+                Set(ref _fPwrCh5MaxAmps, value);
+                _pwrParams[5].MaxAmps = value;
             }
         }
 
 
 
-        private bool f_IsPumpsActive;
+        private bool _fIsPumpsActive;
         public bool IsPumpsActive
         {
-            get => f_IsPumpsActive;
+            get => _fIsPumpsActive;
             set
             {
-                Set(ref f_IsPumpsActive, value);
+                Set(ref _fIsPumpsActive, value);
                 if (value) IsConfocalActive = true;
-                f_PumpDriver?.SetPumpActive(value);
+                _fPumpDriver?.SetPumpActive(value);
             }
         }
 
-        private bool f_IsConfocalActive;
+        private bool _fIsConfocalActive;
         public bool IsConfocalActive
         {
-            get => f_IsConfocalActive;
+            get => _fIsConfocalActive;
             set
             {
-                Set(ref f_IsConfocalActive, value);
-                f_ConfocalDriver?.SetMeasuredActive(value);
+                Set(ref _fIsConfocalActive, value);
+                _fConfocalDriver?.SetMeasuredActive(value);
             }
         }
 
-        private double[] f_ConfocalLog;
+        private double[] _fConfocalLog;
         public double[] ConfocalLog
         {
-            get => f_ConfocalLog;
-            set => Set(ref f_ConfocalLog, value);
+            get => _fConfocalLog;
+            set => Set(ref _fConfocalLog, value);
         }
 
-        private bool f_IsDispenserPortConnected;
+        private bool _isDispenserPortConnected;
         public bool IsDispenserPortConnected
         {
-            get => f_IsDispenserPortConnected;
+            get => _isDispenserPortConnected;
             set
             {
-                Set(ref f_IsDispenserPortConnected, value);
+                Set(ref _isDispenserPortConnected, value);
 
                 if (value)
                 {
-                    f_DispenserDriver.ConnectToPort();
+                    _fDispenserDriver.ConnectToPort();
                     CollectDispenserData();
                 }
-                else f_DispenserDriver.Disconnect();
+                else _fDispenserDriver.Disconnect();
             }
         }
 
-        private bool f_IsPressureSensorPortConnected;
+        private bool _fIsPressureSensorPortConnected;
         public bool IsPressureSensorPortConnected
         {
-            get => f_IsPressureSensorPortConnected;
+            get => _fIsPressureSensorPortConnected;
             set
             {
-                Set(ref f_IsPressureSensorPortConnected, value);
-                f_PressureSensorDriver?.ConnectToPort();
+                Set(ref _fIsPressureSensorPortConnected, value);
+                _fPressureSensorDriver?.ConnectToPort();
             }
         }
 
-        private bool f_IsPressureSensorActive;
+        private bool _isPressureSensorActive;
         public bool IsPressureSensorActive
         {
-            get => f_IsPressureSensorActive;
+            get => _isPressureSensorActive;
             set
             {
-                Set(ref f_IsPressureSensorActive, value);
-                f_PressureSensorDriver?.SetMeasuring(value);
+                _ = Set(ref _isPressureSensorActive, value);
+                _fPressureSensorDriver?.SetMeasuring(value);
             }
         }
 
-        private bool f_IsPyroPortConnected;
+        private bool _isPyroPortConnected;
         public bool IsPyroPortConnected
         {
-            get => f_IsPyroPortConnected;
+            get => _isPyroPortConnected;
             set
             {
-                Set(ref f_IsPyroPortConnected, value);
-                if (value) f_PyroDriver.ConnectToPort();
-                else f_PyroDriver.Disconnect();
+                _ = Set(ref _isPyroPortConnected, value);
+                if (value) _fPyroDriver.ConnectToPort();
+                else _fPyroDriver.Disconnect();
             }
         }
 
-        private bool f_IsPyroActive;
+        private bool _isPyroActive;
         public bool IsPyroActive
         {
-            get => f_IsPyroActive;
+            get => _isPyroActive;
             set
             {
-                Set(ref f_IsPyroActive, value);
-                f_PyroDriver.SetMeasuring(value);
+                _ = Set(ref _isPyroActive, value);
+                _fPyroDriver.SetMeasuring(value);
             }
         }
 
-        private float f_PyroTemperature;
+        private float _fPyroTemperature;
         public float PyroTemperature
         {
-            get => f_PyroTemperature;
+            get => _fPyroTemperature;
             set
             {
-                Set(ref f_PyroTemperature, value);
+                Set(ref _fPyroTemperature, value);
                 CurrentTemperature = Math.Round((value * value * (-0.007)) + (value * 2.1476) - 21.948, 3);
             }
         }
 
-        private float f_PressureSensorValue;
+        private float _pressureSensorValue;
         public float PressureSensorValue
         {
-            get => f_PressureSensorValue;
-            set => Set(ref f_PressureSensorValue, value);
+            get => _pressureSensorValue;
+            set => Set(ref _pressureSensorValue, value);
         }
 
-        private float f_PressureSensorTemperature;
+        private float _pressureSensorTemperature;
         public float PressureSensorTemperature
         {
-            get => f_PressureSensorTemperature;
-            set => Set(ref f_PressureSensorTemperature, value);
+            get => _pressureSensorTemperature;
+            set => Set(ref _pressureSensorTemperature, value);
         }
 
-        private bool f_IsPressurePumpConnected;
+        private bool _fIsPressurePumpConnected;
         public bool IsPressurePumpConnected
         {
-            get => f_IsPressurePumpConnected;
+            get => _fIsPressurePumpConnected;
             set
             {
-                Set(ref f_IsPressurePumpConnected, value);
-                if (value) f_PressurePumpDriver?.Calibrate();
+                _ = Set(ref _fIsPressurePumpConnected, value);
+                if (value) _fPressurePumpDriver?.Calibrate();
                 //FIX_ME add connect function
             }
         }
 
 
-        private bool f_IsDispenserActive;
+        private bool _fIsDispenserActive;
         public bool IsDispenserActive
         {
-            get => f_IsDispenserActive;
+            get => _fIsDispenserActive;
             set
             {
-                Set(ref f_IsDispenserActive, value);
-                if (f_IsDispenserActive)
+                Set(ref _fIsDispenserActive, value);
+                if (_fIsDispenserActive)
                 {
                     if (!IsDispenserPortConnected) IsDispenserPortConnected = true;
-                    f_DispenserDriver.Start();
+                    _fDispenserDriver.Start();
                 }
-                else f_DispenserDriver.Stop();
+                else _fDispenserDriver.Stop();
             }
         }
 
-        private int f_DispenserSignalType;
+        private int _fDispenserSignalType;
         public int DispenserSignalType
         {
-            get => f_DispenserSignalType;
+            get => _fDispenserSignalType;
             set
             {
-                Set(ref f_DispenserSignalType, value);
-                f_DispenserDriver?.SetSignalType(f_DispenserSignalType);
+                _ = Set(ref _fDispenserSignalType, value);
+                _fDispenserDriver?.SetSignalType(_fDispenserSignalType);
                 switch (value)
                 {
                     case 0:
@@ -1177,202 +1173,202 @@ namespace LabControl.ViewModels
             }
         }
 
-        private int f_DispenserChannel;
+        private int _fDispenserChannel;
         public int DispenserChannel
         {
-            get => f_DispenserChannel;
+            get => _fDispenserChannel;
             set
             {
-                f_DispenserDriver?.SetChannel(value);
-                Set(ref f_DispenserChannel, value);
+                _fDispenserDriver?.SetChannel(value);
+                Set(ref _fDispenserChannel, value);
             }
         }
 
-        private int f_DispenserFrequency;
+        private int _fDispenserFrequency;
         public int DispenserFrequency
         {
-            get => f_DispenserFrequency;
+            get => _fDispenserFrequency;
             set
             {
-                f_DispenserDriver?.SetFrequency(value);
-                Set(ref f_DispenserFrequency, value);
+                _fDispenserDriver?.SetFrequency(value);
+                Set(ref _fDispenserFrequency, value);
             }
         }
 
-        private int f_DispenserRiseTime;
+        private int _fDispenserRiseTime;
         public int DispenserRiseTime
         {
-            get => f_DispenserRiseTime;
+            get => _fDispenserRiseTime;
             set
             {
-                Set(ref f_DispenserRiseTime, value);
+                Set(ref _fDispenserRiseTime, value);
                 CollectPulseData();
             }
         }
 
-        private int f_DispenserKeepTime;
+        private int _fDispenserKeepTime;
         public int DispenserKeepTime
         {
-            get => f_DispenserKeepTime;
+            get => _fDispenserKeepTime;
             set
             {
-                Set(ref f_DispenserKeepTime, value);
+                Set(ref _fDispenserKeepTime, value);
                 CollectPulseData();
             }
         }
 
-        private int f_DispenserFallTime;
+        private int _fDispenserFallTime;
         public int DispenserFallTime
         {
-            get => f_DispenserFallTime;
+            get => _fDispenserFallTime;
             set
             {
-                Set(ref f_DispenserFallTime, value);
+                Set(ref _fDispenserFallTime, value);
                 CollectPulseData();
             }
         }
 
-        private int f_DispenserLowTime;
+        private int _fDispenserLowTime;
         public int DispenserLowTime
         {
-            get => f_DispenserLowTime;
+            get => _fDispenserLowTime;
             set
             {
-                Set(ref f_DispenserLowTime, value);
+                Set(ref _fDispenserLowTime, value);
                 CollectPulseData();
             }
         }
 
-        private int f_DispenserRiseTime2;
+        private int _fDispenserRiseTime2;
         public int DispenserRiseTime2
         {
-            get => f_DispenserRiseTime2;
+            get => _fDispenserRiseTime2;
             set
             {
-                Set(ref f_DispenserRiseTime2, value);
+                Set(ref _fDispenserRiseTime2, value);
                 CollectPulseData();
             }
         }
 
-        private int f_DispenserV0;
+        private int _fDispenserV0;
         public int DispenserV0
         {
-            get => f_DispenserV0;
+            get => _fDispenserV0;
             set
             {
-                Set(ref f_DispenserV0, value);
+                Set(ref _fDispenserV0, value);
                 CollectPulseData();
             }
         }
 
-        private int f_DispenserV1;
+        private int _fDispenserV1;
         public int DispenserV1
         {
-            get => f_DispenserV1;
+            get => _fDispenserV1;
             set
             {
-                Set(ref f_DispenserV1, value);
+                Set(ref _fDispenserV1, value);
                 CollectPulseData();
             }
         }
 
-        private int f_DispenserV2;
+        private int _fDispenserV2;
         public int DispenserV2
         {
-            get => f_DispenserV2;
+            get => _fDispenserV2;
             set
             {
-                Set(ref f_DispenserV2, value);
+                Set(ref _fDispenserV2, value);
                 CollectPulseData();
             }
         }
 
-        private Visibility f_DispenserSingleWaveVisible;
+        private Visibility _fDispenserSingleWaveVisible;
         public Visibility DispenserSingleWaveVisible
         {
-            get => f_DispenserSingleWaveVisible;
-            set => Set(ref f_DispenserSingleWaveVisible, value);
+            get => _fDispenserSingleWaveVisible;
+            set => Set(ref _fDispenserSingleWaveVisible, value);
         }
 
-        private int f_DispenserHv0;
+        private int _fDispenserHv0;
         public int DispenserHv0
         {
-            get => f_DispenserHv0;
+            get => _fDispenserHv0;
             set
             {
-                Set(ref f_DispenserHv0, value);
+                Set(ref _fDispenserHv0, value);
                 CollectSineData();
             }
         }
 
-        private int f_DispenserHVpeak;
+        private int _fDispenserHVpeak;
         public int DispenserHVpeak
         {
-            get => f_DispenserHVpeak;
+            get => _fDispenserHVpeak;
             set
             {
-                Set(ref f_DispenserHVpeak, value);
+                Set(ref _fDispenserHVpeak, value);
                 CollectSineData();
             }
         }
 
-        private int f_DispenserHToverall;
+        private int _fDispenserHToverall;
         public int DispenserHToverall
         {
-            get => f_DispenserHToverall;
+            get => _fDispenserHToverall;
             set
             {
-                Set(ref f_DispenserHToverall, value);
+                Set(ref _fDispenserHToverall, value);
                 CollectSineData();
             }
         }
 
-        private Visibility f_DispenserHarmonicWaveVisible;
+        private Visibility _fDispenserHarmonicWaveVisible;
         public Visibility DispenserHarmonicallyWaveVisible
         {
-            get => f_DispenserHarmonicWaveVisible;
-            set => Set(ref f_DispenserHarmonicWaveVisible, value);
+            get => _fDispenserHarmonicWaveVisible;
+            set => Set(ref _fDispenserHarmonicWaveVisible, value);
         }
 
-        private bool f_PressurePumpActive;
+        private bool _fPressurePumpActive;
         public bool PressurePumpActive
         {
-            get => f_PressurePumpActive;
+            get => _fPressurePumpActive;
             set
             {
-                Set(ref f_PressurePumpActive, value);
-                f_PressurePumpDriver?.SetTrigger(value);
+                Set(ref _fPressurePumpActive, value);
+                _fPressurePumpDriver?.SetTrigger(value);
             }
         }
 
-        private int f_AirSupportPressure;
+        private int _fAirSupportPressure;
         public int AirSupportPressure
         {
-            get => f_AirSupportPressure;
+            get => _fAirSupportPressure;
             set
             {
-                Set(ref f_AirSupportPressure, value);
-                f_PressurePumpDriver?.SetPressure(value);
+                Set(ref _fAirSupportPressure, value);
+                _fPressurePumpDriver?.SetPressure(value);
             }
         }
 
-        private int f_AirSupportPressureSelectedItem;
+        private int _airSupportPressureSelectedItem;
         public int AirSupportPressureSelectedItem
         {
-            get => f_AirSupportPressureSelectedItem;
+            get => _airSupportPressureSelectedItem;
             set
             {
-                Set(ref f_AirSupportPressureSelectedItem, value);
+                _ = Set(ref _airSupportPressureSelectedItem, value);
                 AirSupportPressure = value;
             }
         }
 
         #region PwrTab
-        private int f_SelectedPowerPage;
+        private int _fSelectedPowerPage;
         public int SelectedPowerPage
         {
-            get => f_SelectedPowerPage;
-            set => Set(ref f_SelectedPowerPage, value);
+            get => _fSelectedPowerPage;
+            set => Set(ref _fSelectedPowerPage, value);
         }
         #endregion
 
@@ -1496,21 +1492,21 @@ namespace LabControl.ViewModels
         public MainModel()
         {
             // Data context
-            f_DbContext = new ApplicationContext();
+            _fDbContext = new ApplicationContext();
             //f_DbContext.Logs.Load();
             // init collections
             ConfocalLog = new[] { 0d, .40d, .3d };
-            f_PwrParams = new DataModels.PwrItem[6];
+            _pwrParams = new DataModels.PwrItem[6];
             for (byte i = 0; i < 6; i++)
             {
-                f_PwrParams[i] = new DataModels.PwrItem();
+                _pwrParams[i] = new DataModels.PwrItem();
             }
             LogCollection = new ObservableCollection<LogItem>();
             IncomingPumpPortSelected = Settings.Default.IncomingPumpPortSelected;
             PowerSupplyTypes = new ObservableCollection<string>(new PowerSuplyTupesList().GetTypesList());
             IncomingPumpPortCollection = new ObservableCollection<string>(new PortList().GetPortList(IncomingPumpPortSelected));
-            OutloginPumpPortSelected = Settings.Default.OutloginPumpPortSelected;
-            OutcomingPumpPortCollection = new ObservableCollection<string>(new PortList().GetPortList(OutloginPumpPortSelected));
+            OutgoingPumpPortSelected = Settings.Default.OutloginPumpPortSelected;
+            OutcomingPumpPortCollection = new ObservableCollection<string>(new PortList().GetPortList(OutgoingPumpPortSelected));
             LaserPortSelected = Settings.Default.LaserPortSelected;
             LaserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(LaserPortSelected));
             PyroPortSelected = Settings.Default.PyroPortSelected;
@@ -1530,9 +1526,9 @@ namespace LabControl.ViewModels
             //Other
             CurWindowState = WindowState.Normal;
             //Exclude
-            f_DispenserDriver = new DispenserDriver();
-            f_DispenserDriver.SetLogMessage += AddLogMessage;
-            f_DispenserDriver.PortStr = Settings.Default.DispenserPortSelected;
+            _fDispenserDriver = new DispenserDriver();
+            _fDispenserDriver.SetLogMessage += AddLogMessage;
+            _fDispenserDriver.PortStr = Settings.Default.DispenserPortSelected;
             //f_PressureSensorPortSelected = Settings.Default.PressureSensorPortSelected;
             //load params from settings
             WindowHeight = Settings.Default.WindowHeight == 0 ? 550 : Settings.Default.WindowHeight;
@@ -1620,38 +1616,38 @@ namespace LabControl.ViewModels
             WriteChannelParamsCommand = new LambdaCommand(OnWriteChannelParamsCommand);
 
             //Drivers area
-            f_ConfocalDriver = new ConfocalDriver();
-            f_ConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
-            f_ConfocalDriver.SetLogMessage += AddLogMessage;
+            _fConfocalDriver = new ConfocalDriver();
+            _fConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
+            _fConfocalDriver.SetLogMessage += AddLogMessage;
 
-            f_PumpDriver = new PumpDriver();
-            f_PumpDriver.SetLogMessage += AddLogMessage;
-            f_PumpDriver.PortStrInput = Settings.Default.IncomingPumpPortSelected;
-            f_PumpDriver.PortStrOutput = Settings.Default.OutloginPumpPortSelected;
-            f_PumpDriver.TogleTwoPump(Settings.Default.IsTwoPump);
-            f_PumpDriver.SetInputSpeed += SetIncomingPumpSpeedLabel;
-            f_PumpDriver.SetOutputSpeed += SetOutcomingPumpSpeedLabel;
-            f_PumpDriver.SetRequiredLvl(ConfocalLevelSetter);
+            _fPumpDriver = new PumpDriver();
+            _fPumpDriver.SetLogMessage += AddLogMessage;
+            _fPumpDriver.PortStrInput = Settings.Default.IncomingPumpPortSelected;
+            _fPumpDriver.PortStrOutput = Settings.Default.OutloginPumpPortSelected;
+            _fPumpDriver.TogleTwoPump(Settings.Default.IsTwoPump);
+            _fPumpDriver.SetInputSpeed += SetIncomingPumpSpeedLabel;
+            _fPumpDriver.SetOutputSpeed += SetOutcomingPumpSpeedLabel;
+            _fPumpDriver.SetRequiredLvl(ConfocalLevelSetter);
 
-            f_PwrDriver = new PwrDriver();
-            f_PwrDriver.SetLogMessage += AddLogMessage;
-            f_PwrDriver.SetChannelParameters += SetChannelParams;
-            f_PwrDriver.PortStr = Settings.Default.PwrPortSelected;
+            _fPwrDriver = new PwrDriver();
+            _fPwrDriver.SetLogMessage += AddLogMessage;
+            _fPwrDriver.SetChannelParameters += SetChannelParams;
+            _fPwrDriver.PortStr = Settings.Default.PwrPortSelected;
 
-            f_LaserDriver = new LaserDriver();
-            f_LaserDriver.SetLogMessage += AddLogMessage;
-            f_LaserDriver.PortString = Settings.Default.LaserPortSelected;
+            _fLaserDriver = new LaserDriver();
+            _fLaserDriver.SetLogMessage += AddLogMessage;
+            _fLaserDriver.PortString = Settings.Default.LaserPortSelected;
             LaserTypeSelectedIndex = Settings.Default.LaserTypeSelectedIndex;
 
-            f_PyroDriver = new PyroDriver();
-            f_PyroDriver.SetLogMessage += AddLogMessage;
-            f_PyroDriver.EventHandler += PyroHandler;
-            f_PyroDriver.PortStr = Settings.Default.PyroPortSelected;
+            _fPyroDriver = new PyroDriver();
+            _fPyroDriver.SetLogMessage += AddLogMessage;
+            _fPyroDriver.EventHandler += PyroHandler;
+            _fPyroDriver.PortStr = Settings.Default.PyroPortSelected;
 
-            f_PressurePumpDriver = new PressurePumpDriver();
+            _fPressurePumpDriver = new PressurePumpDriver();
 
-            f_PressureSensorDriver = new PressureSensorDriver(PressureSensorPortSelected);
-            f_PressureSensorDriver.EventHandler += PressureSensorHandler;
+            _fPressureSensorDriver = new PressureSensorDriver(PressureSensorPortSelected);
+            _fPressureSensorDriver.EventHandler += PressureSensorHandler;
 
             AddLogMessage("Application Started");
         }
@@ -1661,7 +1657,7 @@ namespace LabControl.ViewModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 LogCollection.Insert(0, new LogItem(DateTime.Now, message));
-                f_DbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
+                _fDbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
             });
         }
 
@@ -1679,13 +1675,13 @@ namespace LabControl.ViewModels
 
         private void OnQuitApp(object p)
         {
-            f_DbContext.SaveChanges();
+            _fDbContext.SaveChanges();
             Settings.Default.WindowHeight = WindowHeight;
             Settings.Default.WindowWidth = WindowWidth;
             Settings.Default.IsTwoPump = IsTwoPump;
             Settings.Default.ConfocalLevelSetter = ConfocalLevelSetter;
             Settings.Default.IncomingPumpPortSelected = IncomingPumpPortSelected;
-            Settings.Default.OutloginPumpPortSelected = OutloginPumpPortSelected;
+            Settings.Default.OutloginPumpPortSelected = OutgoingPumpPortSelected;
             Settings.Default.LaserPowerSetter = LaserPowerSetter;
             Settings.Default.LaserPortSelected = LaserPortSelected;
             Settings.Default.PyroPortSelected = PyroPortSelected;
@@ -1759,7 +1755,7 @@ namespace LabControl.ViewModels
             Settings.Default.DispenserHToverall = DispenserHToverall;
             Settings.Default.AirSupportPressure = AirSupportPressure;
             Settings.Default.Save();
-            f_DbContext.Dispose();
+            _fDbContext.Dispose();
             Application.Current.Shutdown();
         }
 
@@ -1781,7 +1777,7 @@ namespace LabControl.ViewModels
 
         private void OnSetLaserPower(object sender)
         {
-            f_LaserDriver.SetPower(LaserPowerSetter);
+            _fLaserDriver.SetPower(LaserPowerSetter);
             if (!LaserHistoryCollection.Contains(LaserPowerSetter))
                 LaserHistoryCollection.Insert(0, LaserPowerSetter);
         }
@@ -1811,21 +1807,21 @@ namespace LabControl.ViewModels
         private void OnReadChannelParamsCommand(object sender)
         {
             var ch = (int)sender;
-            f_PwrDriver?.GetChanelData(Convert.ToByte(ch));
+            _fPwrDriver?.GetChanelData(Convert.ToByte(ch));
         }
 
         private void OnWriteChannelParamsCommand(object sender)
         {
             var ch = (int)sender;
             var pi = GetChannelParams(ch);
-            f_PwrDriver?.WriteChannelData(ch, pi);
+            _fPwrDriver?.WriteChannelData(ch, pi);
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
         {
             ConfocalLevel = Math.Round(lvl.Dist, 5);
-            f_PumpDriver?.SetMeasuredLevel(lvl);
-            ConfocalLog = f_ConfocalDriver.GetLastFragment();
+            _fPumpDriver?.SetMeasuredLevel(lvl);
+            ConfocalLog = _fConfocalDriver.GetLastFragment();
         }
 
         private void SetIncomingPumpSpeedLabel(string speed)
@@ -1834,13 +1830,13 @@ namespace LabControl.ViewModels
         }
         private void SetOutcomingPumpSpeedLabel(string speed)
         {
-            Application.Current.Dispatcher.Invoke(() => OutcomingPumpSpeed = speed);
+            Application.Current.Dispatcher.Invoke(() => OutgoingPumpSpeed = speed);
         }
 
         private void CollectSineData()
         {
             var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHv0, VPeak = DispenserHVpeak };
-            f_DispenserDriver?.SetSineWaveData(data);
+            _fDispenserDriver?.SetSineWaveData(data);
         }
         private void CollectPulseData()
         {
@@ -1855,15 +1851,15 @@ namespace LabControl.ViewModels
                 V1 = DispenserV1,
                 V2 = DispenserV2
             };
-            f_DispenserDriver?.SetPulseWaveData(data);
+            _fDispenserDriver?.SetPulseWaveData(data);
         }
 
         private void CollectDispenserData()
         {
             CollectSineData();
             CollectPulseData();
-            f_DispenserDriver?.SetChannel(f_DispenserChannel);
-            f_DispenserDriver?.SetFrequency(f_DispenserFrequency);
+            _fDispenserDriver?.SetChannel(_fDispenserChannel);
+            _fDispenserDriver?.SetFrequency(_fDispenserFrequency);
         }
 
         private void SetChannelParams(int channel, DataModels.PwrItem pi)
@@ -1935,8 +1931,8 @@ namespace LabControl.ViewModels
 
         private DataModels.PwrItem GetChannelParams(int channel)
         {
-            if (channel < 0 || channel >= f_PwrParams.Length) return null;
-            return f_PwrParams[channel];
+            if (channel < 0 || channel >= _pwrParams.Length) return null;
+            return _pwrParams[channel];
         }
     }
 }

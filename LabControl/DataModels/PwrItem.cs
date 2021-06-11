@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LabControl.DataModels
 {
-    class PwrItem
+    internal class PwrItem
     {
         public int Mode { get; set; }
         public int Amplitude { get; set; }
@@ -46,7 +43,7 @@ namespace LabControl.DataModels
             {
                 Mode = GetMode(raw);
                 Amplitude = GetAmplitude(raw);
-                Bias = GetBIAS(raw);
+                Bias = GetBias(raw);
                 Frequency = GetFrequency(raw);
                 Duty = GetDuty(raw);
                 Phase = GetPhase(raw);
@@ -55,66 +52,58 @@ namespace LabControl.DataModels
             }
         }
 
-        static int GetMode(byte[] ar)
+        private static int GetMode(IReadOnlyList<byte> ar)
         {
-            var res = 0;
-            res = ar[6];
+            int res = ar[6];
             return res;
         }
 
-        static int GetAmplitude(byte[] ar)
+        private static int GetAmplitude(IReadOnlyList<byte> ar)
         {
-            int res = 0;
             byte[] ampRes = { ar[8], ar[7] };
-            res = BitConverter.ToInt16(ampRes, 0);
+            int res = BitConverter.ToInt16(ampRes, 0);
             return res;
         }
 
-        static int GetBIAS(byte[] ar)
+        private static int GetBias(IReadOnlyList<byte> ar)
         {
-            int res = 0;
             byte[] ampRes = { ar[10], ar[9] };
-            res = BitConverter.ToInt16(ampRes, 0);
+            int res = BitConverter.ToInt16(ampRes, 0);
             return res;
         }
 
-        static int GetFrequency(byte[] ar)
+        private static int GetFrequency(IReadOnlyList<byte> ar)
         {
-            int res = 0;
             byte[] ampRes = { ar[12], ar[11] };
-            res = BitConverter.ToInt16(ampRes, 0);
+            int res = BitConverter.ToInt16(ampRes, 0);
             return res;
         }
 
-        static int GetDuty(byte[] ar)
+        private static int GetDuty(IReadOnlyList<byte> ar)
         {
-            int res = 0;
             byte[] ampRes = { ar[14], ar[13] };
-            res = BitConverter.ToInt16(ampRes, 0);
+            int res = BitConverter.ToInt16(ampRes, 0);
             return res;
         }
 
-        static int GetPhase(byte[] ar)
+        private static int GetPhase(IReadOnlyList<byte> ar)
         {
-            int res = 0;
             byte[] ampRes = { ar[16], ar[15] };
-            res = BitConverter.ToInt16(ampRes, 0);
+            int res = BitConverter.ToInt16(ampRes, 0);
             return res;
         }
 
-        static int GetMaxVolts(byte[] ar)
+        private static int GetMaxVolts(IReadOnlyList<byte> ar)
         {
-            int res = 0;
             byte[] ampRes = { ar[18], ar[17] };
-            res = BitConverter.ToInt16(ampRes, 0);
+            int res = BitConverter.ToInt16(ampRes, 0);
             return res;
         }
 
-        static int GetMaxAmps(byte[] ar)
+        private static int GetMaxAmps(IReadOnlyList<byte> ar)
         {
-            int res = 0;
             byte[] ampRes = { ar[20], ar[19] };
-            res = BitConverter.ToInt16(ampRes, 0);
+            int res = BitConverter.ToInt16(ampRes, 0);
             return res;
         }
     }
