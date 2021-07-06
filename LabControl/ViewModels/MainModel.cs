@@ -70,7 +70,7 @@ namespace LabControl.ViewModels
                 LabelPumpCount = value ? Resources.LabelTwoPump : Resources.LabelOnePump;
                 SecondPumpPanelVisibility = value ? Visibility.Visible : Visibility.Collapsed;
                 LabelPump = value ? Resources.LabelPumpIn : Resources.LabelPump;
-                _fPumpDriver?.TogleTwoPump(value);
+                _fPumpDriver?.ToggleTwoPump(value);
                 _ = Set(ref _isTwoPump, value);
             }
         }
@@ -1624,7 +1624,7 @@ namespace LabControl.ViewModels
             _fPumpDriver.SetLogMessage += AddLogMessage;
             _fPumpDriver.PortStrInput = Settings.Default.IncomingPumpPortSelected;
             _fPumpDriver.PortStrOutput = Settings.Default.OutloginPumpPortSelected;
-            _fPumpDriver.TogleTwoPump(Settings.Default.IsTwoPump);
+            _fPumpDriver.ToggleTwoPump(Settings.Default.IsTwoPump);
             _fPumpDriver.SetInputSpeed += SetIncomingPumpSpeedLabel;
             _fPumpDriver.SetOutputSpeed += SetOutcomingPumpSpeedLabel;
             _fPumpDriver.SetRequiredLvl(ConfocalLevelSetter);
