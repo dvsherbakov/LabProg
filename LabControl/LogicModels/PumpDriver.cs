@@ -197,7 +197,7 @@ namespace LabControl.LogicModels
                     SetOutputSpeed?.Invoke("0");
                     break;
                 case Direction.CounterClockwise:
-                    _portOutput.AddSpeed(speed.Speed);
+                    _portOutput?.AddSpeed(speed.Speed);
                     StartPump(false);
                     _portInput.AddSpeed("0.5 ");
                     StopPump(true);
