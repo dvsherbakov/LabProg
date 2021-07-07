@@ -158,7 +158,7 @@ namespace LabControl.LogicModels
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if (!speed.Equals("0.0 "))
+            if (speed.value != 0)
             {
                 StartPump(true);
             }
