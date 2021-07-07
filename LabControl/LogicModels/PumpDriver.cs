@@ -17,18 +17,18 @@ namespace LabControl.LogicModels
         public bool DirectionOutput { get; set; }
         public float PumpingSpeed { get; set; }
 
-        private DistMeasureRes f_MeasuredLvl;
-        private double f_RequiredLvl;
-        private bool f_IsTwoPump;
-        private bool f_IsPumpActive;
-        private string f_PrevSpeed;
+        private DistMeasureRes _measuredLvl;
+        private double _requiredLvl;
+        private bool _isTwoPump;
+        private bool _isPumpActive;
+        private SpeedGradeItem _prevSpeed;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
         public event LogMessage SetInputSpeed;
         public event LogMessage SetOutputSpeed;
 
-        private readonly List<SpeedGradeItem> f_SpeedGrades = new List<SpeedGradeItem> {
+        private readonly List<SpeedGradeItem> _speedGradeItems = new List<SpeedGradeItem> {
             new SpeedGradeItem{Different=1.00, Speed="250 ", value=250},
             new SpeedGradeItem{Different=0.85, Speed="150 ", value = 150},
             new SpeedGradeItem{Different=0.70, Speed="100 ", value = 100},
@@ -45,7 +45,7 @@ namespace LabControl.LogicModels
 
         public PumpDriver()
         {
-            f_IsPumpActive = false;
+            _isPumpActive = false;
             PumpingSpeed = 0f;
         }
 
@@ -55,7 +55,7 @@ namespace LabControl.LogicModels
             _portInput.SetLogMessage += TestLog;
             _portInput?.OpenPort();
             _portInput?.AddCounterClockwiseDirection();
-            if (!f_IsTwoPump) return;
+            if (!_isTwoPump) return;
             _portOutput = new PumpSerial(PortStrOutput, DirectionOutput);
             _portOutput.SetLogMessage += TestLog;
             _portOutput?.OpenPort();
@@ -75,23 +75,23 @@ namespace LabControl.LogicModels
 
         public void SetMeasuredLevel(DistMeasureRes lvl)
         {
-            f_MeasuredLvl = lvl;
-            if (f_IsTwoPump) OperateTwoPump(); else OperatePump();
+            _measuredLvl = lvl;
+            if (_isTwoPump) OperateTwoPump(); else OperatePump();
         }
 
         public void SetRequiredLvl(double lvl)
         {
-            f_RequiredLvl = lvl;
+            _requiredLvl = lvl;
         }
 
         public void SetPumpActive(bool active)
         {
-            f_IsPumpActive = active;
+            _isPumpActive = active;
         }
 
-        public void TogleTwoPump(bool isTwo)
+        public void ToggleTwoPump(bool isTwo)
         {
-            f_IsTwoPump = isTwo;
+            _isTwoPump = isTwo;
         }
 
         private void StopPump(bool isFirst)
@@ -106,33 +106,40 @@ namespace LabControl.LogicModels
             else _portOutput?.AddStartPump();
         }
 
-        private string GetPumpSpeed(float add = 0)
-        {
-            var subLevel = Math.Abs(f_RequiredLvl - f_MeasuredLvl.Dist) + add / 20;
+        private SpeedGradeItem GetNextSpeed(float speed) =>
+            _speedGradeItems.Where(x => x.value >= speed).OrderBy(y => y.value).ToArray()?[1];
 
-            return f_SpeedGrades.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault()?.Speed;
+        private SpeedGradeItem GetPrevSpeed(float speed) =>
+            _speedGradeItems.Where(x => x.value <= speed).OrderByDescending(y => y.value).ToArray()?[1];
+
+        private SpeedGradeItem GetPumpSpeed(float add = 0)
+        {
+            var subLevel = Math.Abs(_requiredLvl - _measuredLvl.Dist) + add / 20;
+
+            return _speedGradeItems.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault();
         }
 
 
         private void OperatePump()
         {
-            var speed = GetPumpSpeed();
-            if (!f_IsPumpActive)
+            var speed = GetPumpSpeed().value > _prevSpeed.value ? GetNextSpeed(_prevSpeed.value) : GetPrevSpeed(_prevSpeed.value);
+
+            if (!_isPumpActive)
             {
                 StopPump(true);
                 return;
             }
-            if (speed == f_PrevSpeed)
+            if (speed == _prevSpeed)
             {
-                if (Math.Abs(double.Parse(speed.Trim(), CultureInfo.InvariantCulture)) < 0.001)
+                if (Math.Abs(double.Parse(speed.Speed.Trim(), CultureInfo.InvariantCulture)) < 0.001)
                 {
                     StopPump(true);
                 }
             }
             else
             {
-                _portInput?.AddSpeed(speed);
-                SetInputSpeed?.Invoke(speed);
+                _portInput?.AddSpeed(speed.Speed);
+                SetInputSpeed?.Invoke(speed.Speed);
             }
             var direction = GetDirection();
             switch (direction)
@@ -151,11 +158,11 @@ namespace LabControl.LogicModels
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if (!speed.Equals("0.0 "))
+            if (speed.value != 0)
             {
                 StartPump(true);
             }
-            f_PrevSpeed = speed;
+            _prevSpeed = speed;
         }
 
         private void OperateTwoPump()
@@ -165,15 +172,15 @@ namespace LabControl.LogicModels
 
             if (PumpingSpeed != 0)
             {
-                var sp = f_SpeedGrades.Where(x => Math.Abs(PumpingSpeed - x.value) < 0.05).OrderByDescending(y => y.value).FirstOrDefault();
-                _portInput.AddSpeed(direction == Direction.Clockwise ? GetPumpSpeed(PumpingSpeed) : sp.Speed);
-                _portOutput.AddSpeed(direction == Direction.CounterClockwise ? GetPumpSpeed(PumpingSpeed) : sp.Speed);
+                var sp = _speedGradeItems.Where(x => Math.Abs(PumpingSpeed - x.value) < 0.05).OrderByDescending(y => y.value).FirstOrDefault();
+                _portInput.AddSpeed(direction == Direction.Clockwise ? GetPumpSpeed(PumpingSpeed).Speed : sp?.Speed);
+                _portOutput.AddSpeed(direction == Direction.CounterClockwise ? GetPumpSpeed(PumpingSpeed).Speed : sp?.Speed);
                 StartPump(true);
                 StartPump(false);
                 return;
             }
 
-            if (!f_IsPumpActive || speed.Equals("0.0 ") || (direction == Direction.Stop))
+            if (!_isPumpActive || speed.value == 0 || (direction == Direction.Stop))
             {
                 StopPump(true);
                 StopPump(false);
@@ -182,40 +189,38 @@ namespace LabControl.LogicModels
             switch (direction)
             {
                 case Direction.Clockwise:
-                    _portInput.AddSpeed(speed);
+                    _portInput.AddSpeed(speed.Speed);
                     StartPump(true);
                     _portOutput.AddSpeed("0.5 ");
                     StopPump(false);
-                    SetInputSpeed?.Invoke(speed);
+                    SetInputSpeed?.Invoke(speed.Speed);
                     SetOutputSpeed?.Invoke("0");
                     break;
                 case Direction.CounterClockwise:
-                    _portOutput.AddSpeed(speed);
+                    _portOutput.AddSpeed(speed.Speed);
                     StartPump(false);
                     _portInput.AddSpeed("0.5 ");
                     StopPump(true);
                     SetInputSpeed?.Invoke("0");
-                    SetOutputSpeed?.Invoke(speed);
+                    SetOutputSpeed?.Invoke(speed.Speed);
                     break;
-                case Direction.Stop:
+                default:
                     StopPump(false);
                     StopPump(true);
                     SetInputSpeed?.Invoke("0");
                     SetOutputSpeed?.Invoke("0");
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
         private Direction GetDirection()
         {
-            var currentDifferent = f_RequiredLvl - f_MeasuredLvl.Dist;
+            var currentDifferent = _requiredLvl - _measuredLvl.Dist;
             if (Math.Abs(currentDifferent) < 0.001) return Direction.Stop;
             var tmpDirection = (currentDifferent > 0);
-            if (f_MeasuredLvl.IsSingle) tmpDirection = !tmpDirection;
+            if (_measuredLvl.IsSingle) tmpDirection = !tmpDirection;
 
-            if (f_MeasuredLvl.IsSingle)
+            if (_measuredLvl.IsSingle)
                 return !tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
             else
                 return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
