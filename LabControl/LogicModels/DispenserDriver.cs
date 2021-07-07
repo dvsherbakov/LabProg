@@ -170,6 +170,11 @@ namespace LabControl.LogicModels
             f_DispenserSerial?.Start();
         }
 
+        public void Reset()
+        {
+            f_DispenserSerial?.Reset();
+        }
+
         public void Stop()
         {
             f_DispenserSerial?.Stop();

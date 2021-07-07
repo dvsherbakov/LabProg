@@ -1100,7 +1100,8 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _fPyroTemperature, value);
-                CurrentTemperature = Math.Round((value * value * (-0.007)) + (value * 2.1476) - 21.948, 3);
+                //convert pyro to termo
+                CurrentTemperature = Math.Round((value * value * (-0.0054907)) + (value * 2.0255693) - 22.9060161, 3);
             }
         }
 
@@ -1143,7 +1144,10 @@ namespace LabControl.ViewModels
                     if (!IsDispenserPortConnected) IsDispenserPortConnected = true;
                     _fDispenserDriver.Start();
                 }
-                else _fDispenserDriver.Stop();
+                else { 
+                    _fDispenserDriver.Stop();
+                    _fDispenserDriver.Reset();
+                }
             }
         }
 

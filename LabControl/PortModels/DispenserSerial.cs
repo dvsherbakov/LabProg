@@ -239,6 +239,12 @@ namespace LabControl.PortModels
             GetNumberOfChannels();
         }
 
+        public void Reset()
+        {
+            SoftReset();
+           
+        }
+
         public void Start()
         {
 
