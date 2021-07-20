@@ -14,7 +14,7 @@ namespace LabControl.LogicModels
         //private readonly bool f_IsFakeData = false;
         //private readonly Random f_FakeRnd;
 
-        private readonly Timer confocalTimer;
+        private readonly Timer _confocalTimer;
 
         public delegate void ObtainedData(DistMeasureRes xData);
         public event ObtainedData ObtainedDataEvent;
@@ -29,11 +29,11 @@ namespace LabControl.LogicModels
 
         public ConfocalDriver()
         {
-            confocalTimer = new Timer
+            _confocalTimer = new Timer
             {
                 Interval = 5000
             };
-            confocalTimer.Elapsed += InterceptInfo;
+            _confocalTimer.Elapsed += InterceptInfo;
             //f_FakeRnd = new Random();
             _measureLogCollection = new ObservableCollection<ConfocalDataItem>();
         }
@@ -97,8 +97,8 @@ namespace LabControl.LogicModels
         public void SetMeasuredActive(bool active)
         {
             _measuredActive = active;
-            if (_measuredActive) confocalTimer.Start();
-            else confocalTimer.Stop();
+            if (_measuredActive) _confocalTimer.Start();
+            else _confocalTimer.Stop();
         }
 
         public double[] GetLastFragment()
