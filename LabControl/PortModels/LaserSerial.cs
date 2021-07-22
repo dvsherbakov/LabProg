@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using LabControl.ClassHelpers;
@@ -207,9 +208,7 @@ namespace LabControl.PortModels
             var bts = BitConverter.GetBytes(level);
             command.Add(bts[1]);
             command.Add(bts[0]);
-            short sm = 0;
-            foreach (var x in command)
-                sm += x;
+            var sm = command.Aggregate<byte, short>(0, (current, x) => (short) (current + x));
             var cb = BitConverter.GetBytes(sm);
             command.Add(cb[0]);
             command.Add(0x0D);
