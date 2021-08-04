@@ -1101,7 +1101,8 @@ namespace LabControl.ViewModels
             {
                 Set(ref _fPyroTemperature, value);
                 //convert pyro to termo
-                CurrentTemperature = Math.Round((value * value * (-0.00712)) + (value * 2.22842) - 27.51242, 3);
+                if (value > 0)
+                    CurrentTemperature = Math.Round((value * value * (-0.00712)) + (value * 2.22842) - 27.51242, 3);
             }
         }
 
