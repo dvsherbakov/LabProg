@@ -47,7 +47,7 @@ namespace LabControl.LogicModels
         {
             _isPumpActive = false;
             PumpingSpeed = 0f;
-            _prevSpeed = new SpeedGradeItem() {Different = 0, Speed = "0.0 ", value = 0};
+            _prevSpeed = new SpeedGradeItem() { Different = 0, Speed = "0.0 ", value = 0 };
         }
 
         public void ConnectToPorts()
@@ -76,7 +76,7 @@ namespace LabControl.LogicModels
 
         public void SetMeasuredLevel(DistMeasureRes lvl)
         {
-            if (lvl.Dist!=0) _measuredLvl = lvl;
+            if (lvl.Dist != 0) _measuredLvl = lvl;
             if (_isTwoPump) OperateTwoPump(); else OperatePump();
         }
 

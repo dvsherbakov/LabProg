@@ -1144,7 +1144,8 @@ namespace LabControl.ViewModels
                     if (!IsDispenserPortConnected) IsDispenserPortConnected = true;
                     _fDispenserDriver.Start();
                 }
-                else { 
+                else
+                {
                     _fDispenserDriver.Stop();
                     _fDispenserDriver.Reset();
                 }
@@ -1525,7 +1526,7 @@ namespace LabControl.ViewModels
             // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 2.5f, 11f, 25f, 45f, 65f, 150f };
-            AirSupportPressureCollection = new ObservableCollection<int> {0, 1, 2, 5, 10, 20, 50, 150, 200 };
+            AirSupportPressureCollection = new ObservableCollection<int> { 0, 1, 2, 5, 10, 20, 50, 150, 200 };
 
             //Other
             CurWindowState = WindowState.Normal;
@@ -1668,7 +1669,7 @@ namespace LabControl.ViewModels
         private void PyroHandler(float temperature)
         {
             Application.Current.Dispatcher.Invoke(() => { PyroTemperature = temperature; });
-            _fDbContext.Temperatures.Add(new Temperature { Dt = DateTime.Now, Tmp = temperature, CurTmp=CurrentTemperature });
+            _fDbContext.Temperatures.Add(new Temperature { Dt = DateTime.Now, Tmp = temperature, CurTmp = CurrentTemperature });
         }
 
         private void PressureSensorHandler(float pressure, float temperature)
@@ -1679,7 +1680,15 @@ namespace LabControl.ViewModels
 
         private void OnQuitApp(object p)
         {
-            _fDbContext.SaveChanges();
+            try
+            {
+                _ = _fDbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                AddLogMessage(e.Message);
+            }
+
             Settings.Default.WindowHeight = WindowHeight;
             Settings.Default.WindowWidth = WindowWidth;
             Settings.Default.IsTwoPump = IsTwoPump;
