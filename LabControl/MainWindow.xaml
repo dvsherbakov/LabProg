@@ -152,7 +152,7 @@
                 <Border Margin="1 1 10 1" Padding="5 0 5 0"
                         BorderBrush="Aquamarine"
                         CornerRadius="5" BorderThickness="1">
-                    <TextBlock Text="{Binding CurrentTemperature}"
+                    <TextBlock Text="{Binding ConfocalLevel }"
                                Style="{StaticResource PartTransparent}"
                                HorizontalAlignment="Center"/>
                 </Border>
@@ -178,7 +178,15 @@
                 <Border Margin="1 1 10 1" Padding="5 0 5 0"
                         BorderBrush="Aquamarine"
                         CornerRadius="5" BorderThickness="1">
-                    <TextBlock Text="{Binding ConfocalLevel}"
+                    <TextBlock Text="{Binding CurrentTemperature}"
+                               Style="{StaticResource PartTransparent}"
+                               HorizontalAlignment="Center"/>
+                </Border>
+
+                <Border Margin="25 1 10 1" Padding="5 0 5 0"
+                        BorderBrush="Aquamarine"
+                        CornerRadius="5" BorderThickness="1">
+                    <TextBlock Text="{Binding PressureSensorValue }"
                                Style="{StaticResource PartTransparent}"
                                HorizontalAlignment="Center"/>
                 </Border>
