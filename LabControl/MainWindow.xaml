@@ -1889,6 +1889,7 @@
                                             <RowDefinition />
                                             <RowDefinition />
                                             <RowDefinition />
+                                            <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0"
                                                    Padding="5"
@@ -1907,12 +1908,16 @@
                                             ItemsSource="{Binding AirSupportPressureCollection}"
                                             SelectedItem="{Binding AirSupportPressureSelectedItem}"
                                             Margin="0,1"/>
+                                        <Button Grid.Row="2" Grid.Column="1"
+                                                Foreground="SandyBrown"
+                                                Style="{StaticResource TransparentButton}">Max</Button>
                                     </Grid>
                                 </StackPanel>
                             </Expander>
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <!-- Pressure -->
                 <TabItem VerticalAlignment="Center" 
                          Style="{DynamicResource TabItemStyle}"
                          HorizontalAlignment="Center" >

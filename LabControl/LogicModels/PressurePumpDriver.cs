@@ -1,10 +1,6 @@
 ﻿using LabControl.Wrappers;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace LabControl.LogicModels
 {
@@ -42,7 +38,7 @@ namespace LabControl.LogicModels
 
         ~PressurePumpDriver()
         {
-            ElvWrapper.AF1_Destructor(_pId);
+            _ = ElvWrapper.AF1_Destructor(_pId);
         }
 
         public void SetPressure(double pressure)
@@ -50,21 +46,30 @@ namespace LabControl.LogicModels
             ElvWrapper.AF1_Set_Press(_pId, pressure*10, _fCalibration, 1000);
         }
 
+        public void StartImpulse()
+        {
+            var pressure = GetPressure();
+            SetLogMessage?.Invoke("Запуск продувки");
+            _ = ElvWrapper.AF1_Set_Press(_pId, 1900, _fCalibration, 1000);
+            Thread.Sleep(2000);
+            _ = ElvWrapper.AF1_Set_Press(_pId, pressure * 10, _fCalibration, 1000);
+        }
+
         public double GetPressure()
         {
-            ElvWrapper.AF1_Get_Press(_pId, 1000, _fCalibration, out double pressure, 1000);
+            _ = ElvWrapper.AF1_Get_Press(_pId, 1000, _fCalibration, out double pressure, 1000);
             return pressure;
         }
 
         public void SetTrigger(bool trigger)
         {
-            int tr = trigger ? 1 : 0;
-            ElvWrapper.AF1_Set_Trig(_pId, tr);
+            var tr = trigger ? 1 : 0;
+            _ = ElvWrapper.AF1_Set_Trig(_pId, tr);
         }
 
         public bool GetTrigger()
         {
-            ElvWrapper.AF1_Get_Trig(_pId, out int trigger);
+            _ = ElvWrapper.AF1_Get_Trig(_pId, out var trigger);
             return trigger == 1;
         }
     }

@@ -1492,6 +1492,7 @@ namespace LabControl.ViewModels
         public ICommand ToggleDispenserCommand { get; }
         public ICommand ReadChannelParamsCommand { get; }
         public ICommand WriteChannelParamsCommand { get; }
+        public ICommand StartMaxPressureImpulse { get; }
 
         #endregion
 
@@ -1620,6 +1621,7 @@ namespace LabControl.ViewModels
             ToggleDispenserCommand = new LambdaCommand(OnToggleDispenserActive);
             ReadChannelParamsCommand = new LambdaCommand(OnReadChannelParamsCommand);
             WriteChannelParamsCommand = new LambdaCommand(OnWriteChannelParamsCommand);
+            StartMaxPressureImpulse = new LambdaCommand(OnStartMaxPressureImpulse);
 
             //Drivers area
             _fConfocalDriver = new ConfocalDriver();
@@ -1829,6 +1831,11 @@ namespace LabControl.ViewModels
             var ch = (int)sender;
             var pi = GetChannelParams(ch);
             _fPwrDriver?.WriteChannelData(ch, pi);
+        }
+
+        private void OnStartMaxPressureImpulse(object sender)
+        {
+
         }
 
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
