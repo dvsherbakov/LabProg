@@ -1910,6 +1910,7 @@
                                             Margin="0,1"/>
                                         <Button Grid.Row="2" Grid.Column="1"
                                                 Foreground="SandyBrown"
+                                                Command="{Binding StartMaxPressureImpulse}"
                                                 Style="{StaticResource TransparentButton}">Max</Button>
                                     </Grid>
                                 </StackPanel>
