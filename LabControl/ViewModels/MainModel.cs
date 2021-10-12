@@ -1771,7 +1771,7 @@ namespace LabControl.ViewModels
             Settings.Default.DispenserHToverall = DispenserHToverall;
             Settings.Default.AirSupportPressure = AirSupportPressure;
             Settings.Default.Save();
-            _fDbContext.Dispose();
+            //_fDbContext.Dispose();
             Application.Current.Shutdown();
         }
 
