@@ -16,7 +16,6 @@ namespace LabControl.PortModels
         private static List<string> _msgList;
         private int f_DPower;
         private int f_DMaxPower;
-        private float TempAmb;
         private int f_LPwr;
         private int f_LaserType;
 
@@ -129,7 +128,8 @@ namespace LabControl.PortModels
                 case 11:
                     var tMpa = Regex.Match(res, @"([-+]?[0-9]*\.?[0-9]+)");
                     if (tMpa.Success)
-                        TempAmb = Convert.ToInt32(tMpa.Groups[1].Value);
+                    {
+                    }
                     break;
                 case 16:
                     var lPwr = res.Substring(4);
@@ -149,7 +149,7 @@ namespace LabControl.PortModels
 
         public void SetPower(int pwr)
         {
-            if (this.f_LaserType == 0)
+            if (f_LaserType == 0)
             {
                 var cmd = f_LCommand.SetPowerLvl(pwr);
                 if (f_MPort.IsOpen)
@@ -157,7 +157,10 @@ namespace LabControl.PortModels
                     f_MPort.Write(cmd.SCommand);
                 }
             }
-            else SetPowerLevel(pwr);
+            else
+            {
+                SetPowerLevel(pwr);
+            }
         }
 
         public int GetLasePower()
@@ -172,7 +175,10 @@ namespace LabControl.PortModels
                 SendCommand(35);
                 SendCommand(37);
             }
-            else Start();
+            else
+            {
+                Start();
+            }
         }
 
         public void SetOff()

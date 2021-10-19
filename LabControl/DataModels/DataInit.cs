@@ -15,7 +15,7 @@ namespace LabControl.DataModels
             if (File.Exists("MyDatabase.sqlite")) return;
 
             var con = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
-            var commands = new List<SQLiteCommand> {GetLogTable(con), GetTemperatureTable(con)};
+            var commands = new List<SQLiteCommand> { GetLogTable(con), GetTemperatureTable(con) };
 
             con.Open();
             using var transaction = con.BeginTransaction();
@@ -25,6 +25,7 @@ namespace LabControl.DataModels
             }
 
             transaction.Commit();
+            con.Close();
         }
 
         private static SQLiteCommand GetLogTable(SQLiteConnection con)

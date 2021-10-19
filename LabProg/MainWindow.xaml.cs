@@ -46,15 +46,13 @@ namespace LabProg
 
         private void BtLaserAddPowerCycle(object sender, RoutedEventArgs e)
         {
-            LaserPowerAtom wa = new LaserPowerAtom();
-            if (wa.ShowDialog() == true)
+            var wa = new LaserPowerAtom();
+            if (wa.ShowDialog() != true) return;
+            var item = new ListViewItem
             {
-                ListViewItem item = new ListViewItem
-                {
-                    DataContext = wa.LaserPowerAtomResult
-                };
-                lvLaserPowerItems.Items.Add(wa.LaserPowerAtomResult);
-            }
+                DataContext = wa.LaserPowerAtomResult
+            };
+            lvLaserPowerItems.Items.Add(wa.LaserPowerAtomResult);
         }
     }
 }

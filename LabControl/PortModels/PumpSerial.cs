@@ -16,9 +16,9 @@ namespace LabControl.PortModels
         private readonly SerialPort f_MPort;
         //private readonly List<string> f_RecievedData;
         //private bool f_Direction;
-        private readonly string f_ComId;
+        private readonly string _comId;
         public bool PumpReverse { private get; set; }
-        private readonly ObservableCollection<string> f_CmdQueue;
+        private readonly ObservableCollection<string> _cmdQueue;
         private readonly Timer f_QueueTimer;
 
         public bool Active { get; private set; }
@@ -31,7 +31,7 @@ namespace LabControl.PortModels
             //f_RecievedData = new List<string>();
             if (portStr == "") portStr = "COM7";
             PumpReverse = startDirection;
-            f_ComId = portStr;
+            _comId = portStr;
             f_MPort = new SerialPort(portStr)
             {
                 BaudRate = int.Parse("9600"),
@@ -43,8 +43,8 @@ namespace LabControl.PortModels
             };
             f_MPort.DataReceived += DataReceivedHandler;
 
-            f_CmdQueue = new ObservableCollection<string>();
-            f_CmdQueue.CollectionChanged += StartQueue;
+            _cmdQueue = new ObservableCollection<string>();
+            _cmdQueue.CollectionChanged += StartQueue;
 
             f_QueueTimer = new Timer
             {
@@ -63,14 +63,14 @@ namespace LabControl.PortModels
 
         void TimerEvent(object source, ElapsedEventArgs e)
         {
-            if (f_CmdQueue.Count > 0)
+            if (_cmdQueue.Count > 0)
             {
-                var itm = f_CmdQueue.FirstOrDefault();
-                if (f_CmdQueue.Count > 0) { f_CmdQueue.Remove(itm); }
+                var itm = _cmdQueue.FirstOrDefault();
+                if (_cmdQueue.Count > 0) { _cmdQueue.Remove(itm); }
                 WriteAnyCommand(itm);
             }
 
-            if (f_CmdQueue.Count == 0) f_QueueTimer.Enabled = false;
+            if (_cmdQueue.Count == 0) f_QueueTimer.Enabled = false;
         }
 
         private void WriteAnyCommand(string cmd)
@@ -84,20 +84,20 @@ namespace LabControl.PortModels
                 }
                 catch (Exception ex)
                 {
-                    SetLogMessage?.Invoke($"Port {f_ComId} is occuped");
+                    SetLogMessage?.Invoke($"Port {_comId} is occuped");
                     SetLogMessage?.Invoke(ex.Message);
                 }
             }
             else
             {
-                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
-                f_CmdQueue.Clear();
+                SetLogMessage?.Invoke($"Pump port {_comId} is closed");
+                _cmdQueue.Clear();
             }
         }
 
         public void OpenPort()
         {
-            SetLogMessage?.Invoke($"Try connect pump on port {f_ComId}");
+            SetLogMessage?.Invoke($"Try connect pump on port {_comId}");
             try
             {
                 f_MPort.Open();
@@ -114,7 +114,7 @@ namespace LabControl.PortModels
         public void ClosePort()
         {
             f_QueueTimer.Enabled = false;
-            f_CmdQueue.Clear();
+            _cmdQueue.Clear();
             StopPump();
             f_MPort.Close();
             Active = false;
@@ -146,7 +146,7 @@ namespace LabControl.PortModels
         public void AddStartPump()
         {
             if (!f_MPort.IsOpen) return;
-            f_CmdQueue.Add("s");
+            _cmdQueue.Add("s");
         }
 
         private void StopPump()
@@ -154,25 +154,25 @@ namespace LabControl.PortModels
             if (f_MPort.IsOpen)
             {
                 f_MPort.Write("t");
-                SetLogMessage?.Invoke($"Pump  stop: {f_ComId}");
+                SetLogMessage?.Invoke($"Pump  stop: {_comId}");
             }
             else
             {
-                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
+                SetLogMessage?.Invoke($"Pump port {_comId} is closed");
             }
         }
 
         public void AddStopPump()
         {
             if (f_MPort.IsOpen)
-                f_CmdQueue.Add("t");
+                _cmdQueue.Add("t");
         }
 
         public void AddClockwiseDirection()
         {
             if (!f_MPort.IsOpen) return;
-            if (PumpReverse) f_CmdQueue.Add("l");
-            else f_CmdQueue.Add("r");
+            if (PumpReverse) _cmdQueue.Add("l");
+            else _cmdQueue.Add("r");
         }
 
         public void SetCounterClockwiseDirection()
@@ -185,21 +185,21 @@ namespace LabControl.PortModels
             }
             else
             {
-                SetLogMessage?.Invoke($"Pump port {f_ComId} is closed");
+                SetLogMessage?.Invoke($"Pump port {_comId} is closed");
             }
         }
 
         public void AddCounterClockwiseDirection()
         {
             if (!f_MPort.IsOpen) return;
-            if (PumpReverse) f_CmdQueue.Add("r");
-            else f_CmdQueue.Add("l");
+            if (PumpReverse) _cmdQueue.Add("r");
+            else _cmdQueue.Add("l");
         }
 
         public void AddSpeed(string speed)
         {
             if (!f_MPort.IsOpen) return;
-            f_CmdQueue.Add(speed);
+            _cmdQueue.Add(speed);
         }
 
         private static byte[] TrimReceivedData(IEnumerable<byte> src)
