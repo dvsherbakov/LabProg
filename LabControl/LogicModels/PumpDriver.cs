@@ -97,27 +97,43 @@ namespace LabControl.LogicModels
 
         private void StopPump(bool isFirst)
         {
-            if (isFirst) _portInput?.AddStopPump();
-            else _portOutput?.AddStopPump();
+            if (isFirst)
+            {
+                _portInput?.AddStopPump();
+            }
+            else
+            {
+                _portOutput?.AddStopPump();
+            }
         }
 
         private void StartPump(bool isFirst)
         {
-            if (isFirst) _portInput?.AddStartPump();
-            else _portOutput?.AddStartPump();
+            if (isFirst)
+            {
+                _portInput?.AddStartPump();
+            }
+            else
+            {
+                _portOutput?.AddStartPump();
+            }
         }
 
-        private SpeedGradeItem GetNextSpeed(float speed) =>
-            _speedGradeItems.Where(x => x.value >= speed).OrderBy(y => y.value).ToArray()?[1];
+        private SpeedGradeItem GetNextSpeed(float speed)
+        {
+            return _speedGradeItems.Where(x => x.value >= speed).OrderBy(y => y.value).ToArray()[1];
+        }
 
-        private SpeedGradeItem GetPrevSpeed(float speed) =>
-            _speedGradeItems.Where(x => x.value <= speed).OrderByDescending(y => y.value).ToArray()?[1];
+        private SpeedGradeItem GetPrevSpeed(float speed)
+        {
+            return _speedGradeItems.Where(x => x.value <= speed).OrderByDescending(y => y.value).ToArray()[1];
+        }
 
         private SpeedGradeItem GetPumpSpeed(float add = 0)
         {
-            var subLevel = Math.Abs(_requiredLvl - _measuredLvl.Dist) + add / 20;
+            var subLevel = _measuredLvl is null ? 0 : Math.Abs(_requiredLvl - _measuredLvl.Dist) + (add / 20);
 
-            return _speedGradeItems.Where(x => x.Different < subLevel).OrderByDescending(x => x.Different).FirstOrDefault();
+            return _speedGradeItems.Where(x => x.Different <= subLevel).OrderByDescending(x => x.Different).FirstOrDefault();
         }
 
 
@@ -225,15 +241,21 @@ namespace LabControl.LogicModels
 
         private Direction GetDirection()
         {
-            var currentDifferent = _requiredLvl - _measuredLvl.Dist;
-            if (Math.Abs(currentDifferent) < 0.001) return Direction.Stop;
-            var tmpDirection = (currentDifferent > 0);
-            if (_measuredLvl.IsSingle) tmpDirection = !tmpDirection;
+            var currentDifferent = _requiredLvl - _measuredLvl?.Dist ?? 0;
+            if (Math.Abs(currentDifferent) < 0.001)
+            {
+                return Direction.Stop;
+            }
 
-            if (_measuredLvl.IsSingle)
-                return !tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
-            else
+            var tmpDirection = currentDifferent > 0;
+            if (_measuredLvl is { IsSingle: false })
+            {
                 return tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
+            }
+
+            tmpDirection = !tmpDirection;
+            return !tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
+
         }
     }
 

@@ -10,14 +10,14 @@ namespace LabControl.PortModels
 {
     internal class LaserSerial
     {
-        private readonly SerialPort f_MPort;
+        private readonly SerialPort _port;
         private readonly LaserCommand f_LCommand;
         private static List<string> _errList;
         private static List<string> _msgList;
         private int f_DPower;
         private int f_DMaxPower;
         private int f_LPwr;
-        private int f_LaserType;
+        private int _laserType;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -27,7 +27,7 @@ namespace LabControl.PortModels
             _errList = new List<string>();
             _msgList = new List<string>();
             if (portStr.Length == 0) portStr = "COM6";
-            f_MPort = new SerialPort(portStr)
+            _port = new SerialPort(portStr)
             {
                 BaudRate = 9600,
                 Parity = Parity.None,
@@ -37,7 +37,7 @@ namespace LabControl.PortModels
                 RtsEnable = true
             };
             f_LCommand = new LaserCommand();
-            f_MPort.DataReceived += DataReceivedHandler;
+            _port.DataReceived += DataReceivedHandler;
             f_DPower = 0;
             f_DMaxPower = 0;
         }
@@ -46,7 +46,7 @@ namespace LabControl.PortModels
         {
             try
             {
-                f_MPort.Open();
+                _port.Open();
                 SendCommand(1);
                 SendCommand(7);
                 SendCommand(18);
@@ -63,7 +63,7 @@ namespace LabControl.PortModels
 
         public void ClosePort()
         {
-            if (f_MPort.IsOpen) f_MPort.Close();
+            if (_port.IsOpen) _port.Close();
         }
 
         public int GetDPower()
@@ -143,18 +143,18 @@ namespace LabControl.PortModels
 
         private void SendCommand(int cmd)
         {
-            if (f_MPort.IsOpen)
-                f_MPort.Write(f_LCommand.GetCmdById(cmd).SCommand);
+            if (_port.IsOpen)
+                _port.Write(f_LCommand.GetCmdById(cmd).SCommand);
         }
 
         public void SetPower(int pwr)
         {
-            if (f_LaserType == 0)
+            if (_laserType == 0)
             {
                 var cmd = f_LCommand.SetPowerLvl(pwr);
-                if (f_MPort.IsOpen)
+                if (_port.IsOpen)
                 {
-                    f_MPort.Write(cmd.SCommand);
+                    _port.Write(cmd.SCommand);
                 }
             }
             else
@@ -170,7 +170,7 @@ namespace LabControl.PortModels
 
         public void SetOn()
         {
-            if (f_LaserType == 0)
+            if (_laserType == 0)
             {
                 SendCommand(35);
                 SendCommand(37);
@@ -183,7 +183,7 @@ namespace LabControl.PortModels
 
         public void SetOff()
         {
-            if (f_LaserType == 0)
+            if (_laserType == 0)
             {
                 SendCommand(36);
                 SendCommand(38);
@@ -193,19 +193,19 @@ namespace LabControl.PortModels
 
         private void Start()
         {
-            if (f_LaserType == 1) SetPowerStart();
+            if (_laserType == 1) SetPowerStart();
             else
             {
                 var cmd = new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01, 0x63, 0x0D };
-                f_MPort.Write(cmd, 0, 8);
+                _port.Write(cmd, 0, 8);
             }
         }
 
         private void Stop()
         {
-            if (!f_MPort.IsOpen) return;
+            if (!_port.IsOpen) return;
             var cmd = new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
-            f_MPort.Write(cmd, 0, 8);
+            _port.Write(cmd, 0, 8);
         }
 
         private void SetPowerLevel(int level)
@@ -220,7 +220,7 @@ namespace LabControl.PortModels
             command.Add(0x0D);
 
             var cmd = command.ToArray();
-            f_MPort.Write(cmd, 0, 8);
+            _port.Write(cmd, 0, 8);
         }
 
         private void SetPowerStart()
@@ -235,12 +235,12 @@ namespace LabControl.PortModels
             command.Add(0x0D);
 
             var cmd = command.ToArray();
-            f_MPort.Write(cmd, 0, 8);
+            _port.Write(cmd, 0, 8);
         }
 
         public void SetLaserType(int tp)
         {
-            f_LaserType = tp;
+            _laserType = tp;
         }
     }
 }

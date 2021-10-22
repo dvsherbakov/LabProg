@@ -1,32 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LaserTest
 {
     internal class PortModel
     {
-        private SerialPort _port;
+        private readonly SerialPort _port;
 
         public PortModel()
         {
             _port = new SerialPort("COM16")
             {
-                BaudRate = 9600,
+                BaudRate = 115200,
                 Parity = Parity.None,
                 StopBits = StopBits.One,
                 DataBits = 8,
-                Handshake = Handshake.None,
-                RtsEnable = true
             };
             _port.DataReceived += DataReceivedHandler;
             _port.Open();
         }
 
-        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             var sp = (SerialPort)sender;
             try
@@ -58,31 +54,30 @@ namespace LaserTest
 
         public void On()
         {
-            var cmd = new byte[8] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01, 0x63, 0x0D };
-            _port.Write(cmd, 0, 8);
-            _port.WriteLine("on");
+            var cmd = new byte[] { 0x5A, 0xA5, 0x06, 0x83, 0x00, 0xA0, 0x01, 0x00, 0x01 };
+            _port.Write(cmd, 0, 9);
+            Console.WriteLine("Send: ", BitConverter.ToString(cmd));
         }
 
         public void Off()
         {
-            _port.WriteLine("off");
+            var cmd = new byte[] { 0x5A, 0xA5, 0x06, 0x83, 0x00, 0xA0, 0x01, 0x00, 0x00 };
+            _port.Write(cmd, 0, 9);
+            Console.WriteLine("Send: ", BitConverter.ToString(cmd));
         }
 
-        public void SetPower()
+        public void SetPower(byte percent)
         {
-            var level = 25;
-            var command = new List<byte> { 0x53, 0x08, 0x04, 0x01 };
-            var bts = BitConverter.GetBytes(level);
+
+            var command = new List<byte> { 0x5A, 0xA5, 0x06, 0x83, 0x00, 0x20, 0x01 };
+            var bts = BitConverter.GetBytes(percent);
             command.Add(bts[1]);
             command.Add(bts[0]);
-            var sm = command.Aggregate<byte, short>(0, (current, x) => (short)(current + x));
-            var cb = BitConverter.GetBytes(sm);
-            command.Add(cb[0]);
-            command.Add(0x0D);
+
 
             var cmd = command.ToArray();
-            _port.Write(cmd, 0, 8);
-            _port.WriteLine("65");
+            _port.Write(cmd, 0, 9);
+            Console.WriteLine($"Send power: {BitConverter.ToString(cmd)}, Length: {command.Count}");
         }
     }
 }

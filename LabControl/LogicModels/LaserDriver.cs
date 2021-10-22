@@ -10,21 +10,21 @@ namespace LabControl.LogicModels
     class LaserDriver
     {
         public string PortString { get; set; }
-        private LaserSerial f_Port;
+        private LaserSerial _port;
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
         public void ConnectToPort()
         {
-            f_Port = new LaserSerial(PortString);
-            f_Port.SetLogMessage += TestLog;
-            f_Port.OpenPort();
+            _port = new LaserSerial(PortString);
+            _port.SetLogMessage += TestLog;
+            _port.OpenPort();
         }
 
         public void Disconnect()
         {
-            f_Port?.ClosePort();
+            _port?.ClosePort();
         }
 
         private void TestLog(string msg)
@@ -34,23 +34,23 @@ namespace LabControl.LogicModels
 
         public void SetPower(int pwr)
         {
-            f_Port?.SetPower(pwr);
+            _port?.SetPower(pwr);
         }
 
         public void SetLaserType(int tp)
         {
-            f_Port?.SetLaserType(tp);
+            _port?.SetLaserType(tp);
         }
 
         public void EmitOn(bool isEmit)
         {
             if (isEmit)
             {
-                f_Port?.SetOn();
+                _port?.SetOn();
             }
             else
             {
-                f_Port?.SetOff();
+                _port?.SetOff();
             }
         }
 

@@ -12,17 +12,23 @@ namespace LaserTest
     {
         private static void Main(string[] args)
         {
-            var p = new PortModel();
             Console.WriteLine("Start");
-            p.SetPower();
+            var p = new PortModel();
+            //while (true)
+            //{
 
-            p.On();
-            Thread.Sleep(12000);
-            Console.WriteLine("Stop");
-            p.Off();
-            Console.ReadLine();
+                p.SetPower(50);
+                Thread.Sleep(2000);
+                //p.On();
+                //Thread.Sleep(10000);
+                //p.Off();
+                //Thread.Sleep(2000);
+
+            //}
+            Console.ReadKey();
+
         }
 
-        
+
     }
 }

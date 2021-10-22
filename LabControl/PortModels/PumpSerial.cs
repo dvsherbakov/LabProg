@@ -13,13 +13,11 @@ namespace LabControl.PortModels
 {
     public class PumpSerial
     {
-        private readonly SerialPort f_MPort;
-        //private readonly List<string> f_RecievedData;
-        //private bool f_Direction;
+        private readonly SerialPort _port;
         private readonly string _comId;
         public bool PumpReverse { private get; set; }
         private readonly ObservableCollection<string> _cmdQueue;
-        private readonly Timer f_QueueTimer;
+        private readonly Timer _queueTimer;
 
         public bool Active { get; private set; }
 
@@ -28,11 +26,14 @@ namespace LabControl.PortModels
 
         public PumpSerial(string portStr, bool startDirection)
         {
-            //f_RecievedData = new List<string>();
-            if (portStr == "") portStr = "COM7";
+            if (portStr == "")
+            {
+                portStr = "COM7";
+            }
+
             PumpReverse = startDirection;
             _comId = portStr;
-            f_MPort = new SerialPort(portStr)
+            _port = new SerialPort(portStr)
             {
                 BaudRate = int.Parse("9600"),
                 Parity = Parity.None,
@@ -41,50 +42,72 @@ namespace LabControl.PortModels
                 Handshake = Handshake.None,
                 RtsEnable = true
             };
-            f_MPort.DataReceived += DataReceivedHandler;
+            _port.DataReceived += DataReceivedHandler;
 
             _cmdQueue = new ObservableCollection<string>();
             _cmdQueue.CollectionChanged += StartQueue;
 
-            f_QueueTimer = new Timer
+            _queueTimer = new Timer
             {
                 Interval = 1000,
                 Enabled = false,
             };
-            f_QueueTimer.Elapsed += TimerEvent;
+            _queueTimer.Elapsed += TimerEvent;
         }
 
         private async void StartQueue(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action != NotifyCollectionChangedAction.Add) return;
+            if (e.Action != NotifyCollectionChangedAction.Add)
+            {
+                return;
+            }
+
             await Task.Delay(1150);
-            f_QueueTimer.Enabled = true;
+            _queueTimer.Enabled = true;
         }
 
-        void TimerEvent(object source, ElapsedEventArgs e)
+        private void TimerEvent(object source, ElapsedEventArgs e)
         {
             if (_cmdQueue.Count > 0)
             {
+                if (!IsOpen)
+                {
+                    try
+                    {
+                        _port.Open();
+                    }
+                    catch (Exception ex)
+                    {
+                        SetLogMessage?.Invoke(ex.Message);
+                        return;
+                    }
+                }
+
                 var itm = _cmdQueue.FirstOrDefault();
-                if (_cmdQueue.Count > 0) { _cmdQueue.Remove(itm); }
+                if (_cmdQueue.Count > 0) { _ = _cmdQueue.Remove(itm); }
                 WriteAnyCommand(itm);
             }
 
-            if (_cmdQueue.Count == 0) f_QueueTimer.Enabled = false;
+            if (_cmdQueue.Count != 0)
+            {
+                return;
+            }
+
+            _queueTimer.Enabled = false;
+            _port.Close();
         }
 
         private void WriteAnyCommand(string cmd)
         {
-            if (f_MPort.IsOpen)
+            if (IsOpen)
             {
                 try
                 {
-                    f_MPort.Write(cmd);
-                    //SetLogMessage?.Invoke($"Pump start command {cmd}");
+                    _port.Write(cmd);
                 }
                 catch (Exception ex)
                 {
-                    SetLogMessage?.Invoke($"Port {_comId} is occuped");
+                    SetLogMessage?.Invoke($"Port {_comId} is busy");
                     SetLogMessage?.Invoke(ex.Message);
                 }
             }
@@ -100,7 +123,10 @@ namespace LabControl.PortModels
             SetLogMessage?.Invoke($"Try connect pump on port {_comId}");
             try
             {
-                f_MPort.Open();
+                if (!IsOpen)
+                {
+                    _port.Open();
+                }
             }
             catch (Exception ex)
             {
@@ -109,25 +135,25 @@ namespace LabControl.PortModels
             Active = true;
         }
 
-        public bool IsOpen => f_MPort.IsOpen;
+        public bool IsOpen => _port.IsOpen;
 
         public void ClosePort()
         {
-            f_QueueTimer.Enabled = false;
+            _queueTimer.Enabled = false;
             _cmdQueue.Clear();
             StopPump();
-            f_MPort.Close();
+            _port.Close();
             Active = false;
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             System.Threading.Thread.Sleep(30);
-            var cnt = f_MPort.ReadBufferSize;
+            var cnt = _port.ReadBufferSize;
             var mRxData = new byte[cnt + 1];
             try
             {
-                f_MPort.Read(mRxData, 0, cnt);
+                _port.Read(mRxData, 0, cnt);
                 mRxData = TrimReceivedData(mRxData);
             }
             catch (Exception ex)
@@ -137,23 +163,26 @@ namespace LabControl.PortModels
             var ascii = Encoding.ASCII;
             if (mRxData.Length > 0)
             {
-                //f_RecievedData.Add(ascii.GetString(mRxData));
-                // Debug.WriteLine($"{f_ComId}:{ascii.GetString(mRxData)}");
+                Debug.WriteLine($"{_comId}:{ascii.GetString(mRxData)}");
             }
         }
 
 
         public void AddStartPump()
         {
-            if (!f_MPort.IsOpen) return;
+            if (!IsOpen)
+            {
+                return;
+            }
+
             _cmdQueue.Add("s");
         }
 
         private void StopPump()
         {
-            if (f_MPort.IsOpen)
+            if (IsOpen)
             {
-                f_MPort.Write("t");
+                _port.Write("t");
                 SetLogMessage?.Invoke($"Pump  stop: {_comId}");
             }
             else
@@ -164,41 +193,22 @@ namespace LabControl.PortModels
 
         public void AddStopPump()
         {
-            if (f_MPort.IsOpen)
-                _cmdQueue.Add("t");
+            _cmdQueue.Add("t");
         }
 
         public void AddClockwiseDirection()
         {
-            if (!f_MPort.IsOpen) return;
-            if (PumpReverse) _cmdQueue.Add("l");
-            else _cmdQueue.Add("r");
-        }
-
-        public void SetCounterClockwiseDirection()
-        {
-            if (f_MPort.IsOpen)
-            {
-                if (PumpReverse) f_MPort.Write("r");
-                else f_MPort.Write("l");
-                System.Threading.Thread.Sleep(130);
-            }
-            else
-            {
-                SetLogMessage?.Invoke($"Pump port {_comId} is closed");
-            }
+            _cmdQueue.Add(PumpReverse ? "l" : "r");
         }
 
         public void AddCounterClockwiseDirection()
         {
-            if (!f_MPort.IsOpen) return;
-            if (PumpReverse) _cmdQueue.Add("r");
-            else _cmdQueue.Add("l");
+
+            _cmdQueue.Add(PumpReverse ? "r" : "l");
         }
 
         public void AddSpeed(string speed)
         {
-            if (!f_MPort.IsOpen) return;
             _cmdQueue.Add(speed);
         }
 
