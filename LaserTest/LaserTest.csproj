@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LaserOmicron.cs" />
     <Compile Include="LaserSerial.cs" />
+    <Compile Include="MrlII660D.cs" />
+    <Compile Include="MrW6000.cs" />
     <Compile Include="PortModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

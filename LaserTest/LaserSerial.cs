@@ -11,7 +11,9 @@ namespace LaserTest
     {
         public string Name { get; set; }
         public delegate void LogMessage(string msg);
-        private readonly SerialPort _port;
+
+
+        protected SerialPort _port;
 
 
         protected LaserSerial(string name)
@@ -23,9 +25,11 @@ namespace LaserTest
 
         public abstract void On();
 
+        public abstract void Off();
+
         public abstract void SetPowerLevel(int pwr);
 
-        private static byte[] TrimReceivedData(IEnumerable<byte> src)
+        protected static byte[] TrimReceivedData(IEnumerable<byte> src)
         {
             var res = new List<byte>(src);
             while (res.LastOrDefault() == 0)
