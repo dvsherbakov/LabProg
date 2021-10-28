@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
 using System.Text;
 
-namespace LaserTest
+namespace LabControl.PortModels
 {
-    internal class MrlIii660D : LaserSerial
+    internal class MrW6000 : LaserSerial
     {
-        public MrlIii660D(string name) : base(name)
-        {
-        }
 
         public override void Init()
         {
+
             try
             {
                 if (Name.Length == 0)
@@ -23,16 +20,15 @@ namespace LaserTest
 
                 Port = new SerialPort(Name)
                 {
-                    BaudRate = 9600,
+                    BaudRate = 115200,
                     Parity = Parity.None,
                     StopBits = StopBits.One,
                     DataBits = 8,
-                    Handshake = Handshake.None,
-                    RtsEnable = true
                 };
-
                 Port.DataReceived += DataReceivedHandler;
+                Port.Open();
             }
+
             catch (Exception ex)
             {
                 OnSetLogMessage(ex.Message);
@@ -41,31 +37,27 @@ namespace LaserTest
 
         public override void On()
         {
-            if (!Port.IsOpen) return;
-            var cmd = new byte[] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x01, 0x63, 0x0D };
-            Port.Write(cmd, 0, 8);
+            var cmd = new byte[] { 0x5A, 0xA5, 0x06, 0x83, 0x00, 0xA0, 0x01, 0x00, 0x01 };
+            Port.Write(cmd, 0, 9);
+
         }
 
         public override void Off()
         {
-            if (!Port.IsOpen) return;
-            var cmd = new byte[] { 0x53, 0x08, 0x06, 0x01, 0x00, 0x02, 0x64, 0x0D };
-            Port.Write(cmd, 0, 8);
+            var cmd = new byte[] { 0x5A, 0xA5, 0x06, 0x83, 0x00, 0xA0, 0x01, 0x00, 0x00 };
+            Port.Write(cmd, 0, 9);
         }
 
-        public override void SetPowerLevel(int pwr)
+        public override void SetPowerLevel(int percent)
         {
-            var command = new List<byte> { 0x53, 0x08, 0x04, 0x01 };
-            var bts = BitConverter.GetBytes(pwr);
+            var command = new List<byte> { 0x5A, 0xA5, 0x06, 0x83, 0x00, 0x20, 0x01 };
+            var bts = BitConverter.GetBytes(percent);
             command.Add(bts[1]);
             command.Add(bts[0]);
-            var sm = command.Aggregate<byte, short>(0, (current, x) => (short)(current + x));
-            var cb = BitConverter.GetBytes(sm);
-            command.Add(cb[0]);
-            command.Add(0x0D);
+
 
             var cmd = command.ToArray();
-            Port.Write(cmd, 0, 8);
+            Port.Write(cmd, 0, 9);
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -90,6 +82,10 @@ namespace LaserTest
             {
                 OnSetLogMessage(ex.Message);
             }
+        }
+
+        public MrW6000(string name) : base(name)
+        {
         }
     }
 }

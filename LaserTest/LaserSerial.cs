@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LaserTest
 {
@@ -11,9 +8,9 @@ namespace LaserTest
     {
         public string Name { get; set; }
         public delegate void LogMessage(string msg);
+        public event LogMessage SetLogMessage;
 
-
-        protected SerialPort _port;
+        protected SerialPort Port;
 
 
         protected LaserSerial(string name)
@@ -39,7 +36,11 @@ namespace LaserTest
             return res.ToArray();
         }
 
-
+      
+        protected virtual void OnSetLogMessage(string msg)
+        {
+            SetLogMessage?.Invoke(msg);
+        }
     }
 
 }

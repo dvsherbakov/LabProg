@@ -1,41 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LaserTest
 {
     internal class MrW6000 : LaserSerial
     {
-        public event LogMessage SetLogMessage;
 
         public override void Init()
         {
-            _port = new SerialPort("COM16")
+
+            try
             {
-                BaudRate = 115200,
-                Parity = Parity.None,
-                StopBits = StopBits.One,
-                DataBits = 8,
-            };
-            _port.DataReceived += DataReceivedHandler;
-            _port.Open();
+                if (Name.Length == 0)
+                {
+                    Name = "COM6";
+                }
+
+                Port = new SerialPort("COM16")
+                {
+                    BaudRate = 115200,
+                    Parity = Parity.None,
+                    StopBits = StopBits.One,
+                    DataBits = 8,
+                };
+                Port.DataReceived += DataReceivedHandler;
+                Port.Open();
+            }
+
+            catch (Exception ex)
+            {
+                OnSetLogMessage(ex.Message);
+            }
         }
 
         public override void On()
         {
             var cmd = new byte[] { 0x5A, 0xA5, 0x06, 0x83, 0x00, 0xA0, 0x01, 0x00, 0x01 };
-            _port.Write(cmd, 0, 9);
-            Console.WriteLine("Send: ", BitConverter.ToString(cmd));
+            Port.Write(cmd, 0, 9);
+
         }
 
         public override void Off()
         {
             var cmd = new byte[] { 0x5A, 0xA5, 0x06, 0x83, 0x00, 0xA0, 0x01, 0x00, 0x00 };
-            _port.Write(cmd, 0, 9);
-            Console.WriteLine("Send: ", BitConverter.ToString(cmd));
+            Port.Write(cmd, 0, 9);
         }
 
         public override void SetPowerLevel(int percent)
@@ -47,8 +57,7 @@ namespace LaserTest
 
 
             var cmd = command.ToArray();
-            _port.Write(cmd, 0, 9);
-            Console.WriteLine($"Send power: {BitConverter.ToString(cmd)}, Length: {command.Count}");
+            Port.Write(cmd, 0, 9);
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -64,14 +73,14 @@ namespace LaserTest
                 }
                 catch (Exception ex)
                 {
-                    SetLogMessage?.Invoke(ex.Message);
+                   OnSetLogMessage(ex.Message);
                 }
                 var ascii = Encoding.ASCII;
                 var answers = ascii.GetString(TrimReceivedData(mXdata)).Split('\r');
             }
             catch (Exception ex)
             {
-                SetLogMessage?.Invoke(ex.Message);
+                OnSetLogMessage(ex.Message);
             }
         }
 

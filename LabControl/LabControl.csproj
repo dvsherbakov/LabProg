@@ -127,7 +127,10 @@
     <Compile Include="LogicModels\PwrDriver.cs" />
     <Compile Include="LogicModels\PyroDriver.cs" />
     <Compile Include="PortModels\DispenserSerial.cs" />
+    <Compile Include="PortModels\LaserOmicron.cs" />
     <Compile Include="PortModels\LaserSerial.cs" />
+    <Compile Include="PortModels\MrlIii660D.cs" />
+    <Compile Include="PortModels\MrW6000.cs" />
     <Compile Include="PortModels\PressureSensor.cs" />
     <Compile Include="PortModels\PumpSerial.cs" />
     <Compile Include="PortModels\PwrSerial.cs" />

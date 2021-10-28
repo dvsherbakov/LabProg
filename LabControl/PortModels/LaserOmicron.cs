@@ -4,7 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 
-namespace LaserTest
+namespace LabControl.PortModels
 {
     internal class LaserOmicron : LaserSerial
     {
