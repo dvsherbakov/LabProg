@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cams\CameraModel.cs" />
     <Compile Include="ClassHelpers\BytesUtility.cs" />
     <Compile Include="ClassHelpers\ConfocalDataItem.cs" />
     <Compile Include="ClassHelpers\DispenserPulseWaveData.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="LogicModels\ConfocalDriver.cs" />
     <Compile Include="LogicModels\DispenserDriver.cs" />
     <Compile Include="LogicModels\LaserDriver.cs" />
+    <Compile Include="LogicModels\LightingDriver.cs" />
     <Compile Include="LogicModels\PressurePumpDriver.cs" />
     <Compile Include="LogicModels\PressureSensorDriver.cs" />
     <Compile Include="LogicModels\PumpDriver.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="PortModels\PumpSerial.cs" />
     <Compile Include="PortModels\PwrSerial.cs" />
     <Compile Include="PortModels\PyroSerial.cs" />
+    <Compile Include="PortModels\YodnSerial.cs" />
     <Compile Include="ViewModels\DoubleArrayToPointsConverter.cs" />
     <Compile Include="ViewModels\MainModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />

@@ -7,12 +7,12 @@ using System.Timers;
 
 namespace LabControl.LogicModels
 {
-    class PressureSensorDriver
+    internal class PressureSensorDriver
     {
         public string PortStr { get; set; }
-        private PortModels.PressureSensor f_Port;
+        private PortModels.PressureSensor _port;
 
-        private Timer f_Timer = new Timer();
+        private readonly Timer _timer = new Timer();
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -22,21 +22,21 @@ namespace LabControl.LogicModels
 
         public PressureSensorDriver(string portName = "COM12")
         {
-            f_Timer.Interval = 1000;
+            _timer.Interval = 1000;
             PortStr = portName;
-            f_Timer.Elapsed += OnTimedEvent;
+            _timer.Elapsed += OnTimedEvent;
         }
 
         public void ConnectToPort()
         {
             
-            f_Port = new PortModels.PressureSensor(PortStr);
-            f_Port.Open();
+            _port = new PortModels.PressureSensor(PortStr);
+            _port.Open();
         }
 
         public void Disconnect()
         {
-            f_Port.Close();
+            _port.Close();
         }
 
         private void TestLog(string msg)
@@ -47,13 +47,14 @@ namespace LabControl.LogicModels
         
         public void SetMeasuring(bool isMeasuring)
         {
-            if (isMeasuring) f_Timer.Start(); else f_Timer.Stop();
+            if (isMeasuring) _timer.Start(); else _timer.Stop();
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            var pressure = f_Port.GetPressure();
-            var temp = f_Port.GetTemperature();
+            if (!_port.IsOpen) return;
+            var pressure = _port.GetPressure();
+            var temp = _port.GetTemperature();
             EventHandler?.Invoke(pressure, temp);
         }
 

@@ -1042,5 +1042,41 @@ namespace LabControl.Properties {
                 this["OutgoingPumpPortSelected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LightingUvChannelValue {
+            get {
+                return ((int)(this["LightingUvChannelValue"]));
+            }
+            set {
+                this["LightingUvChannelValue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LightingBlueChannelValue {
+            get {
+                return ((int)(this["LightingBlueChannelValue"]));
+            }
+            set {
+                this["LightingBlueChannelValue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LightingGreenRedChannelValue {
+            get {
+                return ((int)(this["LightingGreenRedChannelValue"]));
+            }
+            set {
+                this["LightingGreenRedChannelValue"] = value;
+            }
+        }
     }
 }

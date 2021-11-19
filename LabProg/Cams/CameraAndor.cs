@@ -87,7 +87,7 @@ namespace LabProg.Cams
 
         public float GetTempereture()
         {
-            float temperature = -99.0f;
+            var temperature = -99.0f;
             ErrValue = Api.GetTemperatureF(ref temperature);
             return temperature;
         }
@@ -99,29 +99,29 @@ namespace LabProg.Cams
 
         public void SetFasterSpeed()
         {
-            int vsNumber = 0; float speed = 0.0f;
+            var vsNumber = 0; var speed = 0.0f;
             ErrValue = Api.GetFastestRecommendedVSSpeed(ref vsNumber, ref speed);
-            int nAD = 0;
-            ErrValue = Api.GetNumberADChannels(ref nAD);
-            float sTemp = 0.0f;
-            int hNumber = 0, ADnumber = 0;
+            var nAd = 0;
+            ErrValue = Api.GetNumberADChannels(ref nAd);
+            var sTemp = 0.0f;
+            int hNumber = 0, aDnumber = 0;
 
-            for (int iAD = 0; iAD < nAD; iAD++)
+            for (var iAd = 0; iAd < nAd; iAd++)
             {
-                int index = 0;
-                Api.GetNumberHSSpeeds(iAD, 0, ref index);
-                for (int iSpeed = 0; iSpeed < index; iSpeed++)
+                var index = 0;
+                Api.GetNumberHSSpeeds(iAd, 0, ref index);
+                for (var iSpeed = 0; iSpeed < index; iSpeed++)
                 {
-                    Api.GetHSSpeed(iAD, 0, iSpeed, ref speed);
+                    Api.GetHSSpeed(iAd, 0, iSpeed, ref speed);
                     if (sTemp < speed)
                     {
                         sTemp = speed;
                         hNumber = iSpeed;
-                        ADnumber = iAD;
+                        aDnumber = iAd;
                     }
                 }
             }
-            ErrValue = Api.SetADChannel(ADnumber);
+            ErrValue = Api.SetADChannel(aDnumber);
             ErrValue = Api.SetHSSpeed(0, hNumber);
         }
         private void SetExposure(float exposure) => Api.SetExposureTime(exposure);

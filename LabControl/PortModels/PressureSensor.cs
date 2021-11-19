@@ -4,10 +4,10 @@ using System.IO.Ports;
 
 namespace LabControl.PortModels
 {
-    class PressureSensor
+    internal class PressureSensor
     {
         public ModbusSerialMaster ModBus;
-        private SerialPort f_Port;
+        private SerialPort _port;
         public byte AddrId;
         public string PortStr { get; set; }
 
@@ -19,7 +19,7 @@ namespace LabControl.PortModels
 
         public void Open()
         {
-            f_Port = new SerialPort
+            _port = new SerialPort
             {
                 PortName = PortStr,
                 BaudRate = 9600,
@@ -27,19 +27,19 @@ namespace LabControl.PortModels
                 Parity = Parity.None,
                 StopBits = StopBits.One
             };
-            f_Port.Open();
-            ModBus = ModbusSerialMaster.CreateRtu(f_Port);
+            _port.Open();
+            ModBus = ModbusSerialMaster.CreateRtu(_port);
         }
 
         public void Close()
         {
             ModBus.Dispose();
-            f_Port.Close();
+            _port.Close();
         }
 
-        private float ConvertToFloat(ushort[] buf)
+        private static float ConvertToFloat(ushort[] buf)
         {
-            byte[] bytes = new byte[4];
+            var bytes = new byte[4];
             bytes[0] = (byte)(buf[1] & 0xFF);
             bytes[1] = (byte)(buf[1] >> 8);
             bytes[2] = (byte)(buf[0] & 0xFF);
@@ -60,8 +60,8 @@ namespace LabControl.PortModels
 
         public string GetId()
         {
-            ushort[] source = ModBus.ReadHoldingRegisters(AddrId, 1000, 5);
-            byte[] target = new byte[source.Length * 2];
+            var source = ModBus.ReadHoldingRegisters(AddrId, 1000, 5);
+            var target = new byte[source.Length * 2];
             Buffer.BlockCopy(source, 0, target, 0, source.Length * 2);
 
             try
@@ -79,7 +79,8 @@ namespace LabControl.PortModels
             {
                 return e.Message;
             }
-
         }
+
+        public bool IsOpen => _port.IsOpen;
     }
 }

@@ -42,12 +42,12 @@ namespace LabControl.PortModels
 
         public static void OpenPort()
         {
-            _port.Open();
+            _port?.Open();
         }
 
         public static void ClosePort()
         {
-            _port.Close();
+            _port?.Close();
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)

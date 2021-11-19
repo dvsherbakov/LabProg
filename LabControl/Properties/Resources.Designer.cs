@@ -421,6 +421,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Свечение.
+        /// </summary>
+        internal static string LabelLightingActive {
+            get {
+                return ResourceManager.GetString("LabelLightingActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Микрокомпрессор.
         /// </summary>
         internal static string LabelMicroCompressor {
@@ -777,6 +786,24 @@ namespace LabControl.Properties {
         internal static string PowerSuplyTitle {
             get {
                 return ResourceManager.GetString("PowerSuplyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Датчик давления.
+        /// </summary>
+        internal static string PressureOperationTitle {
+            get {
+                return ResourceManager.GetString("PressureOperationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Что-то неизвестное.
+        /// </summary>
+        internal static string PressurePortConnection {
+            get {
+                return ResourceManager.GetString("PressurePortConnection", resourceCulture);
             }
         }
         

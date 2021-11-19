@@ -10,9 +10,9 @@ using System.Windows.Threading;
 
 namespace LabControl.LogicModels
 {
-    class PwrDriver
+    internal class PwrDriver
     {
-        private PwrSerial f_pwrSerial;
+        private PwrSerial _pwrSerial;
         public string PortStr { get; set; }
 
         public delegate void LogMessage(string msg);
@@ -23,10 +23,10 @@ namespace LabControl.LogicModels
 
         public void ConnectToPort()
         {
-            f_pwrSerial = new PwrSerial(PortStr);
+            _pwrSerial = new PwrSerial(PortStr);
             PwrSerial.OpenPort();
-            f_pwrSerial.SetLogMessage += TestLog;
-            f_pwrSerial.OnRecieve += GetSignal;
+            _pwrSerial.SetLogMessage += TestLog;
+            _pwrSerial.OnRecieve += GetSignal;
         }
 
         public void Disconnect()
@@ -41,47 +41,47 @@ namespace LabControl.LogicModels
 
         public void GetSignal(byte[] rxData)
         {
-           
-            PwrItem pi = new PwrItem(rxData);
+
+            var pi = new PwrItem(rxData);
             if (pi.IsCorrect)
             {
-                SetChannelParameters?.Invoke(f_pwrSerial.CurChannel, pi);
-                
-                SetLogMessage?.Invoke($"Чтение из бп, канал {f_pwrSerial.CurChannel}, успешно");
+                SetChannelParameters?.Invoke(_pwrSerial.CurChannel, pi);
+
+                SetLogMessage?.Invoke($"Чтение из бп, канал {_pwrSerial.CurChannel}, успешно");
             }
             else
             {
-                SetLogMessage?.Invoke("Нераспознаный ответ БП");   
+                SetLogMessage?.Invoke("Нераспознаный ответ БП");
             }
 
         }
 
         public void SetChannelOn(int channel)
         {
-            f_pwrSerial?.SetChannelOn(channel);
+            _pwrSerial?.SetChannelOn(channel);
         }
 
         public void SetChannelOff(int channel)
         {
-            f_pwrSerial?.SetChannelOff(channel);
+            _pwrSerial?.SetChannelOff(channel);
         }
 
         public void GetChanelData(byte channel)
         {
-            f_pwrSerial.CurChannel = channel;
-            f_pwrSerial?.GetChanelData(channel);
+            _pwrSerial.CurChannel = channel;
+            _pwrSerial?.GetChanelData(channel);
         }
 
         public void WriteChannelData(int channel, PwrItem pi)
         {
-            f_pwrSerial?.SetMode(channel, pi.Mode);
-            if (pi.Amplitude> 0) f_pwrSerial.SetAmplitude(channel, pi.Amplitude);
-            if ((pi.Bias <= 10000) && (pi.Bias > 0)) f_pwrSerial.SetBias(channel, pi.Bias);
-            if (pi.Frequency> 0) f_pwrSerial.SetFreq(channel, pi.Frequency);
-            if (pi.Duty > 0) f_pwrSerial.SetDuty(channel, pi.Duty);
-            if (pi.Phase> 0) f_pwrSerial.SetPhase(channel, pi.Phase);
-            if ((pi.MaxVolts <= 10000) && (pi.MaxVolts > 0)) f_pwrSerial.SetMaxVolts(channel, pi.MaxVolts);
-            if (pi.MaxAmps > 0) f_pwrSerial.SetMaxAmps(channel, pi.MaxAmps);
+            _pwrSerial?.SetMode(channel, pi.Mode);
+            if (pi.Amplitude > 0) _pwrSerial?.SetAmplitude(channel, pi.Amplitude);
+            if ((pi.Bias <= 10000) && (pi.Bias > 0)) _pwrSerial?.SetBias(channel, pi.Bias);
+            if (pi.Frequency > 0) _pwrSerial?.SetFreq(channel, pi.Frequency);
+            if (pi.Duty > 0) _pwrSerial?.SetDuty(channel, pi.Duty);
+            if (pi.Phase > 0) _pwrSerial?.SetPhase(channel, pi.Phase);
+            if ((pi.MaxVolts <= 10000) && (pi.MaxVolts > 0)) _pwrSerial?.SetMaxVolts(channel, pi.MaxVolts);
+            if (pi.MaxAmps > 0) _pwrSerial?.SetMaxAmps(channel, pi.MaxAmps);
         }
 
     }

@@ -1933,7 +1933,7 @@
                             <TextBlock 
                                 TextAlignment="Center" 
                                 Foreground="SandyBrown" 
-                                Text="{Binding DispenserOperationTitle}" />
+                                Text="{Binding PressureOperationTitle}" />
                             <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}" 
                                               Width="40" Height="20"  
@@ -2011,8 +2011,81 @@
                                               SelectedItem="{Binding PressureSensorPortSelected}"
                                               Margin="0,1"/>
                                     </Grid>
+                                    <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                                      Width="40" Height="20"  
+                                                      Margin="1 6"
+                                                      IsChecked="{Binding IsPressureSensorPortConnected}"
+                                        />
+                                        <TextBlock Padding="15,5" 
+                                                   Foreground="SandyBrown"
+                                                   Text="{Binding LabelPortConnection}" />
+                                    </StackPanel>
                                 </StackPanel>
                             </Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem >
+                <!-- Lighting -->
+                <TabItem VerticalAlignment="Center" 
+                         Style="{DynamicResource TabItemStyle}"
+                         HorizontalAlignment="Center">
+                    <TabItem.Header>
+                        <Viewbox Width="50" Height="50">
+                            <TextBlock Foreground="SandyBrown">L</TextBlock>
+                        </Viewbox>
+                    </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TextBlock 
+                            TextAlignment="Center" 
+                            Foreground="SandyBrown" 
+                            Text="{Binding PressureOperationTitle}" />
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                              Width="40" Height="20"  
+                                              Margin="1 6"
+                                              IsChecked="{Binding IsLightingPortConnected}"
+                                />
+                                <TextBlock Padding="15,5" 
+                                           Foreground="SandyBrown"
+                                           Text="{Binding LabelPortConnection}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}"
+                                              Width="40" Height="20"
+                                              IsChecked="{Binding IsLightingOn}"
+                                              Margin="1 6" />
+                                <TextBlock Padding="15,5" 
+                                           Foreground="SandyBrown"
+                                           Text="{Binding LabelLightingActive}" />
+                            </StackPanel>
+                            <Grid Margin="10" Visibility="{Binding MultiChannelVisibility}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Slider Value="{Binding LightingUvChannelValue}" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Orientation="Vertical" Minimum="0" Maximum="100" Height="200"/>
+                                <Slider Value="{Binding LightingBlueChannelValue}" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" Orientation="Vertical" Minimum="0" Maximum="100" Height="200"/>
+                                <Slider Value="{Binding LightingGreenRedChannelValue}" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" Orientation="Vertical" Minimum="0" Maximum="100" Height="200"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding LightingUvChannelValue}" HorizontalAlignment="Center" Foreground="SandyBrown"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LightingBlueChannelValue}" HorizontalAlignment="Center" Foreground="SandyBrown"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding LightingGreenRedChannelValue}" HorizontalAlignment="Center" Foreground="SandyBrown"/>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Margin="5 5 0 0" HorizontalAlignment="Center">
+                                <ToggleButton Style="{StaticResource AnimatedSwitch}"
+                                              Width="40" Height="20"
+                                              IsChecked="{Binding IsSingleLighting}"
+                                              Margin="1 6" />
+                                <TextBlock Padding="15,5" 
+                                           Foreground="SandyBrown"
+                                           Text="{Binding LabelLightingActive}" />
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>

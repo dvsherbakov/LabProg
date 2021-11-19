@@ -21,6 +21,7 @@ namespace LabControl.ViewModels
         private readonly DispenserDriver _fDispenserDriver;
         private readonly PressurePumpDriver _fPressurePumpDriver;
         private readonly PressureSensorDriver _fPressureSensorDriver;
+        private readonly LightingDriver _fLightingDriver;
         #endregion
 
         #region ModelFields
@@ -237,13 +238,13 @@ namespace LabControl.ViewModels
             }
         }
 
-        private string _fLaserPortSelected;
+        private string _laserPortSelected;
         public string LaserPortSelected
         {
-            get => _fLaserPortSelected;
+            get => _laserPortSelected;
             set
             {
-                _ = Set(ref _fLaserPortSelected, value);
+                _ = Set(ref _laserPortSelected, value);
                 if (_fLaserDriver != null) _fLaserDriver.PortString = value;
             }
         }
@@ -288,13 +289,13 @@ namespace LabControl.ViewModels
             }
         }
 
-        private string _fPressureSensorPortSelected;
+        private string _pressureSensorPortSelected;
         public string PressureSensorPortSelected
         {
-            get => _fPressureSensorPortSelected;
+            get => _pressureSensorPortSelected;
             set
             {
-                _ = Set(ref _fPressureSensorPortSelected, value);
+                _ = Set(ref _pressureSensorPortSelected, value);
                 if (_fPressureSensorDriver != null) _fPressureSensorDriver.PortStr = value;
             }
         }
@@ -1353,7 +1354,7 @@ namespace LabControl.ViewModels
             get => _fAirSupportPressure;
             set
             {
-                Set(ref _fAirSupportPressure, value);
+                _ = Set(ref _fAirSupportPressure, value);
                 _fPressurePumpDriver?.SetPressure(value);
             }
         }
@@ -1377,6 +1378,87 @@ namespace LabControl.ViewModels
             set => Set(ref _fSelectedPowerPage, value);
         }
         #endregion
+
+        private bool _isLightingPortConnected;
+        public bool IsLightingPortConnected
+        {
+            get => _isLightingPortConnected;
+            set
+            {
+                _ = Set(ref _isLightingPortConnected, value);
+                if (value)
+                {
+                    _fLightingDriver?.ConnectToPort();
+                    _fLightingDriver?.SetUvChannel(LightingUvChannelValue);
+                    _fLightingDriver?.SetBlueChannel(LightingBlueChannelValue);
+                    _fLightingDriver?.SetGreenRedChannel(LightingGreenRedChannelValue);
+                }
+                else _fLightingDriver.ClosePort();
+            }
+        }
+
+        private bool _isLightingOn;
+        public bool IsLightingOn
+        {
+            get => _isLightingOn;
+            set
+            {
+                Set(ref _isLightingOn, value);
+                if (value) _fLightingDriver?.On(); else _fLightingDriver?.Off();
+            }
+        }
+
+        private int _lightingUvChannelValue;
+        public int LightingUvChannelValue
+        {
+            get => _lightingUvChannelValue;
+            set
+            {
+                _ = Set(ref _lightingUvChannelValue, value);
+                _fLightingDriver?.SetUvChannel(value);
+            }
+        }
+
+        private int _lightingBlueChannelValue;
+        public int LightingBlueChannelValue
+        {
+            get => _lightingBlueChannelValue;
+            set
+            {
+                _ = Set(ref _lightingBlueChannelValue, value);
+                _fLightingDriver?.SetBlueChannel(value);
+            }
+        }
+
+        private int _lightingGreenRedChannelValue;
+        public int LightingGreenRedChannelValue
+        {
+            get => _lightingGreenRedChannelValue;
+            set
+            {
+                _ = Set(ref _lightingGreenRedChannelValue, value);
+                _fLightingDriver?.SetGreenRedChannel(value);
+            }
+        }
+
+        private Visibility _multiChannelVisibility;
+        public Visibility MultiChannelVisibility
+        {
+            get => _multiChannelVisibility;
+            set => Set(ref _multiChannelVisibility, value);
+        }
+
+        private bool _isSingleLighting;
+        public bool IsSingleLighting
+        {
+            get => _isSingleLighting;
+            set
+            {
+                Set(ref _isSingleLighting, value);
+                MultiChannelVisibility = value ? Visibility.Collapsed : MultiChannelVisibility = Visibility.Visible;
+            }
+        }
+
 
 
         #endregion
@@ -1478,6 +1560,8 @@ namespace LabControl.ViewModels
         public static string LabelOverPumpSpeed => Resources.LabelOverPumpSpeed;
         public static string LabelPressurePumpStart => Resources.LabelPressurePumpStart;
         public static string LabelAirSupportPressure => Resources.LabelAirSupportPressure;
+        public static string PressureOperationTitle => Resources.PressureOperationTitle;
+        public static string LabelLightingActive => Resources.LabelLightingActive;
         #endregion
 
         #region Commands
@@ -1609,6 +1693,9 @@ namespace LabControl.ViewModels
             DispenserHVpeak = Settings.Default.DispenserHVpeak;
             DispenserHToverall = Settings.Default.DispenserHToverall;
             AirSupportPressure = Settings.Default.AirSupportPressure;
+            LightingUvChannelValue = Settings.Default.LightingUvChannelValue;
+            LightingBlueChannelValue = Settings.Default.LightingBlueChannelValue;
+            LightingGreenRedChannelValue = Settings.Default.LightingGreenRedChannelValue;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -1657,6 +1744,8 @@ namespace LabControl.ViewModels
             _fPressureSensorDriver = new PressureSensorDriver(PressureSensorPortSelected);
             _fPressureSensorDriver.EventHandler += PressureSensorHandler;
 
+            _fLightingDriver = new LightingDriver();
+
             AddLogMessage("Application Started");
         }
 
@@ -1691,6 +1780,13 @@ namespace LabControl.ViewModels
             {
                 AddLogMessage(e.Message);
             }
+
+            _fPumpDriver?.Disconnect();
+            _fPwrDriver?.Disconnect();
+            _fLaserDriver?.Disconnect();
+            _fPyroDriver?.Disconnect();
+            _fDispenserDriver?.Disconnect();
+            _fLightingDriver?.ClosePort();
 
             Settings.Default.WindowHeight = WindowHeight;
             Settings.Default.WindowWidth = WindowWidth;
@@ -1770,6 +1866,9 @@ namespace LabControl.ViewModels
             Settings.Default.DispenserHVpeak = DispenserHVpeak;
             Settings.Default.DispenserHToverall = DispenserHToverall;
             Settings.Default.AirSupportPressure = AirSupportPressure;
+            Settings.Default.LightingUvChannelValue = LightingUvChannelValue;
+            Settings.Default.LightingBlueChannelValue = LightingBlueChannelValue;
+            Settings.Default.LightingGreenRedChannelValue = LightingGreenRedChannelValue;
             Settings.Default.Save();
             //_fDbContext.Dispose();
             Application.Current.Shutdown();

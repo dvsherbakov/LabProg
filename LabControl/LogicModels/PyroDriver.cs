@@ -23,7 +23,7 @@ namespace LabControl.LogicModels
 
         public void Disconnect()
         {
-            _fPort.ClosePort();
+            _fPort?.ClosePort();
         }
 
         private void TestLog(string msg)

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LabControl.ClassHelpers
 {
@@ -21,9 +18,9 @@ namespace LabControl.ClassHelpers
 
         public static bool[] GetBytes(uint val)
         {
-            List<bool> listB = new List<bool>();
+            var listB = new List<bool>();
 
-            for (int i = 7; i > -1; i--)
+            for (var i = 7; i > -1; i--)
             {
                 listB.Add((val >> i & 1) == 1);
             }

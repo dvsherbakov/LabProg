@@ -363,4 +363,13 @@
   <data name="LabelPressureSensorPort" xml:space="preserve">
     <value>Порт датчика давления</value>
   </data>
+  <data name="LabelLightingActive" xml:space="preserve">
+    <value>Свечение</value>
+  </data>
+  <data name="PressureOperationTitle" xml:space="preserve">
+    <value>Датчик давления</value>
+  </data>
+  <data name="PressurePortConnection" xml:space="preserve">
+    <value>Что-то неизвестное</value>
+  </data>
 </root>
