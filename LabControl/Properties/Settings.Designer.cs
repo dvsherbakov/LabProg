@@ -1078,5 +1078,17 @@ namespace LabControl.Properties {
                 this["LightingGreenRedChannelValue"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsSingleLighting {
+            get {
+                return ((bool)(this["IsSingleLighting"]));
+            }
+            set {
+                this["IsSingleLighting"] = value;
+            }
+        }
     }
 }

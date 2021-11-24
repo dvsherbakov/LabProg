@@ -1723,7 +1723,7 @@
                                                    VerticalAlignment="Center" 
                                                    Text="{Binding DispenserFrequencyLabel}" Margin="0,4"/>
                                         <TextBox Grid.Row="2" Grid.Column="1"
-                                                Text="{Binding DispenserFrequency}"
+                                                Text="{Binding DispenserFrequency, UpdateSourceTrigger=PropertyChanged}"
                                                Style="{StaticResource PartTransparent}"
                                                Template="{StaticResource TextBoxBaseControlTemplate}"
                                                TextAlignment="Center" Grid.ColumnSpan="2"/>
@@ -1925,7 +1925,8 @@
                          HorizontalAlignment="Center" >
                     <TabItem.Header>
                         <Viewbox Width="50" Height="50">
-                            <TextBlock Foreground="SandyBrown">P</TextBlock>
+                            
+                                <ContentControl Content="{StaticResource PressureIcon}" Margin="2" />
                         </Viewbox>
                     </TabItem.Header>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -2077,6 +2078,10 @@
                                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LightingBlueChannelValue}" HorizontalAlignment="Center" Foreground="SandyBrown"/>
                                 <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding LightingGreenRedChannelValue}" HorizontalAlignment="Center" Foreground="SandyBrown"/>
                             </Grid>
+                            <StackPanel Orientation="Vertical" Visibility="{Binding AllChannelVisibility}">
+                                <Slider HorizontalAlignment="Center" Orientation="Vertical" Minimum="0" Maximum="100" Height="200" Value="{Binding LightingGeneralChannelValue}"/>
+                                <TextBlock Text="{Binding LightingGeneralChannelValue}" HorizontalAlignment="Center" Foreground="SandyBrown"/>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="5 5 0 0" HorizontalAlignment="Center">
                                 <ToggleButton Style="{StaticResource AnimatedSwitch}"
                                               Width="40" Height="20"
@@ -2084,8 +2089,43 @@
                                               Margin="1 6" />
                                 <TextBlock Padding="15,5" 
                                            Foreground="SandyBrown"
-                                           Text="{Binding LabelLightingActive}" />
+                                           Text="{Binding ChannelManagementTitle}" />
                             </StackPanel>
+
+                            <Expander Padding="5"
+                                  Header="{Binding LabelSettings}"
+                                  Foreground="SandyBrown">
+                                <StackPanel>
+                                    <Grid Margin="15,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*" />
+                                            <ColumnDefinition Width="4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                               VerticalAlignment="Center"
+                                               Foreground="SandyBrown"
+                                               Text="{Binding LabelPressureSensorPort}"/>
+                                        <ComboBox Grid.Row="0" Grid.Column="1"
+                                                  Style="{StaticResource RoundComboBox}"
+                                              ItemsSource="{Binding LightingPortCollection}"
+                                              SelectedItem="{Binding LightingPortSelected}"
+                                              Margin="0,1"/>
+                                    </Grid>
+                                    <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                        <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                                      Width="40" Height="20"  
+                                                      Margin="1 6"
+                                                      
+                                        />
+                                        <TextBlock Padding="15,5" 
+                                                   Foreground="SandyBrown"
+                                                   Text="{Binding LabelPortConnection}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Expander>
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>

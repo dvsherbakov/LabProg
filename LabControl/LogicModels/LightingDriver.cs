@@ -10,7 +10,7 @@ namespace LabControl.LogicModels
         public void ConnectToPort()
         {
             _serial = new YodnSerial();
-            _serial.Init();
+            _serial.Init(PortStr);
         }
 
         public void ClosePort()

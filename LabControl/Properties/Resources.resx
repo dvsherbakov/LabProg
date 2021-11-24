@@ -372,4 +372,10 @@
   <data name="PressurePortConnection" xml:space="preserve">
     <value>Что-то неизвестное</value>
   </data>
+  <data name="LabelLightingChannels" xml:space="preserve">
+    <value>Управление по каналам</value>
+  </data>
+  <data name="LabelLightingChannelsAll" xml:space="preserve">
+    <value>Общее управление каналами</value>
+  </data>
 </root>

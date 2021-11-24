@@ -12,7 +12,9 @@ namespace LabControl.ViewModels
     internal class MainModel : ViewModel
     {
         private readonly ApplicationContext _fDbContext;
+
         #region drivers
+
         private readonly PumpDriver _fPumpDriver;
         private readonly ConfocalDriver _fConfocalDriver;
         private readonly PwrDriver _fPwrDriver;
@@ -22,10 +24,13 @@ namespace LabControl.ViewModels
         private readonly PressurePumpDriver _fPressurePumpDriver;
         private readonly PressureSensorDriver _fPressureSensorDriver;
         private readonly LightingDriver _fLightingDriver;
+
         #endregion
 
         #region ModelFields
+
         private WindowState _curWindowState;
+
         public WindowState CurWindowState
         {
             get => _curWindowState;
@@ -35,6 +40,7 @@ namespace LabControl.ViewModels
         public static string WindowTitle => Resources.MainWindowTitle;
 
         private int _windowHeight;
+
         public int WindowHeight
         {
             get => _windowHeight;
@@ -42,6 +48,7 @@ namespace LabControl.ViewModels
         }
 
         private int _windowWidth;
+
         public int WindowWidth
         {
             get => _windowWidth;
@@ -49,6 +56,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isPumpPortsConnect;
+
         public bool IsPumpPortsConnect
         {
             get => _isPumpPortsConnect;
@@ -63,6 +71,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isTwoPump;
+
         public bool IsTwoPump
         {
             get => _isTwoPump;
@@ -77,6 +86,7 @@ namespace LabControl.ViewModels
         }
 
         private string _labelPump;
+
         public string LabelPump
         {
             get => _labelPump;
@@ -84,6 +94,7 @@ namespace LabControl.ViewModels
         }
 
         private string _labelPumpCount;
+
         public string LabelPumpCount
         {
             get => _labelPumpCount;
@@ -91,6 +102,7 @@ namespace LabControl.ViewModels
         }
 
         private double _confocalLevel;
+
         public double ConfocalLevel
         {
             get => _confocalLevel;
@@ -98,6 +110,7 @@ namespace LabControl.ViewModels
         }
 
         private double _confocalLevelSetter;
+
         public double ConfocalLevelSetter
         {
             get => _confocalLevelSetter;
@@ -109,6 +122,7 @@ namespace LabControl.ViewModels
         }
 
         private string _fIncomingPumpPortSelected;
+
         public string IncomingPumpPortSelected
         {
             get => _fIncomingPumpPortSelected;
@@ -120,6 +134,7 @@ namespace LabControl.ViewModels
         }
 
         private string _outgoingPumpPortSelected;
+
         public string OutgoingPumpPortSelected
         {
             get => _outgoingPumpPortSelected;
@@ -131,6 +146,7 @@ namespace LabControl.ViewModels
         }
 
         private float _fPumpingSpeedSelected;
+
         public float PumpingSpeedSelected
         {
             get => _fPumpingSpeedSelected;
@@ -142,6 +158,7 @@ namespace LabControl.ViewModels
         }
 
         private string _incomingPumpSpeed;
+
         public string IncomingPumpSpeed
         {
             get => _incomingPumpSpeed;
@@ -149,6 +166,7 @@ namespace LabControl.ViewModels
         }
 
         private string _outgoingPumpSpeed;
+
         public string OutgoingPumpSpeed
         {
             get => _outgoingPumpSpeed;
@@ -156,6 +174,7 @@ namespace LabControl.ViewModels
         }
 
         private int _currentLaserPower;
+
         public int CurrentLaserPower
         {
             get => _currentLaserPower;
@@ -163,6 +182,7 @@ namespace LabControl.ViewModels
         }
 
         private int _laserPowerSetter;
+
         public int LaserPowerSetter
         {
             get => _laserPowerSetter;
@@ -170,6 +190,7 @@ namespace LabControl.ViewModels
         }
 
         private int _laserPowerHistorySelectedItem;
+
         public int LaserPowerHistorySelectedItem
         {
             get => _laserPowerHistorySelectedItem;
@@ -182,6 +203,7 @@ namespace LabControl.ViewModels
         }
 
         private double _fCurrentTemperature;
+
         public double CurrentTemperature
         {
             get => _fCurrentTemperature;
@@ -189,6 +211,7 @@ namespace LabControl.ViewModels
         }
 
         private Visibility _secondPumpPanelVisibility;
+
         public Visibility SecondPumpPanelVisibility
         {
             get => _secondPumpPanelVisibility;
@@ -196,6 +219,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isRevereFirstPump;
+
         public bool IsRevereFirstPump
         {
             get => _isRevereFirstPump;
@@ -203,6 +227,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _fIsRevereSecondPump;
+
         public bool IsRevereSecondPump
         {
             get => _fIsRevereSecondPump;
@@ -210,6 +235,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isLaserPortConnected;
+
         public bool IsLaserPortConnected
         {
             get => _isLaserPortConnected;
@@ -227,6 +253,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isLaserEmit;
+
         public bool IsLaserEmit
         {
             get => _isLaserEmit;
@@ -239,6 +266,7 @@ namespace LabControl.ViewModels
         }
 
         private string _laserPortSelected;
+
         public string LaserPortSelected
         {
             get => _laserPortSelected;
@@ -250,6 +278,7 @@ namespace LabControl.ViewModels
         }
 
         private string _pyroPortSelected;
+
         public string PyroPortSelected
         {
             get => _pyroPortSelected;
@@ -261,6 +290,7 @@ namespace LabControl.ViewModels
         }
 
         private string _dispenserPortSelected;
+
         public string DispenserPortSelected
         {
             get => _dispenserPortSelected;
@@ -272,24 +302,27 @@ namespace LabControl.ViewModels
         }
 
         private string _fAirSupportPortSelected;
+
         public string AirSupportPortSelected
         {
             get => _fAirSupportPortSelected;
             set => Set(ref _fAirSupportPortSelected, value);
         }
 
-        private string _fPwrPortSelected;
+        private string _pwrPortSelected;
+
         public string PwrPortSelected
         {
-            get => _fPwrPortSelected;
+            get => _pwrPortSelected;
             set
             {
-                _ = Set(ref _fPwrPortSelected, value);
+                _ = Set(ref _pwrPortSelected, value);
                 if (_fPwrDriver != null) _fPwrDriver.PortStr = value;
             }
         }
 
         private string _pressureSensorPortSelected;
+
         public string PressureSensorPortSelected
         {
             get => _pressureSensorPortSelected;
@@ -297,6 +330,18 @@ namespace LabControl.ViewModels
             {
                 _ = Set(ref _pressureSensorPortSelected, value);
                 if (_fPressureSensorDriver != null) _fPressureSensorDriver.PortStr = value;
+            }
+        }
+
+        private string _lightingPortSelected;
+
+        public string LightingPortSelected
+        {
+            get => _lightingPortSelected;
+            set
+            {
+                if (!Set(ref _lightingPortSelected, value)) return;
+                if (_fLightingDriver != null) _fLightingDriver.PortStr = value;
             }
         }
 
@@ -1397,6 +1442,14 @@ namespace LabControl.ViewModels
             }
         }
 
+        private string _channelManagementTitle;
+
+        public string ChannelManagementTitle
+        {
+            get => _channelManagementTitle;
+            set => Set(ref _channelManagementTitle, value);
+        }
+
         private bool _isLightingOn;
         public bool IsLightingOn
         {
@@ -1436,9 +1489,16 @@ namespace LabControl.ViewModels
             get => _lightingGreenRedChannelValue;
             set
             {
-                _ = Set(ref _lightingGreenRedChannelValue, value);
-                _fLightingDriver?.SetGreenRedChannel(value);
+                if (Set(ref _lightingGreenRedChannelValue, value))
+                    _fLightingDriver?.SetGreenRedChannel(value);
             }
+        }
+
+        private int _lightingGeneralChannelValue;
+        public int LightingGeneralChannelValue
+        {
+            get => _lightingGeneralChannelValue;
+            set => Set(ref _lightingGeneralChannelValue, value);
         }
 
         private Visibility _multiChannelVisibility;
@@ -1448,14 +1508,32 @@ namespace LabControl.ViewModels
             set => Set(ref _multiChannelVisibility, value);
         }
 
+        private Visibility _allChannelVisibility;
+        public Visibility AllChannelVisibility
+        {
+            get => _allChannelVisibility;
+            set => Set(ref _allChannelVisibility, value);
+        }
+
         private bool _isSingleLighting;
         public bool IsSingleLighting
         {
             get => _isSingleLighting;
             set
             {
-                Set(ref _isSingleLighting, value);
-                MultiChannelVisibility = value ? Visibility.Collapsed : MultiChannelVisibility = Visibility.Visible;
+                _ = Set(ref _isSingleLighting, value);
+                if (value)
+                {
+                    MultiChannelVisibility = Visibility.Collapsed;
+                    AllChannelVisibility = Visibility.Visible;
+                    ChannelManagementTitle = LabelLightingChannelsAll;
+                }
+                else
+                {
+                    MultiChannelVisibility = Visibility.Visible;
+                    AllChannelVisibility = Visibility.Collapsed;
+                    ChannelManagementTitle = LabelLightingChannels;
+                }
             }
         }
 
@@ -1477,6 +1555,7 @@ namespace LabControl.ViewModels
         public ObservableCollection<float> PumpingSpeedCollection { get; set; }
         public ObservableCollection<int> AirSupportPressureCollection { get; set; }
         public ObservableCollection<string> PressureSensorPortCollection { get; set; }
+        public ObservableCollection<string> LightingPortCollection { get; set; }
         #endregion
 
         #region StaticLabels
@@ -1562,6 +1641,8 @@ namespace LabControl.ViewModels
         public static string LabelAirSupportPressure => Resources.LabelAirSupportPressure;
         public static string PressureOperationTitle => Resources.PressureOperationTitle;
         public static string LabelLightingActive => Resources.LabelLightingActive;
+        public static string LabelLightingChannels => Resources.LabelLightingChannels;
+        public static string LabelLightingChannelsAll => Resources.LabelLightingChannelsAll;
         #endregion
 
         #region Commands
@@ -1609,6 +1690,8 @@ namespace LabControl.ViewModels
             LaserHistoryCollection = new ObservableCollection<int>() { 100, 150, 200, 250, 300, 350, 400 };
             DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
             PressureSensorPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PressureSensorPortSelected));
+            LightingPortCollection =
+                new ObservableCollection<string>(new PortList().GetPortList(PressureSensorPortSelected));
             // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 2.5f, 11f, 25f, 45f, 65f, 150f };
@@ -1696,6 +1779,7 @@ namespace LabControl.ViewModels
             LightingUvChannelValue = Settings.Default.LightingUvChannelValue;
             LightingBlueChannelValue = Settings.Default.LightingBlueChannelValue;
             LightingGreenRedChannelValue = Settings.Default.LightingGreenRedChannelValue;
+            IsSingleLighting = Settings.Default.IsSingleLighting;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -1869,6 +1953,7 @@ namespace LabControl.ViewModels
             Settings.Default.LightingUvChannelValue = LightingUvChannelValue;
             Settings.Default.LightingBlueChannelValue = LightingBlueChannelValue;
             Settings.Default.LightingGreenRedChannelValue = LightingGreenRedChannelValue;
+            Settings.Default.IsSingleLighting = IsSingleLighting;
             Settings.Default.Save();
             //_fDbContext.Dispose();
             Application.Current.Shutdown();

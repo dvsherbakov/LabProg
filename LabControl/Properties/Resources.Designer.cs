@@ -430,6 +430,24 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Управление по каналам.
+        /// </summary>
+        internal static string LabelLightingChannels {
+            get {
+                return ResourceManager.GetString("LabelLightingChannels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Общее управление каналами.
+        /// </summary>
+        internal static string LabelLightingChannelsAll {
+            get {
+                return ResourceManager.GetString("LabelLightingChannelsAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Микрокомпрессор.
         /// </summary>
         internal static string LabelMicroCompressor {
