@@ -1498,7 +1498,11 @@ namespace LabControl.ViewModels
         public int LightingGeneralChannelValue
         {
             get => _lightingGeneralChannelValue;
-            set => Set(ref _lightingGeneralChannelValue, value);
+            set
+            {
+                if (Set(ref _lightingGeneralChannelValue, value))
+                    _fLightingDriver.SetGeneralChannel(value);
+            }
         }
 
         private Visibility _multiChannelVisibility;
