@@ -5,6 +5,7 @@ namespace LabControl.LogicModels
     internal class LightingDriver
     {
         private YodnSerial _serial;
+        public bool IsDynamicManageChannels { get; set; }
         public string PortStr { get; set; }
 
         public void ConnectToPort()
@@ -42,5 +43,7 @@ namespace LabControl.LogicModels
         {
             _serial?.SetGreenRedChannel(value);
         }
+
+
     }
 }

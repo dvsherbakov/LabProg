@@ -349,6 +349,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Динамическое управление каналами.
+        /// </summary>
+        internal static string LabelDynamicManageChannels {
+            get {
+                return ResourceManager.GetString("LabelDynamicManageChannels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Регулируемый ток (мА).
         /// </summary>
         internal static string LabelElectricFlow {

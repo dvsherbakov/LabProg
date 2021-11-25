@@ -1537,7 +1537,16 @@ namespace LabControl.ViewModels
             }
         }
 
-
+        private bool _isDynamicManageChannels;
+        public bool IsDynamicManageChannels
+        {
+            get => _isDynamicManageChannels;
+            set
+            {
+                Set(ref _isDynamicManageChannels, value);
+                _fLightingDriver.IsDynamicManageChannels = value;
+            }
+        }
 
         #endregion
 
@@ -1643,6 +1652,7 @@ namespace LabControl.ViewModels
         public static string LabelLightingActive => Resources.LabelLightingActive;
         public static string LabelLightingChannels => Resources.LabelLightingChannels;
         public static string LabelLightingChannelsAll => Resources.LabelLightingChannelsAll;
+        public static string LabelDynamicManageChannels => Resources.LabelDynamicManageChannels;
         #endregion
 
         #region Commands

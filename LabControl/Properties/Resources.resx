@@ -378,4 +378,7 @@
   <data name="LabelLightingChannelsAll" xml:space="preserve">
     <value>Общее управление каналами</value>
   </data>
+  <data name="LabelDynamicManageChannels" xml:space="preserve">
+    <value>Динамическое управление каналами</value>
+  </data>
 </root>
