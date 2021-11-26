@@ -15,15 +15,15 @@ namespace LabControl.ViewModels
 
         #region drivers
 
-        private readonly PumpDriver _fPumpDriver;
-        private readonly ConfocalDriver _fConfocalDriver;
-        private readonly PwrDriver _fPwrDriver;
-        private readonly LaserDriver _fLaserDriver;
-        private readonly PyroDriver _fPyroDriver;
-        private readonly DispenserDriver _fDispenserDriver;
-        private readonly PressurePumpDriver _fPressurePumpDriver;
-        private readonly PressureSensorDriver _fPressureSensorDriver;
-        private readonly LightingDriver _fLightingDriver;
+        private readonly PumpDriver _pumpDriver;
+        private readonly ConfocalDriver _confocalDriver;
+        private readonly PwrDriver _pwrDriver;
+        private readonly LaserDriver _laserDriver;
+        private readonly PyroDriver _pyroDriver;
+        private readonly DispenserDriver _dispenserDriver;
+        private readonly PressurePumpDriver _pressurePumpDriver;
+        private readonly PressureSensorDriver _pressureSensorDriver;
+        private readonly LightingDriver _lightingDriver;
 
         #endregion
 
@@ -64,9 +64,9 @@ namespace LabControl.ViewModels
             {
                 _ = Set(ref _isPumpPortsConnect, value);
                 if (value)
-                    _fPumpDriver.ConnectToPorts();
+                    _pumpDriver.ConnectToPorts();
                 else
-                    _fPumpDriver.Disconnect();
+                    _pumpDriver.Disconnect();
             }
         }
 
@@ -80,7 +80,7 @@ namespace LabControl.ViewModels
                 LabelPumpCount = value ? Resources.LabelTwoPump : Resources.LabelOnePump;
                 SecondPumpPanelVisibility = value ? Visibility.Visible : Visibility.Collapsed;
                 LabelPump = value ? Resources.LabelPumpIn : Resources.LabelPump;
-                _fPumpDriver?.ToggleTwoPump(value);
+                _pumpDriver?.ToggleTwoPump(value);
                 _ = Set(ref _isTwoPump, value);
             }
         }
@@ -117,7 +117,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _confocalLevelSetter, value);
-                _fPumpDriver?.SetRequiredLvl(value);
+                _pumpDriver?.SetRequiredLvl(value);
             }
         }
 
@@ -129,7 +129,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _fIncomingPumpPortSelected, value);
-                if (_fPumpDriver != null) _fPumpDriver.PortStrInput = value;
+                if (_pumpDriver != null) _pumpDriver.PortStrInput = value;
             }
         }
 
@@ -141,7 +141,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _outgoingPumpPortSelected, value);
-                if (_fPumpDriver != null) _fPumpDriver.PortStrOutput = value;
+                if (_pumpDriver != null) _pumpDriver.PortStrOutput = value;
             }
         }
 
@@ -153,7 +153,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _fPumpingSpeedSelected, value);
-                if (_fPumpDriver != null) _fPumpDriver.PumpingSpeed = value;
+                if (_pumpDriver != null) _pumpDriver.PumpingSpeed = value;
             }
         }
 
@@ -244,11 +244,11 @@ namespace LabControl.ViewModels
                 _ = Set(ref _isLaserPortConnected, value);
                 if (value)
                 {
-                    _fLaserDriver.ConnectToPort();
-                    _fLaserDriver.SetLaserType(LaserTypeSelectedIndex);
+                    _laserDriver.ConnectToPort();
+                    _laserDriver.SetLaserType(LaserTypeSelectedIndex);
 
                 }
-                else _fLaserDriver.Disconnect();
+                else _laserDriver.Disconnect();
             }
         }
 
@@ -261,7 +261,7 @@ namespace LabControl.ViewModels
             {
                 if (!IsLaserPortConnected) IsLaserPortConnected = true;
                 _ = Set(ref _isLaserEmit, value);
-                _fLaserDriver?.EmitOn(value);
+                _laserDriver?.EmitOn(value);
             }
         }
 
@@ -273,7 +273,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _laserPortSelected, value);
-                if (_fLaserDriver != null) _fLaserDriver.PortString = value;
+                if (_laserDriver != null) _laserDriver.PortString = value;
             }
         }
 
@@ -285,7 +285,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _pyroPortSelected, value);
-                if (_fPyroDriver != null) _fPyroDriver.PortStr = value;
+                if (_pyroDriver != null) _pyroDriver.PortStr = value;
             }
         }
 
@@ -297,7 +297,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _dispenserPortSelected, value);
-                if (_fDispenserDriver != null) _fDispenserDriver.PortStr = value;
+                if (_dispenserDriver != null) _dispenserDriver.PortStr = value;
             }
         }
 
@@ -317,7 +317,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _pwrPortSelected, value);
-                if (_fPwrDriver != null) _fPwrDriver.PortStr = value;
+                if (_pwrDriver != null) _pwrDriver.PortStr = value;
             }
         }
 
@@ -329,7 +329,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _pressureSensorPortSelected, value);
-                if (_fPressureSensorDriver != null) _fPressureSensorDriver.PortStr = value;
+                if (_pressureSensorDriver != null) _pressureSensorDriver.PortStr = value;
             }
         }
 
@@ -341,7 +341,7 @@ namespace LabControl.ViewModels
             set
             {
                 if (!Set(ref _lightingPortSelected, value)) return;
-                if (_fLightingDriver != null) _fLightingDriver.PortStr = value;
+                if (_lightingDriver != null) _lightingDriver.PortStr = value;
             }
         }
 
@@ -352,7 +352,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _laserTypeSelectedIndex, value);
-                _fLaserDriver?.SetLaserType(value);
+                _laserDriver?.SetLaserType(value);
             }
         }
 
@@ -365,7 +365,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _fIsPwrPortConnect, value);
-                _fPwrDriver.ConnectToPort();
+                _pwrDriver.ConnectToPort();
             }
         }
 
@@ -376,7 +376,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _fPwrSwitchCh0, value);
-                if (value) _fPwrDriver?.SetChannelOn(0); else _fPwrDriver?.SetChannelOff(0);
+                if (value) _pwrDriver?.SetChannelOn(0); else _pwrDriver?.SetChannelOff(0);
             }
         }
 
@@ -398,7 +398,7 @@ namespace LabControl.ViewModels
                 if (value == 1)
                 {
                     LabelPwrChannel0Bias = Resources.LabelElectricFlow;
-                    _fPwrDriver?.SetChannelOn(0);
+                    _pwrDriver?.SetChannelOn(0);
                 }
                 else { LabelPwrChannel0Bias = Resources.LabelOffsetVoltage; }
                 _pwrParams[0].Mode = value;
@@ -499,7 +499,7 @@ namespace LabControl.ViewModels
                 if (value == 1)
                 {
                     LabelPwrChannel1Bias = Resources.LabelElectricFlow;
-                    _fPwrDriver?.SetChannelOn(1);
+                    _pwrDriver?.SetChannelOn(1);
                 }
                 else
                 {
@@ -516,7 +516,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _fPwrSwitchCh1, value);
-                if (value) _fPwrDriver?.SetChannelOn(1); else _fPwrDriver?.SetChannelOff(1);
+                if (value) _pwrDriver?.SetChannelOn(1); else _pwrDriver?.SetChannelOff(1);
             }
         }
 
@@ -603,7 +603,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _fPwrSwitchCh2, value);
-                if (value) _fPwrDriver?.SetChannelOn(2); else _fPwrDriver?.SetChannelOff(2);
+                if (value) _pwrDriver?.SetChannelOn(2); else _pwrDriver?.SetChannelOff(2);
             }
         }
 
@@ -624,7 +624,7 @@ namespace LabControl.ViewModels
                 if (value == 1)
                 {
                     LabelPwrChannel2Bias = Resources.LabelElectricFlow;
-                    _fPwrDriver?.SetChannelOn(2);
+                    _pwrDriver?.SetChannelOn(2);
                 }
                 else
                 {
@@ -706,7 +706,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _fPwrSwitchCh3, value);
-                if (value) _fPwrDriver?.SetChannelOn(3); else _fPwrDriver?.SetChannelOff(3);
+                if (value) _pwrDriver?.SetChannelOn(3); else _pwrDriver?.SetChannelOff(3);
             }
         }
 
@@ -727,7 +727,7 @@ namespace LabControl.ViewModels
                 if (value == 1)
                 {
                     LabelPwrChannel3Bias = Resources.LabelElectricFlow;
-                    _fPwrDriver?.SetChannelOn(3);
+                    _pwrDriver?.SetChannelOn(3);
                 }
                 else { LabelPwrChannel3Bias = Resources.LabelOffsetVoltage; }
                 _pwrParams[3].Mode = value;
@@ -751,7 +751,7 @@ namespace LabControl.ViewModels
                 if (value == 1)
                 {
                     LabelPwrChannel4Bias = Resources.LabelElectricFlow;
-                    _fPwrDriver?.SetChannelOn(4);
+                    _pwrDriver?.SetChannelOn(4);
                 }
                 else
                 {
@@ -846,9 +846,9 @@ namespace LabControl.ViewModels
             {
                 Set(ref _fPwrSwitchCh4, value);
                 if (value)
-                    _fPwrDriver?.SetChannelOn(4);
+                    _pwrDriver?.SetChannelOn(4);
                 else
-                    _fPwrDriver?.SetChannelOff(4);
+                    _pwrDriver?.SetChannelOff(4);
             }
         }
 
@@ -936,7 +936,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _fPwrSwitchCh5, value);
-                if (value) _fPwrDriver?.SetChannelOn(5); else _fPwrDriver?.SetChannelOff(5);
+                if (value) _pwrDriver?.SetChannelOn(5); else _pwrDriver?.SetChannelOff(5);
             }
         }
 
@@ -957,12 +957,12 @@ namespace LabControl.ViewModels
                 if (value == 1)
                 {
                     LabelPwrChannel5Bias = Resources.LabelElectricFlow;
-                    _fPwrDriver?.SetChannelOn(5);
+                    _pwrDriver?.SetChannelOn(5);
                 }
                 else
                 {
                     LabelPwrChannel5Bias = Resources.LabelOffsetVoltage;
-                    _fPwrDriver?.SetChannelOff(5);
+                    _pwrDriver?.SetChannelOff(5);
                 }
                 _pwrParams[5].Mode = value;
             }
@@ -1055,7 +1055,7 @@ namespace LabControl.ViewModels
             {
                 Set(ref _fIsPumpsActive, value);
                 if (value) IsConfocalActive = true;
-                _fPumpDriver?.SetPumpActive(value);
+                _pumpDriver?.SetPumpActive(value);
             }
         }
 
@@ -1066,7 +1066,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _fIsConfocalActive, value);
-                _fConfocalDriver?.SetMeasuredActive(value);
+                _confocalDriver?.SetMeasuredActive(value);
             }
         }
 
@@ -1087,10 +1087,10 @@ namespace LabControl.ViewModels
 
                 if (value)
                 {
-                    _fDispenserDriver.ConnectToPort();
+                    _dispenserDriver.ConnectToPort();
                     CollectDispenserData();
                 }
-                else _fDispenserDriver.Disconnect();
+                else _dispenserDriver.Disconnect();
             }
         }
 
@@ -1101,7 +1101,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _fIsPressureSensorPortConnected, value);
-                _fPressureSensorDriver?.ConnectToPort();
+                _pressureSensorDriver?.ConnectToPort();
             }
         }
 
@@ -1112,7 +1112,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _isPressureSensorActive, value);
-                _fPressureSensorDriver?.SetMeasuring(value);
+                _pressureSensorDriver?.SetMeasuring(value);
             }
         }
 
@@ -1123,8 +1123,8 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _isPyroPortConnected, value);
-                if (value) _fPyroDriver.ConnectToPort();
-                else _fPyroDriver.Disconnect();
+                if (value) _pyroDriver.ConnectToPort();
+                else _pyroDriver.Disconnect();
             }
         }
 
@@ -1135,7 +1135,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _isPyroActive, value);
-                _fPyroDriver.SetMeasuring(value);
+                _pyroDriver.SetMeasuring(value);
             }
         }
 
@@ -1173,7 +1173,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _fIsPressurePumpConnected, value);
-                if (value) _fPressurePumpDriver?.Calibrate();
+                if (value) _pressurePumpDriver?.Calibrate();
                 //FIX_ME add connect function
             }
         }
@@ -1189,12 +1189,12 @@ namespace LabControl.ViewModels
                 if (_fIsDispenserActive)
                 {
                     if (!IsDispenserPortConnected) IsDispenserPortConnected = true;
-                    _fDispenserDriver.Start();
+                    _dispenserDriver.Start();
                 }
                 else
                 {
-                    _fDispenserDriver.Stop();
-                    _fDispenserDriver.Reset();
+                    _dispenserDriver.Stop();
+                    _dispenserDriver.Reset();
                 }
             }
         }
@@ -1206,7 +1206,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _fDispenserSignalType, value);
-                _fDispenserDriver?.SetSignalType(_fDispenserSignalType);
+                _dispenserDriver?.SetSignalType(_fDispenserSignalType);
                 switch (value)
                 {
                     case 0:
@@ -1231,7 +1231,7 @@ namespace LabControl.ViewModels
             get => _fDispenserChannel;
             set
             {
-                _fDispenserDriver?.SetChannel(value);
+                _dispenserDriver?.SetChannel(value);
                 Set(ref _fDispenserChannel, value);
             }
         }
@@ -1242,7 +1242,7 @@ namespace LabControl.ViewModels
             get => _fDispenserFrequency;
             set
             {
-                _fDispenserDriver?.SetFrequency(value);
+                _dispenserDriver?.SetFrequency(value);
                 Set(ref _fDispenserFrequency, value);
             }
         }
@@ -1389,7 +1389,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _fPressurePumpActive, value);
-                _fPressurePumpDriver?.SetTrigger(value);
+                _pressurePumpDriver?.SetTrigger(value);
             }
         }
 
@@ -1400,7 +1400,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _fAirSupportPressure, value);
-                _fPressurePumpDriver?.SetPressure(value);
+                _pressurePumpDriver?.SetPressure(value);
             }
         }
 
@@ -1433,12 +1433,12 @@ namespace LabControl.ViewModels
                 _ = Set(ref _isLightingPortConnected, value);
                 if (value)
                 {
-                    _fLightingDriver?.ConnectToPort();
-                    _fLightingDriver?.SetUvChannel(LightingUvChannelValue);
-                    _fLightingDriver?.SetBlueChannel(LightingBlueChannelValue);
-                    _fLightingDriver?.SetGreenRedChannel(LightingGreenRedChannelValue);
+                    _lightingDriver?.ConnectToPort();
+                    _lightingDriver?.SetUvChannel(LightingUvChannelValue);
+                    _lightingDriver?.SetBlueChannel(LightingBlueChannelValue);
+                    _lightingDriver?.SetGreenRedChannel(LightingGreenRedChannelValue);
                 }
-                else _fLightingDriver.ClosePort();
+                else _lightingDriver.ClosePort();
             }
         }
 
@@ -1457,7 +1457,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _isLightingOn, value);
-                if (value) _fLightingDriver?.On(); else _fLightingDriver?.Off();
+                if (value) _lightingDriver?.On(); else _lightingDriver?.Off();
             }
         }
 
@@ -1468,7 +1468,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _lightingUvChannelValue, value);
-                _fLightingDriver?.SetUvChannel(value);
+                _lightingDriver?.SetUvChannel(value);
             }
         }
 
@@ -1479,7 +1479,7 @@ namespace LabControl.ViewModels
             set
             {
                 _ = Set(ref _lightingBlueChannelValue, value);
-                _fLightingDriver?.SetBlueChannel(value);
+                _lightingDriver?.SetBlueChannel(value);
             }
         }
 
@@ -1490,7 +1490,7 @@ namespace LabControl.ViewModels
             set
             {
                 if (Set(ref _lightingGreenRedChannelValue, value))
-                    _fLightingDriver?.SetGreenRedChannel(value);
+                    _lightingDriver?.SetGreenRedChannel(value);
             }
         }
 
@@ -1501,7 +1501,7 @@ namespace LabControl.ViewModels
             set
             {
                 if (Set(ref _lightingGeneralChannelValue, value))
-                    _fLightingDriver.SetGeneralChannel(value);
+                    _lightingDriver.SetGeneralChannel(value);
             }
         }
 
@@ -1548,7 +1548,7 @@ namespace LabControl.ViewModels
             set
             {
                 Set(ref _isDynamicManageChannels, value);
-                _fLightingDriver.IsDynamicManageChannels = value;
+                _lightingDriver.IsDynamicManageChannels = value;
             }
         }
 
@@ -1714,9 +1714,9 @@ namespace LabControl.ViewModels
             //Other
             CurWindowState = WindowState.Normal;
             //Exclude
-            _fDispenserDriver = new DispenserDriver();
-            _fDispenserDriver.SetLogMessage += AddLogMessage;
-            _fDispenserDriver.PortStr = Settings.Default.DispenserPortSelected;
+            _dispenserDriver = new DispenserDriver();
+            _dispenserDriver.SetLogMessage += AddLogMessage;
+            _dispenserDriver.PortStr = Settings.Default.DispenserPortSelected;
             //f_PressureSensorPortSelected = Settings.Default.PressureSensorPortSelected;
             //load params from settings
             WindowHeight = Settings.Default.WindowHeight == 0 ? 550 : Settings.Default.WindowHeight;
@@ -1809,40 +1809,40 @@ namespace LabControl.ViewModels
             StartMaxPressureImpulse = new LambdaCommand(OnStartMaxPressureImpulse);
 
             //Drivers area
-            _fConfocalDriver = new ConfocalDriver();
-            _fConfocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
-            _fConfocalDriver.SetLogMessage += AddLogMessage;
+            _confocalDriver = new ConfocalDriver();
+            _confocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
+            _confocalDriver.SetLogMessage += AddLogMessage;
 
-            _fPumpDriver = new PumpDriver();
-            _fPumpDriver.SetLogMessage += AddLogMessage;
-            _fPumpDriver.PortStrInput = Settings.Default.IncomingPumpPortSelected;
-            _fPumpDriver.PortStrOutput = Settings.Default.OutloginPumpPortSelected;
-            _fPumpDriver.ToggleTwoPump(Settings.Default.IsTwoPump);
-            _fPumpDriver.SetInputSpeed += SetIncomingPumpSpeedLabel;
-            _fPumpDriver.SetOutputSpeed += SetOutcomingPumpSpeedLabel;
-            _fPumpDriver.SetRequiredLvl(ConfocalLevelSetter);
+            _pumpDriver = new PumpDriver();
+            _pumpDriver.SetLogMessage += AddLogMessage;
+            _pumpDriver.PortStrInput = Settings.Default.IncomingPumpPortSelected;
+            _pumpDriver.PortStrOutput = Settings.Default.OutloginPumpPortSelected;
+            _pumpDriver.ToggleTwoPump(Settings.Default.IsTwoPump);
+            _pumpDriver.SetInputSpeed += SetIncomingPumpSpeedLabel;
+            _pumpDriver.SetOutputSpeed += SetOutcomingPumpSpeedLabel;
+            _pumpDriver.SetRequiredLvl(ConfocalLevelSetter);
 
-            _fPwrDriver = new PwrDriver();
-            _fPwrDriver.SetLogMessage += AddLogMessage;
-            _fPwrDriver.SetChannelParameters += SetChannelParams;
-            _fPwrDriver.PortStr = Settings.Default.PwrPortSelected;
+            _pwrDriver = new PwrDriver();
+            _pwrDriver.SetLogMessage += AddLogMessage;
+            _pwrDriver.SetChannelParameters += SetChannelParams;
+            _pwrDriver.PortStr = Settings.Default.PwrPortSelected;
 
-            _fLaserDriver = new LaserDriver();
-            _fLaserDriver.SetLogMessage += AddLogMessage;
-            _fLaserDriver.PortString = Settings.Default.LaserPortSelected;
+            _laserDriver = new LaserDriver();
+            _laserDriver.SetLogMessage += AddLogMessage;
+            _laserDriver.PortString = Settings.Default.LaserPortSelected;
             LaserTypeSelectedIndex = Settings.Default.LaserTypeSelectedIndex;
 
-            _fPyroDriver = new PyroDriver();
-            _fPyroDriver.SetLogMessage += AddLogMessage;
-            _fPyroDriver.EventHandler += PyroHandler;
-            _fPyroDriver.PortStr = Settings.Default.PyroPortSelected;
+            _pyroDriver = new PyroDriver();
+            _pyroDriver.SetLogMessage += AddLogMessage;
+            _pyroDriver.EventHandler += PyroHandler;
+            _pyroDriver.PortStr = Settings.Default.PyroPortSelected;
 
-            _fPressurePumpDriver = new PressurePumpDriver();
+            _pressurePumpDriver = new PressurePumpDriver();
 
-            _fPressureSensorDriver = new PressureSensorDriver(PressureSensorPortSelected);
-            _fPressureSensorDriver.EventHandler += PressureSensorHandler;
+            _pressureSensorDriver = new PressureSensorDriver(PressureSensorPortSelected);
+            _pressureSensorDriver.EventHandler += PressureSensorHandler;
 
-            _fLightingDriver = new LightingDriver();
+            _lightingDriver = new LightingDriver();
 
             AddLogMessage("Application Started");
         }
@@ -1879,12 +1879,12 @@ namespace LabControl.ViewModels
                 AddLogMessage(e.Message);
             }
 
-            _fPumpDriver?.Disconnect();
-            _fPwrDriver?.Disconnect();
-            _fLaserDriver?.Disconnect();
-            _fPyroDriver?.Disconnect();
-            _fDispenserDriver?.Disconnect();
-            _fLightingDriver?.ClosePort();
+            _pumpDriver?.Disconnect();
+            _pwrDriver?.Disconnect();
+            _laserDriver?.Disconnect();
+            _pyroDriver?.Disconnect();
+            _dispenserDriver?.Disconnect();
+            _lightingDriver?.ClosePort();
 
             Settings.Default.WindowHeight = WindowHeight;
             Settings.Default.WindowWidth = WindowWidth;
@@ -1991,7 +1991,7 @@ namespace LabControl.ViewModels
 
         private void OnSetLaserPower(object sender)
         {
-            _fLaserDriver.SetPower(LaserPowerSetter);
+            _laserDriver.SetPower(LaserPowerSetter);
             if (!LaserHistoryCollection.Contains(LaserPowerSetter))
                 LaserHistoryCollection.Insert(0, LaserPowerSetter);
         }
@@ -2021,14 +2021,14 @@ namespace LabControl.ViewModels
         private void OnReadChannelParamsCommand(object sender)
         {
             var ch = (int)sender;
-            _fPwrDriver?.GetChanelData(Convert.ToByte(ch));
+            _pwrDriver?.GetChanelData(Convert.ToByte(ch));
         }
 
         private void OnWriteChannelParamsCommand(object sender)
         {
             var ch = (int)sender;
             var pi = GetChannelParams(ch);
-            _fPwrDriver?.WriteChannelData(ch, pi);
+            _pwrDriver?.WriteChannelData(ch, pi);
         }
 
         private void OnStartMaxPressureImpulse(object sender)
@@ -2039,8 +2039,8 @@ namespace LabControl.ViewModels
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
         {
             ConfocalLevel = Math.Round(lvl.Dist, 5);
-            _fPumpDriver?.SetMeasuredLevel(lvl);
-            ConfocalLog = _fConfocalDriver.GetLastFragment();
+            _pumpDriver?.SetMeasuredLevel(lvl);
+            ConfocalLog = _confocalDriver.GetLastFragment();
         }
 
         private void SetIncomingPumpSpeedLabel(string speed)
@@ -2055,7 +2055,7 @@ namespace LabControl.ViewModels
         private void CollectSineData()
         {
             var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHv0, VPeak = DispenserHVpeak };
-            _fDispenserDriver?.SetSineWaveData(data);
+            _dispenserDriver?.SetSineWaveData(data);
         }
         private void CollectPulseData()
         {
@@ -2070,15 +2070,15 @@ namespace LabControl.ViewModels
                 V1 = DispenserV1,
                 V2 = DispenserV2
             };
-            _fDispenserDriver?.SetPulseWaveData(data);
+            _dispenserDriver?.SetPulseWaveData(data);
         }
 
         private void CollectDispenserData()
         {
             CollectSineData();
             CollectPulseData();
-            _fDispenserDriver?.SetChannel(_fDispenserChannel);
-            _fDispenserDriver?.SetFrequency(_fDispenserFrequency);
+            _dispenserDriver?.SetChannel(_fDispenserChannel);
+            _dispenserDriver?.SetFrequency(_fDispenserFrequency);
         }
 
         private void SetChannelParams(int channel, DataModels.PwrItem pi)
