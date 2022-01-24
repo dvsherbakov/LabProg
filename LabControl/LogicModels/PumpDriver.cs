@@ -63,6 +63,36 @@ namespace LabControl.LogicModels
             _portOutput?.AddClockwiseDirection();
         }
 
+        public void TestInputStart()
+        {
+            _portInput.TestStart();
+        }
+
+        public void TestOutputStart()
+        {
+            _portOutput.TestStart();
+        }
+
+        public void TestInputStop()
+        {
+            _portInput.TestStop();
+        }
+
+        public void TestOutputStop()
+        {
+            _portOutput.TestStop();
+        }
+
+        public void TestInputPump()
+        {
+            _portInput.TestPump();
+        }
+
+        public void TestOutputPump()
+        {
+            _portOutput.TestPump();
+        }
+
         public void Disconnect()
         {
             _portInput?.ClosePort();

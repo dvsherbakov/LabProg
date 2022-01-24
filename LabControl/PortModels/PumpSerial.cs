@@ -74,7 +74,7 @@ namespace LabControl.PortModels
                 {
                     try
                     {
-                        _port.Open();
+                        OpenPort();
                     }
                     catch (Exception ex)
                     {
@@ -83,9 +83,12 @@ namespace LabControl.PortModels
                     }
                 }
 
-                var itm = _cmdQueue.FirstOrDefault();
-                if (_cmdQueue.Count > 0) { _ = _cmdQueue.Remove(itm); }
-                WriteAnyCommand(itm);
+                if (_cmdQueue.Count > 0)
+                {
+                    var itm = _cmdQueue.FirstOrDefault();
+                    _cmdQueue.RemoveAt(0);
+                    WriteAnyCommand(itm);
+                }
             }
 
             if (_cmdQueue.Count != 0)
@@ -235,6 +238,16 @@ namespace LabControl.PortModels
             Task.Delay(100);
             _port.Write("s");
             Task.Delay(500);
+            _port.Write("t");
+        }
+
+        public void TestStart()
+        {
+            _port.Write("s");
+        }
+
+        public void TestStop()
+        {
             _port.Write("t");
         }
     }
