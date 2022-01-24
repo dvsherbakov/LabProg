@@ -343,6 +343,7 @@
                                                        VerticalAlignment="Center"
                                                         Foreground="SandyBrown"
                                                         Text="{Binding LabelReverse}" />
+                                                <Button Width="50" Style="{StaticResource TransparentButton}">T</Button>
                                             </DockPanel>
                                         </StackPanel>
                                     </Border>

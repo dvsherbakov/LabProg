@@ -221,5 +221,21 @@ namespace LabControl.PortModels
             }
             return res.ToArray();
         }
+
+        public void TestPump()
+        {
+            if (!IsOpen) return;
+            _port.Write("l");
+            Task.Delay(100);
+            _port.Write("s");
+            Task.Delay(500);
+            _port.Write("t");
+            Task.Delay(100);
+            _port.Write("r");
+            Task.Delay(100);
+            _port.Write("s");
+            Task.Delay(500);
+            _port.Write("t");
+        }
     }
 }
