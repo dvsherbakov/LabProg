@@ -49,7 +49,7 @@ namespace LabControl.PortModels
 
             _queueTimer = new Timer
             {
-                Interval = 1000,
+                Interval = 300,
                 Enabled = false,
             };
             _queueTimer.Elapsed += TimerEvent;
@@ -68,6 +68,7 @@ namespace LabControl.PortModels
 
         private void TimerEvent(object source, ElapsedEventArgs e)
         {
+            SetLogMessage?.Invoke($"Pump port {_comId} is Queue length - {_cmdQueue.Count}");
             if (_cmdQueue.Count > 0)
             {
                 if (!IsOpen)
@@ -97,7 +98,7 @@ namespace LabControl.PortModels
             }
 
             _queueTimer.Enabled = false;
-            _port.Close();
+           
         }
 
         private void WriteAnyCommand(string cmd)
@@ -225,29 +226,31 @@ namespace LabControl.PortModels
             return res.ToArray();
         }
 
-        public void TestPump()
+        public async Task TestPumpAsync()
         {
-            if (!IsOpen) return;
+            if (!IsOpen) _port.Open();
             _port.Write("l");
-            Task.Delay(100);
+            await Task.Delay(1000);
             _port.Write("s");
-            Task.Delay(500);
+            await Task.Delay(5000);
             _port.Write("t");
-            Task.Delay(100);
+            await Task.Delay(300);
             _port.Write("r");
-            Task.Delay(100);
+            await Task.Delay(1000);
             _port.Write("s");
-            Task.Delay(500);
+            await Task.Delay(5000);
             _port.Write("t");
         }
 
         public void TestStart()
         {
+            if (!IsOpen) _port.Open();
             _port.Write("s");
         }
 
         public void TestStop()
         {
+            if (!IsOpen) _port.Open();
             _port.Write("t");
         }
     }

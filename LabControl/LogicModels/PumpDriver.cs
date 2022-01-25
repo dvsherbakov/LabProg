@@ -85,12 +85,12 @@ namespace LabControl.LogicModels
 
         public void TestInputPump()
         {
-            _portInput?.TestPump();
+            _portInput?.TestPumpAsync();
         }
 
         public void TestOutputPump()
         {
-            _portOutput?.TestPump();
+            _portOutput?.TestPumpAsync();
         }
 
         public void Disconnect()
