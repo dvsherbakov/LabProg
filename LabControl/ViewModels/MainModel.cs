@@ -1672,6 +1672,12 @@ namespace LabControl.ViewModels
         public ICommand ReadChannelParamsCommand { get; }
         public ICommand WriteChannelParamsCommand { get; }
         public ICommand StartMaxPressureImpulse { get; }
+        public ICommand TestInputStart { get; }
+        public  ICommand TestOutputStart { get; }
+        public ICommand TestInputStop { get; }
+        public ICommand TestOutputStop { get; }
+        public ICommand TestInputPump { get; }
+        public ICommand TestOutputPump { get; }
 
         #endregion
 
@@ -1807,7 +1813,8 @@ namespace LabControl.ViewModels
             ReadChannelParamsCommand = new LambdaCommand(OnReadChannelParamsCommand);
             WriteChannelParamsCommand = new LambdaCommand(OnWriteChannelParamsCommand);
             StartMaxPressureImpulse = new LambdaCommand(OnStartMaxPressureImpulse);
-
+            TestInputPump = new LambdaCommand(OnTestInputPump);
+            TestOutputPump = new LambdaCommand(OnTestOutputPump);
             //Drivers area
             _confocalDriver = new ConfocalDriver();
             _confocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -2036,6 +2043,15 @@ namespace LabControl.ViewModels
 
         }
 
+        private void OnTestInputPump(object sender)
+        {
+            _pumpDriver?.TestInputPump();
+        }
+
+        private void OnTestOutputPump(object sender)
+        {
+            _pumpDriver?.TestOutputPump();
+        }
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
         {
             ConfocalLevel = Math.Round(lvl.Dist, 5);

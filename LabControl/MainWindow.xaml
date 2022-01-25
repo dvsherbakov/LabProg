@@ -343,7 +343,7 @@
                                                        VerticalAlignment="Center"
                                                         Foreground="SandyBrown"
                                                         Text="{Binding LabelReverse}" />
-                                                <Button Width="50" Style="{StaticResource TransparentButton}">T</Button>
+                                                <Button Width="50" Style="{StaticResource TransparentButton}" Command="{Binding TestInputPump}">T</Button>
                                             </DockPanel>
                                         </StackPanel>
                                     </Border>
@@ -375,6 +375,7 @@
                                                         VerticalAlignment="Center"
                                                         Foreground="SandyBrown"
                                                         Text="{Binding LabelReverse}" />
+                                                <Button Width="50" Style="{StaticResource TransparentButton}" Command="{Binding TestOutputPump}">T</Button>
                                             </DockPanel>
                                         </StackPanel>
                                     </Border>
@@ -1927,8 +1928,8 @@
                          HorizontalAlignment="Center" >
                     <TabItem.Header>
                         <Viewbox Width="50" Height="50">
-                            
-                                <ContentControl Content="{StaticResource PressureIcon}" Margin="2" />
+
+                            <ContentControl Content="{StaticResource PressureIcon}" Margin="2" />
                         </Viewbox>
                     </TabItem.Header>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">

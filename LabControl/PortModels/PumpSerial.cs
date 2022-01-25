@@ -166,7 +166,7 @@ namespace LabControl.PortModels
             var ascii = Encoding.ASCII;
             if (mRxData.Length > 0)
             {
-                Debug.WriteLine($"{_comId}:{ascii.GetString(mRxData)}");
+                SetLogMessage?.Invoke(($"{_comId}:{ascii.GetString(mRxData)}"));
             }
         }
 
