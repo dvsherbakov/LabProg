@@ -1815,6 +1815,10 @@ namespace LabControl.ViewModels
             StartMaxPressureImpulse = new LambdaCommand(OnStartMaxPressureImpulse);
             TestInputPump = new LambdaCommand(OnTestInputPump);
             TestOutputPump = new LambdaCommand(OnTestOutputPump);
+            TestInputStart = new LambdaCommand(OnTestInputStart);
+            TestOutputStart = new LambdaCommand(OnTestOutputStart);
+            TestInputStop = new LambdaCommand(OnTestInputStop);
+            TestOutputStop = new LambdaCommand(OnTestOutputStop);
             //Drivers area
             _confocalDriver = new ConfocalDriver();
             _confocalDriver.ObtainedDataEvent += SetUpMeasuredLevel;
@@ -2051,6 +2055,26 @@ namespace LabControl.ViewModels
         private void OnTestOutputPump(object sender)
         {
             _pumpDriver?.TestOutputPump();
+        }
+
+        private void OnTestInputStart(object sender)
+        {
+            _pumpDriver?.TestInputStart();
+        }
+
+        private void OnTestOutputStart(object sender)
+        {
+            _pumpDriver?.TestOutputStart();
+        }
+
+        private void OnTestInputStop(object sender)
+        {
+            _pumpDriver?.TestInputStop();
+        }
+
+        private void OnTestOutputStop(object sender)
+        {
+            _pumpDriver?.TestOutputStop();
         }
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
         {

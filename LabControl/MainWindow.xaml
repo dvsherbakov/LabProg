@@ -344,6 +344,8 @@
                                                         Foreground="SandyBrown"
                                                         Text="{Binding LabelReverse}" />
                                                 <Button Width="50" Style="{StaticResource TransparentButton}" Command="{Binding TestInputPump}">T</Button>
+                                                <Button Width="50" Style="{StaticResource TransparentButton}" Command="{Binding TestInputStart}">S</Button>
+                                                <Button Width="50" Style="{StaticResource TransparentButton}" Command="{Binding TestInputStop}">D</Button>
                                             </DockPanel>
                                         </StackPanel>
                                     </Border>
@@ -376,6 +378,8 @@
                                                         Foreground="SandyBrown"
                                                         Text="{Binding LabelReverse}" />
                                                 <Button Width="50" Style="{StaticResource TransparentButton}" Command="{Binding TestOutputPump}">T</Button>
+                                                <Button Width="50" Style="{StaticResource TransparentButton}" Command="{Binding TestOutputStart}">S</Button>
+                                                <Button Width="50" Style="{StaticResource TransparentButton}" Command="{Binding TestOutputStop}">D</Button>
                                             </DockPanel>
                                         </StackPanel>
                                     </Border>

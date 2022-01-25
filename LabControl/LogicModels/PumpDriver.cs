@@ -70,27 +70,27 @@ namespace LabControl.LogicModels
 
         public void TestOutputStart()
         {
-            _portOutput.TestStart();
+            _portOutput?.TestStart();
         }
 
         public void TestInputStop()
         {
-            _portInput.TestStop();
+            _portInput?.TestStop();
         }
 
         public void TestOutputStop()
         {
-            _portOutput.TestStop();
+            _portOutput?.TestStop();
         }
 
         public void TestInputPump()
         {
-            _portInput.TestPump();
+            _portInput?.TestPump();
         }
 
         public void TestOutputPump()
         {
-            _portOutput.TestPump();
+            _portOutput?.TestPump();
         }
 
         public void Disconnect()
