@@ -33,6 +33,7 @@ namespace LabControl.PortModels
             {
                 OnSetLogMessage(ex.Message);
             }
+            Port.Open();
         }
 
         public override void On()
