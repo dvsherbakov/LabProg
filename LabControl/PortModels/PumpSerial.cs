@@ -68,22 +68,9 @@ namespace LabControl.PortModels
 
         private void TimerEvent(object source, ElapsedEventArgs e)
         {
-            SetLogMessage?.Invoke($"Pump port {_comId} is Queue length - {_cmdQueue.Count}");
             if (_cmdQueue.Count > 0)
             {
-                if (!IsOpen)
-                {
-                    try
-                    {
-                        OpenPort();
-                    }
-                    catch (Exception ex)
-                    {
-                        SetLogMessage?.Invoke(ex.Message);
-                        return;
-                    }
-                }
-
+                
                 if (_cmdQueue.Count > 0)
                 {
                     var itm = _cmdQueue.FirstOrDefault();
@@ -111,8 +98,8 @@ namespace LabControl.PortModels
                 }
                 catch (Exception ex)
                 {
-                    SetLogMessage?.Invoke($"Port {_comId} is busy");
-                    SetLogMessage?.Invoke(ex.Message);
+                    SetLogMessage?.Invoke($"Port {_comId} error: {ex.Message}");
+
                 }
             }
             else
@@ -176,6 +163,7 @@ namespace LabControl.PortModels
         {
             if (!IsOpen)
             {
+                SetLogMessage?.Invoke($"Can't start. Pump port {_comId} is closed");
                 return;
             }
 
