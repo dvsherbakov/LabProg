@@ -18,9 +18,11 @@ namespace LabControl.PortModels
         private readonly ObservableCollection<string> _cmdQueue;
         private readonly Timer _queueTimer;
 
+
         public bool Active { get; private set; }
 
         public delegate void LogMessage(string msg);
+
         public event LogMessage SetLogMessage;
         public event LogMessage SetQueue;
 
@@ -68,26 +70,22 @@ namespace LabControl.PortModels
 
         private void TimerEvent(object source, ElapsedEventArgs e)
         {
-            if (_cmdQueue.Count > 0)
+            if (_cmdQueue.Count <= 0)
             {
-                
-                if (_cmdQueue.Count > 0)
-                {
-                    var itm = _cmdQueue.FirstOrDefault();
-                    _cmdQueue.RemoveAt(0);
-                    WriteAnyCommand(itm);
-                }
-            }
-
-            SetQueue?.Invoke(string.Join(":", _cmdQueue));
-
-            if (_cmdQueue.Count != 0)
-            {
+                _queueTimer.Enabled = false;
+                SetQueue?.Invoke("empty");
                 return;
             }
 
-            _queueTimer.Enabled = false;
-           
+
+            if (_cmdQueue.Count > 0)
+            {
+                var itm = _cmdQueue.FirstOrDefault();
+                _cmdQueue.RemoveAt(0);
+                WriteAnyCommand(itm);
+            }
+
+            SetQueue?.Invoke(string.Join(":", _cmdQueue));
         }
 
         private void WriteAnyCommand(string cmd)
@@ -101,7 +99,6 @@ namespace LabControl.PortModels
                 catch (Exception ex)
                 {
                     SetLogMessage?.Invoke($"Port {_comId} error: {ex.Message}");
-
                 }
             }
             else
@@ -125,6 +122,7 @@ namespace LabControl.PortModels
             {
                 SetLogMessage?.Invoke(ex.Message);
             }
+
             Active = true;
         }
 
@@ -153,6 +151,7 @@ namespace LabControl.PortModels
             {
                 SetLogMessage?.Invoke(ex.Message);
             }
+
             var ascii = Encoding.ASCII;
             if (mRxData.Length > 0)
             {
@@ -164,6 +163,7 @@ namespace LabControl.PortModels
         {
             _cmdQueue.Add(cmd);
             SetQueue?.Invoke(string.Join(":", _cmdQueue));
+            if (Active & !_queueTimer.Enabled) _queueTimer.Enabled = true;
         }
 
         public void AddStartPump()
@@ -202,7 +202,6 @@ namespace LabControl.PortModels
 
         public void AddCounterClockwiseDirection()
         {
-
             AddToQueue(PumpReverse ? "r" : "l");
         }
 
@@ -218,6 +217,7 @@ namespace LabControl.PortModels
             {
                 res.RemoveAt(res.Count - 1);
             }
+
             return res.ToArray();
         }
 
