@@ -18,7 +18,6 @@ namespace LabControl.PortModels
         private readonly ObservableCollection<string> _cmdQueue;
         private readonly Timer _queueTimer;
 
-
         public bool Active { get; private set; }
 
         public delegate void LogMessage(string msg);
@@ -76,8 +75,7 @@ namespace LabControl.PortModels
                 SetQueue?.Invoke("empty");
                 return;
             }
-
-
+            
             if (_cmdQueue.Count > 0)
             {
                 var itm = _cmdQueue.FirstOrDefault();
