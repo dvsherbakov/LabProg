@@ -62,7 +62,7 @@ namespace LabControl.LogicModels
             if (!_isTwoPump) return;
             _portOutput = new PumpSerial(PortStrOutput, DirectionOutput);
             _portOutput.SetLogMessage += TestLog;
-            _portOutput.SetQueue += SetInputQueueValue;
+            _portOutput.SetQueue += SetOutputQueueValue;
             _portOutput?.OpenPort();
             _portOutput?.AddClockwiseDirection();
         }

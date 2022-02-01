@@ -68,26 +68,18 @@ namespace LabControl.PortModels
 
         private void TimerEvent(object source, ElapsedEventArgs e)
         {
+
             if (_cmdQueue.Count > 0)
             {
-                
-                if (_cmdQueue.Count > 0)
-                {
-                    var itm = _cmdQueue.FirstOrDefault();
-                    _cmdQueue.RemoveAt(0);
-                    WriteAnyCommand(itm);
-                }
+                var itm = _cmdQueue.FirstOrDefault();
+                _cmdQueue.RemoveAt(0);
+                WriteAnyCommand(itm);
             }
-
             SetQueue?.Invoke(string.Join(":", _cmdQueue));
 
-            if (_cmdQueue.Count != 0)
-            {
-                return;
-            }
 
-            _queueTimer.Enabled = false;
-           
+            if (_cmdQueue.Count <= 0) _queueTimer.Enabled = false;
+
         }
 
         private void WriteAnyCommand(string cmd)
