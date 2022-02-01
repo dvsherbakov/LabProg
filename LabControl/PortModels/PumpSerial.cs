@@ -160,6 +160,11 @@ namespace LabControl.PortModels
             }
         }
 
+        private void AddToQueue(string cmd)
+        {
+            _cmdQueue.Add(cmd);
+            SetQueue?.Invoke(string.Join(":", _cmdQueue));
+        }
 
         public void AddStartPump()
         {
@@ -169,7 +174,7 @@ namespace LabControl.PortModels
                 return;
             }
 
-            _cmdQueue.Add("s");
+            AddToQueue("s");
         }
 
         private void StopPump()
@@ -187,23 +192,23 @@ namespace LabControl.PortModels
 
         public void AddStopPump()
         {
-            _cmdQueue.Add("t");
+            AddToQueue("t");
         }
 
         public void AddClockwiseDirection()
         {
-            _cmdQueue.Add(PumpReverse ? "l" : "r");
+            AddToQueue(PumpReverse ? "l" : "r");
         }
 
         public void AddCounterClockwiseDirection()
         {
 
-            _cmdQueue.Add(PumpReverse ? "r" : "l");
+            AddToQueue(PumpReverse ? "r" : "l");
         }
 
         public void AddSpeed(string speed)
         {
-            _cmdQueue.Add(speed);
+            AddToQueue(speed);
         }
 
         private static byte[] TrimReceivedData(IEnumerable<byte> src)
