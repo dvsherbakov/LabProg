@@ -158,7 +158,6 @@ namespace LabControl.ViewModels
         }
 
         private string _incomingPumpSpeed;
-
         public string IncomingPumpSpeed
         {
             get => _incomingPumpSpeed;
@@ -166,11 +165,24 @@ namespace LabControl.ViewModels
         }
 
         private string _outgoingPumpSpeed;
-
         public string OutgoingPumpSpeed
         {
             get => _outgoingPumpSpeed;
             set => Set(ref _outgoingPumpSpeed, value);
+        }
+
+        private string _outgoingPumpQueue;
+        public string OutgoingPumpQueue
+        {
+            get => _outgoingPumpQueue;
+            set => Set(ref _outgoingPumpQueue, value);
+        }
+
+        private string _incomingPumpQueue;
+        public string IncomingPumpQueue
+        {
+            get => _incomingPumpQueue;
+            set => Set(ref _incomingPumpQueue, value);
         }
 
         private int _currentLaserPower;
@@ -1830,7 +1842,9 @@ namespace LabControl.ViewModels
             _pumpDriver.PortStrOutput = Settings.Default.OutloginPumpPortSelected;
             _pumpDriver.ToggleTwoPump(Settings.Default.IsTwoPump);
             _pumpDriver.SetInputSpeed += SetIncomingPumpSpeedLabel;
-            _pumpDriver.SetOutputSpeed += SetOutcomingPumpSpeedLabel;
+            _pumpDriver.SetOutputSpeed += SetOutgoingPumpSpeedLabel;
+            _pumpDriver.SetInputQueue += SetIncomingPumpQueue;
+            _pumpDriver.SetOutputQueue += SetOutgoingPumpQueue;
             _pumpDriver.SetRequiredLvl(ConfocalLevelSetter);
 
             _pwrDriver = new PwrDriver();
@@ -2087,9 +2101,19 @@ namespace LabControl.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() => IncomingPumpSpeed = speed);
         }
-        private void SetOutcomingPumpSpeedLabel(string speed)
+        private void SetOutgoingPumpSpeedLabel(string speed)
         {
             Application.Current.Dispatcher.Invoke(() => OutgoingPumpSpeed = speed);
+        }
+
+        private void SetIncomingPumpQueue(string queue)
+        {
+            Application.Current.Dispatcher.Invoke(() => IncomingPumpQueue = queue);
+        }
+
+        private void SetOutgoingPumpQueue(string queue)
+        {
+            Application.Current.Dispatcher.Invoke(() => OutgoingPumpQueue = queue);
         }
 
         private void CollectSineData()

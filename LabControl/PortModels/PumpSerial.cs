@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -23,6 +22,7 @@ namespace LabControl.PortModels
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
+        public event LogMessage SetQueue;
 
         public PumpSerial(string portStr, bool startDirection)
         {
@@ -78,6 +78,8 @@ namespace LabControl.PortModels
                     WriteAnyCommand(itm);
                 }
             }
+
+            SetQueue?.Invoke(string.Join(":", _cmdQueue));
 
             if (_cmdQueue.Count != 0)
             {

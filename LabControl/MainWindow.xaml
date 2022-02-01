@@ -438,6 +438,24 @@
                                                 HorizontalAlignment="Center"/>
                                         </Border>
                                     </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0"
+                                                Margin="1"
+                                                BorderBrush="Aquamarine"
+                                                CornerRadius="5" BorderThickness="1">
+                                            <TextBlock Text="{Binding IncomingPumpQueue}"></TextBlock>
+                                        </Border>
+                                        <Border Grid.Column="1"
+                                                Margin="1"
+                                                BorderBrush="Aquamarine"
+                                                CornerRadius="5" BorderThickness="1">
+                                            <TextBlock Text="{Binding OutgoingPumpQueue}"></TextBlock>
+                                        </Border>
+                                    </Grid>
                                 </StackPanel>
                             </Expander>
                         </StackPanel>

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LabControl.ClassHelpers;
 
 namespace LabControl.PortModels
@@ -72,7 +69,7 @@ namespace LabControl.PortModels
             var cmd = f_CommandList.FirstOrDefault();
             if (cmd == null) return;
             f_Port.Write(cmd.CommandString, 0, cmd.CommandString.Length);
-            f_CommandList.Remove(cmd);
+            f_CommandList.RemoveAt(0);
         }
 
         public void OpenPort()

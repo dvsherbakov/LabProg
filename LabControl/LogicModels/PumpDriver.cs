@@ -27,6 +27,8 @@ namespace LabControl.LogicModels
         public event LogMessage SetLogMessage;
         public event LogMessage SetInputSpeed;
         public event LogMessage SetOutputSpeed;
+        public event LogMessage SetInputQueue;
+        public event LogMessage SetOutputQueue;
 
         private readonly List<SpeedGradeItem> _speedGradeItems = new List<SpeedGradeItem> {
             new SpeedGradeItem{Different=1.00, Speed="250 ", value=250},
@@ -54,11 +56,13 @@ namespace LabControl.LogicModels
         {
             _portInput = new PumpSerial(PortStrInput, DirectionInput);
             _portInput.SetLogMessage += TestLog;
+            _portInput.SetQueue += SetInputQueueValue;
             _portInput?.OpenPort();
             _portInput?.AddCounterClockwiseDirection();
             if (!_isTwoPump) return;
             _portOutput = new PumpSerial(PortStrOutput, DirectionOutput);
             _portOutput.SetLogMessage += TestLog;
+            _portOutput.SetQueue += SetInputQueueValue;
             _portOutput?.OpenPort();
             _portOutput?.AddClockwiseDirection();
         }
@@ -102,6 +106,16 @@ namespace LabControl.LogicModels
         private void TestLog(string msg)
         {
             SetLogMessage?.Invoke(msg);
+        }
+
+        private void SetInputQueueValue(string queue)
+        {
+            SetInputQueue?.Invoke(queue);
+        }
+
+        private void SetOutputQueueValue(string queue)
+        {
+            SetOutputQueue?.Invoke(queue);
         }
 
         public void SetMeasuredLevel(DistMeasureRes lvl)
