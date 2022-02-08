@@ -54,6 +54,13 @@ namespace LabControl.PortModels
                 Enabled = false,
             };
             _queueTimer.Elapsed += TimerEvent;
+
+            var controlTimer = new Timer
+            {
+                Interval = 5000,
+                Enabled = true
+            };
+            controlTimer.Elapsed += ControlEvent;
         }
 
         private async void StartQueue(object sender, NotifyCollectionChangedEventArgs e)
@@ -75,7 +82,7 @@ namespace LabControl.PortModels
                 SetQueue?.Invoke("empty");
                 return;
             }
-            
+
             if (_cmdQueue.Count > 0)
             {
                 var itm = _cmdQueue.FirstOrDefault();
@@ -84,6 +91,11 @@ namespace LabControl.PortModels
             }
 
             SetQueue?.Invoke(string.Join(":", _cmdQueue));
+        }
+
+        private void ControlEvent(object source, ElapsedEventArgs e)
+        {
+            if (Active && _cmdQueue.Count > 0) _queueTimer.Enabled = true;
         }
 
         private void WriteAnyCommand(string cmd)
