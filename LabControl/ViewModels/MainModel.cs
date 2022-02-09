@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using LabControl.ClassHelpers;
@@ -1994,6 +1995,13 @@ namespace LabControl.ViewModels
             Settings.Default.LightingGreenRedChannelValue = LightingGreenRedChannelValue;
             Settings.Default.IsSingleLighting = IsSingleLighting;
             Settings.Default.Save();
+
+            //Remove this blog later
+            TextWriter tw = new StreamWriter("SavedList.txt");
+            foreach (var s in LogCollection)
+                tw.WriteLine(s.Message);
+            tw.Close();
+
             //_fDbContext.Dispose();
             Application.Current.Shutdown();
         }
