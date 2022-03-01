@@ -56,6 +56,13 @@ namespace LabControl.LogicModels
 
         }
 
+        public void SetAllDiodes(bool value)
+        {
+            for (var i = 0; i < 4; i++)
+                if (value) SetChannelOn(i); else SetChannelOff(i);
+
+        }
+
         public void SetChannelOn(int channel)
         {
             _pwrSerial?.SetChannelOn(channel);

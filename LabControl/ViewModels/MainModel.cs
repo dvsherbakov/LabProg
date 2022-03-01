@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using LabControl.ClassHelpers;
@@ -379,6 +380,18 @@ namespace LabControl.ViewModels
             {
                 _ = Set(ref _fIsPwrPortConnect, value);
                 _pwrDriver.ConnectToPort();
+            }
+        }
+
+        private bool _pwrAllDiodesSwitch;
+
+        public bool PwrAllDiodesSwitch
+        {
+            get => _pwrAllDiodesSwitch;
+            set
+            {
+                Set(ref _pwrAllDiodesSwitch, value);
+                OnSetAllDiodes(value);
             }
         }
 
@@ -1592,6 +1605,7 @@ namespace LabControl.ViewModels
         public static string LabelConfocalSetter => Resources.LabelConfocalSetter;
         public static string LabelPumpActive => Resources.LabelPumpActive;
         public static string LabelPortConnection => Resources.LabelPortConnection;
+        public static string LabelAllDiodes => Resources.LabelAllDiodes;
         public static string LabelSettings => Resources.LabelSettings;
         public static string LabelInputPumpPort => Resources.LabelInputPumpPort;
         public static string LabelOutputPumpPort => Resources.LabelOutputPumpPort;
@@ -1686,7 +1700,7 @@ namespace LabControl.ViewModels
         public ICommand WriteChannelParamsCommand { get; }
         public ICommand StartMaxPressureImpulse { get; }
         public ICommand TestInputStart { get; }
-        public  ICommand TestOutputStart { get; }
+        public ICommand TestOutputStart { get; }
         public ICommand TestInputStop { get; }
         public ICommand TestOutputStop { get; }
         public ICommand TestInputPump { get; }
@@ -2049,6 +2063,17 @@ namespace LabControl.ViewModels
         private void OnToggleDispenserActive(object sender)
         {
             IsDispenserActive = !IsDispenserActive;
+        }
+
+        private void OnSetAllDiodes(bool value)
+        {
+            PwrSwitchCh0 = value;
+            Thread.Sleep(250);
+            PwrSwitchCh1 = value;
+            Thread.Sleep(250);
+            PwrSwitchCh2 = value;
+            Thread.Sleep(250);
+            PwrSwitchCh3 = value;
         }
 
         private void OnReadChannelParamsCommand(object sender)
