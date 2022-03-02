@@ -713,6 +713,19 @@
                                     VerticalAlignment="Center" 
                                     HorizontalAlignment="Center">
                                     <TabItem.Header>
+                                        <TextBlock Text="D" 
+                                                   Foreground="SandyBrown"
+                                                   Background="Transparent"/>
+                                    </TabItem.Header>
+                                    <StackPanel>
+
+                                    </StackPanel>
+                                </TabItem>
+                                <TabItem 
+                                    Style="{DynamicResource TabItemStyle}"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center">
+                                    <TabItem.Header>
                                         <TextBlock Text="0" 
                                                    Foreground="SandyBrown"
                                                    Background="Transparent"/>
