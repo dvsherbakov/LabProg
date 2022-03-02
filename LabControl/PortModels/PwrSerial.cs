@@ -40,7 +40,7 @@ namespace LabControl.PortModels
             _port.DataReceived += DataReceivedHandler;
         }
 
-        public static void OpenPort()
+        public void OpenPort()
         {
             _port?.Open();
         }
@@ -143,7 +143,7 @@ namespace LabControl.PortModels
         {
             var dt = _modBus.GetMaxVolts(PwrParams.Amplitudes[chanel], amplitude);
             Write(dt);
-            Thread.Sleep(1000);
+            Thread.Sleep(250);
         }
 
         public void SetBias(int chanel, int bias)

@@ -23,10 +23,17 @@ namespace LabControl.LogicModels
 
         public void ConnectToPort()
         {
-            _pwrSerial = new PwrSerial(PortStr);
-            PwrSerial.OpenPort();
-            _pwrSerial.SetLogMessage += TestLog;
-            _pwrSerial.OnRecieve += GetSignal;
+            try
+            {
+                _pwrSerial = new PwrSerial(PortStr);
+                _pwrSerial.OpenPort();
+                _pwrSerial.SetLogMessage += TestLog;
+                _pwrSerial.OnRecieve += GetSignal;
+            }
+            catch (Exception ex)
+            {
+                SetLogMessage?.Invoke(ex.Message);
+            }
         }
 
         public void Disconnect()
@@ -77,6 +84,15 @@ namespace LabControl.LogicModels
         {
             _pwrSerial.CurChannel = channel;
             _pwrSerial?.GetChanelData(channel);
+        }
+
+        public void SetDiodesParam(int amplitude)
+        {
+            if (amplitude < 0) return;
+            for (var i = 0; i < 4; i++)
+            {
+                _pwrSerial?.SetAmplitude(i, amplitude);
+            }
         }
 
         public void WriteChannelData(int channel, PwrItem pi)

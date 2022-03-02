@@ -718,7 +718,56 @@
                                                    Background="Transparent"/>
                                     </TabItem.Header>
                                     <StackPanel>
-
+                                        <TextBlock Foreground="SandyBrown"
+                                                   TextAlignment="Center" 
+                                                   Text="Каналы диодов (0,1,2,3)"/>
+                                        <StackPanel Orientation="Horizontal" Margin="5 5 0 0 ">
+                                            <ToggleButton Style="{StaticResource AnimatedSwitch}" 
+                                                          Width="40" Height="20"  
+                                                          Margin="1,6,1,6"
+                                                          IsChecked="{Binding PwrAllDiodesSwitch}"
+                                            />
+                                            <TextBlock Padding="15,5" 
+                                                       Foreground="SandyBrown"
+                                                       Text="{Binding LabelAllDiodes}" />
+                                        </StackPanel>
+                                        <Grid Margin="10,10,10,10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                                <RowDefinition Height="28"></RowDefinition>
+                                               
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                                <ColumnDefinition Width="18*"></ColumnDefinition>
+                                                <ColumnDefinition Width="6*"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Grid.Row="0" 
+                                                       Foreground="SandyBrown"
+                                                       Text="Напряжение"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBox Grid.Column="1" Grid.Row="0" 
+                                                     Text="{Binding PwrAllDiodeAmplitude}"
+                                                     TextAlignment="Center"
+                                                     Style="{StaticResource PartTransparent}"
+                                                     Template="{StaticResource TextBoxBaseControlTemplate}"
+                                            />
+                                            <Button 
+                                                Grid.Row="0" Grid.Column="2"
+                                                Command="{Binding SetDiodesParam}"
+                                                Style="{StaticResource TransparentButton}">
+                                                <Viewbox>
+                                                    <Grid>
+                                                        <Path  Stroke="SandyBrown" StrokeThickness="3">
+                                                            <Path.Data>
+                                                                <EllipseGeometry RadiusX="11" RadiusY="11" Center="12,12" />
+                                                            </Path.Data>
+                                                        </Path>
+                                                        <Path Data="M9,6L9,19 18,13z" Stroke="SandyBrown" />
+                                                    </Grid>
+                                                </Viewbox>
+                                            </Button>
+                                        </Grid>
                                     </StackPanel>
                                 </TabItem>
                                 <TabItem 

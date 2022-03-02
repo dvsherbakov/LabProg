@@ -395,6 +395,14 @@ namespace LabControl.ViewModels
             }
         }
 
+        private int _pwrAllDiodeAmplitude;
+
+        public int PwrAllDiodeAmplitude
+        {
+            get => _pwrAllDiodeAmplitude;
+            set => Set(ref _pwrAllDiodeAmplitude, value);
+        }
+
         private bool _fPwrSwitchCh0;
         public bool PwrSwitchCh0
         {
@@ -1692,6 +1700,7 @@ namespace LabControl.ViewModels
         public ICommand MaximizedCommand { get; }
         public ICommand StandardSizeCommand { get; }
         public ICommand SetLaserPwrCommand { get; }
+        public ICommand SetDiodesParam { get; }
         public ICommand ToggleLaserEmit { get; }
         public ICommand StartPumpCommand { get; }
         public ICommand TogglePumpCommand { get; }
@@ -1833,6 +1842,7 @@ namespace LabControl.ViewModels
             MaximizedCommand = new LambdaCommand(OnMaximizedCommandExecute);
             StandardSizeCommand = new LambdaCommand(OnStandardSizeCommand);
             SetLaserPwrCommand = new LambdaCommand(OnSetLaserPower);
+            SetDiodesParam = new LambdaCommand(OnSetDiodesParam);
             ToggleLaserEmit = new LambdaCommand(OnToggleLaserEmit);
             StartPumpCommand = new LambdaCommand(OnStartPump);
             TogglePumpCommand = new LambdaCommand(OnTogglePump);
@@ -2087,6 +2097,11 @@ namespace LabControl.ViewModels
             var ch = (int)sender;
             var pi = GetChannelParams(ch);
             _pwrDriver?.WriteChannelData(ch, pi);
+        }
+
+        private void OnSetDiodesParam(object sender)
+        {
+            _pwrDriver?.SetDiodesParam(PwrAllDiodeAmplitude);
         }
 
         private void OnStartMaxPressureImpulse(object sender)
