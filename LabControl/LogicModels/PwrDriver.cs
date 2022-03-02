@@ -91,7 +91,7 @@ namespace LabControl.LogicModels
             if (amplitude < 0) return;
             for (var i = 0; i < 4; i++)
             {
-                _pwrSerial?.SetAmplitude(i, amplitude);
+                _pwrSerial?.SetBias(i, amplitude);
             }
         }
 

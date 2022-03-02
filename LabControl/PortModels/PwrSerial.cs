@@ -150,7 +150,7 @@ namespace LabControl.PortModels
         {
             var dt = _modBus.GetMaxVolts(PwrParams.Biases[chanel], bias);
             Write(dt);
-            Thread.Sleep(1000);
+            Thread.Sleep(250);
         }
 
         public void SetFreq(int chanel, int freq)
