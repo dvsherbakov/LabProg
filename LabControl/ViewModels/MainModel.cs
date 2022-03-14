@@ -1720,7 +1720,7 @@ namespace LabControl.ViewModels
         public MainModel()
         {
             // Data context
-            _fDbContext = new ApplicationContext();
+            // _fDbContext = new ApplicationContext();
             //f_DbContext.Logs.Load();
             // init collections
             ConfocalLog = new[] { 0d, .40d, .3d };
@@ -1902,14 +1902,14 @@ namespace LabControl.ViewModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 LogCollection.Insert(0, new LogItem(DateTime.Now, message));
-                _fDbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
+               // _fDbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
             });
         }
 
         private void PyroHandler(float temperature)
         {
             Application.Current.Dispatcher.Invoke(() => { PyroTemperature = temperature; });
-            _fDbContext.Temperatures.Add(new Temperature { Dt = DateTime.Now, Tmp = temperature, CurTmp = CurrentTemperature });
+            //_fDbContext.Temperatures.Add(new Temperature { Dt = DateTime.Now, Tmp = temperature, CurTmp = CurrentTemperature });
         }
 
         private void PressureSensorHandler(float pressure, float temperature)
@@ -1922,7 +1922,7 @@ namespace LabControl.ViewModels
         {
             try
             {
-                _ = _fDbContext.SaveChanges();
+                //_ = _fDbContext.SaveChanges();
             }
             catch (Exception e)
             {

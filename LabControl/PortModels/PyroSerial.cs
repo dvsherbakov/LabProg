@@ -10,10 +10,10 @@ namespace LabControl.PortModels
     internal class PyroSerial
     {
         private static SerialPort _port;
-        private byte[] f_RxData;
-        private long f_RxIdx;
-        private readonly Dictionary<long, float> f_TempLog = new Dictionary<long, float>();
-        private readonly System.Timers.Timer f_ATimer = new System.Timers.Timer();
+        private byte[] _fRxData;
+        private long _fRxIdx;
+        private readonly Dictionary<long, float> _fTempLog = new Dictionary<long, float>();
+        private readonly System.Timers.Timer _fATimer = new System.Timers.Timer();
 
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
@@ -25,7 +25,7 @@ namespace LabControl.PortModels
         {
             
             if (string.IsNullOrEmpty(port)) port = "COM4";
-            f_RxIdx = 0;
+            _fRxIdx = 0;
             SetLogMessage?.Invoke($"Try connected Pyro on port {port}");
             _port = new SerialPort(port)
             {
@@ -37,8 +37,8 @@ namespace LabControl.PortModels
                 RtsEnable = true
             };
             _port.DataReceived += DataReceivedHandler;
-            f_ATimer.Elapsed += OnTimedEvent;
-            f_ATimer.Interval = 1200;
+            _fATimer.Elapsed += OnTimedEvent;
+            _fATimer.Interval = 1200;
         }
 
         public static void OpenPort()
@@ -48,12 +48,12 @@ namespace LabControl.PortModels
 
         public void StartMeasuring()
         {
-            f_ATimer.Enabled = true;
+            _fATimer.Enabled = true;
         }
 
         public void StopMeasuring()
         {
-            f_ATimer.Enabled = false;
+            _fATimer.Enabled = false;
         }
 
         public void ClosePort()
@@ -68,16 +68,16 @@ namespace LabControl.PortModels
             try
             {
                 var cnt = sp.ReadBufferSize;
-                f_RxData = new byte[cnt + 1];
-                sp.Read(f_RxData, 0, cnt);
+                _fRxData = new byte[cnt + 1];
+                sp.Read(_fRxData, 0, cnt);
             }
             catch (Exception ex)
             {
                 SetLogMessage?.Invoke(ex.Message);
             }
-            var t = RcConvert(f_RxData);
-            f_TempLog.Add(f_RxIdx, t);
-            f_RxIdx++;
+            var t = RcConvert(_fRxData);
+            _fTempLog.Add(_fRxIdx, t);
+            _fRxIdx++;
             EventHandler?.Invoke(t);
         }
 
@@ -116,7 +116,7 @@ namespace LabControl.PortModels
 
         public float GetLastRes()
         {
-            f_TempLog.TryGetValue(f_RxIdx - 1, out var val);
+            _fTempLog.TryGetValue(_fRxIdx - 1, out var val);
             return val;
         }
 
