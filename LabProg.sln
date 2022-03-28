@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30330.147
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabProg", "LabProg\LabProg.csproj", "{806003A1-BF6F-4EE8-8E2F-CDAF3218D9A4}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaserTest", "LaserTest\LaserTest.csproj", "{981975DD-2D64-436D-8346-AE98AD36C0DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YodnTest", "YodnTest\YodnTest.csproj", "{23048628-823A-4980-A20A-B85EB4C24574}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicrodropDesktop", "MicrodropDesktop\MicrodropDesktop.csproj", "{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,18 @@ Global
 		{23048628-823A-4980-A20A-B85EB4C24574}.Release|x64.Build.0 = Release|Any CPU
 		{23048628-823A-4980-A20A-B85EB4C24574}.Release|x86.ActiveCfg = Release|Any CPU
 		{23048628-823A-4980-A20A-B85EB4C24574}.Release|x86.Build.0 = Release|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Debug|x64.Build.0 = Debug|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Debug|x86.Build.0 = Debug|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Release|x64.ActiveCfg = Release|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Release|x64.Build.0 = Release|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Release|x86.ActiveCfg = Release|Any CPU
+		{83E5BDA1-7B6A-482C-8997-91AE9111C5B7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
