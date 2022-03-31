@@ -12,15 +12,16 @@ namespace MicrodropDesktop
 {
     public partial class Form1 : Form
     {
-        private PortController controller;
+        private readonly PortController _controller;
         public Form1()
         {
             InitializeComponent();
-            controller = new PortController("COM21");
-            controller.SetLogMessage += AddLogMessage;
-            controller.OpenPort();
-            controller.GetFrequency(0);
-            cbPulseNo.SelectedIndex=0;
+            _controller = new PortController("COM16");
+            _controller.SetLogMessage += AddLogMessage;
+            _controller.OpenPort();
+            _controller.GetFrequency(0);
+            cbPulseNo.SelectedIndex = 0;
+            cbHead.SelectedItem = 0;
         }
 
         private void AddLogMessage(string message)
@@ -32,29 +33,29 @@ namespace MicrodropDesktop
 
         }
 
-        private void btnRequest_Click(object sender, EventArgs e)
+        private void BtnRequest_Click(object sender, EventArgs e)
         {
-            controller?.SendRequest();
+            _controller?.SendRequest();
         }
 
-        private void btnFrequency_Click(object sender, EventArgs e)
+        private void BtnFrequency_Click(object sender, EventArgs e)
         {
-            controller?.GetFrequency(2);
+            _controller?.GetFrequency(2);
         }
 
-        private void btnStrobe_Click(object sender, EventArgs e)
+        private void BtnStrobe_Click(object sender, EventArgs e)
         {
-            controller?.GetStrobe(1);
+            _controller?.GetStrobe(1);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
-            controller?.SetFrequency(2, 362);
+            _controller?.SetFrequency(2, 362);
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void Button1_Click_1(object sender, EventArgs e)
         {
-            controller?.GetPulseLength(1,3);
+            _controller?.GetPulseLength(1, 3);
         }
 
         private (int, int) GetPulseData()
@@ -64,22 +65,39 @@ namespace MicrodropDesktop
             return (channel, value);
         }
 
-        private void btSetImpulseLength_Click(object sender, EventArgs e)
+        private int GetHead()
         {
-            var (channel, value) = GetPulseData();
-            controller?.SetPulseLength(1, channel, value);
+            return cbHead.SelectedIndex + 1;
         }
 
-        private void btnSetImpulseVoltage_Click(object sender, EventArgs e)
+        private void BtSetImpulseLength_Click(object sender, EventArgs e)
         {
             var (channel, value) = GetPulseData();
-            controller?.SetPulseVoltage(1, channel, value);
+            _controller?.SetPulseLength(1, channel, value);
         }
 
-        private void btnSetPulseDelay_Click(object sender, EventArgs e)
+        private void BtnSetImpulseVoltage_Click(object sender, EventArgs e)
         {
             var (channel, value) = GetPulseData();
-            controller?.SetPulseDelay(1, channel, value);
+            _controller?.SetPulseVoltage(1, channel, value);
+        }
+
+        private void BtnSetPulseDelay_Click(object sender, EventArgs e)
+        {
+            var (channel, value) = GetPulseData();
+            _controller?.SetPulseDelay(1, channel, value);
+        }
+
+        private void BtnStart_Click(object sender, EventArgs e)
+        {
+            var head = GetHead();
+            _controller?.SetActive(head, 1);
+        }
+
+        private void BtnStop_Click(object sender, EventArgs e)
+        {
+            var head = GetHead();
+            _controller?.SetActive(head, 0);
         }
     }
 }

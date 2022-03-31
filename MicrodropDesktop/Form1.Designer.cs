@@ -39,6 +39,9 @@
             this.tbPulseValue = new System.Windows.Forms.TextBox();
             this.btnSetImpulseVoltage = new System.Windows.Forms.Button();
             this.btnSetPulseDelay = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.cbHead = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lbLog
@@ -58,7 +61,7 @@
             this.btnRequest.TabIndex = 1;
             this.btnRequest.Text = "Запрос";
             this.btnRequest.UseVisualStyleBackColor = true;
-            this.btnRequest.Click += new System.EventHandler(this.btnRequest_Click);
+            this.btnRequest.Click += new System.EventHandler(this.BtnRequest_Click);
             // 
             // btnGreqency
             // 
@@ -68,7 +71,7 @@
             this.btnGreqency.TabIndex = 2;
             this.btnGreqency.Text = "Частота";
             this.btnGreqency.UseVisualStyleBackColor = true;
-            this.btnGreqency.Click += new System.EventHandler(this.btnFrequency_Click);
+            this.btnGreqency.Click += new System.EventHandler(this.BtnFrequency_Click);
             // 
             // btnStrobe
             // 
@@ -78,7 +81,7 @@
             this.btnStrobe.TabIndex = 3;
             this.btnStrobe.Text = "Стробоскоб";
             this.btnStrobe.UseVisualStyleBackColor = true;
-            this.btnStrobe.Click += new System.EventHandler(this.btnStrobe_Click);
+            this.btnStrobe.Click += new System.EventHandler(this.BtnStrobe_Click);
             // 
             // btnSetFreq
             // 
@@ -88,7 +91,7 @@
             this.btnSetFreq.TabIndex = 4;
             this.btnSetFreq.Text = "Уст частоту";
             this.btnSetFreq.UseVisualStyleBackColor = true;
-            this.btnSetFreq.Click += new System.EventHandler(this.button1_Click);
+            this.btnSetFreq.Click += new System.EventHandler(this.Button1_Click);
             // 
             // btnImpulseLength
             // 
@@ -98,7 +101,7 @@
             this.btnImpulseLength.TabIndex = 5;
             this.btnImpulseLength.Text = "Длинна имп";
             this.btnImpulseLength.UseVisualStyleBackColor = true;
-            this.btnImpulseLength.Click += new System.EventHandler(this.button1_Click_1);
+            this.btnImpulseLength.Click += new System.EventHandler(this.Button1_Click_1);
             // 
             // cbPulseNo
             // 
@@ -120,7 +123,7 @@
             this.btSetImpulseLength.TabIndex = 7;
             this.btSetImpulseLength.Text = "Уст дл имп";
             this.btSetImpulseLength.UseVisualStyleBackColor = true;
-            this.btSetImpulseLength.Click += new System.EventHandler(this.btSetImpulseLength_Click);
+            this.btSetImpulseLength.Click += new System.EventHandler(this.BtSetImpulseLength_Click);
             // 
             // tbPulseValue
             // 
@@ -137,7 +140,7 @@
             this.btnSetImpulseVoltage.TabIndex = 9;
             this.btnSetImpulseVoltage.Text = "Уст напр";
             this.btnSetImpulseVoltage.UseVisualStyleBackColor = true;
-            this.btnSetImpulseVoltage.Click += new System.EventHandler(this.btnSetImpulseVoltage_Click);
+            this.btnSetImpulseVoltage.Click += new System.EventHandler(this.BtnSetImpulseVoltage_Click);
             // 
             // btnSetPulseDelay
             // 
@@ -147,13 +150,47 @@
             this.btnSetPulseDelay.TabIndex = 10;
             this.btnSetPulseDelay.Text = "Уст задержку";
             this.btnSetPulseDelay.UseVisualStyleBackColor = true;
-            this.btnSetPulseDelay.Click += new System.EventHandler(this.btnSetPulseDelay_Click);
+            this.btnSetPulseDelay.Click += new System.EventHandler(this.BtnSetPulseDelay_Click);
+            // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(481, 175);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(112, 34);
+            this.btnStart.TabIndex = 11;
+            this.btnStart.Text = "Старт";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.BtnStart_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(613, 175);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(112, 34);
+            this.btnStop.TabIndex = 12;
+            this.btnStop.Text = "Стоп";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.BtnStop_Click);
+            // 
+            // cbHead
+            // 
+            this.cbHead.FormattingEnabled = true;
+            this.cbHead.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.cbHead.Location = new System.Drawing.Point(288, 102);
+            this.cbHead.Name = "cbHead";
+            this.cbHead.Size = new System.Drawing.Size(52, 33);
+            this.cbHead.TabIndex = 13;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(837, 450);
+            this.Controls.Add(this.cbHead);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnSetPulseDelay);
             this.Controls.Add(this.btnSetImpulseVoltage);
             this.Controls.Add(this.tbPulseValue);
@@ -185,5 +222,8 @@
         private System.Windows.Forms.TextBox tbPulseValue;
         private System.Windows.Forms.Button btnSetImpulseVoltage;
         private System.Windows.Forms.Button btnSetPulseDelay;
+        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.ComboBox cbHead;
     }
 }
