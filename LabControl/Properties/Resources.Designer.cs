@@ -205,6 +205,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Тип диспенсера.
+        /// </summary>
+        internal static string DispenserTypeLabel {
+            get {
+                return ResourceManager.GetString("DispenserTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Напряжение.
         /// </summary>
         internal static string DispenserVoltageLabel {

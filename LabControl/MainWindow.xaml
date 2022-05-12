@@ -598,7 +598,7 @@
                                                Text="{Binding LabelLaserType}" />
                                     <ComboBox Grid.Row="1" Grid.Column="1"
                                               SelectedIndex="{Binding LaserTypeSelectedIndex}"
-                                              Margin="0,1">
+                                              Margin="1663,34,-1662,-32">
                                         <TextBlock>Omicron</TextBlock>
                                         <TextBlock>MRL-III-660D</TextBlock>
                                         <TextBlock>MRL-WW-3000</TextBlock>
@@ -735,7 +735,7 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="28"></RowDefinition>
                                                 <RowDefinition Height="28"></RowDefinition>
-                                               
+
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="30*"></ColumnDefinition>
@@ -1773,6 +1773,7 @@
                                     <Grid Margin="15,0,0,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="6*" />
@@ -1787,6 +1788,14 @@
                                               ItemsSource="{Binding DispenserPortCollection}"
                                               SelectedItem="{Binding DispenserPortSelected}"
                                               Margin="0,1"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding DispenserTypeLabel}"/>
+                                        <ComboBox Grid.Row="1" Grid.Column="1"  
+                                                  Style="{StaticResource RoundComboBox}" 
+                                                  Margin="0,1"
+                                                  SelectedIndex="{Binding DispenserTypeSelectedIndex}">
+                                            <TextBlock>Microdrop</TextBlock>
+                                            <TextBlock>Microfab</TextBlock>
+                                        </ComboBox>
                                     </Grid>
                                     <Grid Margin="15,0,0,0">
                                         <Grid.ColumnDefinitions>

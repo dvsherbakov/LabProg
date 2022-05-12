@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LabControl.LogicModels
 {
-    class LaserDriver
+    internal class LaserDriver
     {
         public string PortString { get; set; }
         private LaserSerial _port;
@@ -18,18 +18,13 @@ namespace LabControl.LogicModels
 
         public void ConnectToPort()
         {
-            switch (_laserType)
+            _port = _laserType switch
             {
-                case 0:  
-                    _port = new LaserOmicron(PortString);
-                    break;
-                case 1:
-                    _port = new MrlIii660D(PortString);
-                    break;
-                case 2:
-                    _port = new MrW6000(PortString);
-                    break;
-            }
+                0 => new LaserOmicron(PortString),
+                1 => new MrlIii660D(PortString),
+                2 => new MrW6000(PortString),
+                _ => _port
+            };
 
             _port.SetLogMessage += TestLog;
             _port.Init();
