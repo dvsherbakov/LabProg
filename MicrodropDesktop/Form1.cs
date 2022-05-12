@@ -16,7 +16,7 @@ namespace MicrodropDesktop
         public Form1()
         {
             InitializeComponent();
-            _controller = new PortController("COM16");
+            _controller = new PortController("COM21");
             _controller.SetLogMessage += AddLogMessage;
             _controller.OpenPort();
             _controller.GetFrequency(0);
