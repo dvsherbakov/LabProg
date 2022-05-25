@@ -61,6 +61,11 @@ namespace LabControl.PortModels
             Port.Write(cmd, 0, 9);
         }
 
+        public override void PowerLevelReduce(int pwr, int time)
+        {
+            throw new NotImplementedException();
+        }
+
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             var sp = (SerialPort)sender;

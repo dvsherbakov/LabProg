@@ -26,6 +26,8 @@ namespace LabControl.PortModels
 
         public abstract void SetPowerLevel(int pwr);
 
+        public abstract void PowerLevelReduce(int pwr, int time);
+
         internal void ClosePort()
         {
             Port.Close();

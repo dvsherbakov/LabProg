@@ -203,6 +203,22 @@ namespace LabControl.ViewModels
             set => Set(ref _laserPowerSetter, value);
         }
 
+        private int _laserReducePower;
+
+        public int LaserReducePower
+        {
+            get => _laserReducePower;
+            set => Set(ref _laserReducePower, value);
+        }
+
+        private int _laserReduceTime;
+
+        public int LaserReduceTime
+        {
+            get => _laserReduceTime;
+            set=> Set(ref _laserReduceTime, value);
+        }
+
         private int _laserPowerHistorySelectedItem;
 
         public int LaserPowerHistorySelectedItem

@@ -112,6 +112,11 @@ namespace LabControl.PortModels
             }
         }
 
+        public override void PowerLevelReduce(int pwr, int time)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void Off()
         {
             SendCommand(36);

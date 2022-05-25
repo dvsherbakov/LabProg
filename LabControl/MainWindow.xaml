@@ -575,35 +575,53 @@
                             <Expander Padding="5"
                                   Header="{Binding LabelSettings}"
                                   Foreground="SandyBrown">
-                                <Grid Margin="15,0,0,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="28"/>
-                                        <RowDefinition Height="28"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="4*" />
-                                        <ColumnDefinition Width="3*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                <StackPanel>
+                                    <Grid Margin="15,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="28"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="4*" />
+                                            <ColumnDefinition Width="3*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Row="0" Grid.Column="0"
                                                VerticalAlignment="Center"
                                                Foreground="SandyBrown"
                                                Text="{Binding LabelLaserPort}" />
-                                    <ComboBox Grid.Row="0" Grid.Column="1"
+                                        <ComboBox Grid.Row="0" Grid.Column="1"
                                               ItemsSource="{Binding LaserPortCollection}"
                                               SelectedItem="{Binding LaserPortSelected}"
                                               Margin="0,1"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="0"
+                                        <TextBlock Grid.Row="1" Grid.Column="0"
                                                VerticalAlignment="Center"
                                                Foreground="SandyBrown"
                                                Text="{Binding LabelLaserType}" />
-                                    <ComboBox Grid.Row="1" Grid.Column="1"
+                                        <ComboBox Grid.Row="1" Grid.Column="1"
                                               SelectedIndex="{Binding LaserTypeSelectedIndex}"
                                               Margin="1663,34,-1662,-32">
-                                        <TextBlock>Omicron</TextBlock>
-                                        <TextBlock>MRL-III-660D</TextBlock>
-                                        <TextBlock>MRL-WW-3000</TextBlock>
-                                    </ComboBox>
-                                </Grid>
+                                            <TextBlock>Omicron</TextBlock>
+                                            <TextBlock>MRL-III-660D</TextBlock>
+                                            <TextBlock>MRL-WW-3000</TextBlock>
+                                        </ComboBox>
+                                    </Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="Сброс мощности" TextAlignment="Center"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="На величину:"/>
+                                            <TextBox Style="{StaticResource PartTransparent}" Width="60" TextAlignment="Center"
+                                                     Text="{Binding LaserReducePower}"
+                                                     Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="За время:"/>
+                                            <TextBox Style="{StaticResource PartTransparent}" Width="60" TextAlignment="Center"
+                                                     Text="{Binding LaserReduceTime}"
+                                                     Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                </StackPanel>
                             </Expander>
                         </StackPanel>
                     </ScrollViewer>
