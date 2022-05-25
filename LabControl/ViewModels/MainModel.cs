@@ -1128,6 +1128,14 @@ namespace LabControl.ViewModels
             }
         }
 
+        private int _dispenserTypeSelectedIndex;
+
+        public int DispenserTypeSelectedIndex
+        {
+            get => _dispenserTypeSelectedIndex;
+            set => Set(ref _dispenserTypeSelectedIndex, value);
+        }
+
         private bool _fIsPressureSensorPortConnected;
         public bool IsPressureSensorPortConnected
         {
@@ -1660,6 +1668,7 @@ namespace LabControl.ViewModels
         public static string LabelTemperature => Resources.LabelTemperature;
         public static string LabelPressure => Resources.LabelPressure;
         public static string DispenserOperationTitle => Resources.DispenserOperationTitle;
+        public static string DispenserTypeLabel => Resources.DispenserTypeLabel;
         public static string DispenserSignalTypeLabel => Resources.DispenserSignalTypeLabel;
         public static string DispenserCurrentChannelLabel => Resources.DispenserCurrentChannelLabel;
         public static string DispenserFrequencyLabel => Resources.DispenserFrequencyLabel;
@@ -1818,6 +1827,7 @@ namespace LabControl.ViewModels
             IsRevereFirstPump = Settings.Default.IsRevereFirstPump;
             IsRevereSecondPump = Settings.Default.IsRevereSecondPump;
             DispenserSignalType = Settings.Default.DispenserSignalType;
+            DispenserTypeSelectedIndex = Settings.Default.DispenserTypeSelectedIndex;
             DispenserChannel = Settings.Default.DispenserChannel;
             DispenserFrequency = Settings.Default.DispenserFrequency;
             DispenserRiseTime = Settings.Default.DispenserRiseTime;
@@ -2000,6 +2010,7 @@ namespace LabControl.ViewModels
             Settings.Default.IsRevereFirstPump = IsRevereFirstPump;
             Settings.Default.IsRevereSecondPump = IsRevereSecondPump;
             Settings.Default.DispenserSignalType = DispenserSignalType;
+            Settings.Default.DispenserTypeSelectedIndex = DispenserTypeSelectedIndex;
             Settings.Default.DispenserChannel = DispenserChannel;
             Settings.Default.DispenserFrequency = DispenserFrequency;
             Settings.Default.DispenserRiseTime = DispenserRiseTime;

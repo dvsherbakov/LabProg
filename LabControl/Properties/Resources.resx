@@ -384,4 +384,7 @@
   <data name="LabelAllDiodes" xml:space="preserve">
     <value>Все диоды</value>
   </data>
+  <data name="DispenserTypeLabel" xml:space="preserve">
+    <value>Тип диспенсера</value>
+  </data>
 </root>

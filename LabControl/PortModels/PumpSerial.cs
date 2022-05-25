@@ -19,6 +19,7 @@ namespace LabControl.PortModels
         private readonly Timer _queueTimer;
 
         public bool Active { get; private set; }
+        public double Speed { get; private set; }
 
         public delegate void LogMessage(string msg);
 
