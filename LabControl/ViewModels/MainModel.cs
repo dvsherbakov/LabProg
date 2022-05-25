@@ -1182,7 +1182,7 @@ namespace LabControl.ViewModels
                 Set(ref _fPyroTemperature, value);
                 //convert pyro to termo
                 if (value > 0)
-                    CurrentTemperature = Math.Round((value * value * (-0.0077)) + (value * 2.1804) - 18.425, 3);
+                    CurrentTemperature = Math.Round((value * value * (-0.0118)) + (value * 2.9009) - 44.827, 3);
             }
         }
 
@@ -1902,7 +1902,7 @@ namespace LabControl.ViewModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 LogCollection.Insert(0, new LogItem(DateTime.Now, message));
-               // _fDbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
+                // _fDbContext.Logs.Add(new Log { Dt = DateTime.Now, Message = message, Code = 0 });
             });
         }
 
