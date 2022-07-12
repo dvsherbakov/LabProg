@@ -1095,8 +1095,6 @@ namespace LabControl.ViewModels
             }
         }
 
-
-
         private bool _fIsPumpsActive;
         public bool IsPumpsActive
         {
@@ -1918,7 +1916,10 @@ namespace LabControl.ViewModels
             _pressureSensorDriver = new PressureSensorDriver(PressureSensorPortSelected);
             _pressureSensorDriver.EventHandler += PressureSensorHandler;
 
-            _lightingDriver = new LightingDriver();
+            _lightingDriver = new LightingDriver
+            {
+                PortStr = Settings.Default.LightingPortSelected
+            };
 
             AddLogMessage("Application Started");
         }
@@ -2045,6 +2046,7 @@ namespace LabControl.ViewModels
             Settings.Default.LightingBlueChannelValue = LightingBlueChannelValue;
             Settings.Default.LightingGreenRedChannelValue = LightingGreenRedChannelValue;
             Settings.Default.IsSingleLighting = IsSingleLighting;
+            Settings.Default.LightingPortSelected = LightingPortSelected;
             Settings.Default.Save();
 
             //Remove this blog later

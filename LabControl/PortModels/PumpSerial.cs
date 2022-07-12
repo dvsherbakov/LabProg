@@ -137,7 +137,7 @@ namespace LabControl.PortModels
             Active = true;
         }
 
-        public bool IsOpen => _port.IsOpen;
+        private bool IsOpen => _port.IsOpen;
 
         public void ClosePort()
         {

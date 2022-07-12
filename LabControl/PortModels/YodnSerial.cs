@@ -11,7 +11,7 @@ namespace LabControl.PortModels
         private string _portName;
         private SerialPort _port;
 
-        public void Init(string portName = "COM17")
+        public void Init(string portName = "COM16")
         {
             _portName = portName;
             _port = new SerialPort(_portName)
@@ -32,51 +32,50 @@ namespace LabControl.PortModels
             _port.Open();
             _port.DiscardInBuffer();
             _port.DiscardOutBuffer();
+
+
             _port.Write("p");
-            Thread.Sleep(50);
+            Thread.Sleep(30);
 
             _port.Write("P");
-            Thread.Sleep(50);
             _port.Write("Q");
-            Thread.Sleep(50);
             _port.Write("R");
-            Thread.Sleep(50);
+
 
             _port.Write(new byte[] { 0x53, 0x01 }, 0, 2);
-            Thread.Sleep(50);
             _port.Write(new byte[] { 0x53, 0x02 }, 0, 2);
-            Thread.Sleep(50);
             _port.Write(new byte[] { 0x53, 0x03 }, 0, 2);
-            Thread.Sleep(50);
             _port.Write(new byte[] { 0x55, 0x01 }, 0, 2);
-            Thread.Sleep(50);
             _port.Write(new byte[] { 0x55, 0x02 }, 0, 2);
-            Thread.Sleep(50);
             _port.Write(new byte[] { 0x55, 0x03 }, 0, 2);
-            Thread.Sleep(50);
             _port.Write(new byte[] { 0x57, 0x00 }, 0, 2);
-            Thread.Sleep(50);
-            Off();
+            _port.Write(new byte[] { 0x60, 0x01, 0x01 }, 0, 3);
+            _port.Write(new byte[] { 0x60, 0x02, 0x01 }, 0, 3);
+            _port.Write(new byte[] { 0x60, 0x03, 0x01 }, 0, 3);
         }
 
         public void Close()
         {
+            if (!_port.IsOpen) return;
             Off();
             _port.DiscardInBuffer();
             _port.DiscardOutBuffer();
+            _port.Write("u");
             _port.Close();
         }
 
         public void SetUvChannel(int value)
         {
-            if (_port.IsOpen)
-                _port.Write(new byte[] { 0x61, 0x01, (byte)value }, 0, 3); //Set led 1
+            if (!_port.IsOpen) return;
+            _port.Write(new byte[] { 0x61, 0x01, (byte)value }, 0, 3); //Set led 1
+            Thread.Sleep(50);
         }
 
         public void SetBlueChannel(int value)
         {
-            if (_port.IsOpen)
-                _port.Write(new byte[] { 0x61, 0x02, (byte)value }, 0, 3); //Set led 2
+            if (!_port.IsOpen) return;
+            _port.Write(new byte[] { 0x61, 0x02, (byte)value }, 0, 3); //Set led 2
+            Thread.Sleep(50);
         }
 
         public void SetGreenRedChannel(int value)
@@ -88,16 +87,15 @@ namespace LabControl.PortModels
         public void On()
         {
             if (!_port.IsOpen) return;
-            _port.Write("p");
-            Thread.Sleep(50);
-            _port.Write(new byte[] { 0x60, 0x00, 0x01 }, 0, 3); //Lamp On
+            _port.Write(new byte[] { 0x60, 0x00, 0x01 }, 0, 3);
+            //_port.Write("");
         }
 
         public void Off()
         {
-            if (_port.IsOpen)
-                _port.Write(new byte[] { 60, 00, 00 }, 0, 3); //Lamp Off
-
+            if (!_port.IsOpen) return;
+            _port.Write(new byte[] { 0x60, 0x00, 0x00 }, 0, 3); //Lamp Off
+            //_port.Write("");
         }
 
         public void SendR()

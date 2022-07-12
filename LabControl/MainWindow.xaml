@@ -762,7 +762,7 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Grid.Row="0" 
                                                        Foreground="SandyBrown"
-                                                       Text="Напряжение"
+                                                       Text="{Binding DispenserVoltageLabel}"
                                                        VerticalAlignment="Center"/>
                                             <TextBox Grid.Column="1" Grid.Row="0" 
                                                      Text="{Binding PwrAllDiodeAmplitude}"
