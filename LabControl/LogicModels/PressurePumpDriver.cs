@@ -55,9 +55,9 @@ namespace LabControl.LogicModels
             _ = ElvWrapper.AF1_Set_Press(_pId, pressure * 10, _fCalibration, 1000);
         }
 
-        public double GetPressure()
+        private double GetPressure()
         {
-            _ = ElvWrapper.AF1_Get_Press(_pId, 1000, _fCalibration, out double pressure, 1000);
+            _ = ElvWrapper.AF1_Get_Press(_pId, 1000, _fCalibration, out var pressure, 1000);
             return pressure;
         }
 

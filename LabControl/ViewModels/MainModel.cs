@@ -160,6 +160,7 @@ namespace LabControl.ViewModels
         }
 
         private string _incomingPumpSpeed;
+
         public string IncomingPumpSpeed
         {
             get => _incomingPumpSpeed;
@@ -167,6 +168,7 @@ namespace LabControl.ViewModels
         }
 
         private string _outgoingPumpSpeed;
+
         public string OutgoingPumpSpeed
         {
             get => _outgoingPumpSpeed;
@@ -174,6 +176,7 @@ namespace LabControl.ViewModels
         }
 
         private string _outgoingPumpQueue;
+
         public string OutgoingPumpQueue
         {
             get => _outgoingPumpQueue;
@@ -181,6 +184,7 @@ namespace LabControl.ViewModels
         }
 
         private string _incomingPumpQueue;
+
         public string IncomingPumpQueue
         {
             get => _incomingPumpQueue;
@@ -216,7 +220,7 @@ namespace LabControl.ViewModels
         public int LaserReduceTime
         {
             get => _laserReduceTime;
-            set=> Set(ref _laserReduceTime, value);
+            set => Set(ref _laserReduceTime, value);
         }
 
         private int _laserPowerHistorySelectedItem;
@@ -276,7 +280,6 @@ namespace LabControl.ViewModels
                 {
                     _laserDriver.ConnectToPort();
                     _laserDriver.SetLaserType(LaserTypeSelectedIndex);
-
                 }
                 else _laserDriver.Disconnect();
             }
@@ -376,6 +379,7 @@ namespace LabControl.ViewModels
         }
 
         private int _laserTypeSelectedIndex;
+
         public int LaserTypeSelectedIndex
         {
             get => _laserTypeSelectedIndex;
@@ -389,6 +393,7 @@ namespace LabControl.ViewModels
         private readonly DataModels.PwrItem[] _pwrParams;
 
         private bool _fIsPwrPortConnect;
+
         public bool IsPwrPortConnect
         {
             get => _fIsPwrPortConnect;
@@ -420,25 +425,28 @@ namespace LabControl.ViewModels
         }
 
         private bool _fPwrSwitchCh0;
+
         public bool PwrSwitchCh0
         {
             get => _fPwrSwitchCh0;
             set
             {
                 _ = Set(ref _fPwrSwitchCh0, value);
-                if (value) _pwrDriver?.SetChannelOn(0); else _pwrDriver?.SetChannelOff(0);
+                if (value) _pwrDriver?.SetChannelOn(0);
+                else _pwrDriver?.SetChannelOff(0);
             }
         }
 
         private string _fLabelPwrChannel0Bias;
+
         public string LabelPwrChannel0Bias
         {
             get => _fLabelPwrChannel0Bias;
             set => Set(ref _fLabelPwrChannel0Bias, value);
-
         }
 
         private int _pwrCh0Mode;
+
         public int PwrCh0Mode
         {
             get => _pwrCh0Mode;
@@ -450,12 +458,17 @@ namespace LabControl.ViewModels
                     LabelPwrChannel0Bias = Resources.LabelElectricFlow;
                     _pwrDriver?.SetChannelOn(0);
                 }
-                else { LabelPwrChannel0Bias = Resources.LabelOffsetVoltage; }
+                else
+                {
+                    LabelPwrChannel0Bias = Resources.LabelOffsetVoltage;
+                }
+
                 _pwrParams[0].Mode = value;
             }
         }
 
         private int _pwrCh0Bias;
+
         public int PwrCh0Bias
         {
             get => _pwrCh0Bias;
@@ -467,6 +480,7 @@ namespace LabControl.ViewModels
         }
 
         private int _pwrCh0Amplitude;
+
         public int PwrCh0Amplitude
         {
             get => _pwrCh0Amplitude;
@@ -478,6 +492,7 @@ namespace LabControl.ViewModels
         }
 
         private int _pwrCh0Duty;
+
         public int PwrCh0Duty
         {
             get => _pwrCh0Duty;
@@ -489,6 +504,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh0Freq;
+
         public int PwrCh0Freq
         {
             get => _fPwrCh0Freq;
@@ -500,6 +516,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh0Phase;
+
         public int PwrCh0Phase
         {
             get => _fPwrCh0Phase;
@@ -511,6 +528,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh0MaxAmps;
+
         public int PwrCh0MaxAmps
         {
             get => _fPwrCh0MaxAmps;
@@ -522,6 +540,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh0MaxVoltage;
+
         public int PwrCh0MaxVoltage
         {
             get => _fPwrCh0MaxVoltage;
@@ -533,6 +552,7 @@ namespace LabControl.ViewModels
         }
 
         private string _fLabelPwrChannel1Bias;
+
         public string LabelPwrChannel1Bias
         {
             get => _fLabelPwrChannel1Bias;
@@ -540,6 +560,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh1Mode;
+
         public int PwrCh1Mode
         {
             get => _fPwrCh1Mode;
@@ -555,22 +576,26 @@ namespace LabControl.ViewModels
                 {
                     LabelPwrChannel1Bias = Resources.LabelOffsetVoltage;
                 }
+
                 _pwrParams[1].Mode = value;
             }
         }
 
         private bool _fPwrSwitchCh1;
+
         public bool PwrSwitchCh1
         {
             get => _fPwrSwitchCh1;
             set
             {
                 Set(ref _fPwrSwitchCh1, value);
-                if (value) _pwrDriver?.SetChannelOn(1); else _pwrDriver?.SetChannelOff(1);
+                if (value) _pwrDriver?.SetChannelOn(1);
+                else _pwrDriver?.SetChannelOff(1);
             }
         }
 
         private int _fPwrCh1Bias;
+
         public int PwrCh1Bias
         {
             get => _fPwrCh1Bias;
@@ -582,6 +607,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh1Amplitude;
+
         public int PwrCh1Amplitude
         {
             get => _fPwrCh1Amplitude;
@@ -593,6 +619,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh1Freq;
+
         public int PwrCh1Freq
         {
             get => _fPwrCh1Freq;
@@ -604,6 +631,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh1Duty;
+
         public int PwrCh1Duty
         {
             get => _fPwrCh1Duty;
@@ -615,6 +643,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh1Phase;
+
         public int PwrCh1Phase
         {
             get => _fPwrCh1Phase;
@@ -624,7 +653,9 @@ namespace LabControl.ViewModels
                 _pwrParams[1].Phase = value;
             }
         }
+
         private int _fPwrCh1MaxVoltage;
+
         public int PwrCh1MaxVoltage
         {
             get => _fPwrCh1MaxVoltage;
@@ -636,6 +667,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh1MaxAmps;
+
         public int PwrCh1MaxAmps
         {
             get => _fPwrCh1MaxAmps;
@@ -647,17 +679,20 @@ namespace LabControl.ViewModels
         }
 
         private bool _fPwrSwitchCh2;
+
         public bool PwrSwitchCh2
         {
             get => _fPwrSwitchCh2;
             set
             {
                 Set(ref _fPwrSwitchCh2, value);
-                if (value) _pwrDriver?.SetChannelOn(2); else _pwrDriver?.SetChannelOff(2);
+                if (value) _pwrDriver?.SetChannelOn(2);
+                else _pwrDriver?.SetChannelOff(2);
             }
         }
 
         private string _fLabelPwrChannel2Bias;
+
         public string LabelPwrChannel2Bias
         {
             get => _fLabelPwrChannel2Bias;
@@ -665,6 +700,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh2Mode;
+
         public int PwrCh2Mode
         {
             get => _fPwrCh2Mode;
@@ -680,11 +716,13 @@ namespace LabControl.ViewModels
                 {
                     LabelPwrChannel2Bias = Resources.LabelOffsetVoltage;
                 }
+
                 _pwrParams[2].Mode = value;
             }
         }
 
         private int _fPwrCh2Bias;
+
         public int PwrCh2Bias
         {
             get => _fPwrCh2Bias;
@@ -696,6 +734,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh2Amplitude;
+
         public int PwrCh2Amplitude
         {
             get => _fPwrCh2Amplitude;
@@ -707,6 +746,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh2Freq;
+
         public int PwrCh2Freq
         {
             get => _fPwrCh2Freq;
@@ -718,27 +758,43 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh2Duty;
+
         public int PwrCh2Duty
         {
             get => _fPwrCh2Duty;
-            set { Set(ref _fPwrCh2Duty, value); _pwrParams[2].Duty = value; }
+            set
+            {
+                Set(ref _fPwrCh2Duty, value);
+                _pwrParams[2].Duty = value;
+            }
         }
 
         private int _fPwrCh2Phase;
+
         public int PwrCh2Phase
         {
             get => _fPwrCh2Phase;
-            set { Set(ref _fPwrCh2Phase, value); _pwrParams[2].Phase = value; }
+            set
+            {
+                Set(ref _fPwrCh2Phase, value);
+                _pwrParams[2].Phase = value;
+            }
         }
 
         private int _fPwrCh2MaxVoltage;
+
         public int PwrCh2MaxVoltage
         {
             get => _fPwrCh2MaxVoltage;
-            set { Set(ref _fPwrCh2MaxVoltage, value); _pwrParams[2].MaxVolts = value; }
+            set
+            {
+                Set(ref _fPwrCh2MaxVoltage, value);
+                _pwrParams[2].MaxVolts = value;
+            }
         }
 
         private int _fPwrCh2MaxAmps;
+
         public int PwrCh2MaxAmps
         {
             get => _fPwrCh2MaxAmps;
@@ -750,17 +806,20 @@ namespace LabControl.ViewModels
         }
 
         private bool _fPwrSwitchCh3;
+
         public bool PwrSwitchCh3
         {
             get => _fPwrSwitchCh3;
             set
             {
                 Set(ref _fPwrSwitchCh3, value);
-                if (value) _pwrDriver?.SetChannelOn(3); else _pwrDriver?.SetChannelOff(3);
+                if (value) _pwrDriver?.SetChannelOn(3);
+                else _pwrDriver?.SetChannelOff(3);
             }
         }
 
         private string _fLabelPwrChannel3Bias;
+
         public string LabelPwrChannel3Bias
         {
             get => _fLabelPwrChannel3Bias;
@@ -768,6 +827,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh3Mode;
+
         public int PwrCh3Mode
         {
             get => _fPwrCh3Mode;
@@ -779,12 +839,17 @@ namespace LabControl.ViewModels
                     LabelPwrChannel3Bias = Resources.LabelElectricFlow;
                     _pwrDriver?.SetChannelOn(3);
                 }
-                else { LabelPwrChannel3Bias = Resources.LabelOffsetVoltage; }
+                else
+                {
+                    LabelPwrChannel3Bias = Resources.LabelOffsetVoltage;
+                }
+
                 _pwrParams[3].Mode = value;
             }
         }
 
         private string _fLabelPwrChannel4Bias;
+
         public string LabelPwrChannel4Bias
         {
             get => _fLabelPwrChannel4Bias;
@@ -792,6 +857,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh4Mode;
+
         public int PwrCh4Mode
         {
             get => _fPwrCh4Mode;
@@ -807,11 +873,13 @@ namespace LabControl.ViewModels
                 {
                     LabelPwrChannel4Bias = Resources.LabelOffsetVoltage;
                 }
+
                 _pwrParams[4].Mode = value;
             }
         }
 
         private int _fPwrCh3Bias;
+
         public int PwrCh3Bias
         {
             get => _fPwrCh3Bias;
@@ -823,6 +891,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh3Amplitude;
+
         public int PwrCh3Amplitude
         {
             get => _fPwrCh3Amplitude;
@@ -834,6 +903,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh3Freq;
+
         public int PwrCh3Freq
         {
             get => _fPwrCh3Freq;
@@ -845,6 +915,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh3Duty;
+
         public int PwrCh3Duty
         {
             get => _fPwrCh3Duty;
@@ -856,6 +927,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh3Phase;
+
         public int PwrCh3Phase
         {
             get => _fPwrCh3Phase;
@@ -867,6 +939,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh3MaxVoltage;
+
         public int PwrCh3MaxVoltage
         {
             get => _fPwrCh3MaxVoltage;
@@ -878,6 +951,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh3MaxAmps;
+
         public int PwrCh3MaxAmps
         {
             get => _fPwrCh3MaxAmps;
@@ -889,6 +963,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _fPwrSwitchCh4;
+
         public bool PwrSwitchCh4
         {
             get => _fPwrSwitchCh4;
@@ -903,6 +978,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh4Bias;
+
         public int PwrCh4Bias
         {
             get => _fPwrCh4Bias;
@@ -914,6 +990,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh4Amplitude;
+
         public int PwrCh4Amplitude
         {
             get => _fPwrCh4Amplitude;
@@ -925,6 +1002,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh4Freq;
+
         public int PwrCh4Freq
         {
             get => _fPwrCh4Freq;
@@ -936,6 +1014,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh4Duty;
+
         public int PwrCh4Duty
         {
             get => _fPwrCh4Duty;
@@ -947,6 +1026,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh4Phase;
+
         public int PwrCh4Phase
         {
             get => _fPwrCh4Phase;
@@ -958,6 +1038,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh4MaxVoltage;
+
         public int PwrCh4MaxVoltage
         {
             get => _fPwrCh4MaxVoltage;
@@ -969,6 +1050,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh4MaxAmps;
+
         public int PwrCh4MaxAmps
         {
             get => _fPwrCh4MaxAmps;
@@ -980,17 +1062,20 @@ namespace LabControl.ViewModels
         }
 
         private bool _fPwrSwitchCh5;
+
         public bool PwrSwitchCh5
         {
             get => _fPwrSwitchCh5;
             set
             {
                 Set(ref _fPwrSwitchCh5, value);
-                if (value) _pwrDriver?.SetChannelOn(5); else _pwrDriver?.SetChannelOff(5);
+                if (value) _pwrDriver?.SetChannelOn(5);
+                else _pwrDriver?.SetChannelOff(5);
             }
         }
 
         private string _fLabelPwrChannel5Bias;
+
         public string LabelPwrChannel5Bias
         {
             get => _fLabelPwrChannel5Bias;
@@ -998,6 +1083,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh5Mode;
+
         public int PwrCh5Mode
         {
             get => _fPwrCh5Mode;
@@ -1014,11 +1100,13 @@ namespace LabControl.ViewModels
                     LabelPwrChannel5Bias = Resources.LabelOffsetVoltage;
                     _pwrDriver?.SetChannelOff(5);
                 }
+
                 _pwrParams[5].Mode = value;
             }
         }
 
         private int _fPwrCh5Bias;
+
         public int PwrCh5Bias
         {
             get => _fPwrCh5Bias;
@@ -1030,6 +1118,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh5Amplitude;
+
         public int PwrCh5Amplitude
         {
             get => _fPwrCh5Amplitude;
@@ -1041,6 +1130,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh5Freq;
+
         public int PwrCh5Freq
         {
             get => _fPwrCh5Freq;
@@ -1052,6 +1142,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh5Duty;
+
         public int PwrCh5Duty
         {
             get => _fPwrCh5Duty;
@@ -1063,6 +1154,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh5Phase;
+
         public int PwrCh5Phase
         {
             get => _fPwrCh5Phase;
@@ -1074,6 +1166,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh5MaxVoltage;
+
         public int PwrCh5MaxVoltage
         {
             get => _fPwrCh5MaxVoltage;
@@ -1085,6 +1178,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fPwrCh5MaxAmps;
+
         public int PwrCh5MaxAmps
         {
             get => _fPwrCh5MaxAmps;
@@ -1096,6 +1190,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _fIsPumpsActive;
+
         public bool IsPumpsActive
         {
             get => _fIsPumpsActive;
@@ -1108,6 +1203,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _fIsConfocalActive;
+
         public bool IsConfocalActive
         {
             get => _fIsConfocalActive;
@@ -1119,6 +1215,7 @@ namespace LabControl.ViewModels
         }
 
         private double[] _fConfocalLog;
+
         public double[] ConfocalLog
         {
             get => _fConfocalLog;
@@ -1126,6 +1223,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isDispenserPortConnected;
+
         public bool IsDispenserPortConnected
         {
             get => _isDispenserPortConnected;
@@ -1151,6 +1249,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _fIsPressureSensorPortConnected;
+
         public bool IsPressureSensorPortConnected
         {
             get => _fIsPressureSensorPortConnected;
@@ -1162,6 +1261,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isPressureSensorActive;
+
         public bool IsPressureSensorActive
         {
             get => _isPressureSensorActive;
@@ -1173,6 +1273,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isPyroPortConnected;
+
         public bool IsPyroPortConnected
         {
             get => _isPyroPortConnected;
@@ -1185,6 +1286,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isPyroActive;
+
         public bool IsPyroActive
         {
             get => _isPyroActive;
@@ -1196,6 +1298,7 @@ namespace LabControl.ViewModels
         }
 
         private float _fPyroTemperature;
+
         public float PyroTemperature
         {
             get => _fPyroTemperature;
@@ -1209,6 +1312,7 @@ namespace LabControl.ViewModels
         }
 
         private float _pressureSensorValue;
+
         public float PressureSensorValue
         {
             get => _pressureSensorValue;
@@ -1216,6 +1320,7 @@ namespace LabControl.ViewModels
         }
 
         private float _pressureSensorTemperature;
+
         public float PressureSensorTemperature
         {
             get => _pressureSensorTemperature;
@@ -1223,6 +1328,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _fIsPressurePumpConnected;
+
         public bool IsPressurePumpConnected
         {
             get => _fIsPressurePumpConnected;
@@ -1236,6 +1342,7 @@ namespace LabControl.ViewModels
 
 
         private bool _fIsDispenserActive;
+
         public bool IsDispenserActive
         {
             get => _fIsDispenserActive;
@@ -1256,6 +1363,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserSignalType;
+
         public int DispenserSignalType
         {
             get => _fDispenserSignalType;
@@ -1282,6 +1390,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserChannel;
+
         public int DispenserChannel
         {
             get => _fDispenserChannel;
@@ -1293,6 +1402,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserFrequency;
+
         public int DispenserFrequency
         {
             get => _fDispenserFrequency;
@@ -1304,6 +1414,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserRiseTime;
+
         public int DispenserRiseTime
         {
             get => _fDispenserRiseTime;
@@ -1315,6 +1426,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserKeepTime;
+
         public int DispenserKeepTime
         {
             get => _fDispenserKeepTime;
@@ -1326,6 +1438,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserFallTime;
+
         public int DispenserFallTime
         {
             get => _fDispenserFallTime;
@@ -1337,6 +1450,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserLowTime;
+
         public int DispenserLowTime
         {
             get => _fDispenserLowTime;
@@ -1348,6 +1462,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserRiseTime2;
+
         public int DispenserRiseTime2
         {
             get => _fDispenserRiseTime2;
@@ -1359,6 +1474,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserV0;
+
         public int DispenserV0
         {
             get => _fDispenserV0;
@@ -1370,6 +1486,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserV1;
+
         public int DispenserV1
         {
             get => _fDispenserV1;
@@ -1381,6 +1498,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserV2;
+
         public int DispenserV2
         {
             get => _fDispenserV2;
@@ -1392,6 +1510,7 @@ namespace LabControl.ViewModels
         }
 
         private Visibility _fDispenserSingleWaveVisible;
+
         public Visibility DispenserSingleWaveVisible
         {
             get => _fDispenserSingleWaveVisible;
@@ -1399,6 +1518,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserHv0;
+
         public int DispenserHv0
         {
             get => _fDispenserHv0;
@@ -1410,6 +1530,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserHVpeak;
+
         public int DispenserHVpeak
         {
             get => _fDispenserHVpeak;
@@ -1421,6 +1542,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fDispenserHToverall;
+
         public int DispenserHToverall
         {
             get => _fDispenserHToverall;
@@ -1432,6 +1554,7 @@ namespace LabControl.ViewModels
         }
 
         private Visibility _fDispenserHarmonicWaveVisible;
+
         public Visibility DispenserHarmonicallyWaveVisible
         {
             get => _fDispenserHarmonicWaveVisible;
@@ -1439,6 +1562,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _fPressurePumpActive;
+
         public bool PressurePumpActive
         {
             get => _fPressurePumpActive;
@@ -1450,6 +1574,7 @@ namespace LabControl.ViewModels
         }
 
         private int _fAirSupportPressure;
+
         public int AirSupportPressure
         {
             get => _fAirSupportPressure;
@@ -1461,6 +1586,7 @@ namespace LabControl.ViewModels
         }
 
         private int _airSupportPressureSelectedItem;
+
         public int AirSupportPressureSelectedItem
         {
             get => _airSupportPressureSelectedItem;
@@ -1472,15 +1598,19 @@ namespace LabControl.ViewModels
         }
 
         #region PwrTab
+
         private int _fSelectedPowerPage;
+
         public int SelectedPowerPage
         {
             get => _fSelectedPowerPage;
             set => Set(ref _fSelectedPowerPage, value);
         }
+
         #endregion
 
         private bool _isLightingPortConnected;
+
         public bool IsLightingPortConnected
         {
             get => _isLightingPortConnected;
@@ -1507,17 +1637,20 @@ namespace LabControl.ViewModels
         }
 
         private bool _isLightingOn;
+
         public bool IsLightingOn
         {
             get => _isLightingOn;
             set
             {
                 Set(ref _isLightingOn, value);
-                if (value) _lightingDriver?.On(); else _lightingDriver?.Off();
+                if (value) _lightingDriver?.On();
+                else _lightingDriver?.Off();
             }
         }
 
         private int _lightingUvChannelValue;
+
         public int LightingUvChannelValue
         {
             get => _lightingUvChannelValue;
@@ -1529,6 +1662,7 @@ namespace LabControl.ViewModels
         }
 
         private int _lightingBlueChannelValue;
+
         public int LightingBlueChannelValue
         {
             get => _lightingBlueChannelValue;
@@ -1540,6 +1674,7 @@ namespace LabControl.ViewModels
         }
 
         private int _lightingGreenRedChannelValue;
+
         public int LightingGreenRedChannelValue
         {
             get => _lightingGreenRedChannelValue;
@@ -1551,6 +1686,7 @@ namespace LabControl.ViewModels
         }
 
         private int _lightingGeneralChannelValue;
+
         public int LightingGeneralChannelValue
         {
             get => _lightingGeneralChannelValue;
@@ -1562,6 +1698,7 @@ namespace LabControl.ViewModels
         }
 
         private Visibility _multiChannelVisibility;
+
         public Visibility MultiChannelVisibility
         {
             get => _multiChannelVisibility;
@@ -1569,6 +1706,7 @@ namespace LabControl.ViewModels
         }
 
         private Visibility _allChannelVisibility;
+
         public Visibility AllChannelVisibility
         {
             get => _allChannelVisibility;
@@ -1576,6 +1714,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isSingleLighting;
+
         public bool IsSingleLighting
         {
             get => _isSingleLighting;
@@ -1598,6 +1737,7 @@ namespace LabControl.ViewModels
         }
 
         private bool _isDynamicManageChannels;
+
         public bool IsDynamicManageChannels
         {
             get => _isDynamicManageChannels;
@@ -1611,6 +1751,7 @@ namespace LabControl.ViewModels
         #endregion
 
         #region Collections
+
         public ObservableCollection<LogItem> LogCollection { get; }
         public ObservableCollection<string> IncomingPumpPortCollection { get; set; }
         public ObservableCollection<string> PowerSupplyTypes { get; set; }
@@ -1625,9 +1766,11 @@ namespace LabControl.ViewModels
         public ObservableCollection<int> AirSupportPressureCollection { get; set; }
         public ObservableCollection<string> PressureSensorPortCollection { get; set; }
         public ObservableCollection<string> LightingPortCollection { get; set; }
+
         #endregion
 
         #region StaticLabels
+
         public static string LabelOn => Resources.LabelOn;
         public static string LogMessageHeader => Resources.LogHeaderColumn1Name;
         public static string LabelPumpOperation => Resources.PumpOperationTitle;
@@ -1715,9 +1858,11 @@ namespace LabControl.ViewModels
         public static string LabelLightingChannels => Resources.LabelLightingChannels;
         public static string LabelLightingChannelsAll => Resources.LabelLightingChannelsAll;
         public static string LabelDynamicManageChannels => Resources.LabelDynamicManageChannels;
+
         #endregion
 
         #region Commands
+
         public ICommand QuitCommand { get; }
         public ICommand MinimizedCommand { get; }
         public ICommand MaximizedCommand { get; }
@@ -1752,12 +1897,15 @@ namespace LabControl.ViewModels
             {
                 _pwrParams[i] = new DataModels.PwrItem();
             }
+
             LogCollection = new ObservableCollection<LogItem>();
             IncomingPumpPortSelected = Settings.Default.IncomingPumpPortSelected;
             PowerSupplyTypes = new ObservableCollection<string>(new PowerSuplyTupesList().GetTypesList());
-            IncomingPumpPortCollection = new ObservableCollection<string>(new PortList().GetPortList(IncomingPumpPortSelected));
+            IncomingPumpPortCollection =
+                new ObservableCollection<string>(new PortList().GetPortList(IncomingPumpPortSelected));
             OutgoingPumpPortSelected = Settings.Default.OutloginPumpPortSelected;
-            OutcomingPumpPortCollection = new ObservableCollection<string>(new PortList().GetPortList(OutgoingPumpPortSelected));
+            OutcomingPumpPortCollection =
+                new ObservableCollection<string>(new PortList().GetPortList(OutgoingPumpPortSelected));
             LaserPortSelected = Settings.Default.LaserPortSelected;
             LaserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(LaserPortSelected));
             PyroPortSelected = Settings.Default.PyroPortSelected;
@@ -1767,8 +1915,10 @@ namespace LabControl.ViewModels
             PwrPortSelected = Settings.Default.PwrPortSelected;
             PwrPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PyroPortSelected));
             LaserHistoryCollection = new ObservableCollection<int>() { 100, 150, 200, 250, 300, 350, 400 };
-            DispenserPortCollection = new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
-            PressureSensorPortCollection = new ObservableCollection<string>(new PortList().GetPortList(PressureSensorPortSelected));
+            DispenserPortCollection =
+                new ObservableCollection<string>(new PortList().GetPortList(DispenserPortSelected));
+            PressureSensorPortCollection =
+                new ObservableCollection<string>(new PortList().GetPortList(PressureSensorPortSelected));
             LightingPortCollection =
                 new ObservableCollection<string>(new PortList().GetPortList(PressureSensorPortSelected));
             // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
@@ -2135,7 +2285,7 @@ namespace LabControl.ViewModels
 
         private void OnStartMaxPressureImpulse(object sender)
         {
-
+            _pressurePumpDriver.StartImpulse();
         }
 
         private void OnTestInputPump(object sender)
@@ -2167,6 +2317,7 @@ namespace LabControl.ViewModels
         {
             _pumpDriver?.TestOutputStop();
         }
+
         private void SetUpMeasuredLevel(DistMeasureRes lvl)
         {
             ConfocalLevel = Math.Round(lvl.Dist, 5);
@@ -2178,6 +2329,7 @@ namespace LabControl.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() => IncomingPumpSpeed = speed);
         }
+
         private void SetOutgoingPumpSpeedLabel(string speed)
         {
             Application.Current.Dispatcher.Invoke(() => OutgoingPumpSpeed = speed);
@@ -2195,9 +2347,11 @@ namespace LabControl.ViewModels
 
         private void CollectSineData()
         {
-            var data = new DispenserSineWaveData() { TimeToverall = DispenserHToverall, V0 = DispenserHv0, VPeak = DispenserHVpeak };
+            var data = new DispenserSineWaveData()
+            { TimeToverall = DispenserHToverall, V0 = DispenserHv0, VPeak = DispenserHVpeak };
             _dispenserDriver?.SetSineWaveData(data);
         }
+
         private void CollectPulseData()
         {
             var data = new DispenserPulseWaveData()
