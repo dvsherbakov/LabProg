@@ -167,6 +167,7 @@ namespace LabControl.PortModels
             if (mRxData.Length > 0)
             {
                 SetLogMessage?.Invoke(($"{_comId}:{ascii.GetString(mRxData)}:{BitConverter.ToString(mRxData)}"));
+
             }
         }
 

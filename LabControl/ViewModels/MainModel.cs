@@ -2200,10 +2200,10 @@ namespace LabControl.ViewModels
             Settings.Default.Save();
 
             //Remove this blog later
-            TextWriter tw = new StreamWriter("SavedList.txt");
-            foreach (var s in LogCollection)
-                tw.WriteLine(s.Message);
-            tw.Close();
+            //TextWriter tw = new StreamWriter("SavedList.txt");
+            //foreach (var s in LogCollection)
+            //    tw.WriteLine(s.Message);
+            //tw.Close();
 
             //_fDbContext.Dispose();
             Application.Current.Shutdown();
