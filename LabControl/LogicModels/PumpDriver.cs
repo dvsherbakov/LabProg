@@ -13,8 +13,8 @@ namespace LabControl.LogicModels
         private PumpSerial _portOutput;
         public string PortStrInput { get; set; }
         public string PortStrOutput { get; set; }
-        public bool DirectionInput { get; set; }
-        public bool DirectionOutput { get; set; }
+        private bool DirectionInput { get; set; }
+        private bool DirectionOutput { get; set; }
         public float PumpingSpeed { get; set; }
 
         private DistMeasureRes _measuredLvl;
@@ -24,25 +24,27 @@ namespace LabControl.LogicModels
         private SpeedGradeItem _prevSpeed;
 
         public delegate void LogMessage(string msg);
+
         public event LogMessage SetLogMessage;
         public event LogMessage SetInputSpeed;
         public event LogMessage SetOutputSpeed;
         public event LogMessage SetInputQueue;
         public event LogMessage SetOutputQueue;
 
-        private readonly List<SpeedGradeItem> _speedGradeItems = new List<SpeedGradeItem> {
-            new SpeedGradeItem{Different=1.00, Speed="250 ", value=250},
-            new SpeedGradeItem{Different=0.85, Speed="150 ", value = 150},
-            new SpeedGradeItem{Different=0.70, Speed="100 ", value = 100},
-            new SpeedGradeItem{Different=0.45, Speed="65.0", value = 65},
-            new SpeedGradeItem{Different=0.30, Speed="45.0", value = 45},
-            new SpeedGradeItem{Different=0.20, Speed="35.0", value = 35},
-            new SpeedGradeItem{Different=0.10, Speed="25.0", value = 25},
-            new SpeedGradeItem{Different=0.08, Speed="20.0", value = 20},
-            new SpeedGradeItem{Different=0.04, Speed="11.0", value = 11},
-            new SpeedGradeItem{Different=0.01, Speed="2.5 ", value = 2.5f},
-            new SpeedGradeItem{Different=0.005, Speed="0.5 ", value=0.5f},
-            new SpeedGradeItem{Different=0.00, Speed="0.0 ", value=0}
+        private readonly List<SpeedGradeItem> _speedGradeItems = new List<SpeedGradeItem>
+        {
+            new SpeedGradeItem { Different = 1.00, Speed = "250 ", value = 250 },
+            new SpeedGradeItem { Different = 0.85, Speed = "150 ", value = 150 },
+            new SpeedGradeItem { Different = 0.70, Speed = "100 ", value = 100 },
+            new SpeedGradeItem { Different = 0.45, Speed = "65.0", value = 65 },
+            new SpeedGradeItem { Different = 0.30, Speed = "45.0", value = 45 },
+            new SpeedGradeItem { Different = 0.20, Speed = "35.0", value = 35 },
+            new SpeedGradeItem { Different = 0.10, Speed = "25.0", value = 25 },
+            new SpeedGradeItem { Different = 0.08, Speed = "20.0", value = 20 },
+            new SpeedGradeItem { Different = 0.04, Speed = "11.0", value = 11 },
+            new SpeedGradeItem { Different = 0.01, Speed = "2.5 ", value = 2.5f },
+            new SpeedGradeItem { Different = 0.005, Speed = "0.5 ", value = 0.5f },
+            new SpeedGradeItem { Different = 0.00, Speed = "0.0 ", value = 0 }
         };
 
         public PumpDriver()
@@ -57,14 +59,26 @@ namespace LabControl.LogicModels
             _portInput = new PumpSerial(PortStrInput, DirectionInput);
             _portInput.SetLogMessage += TestLog;
             _portInput.SetQueue += SetInputQueueValue;
+            _portInput.SetSpeed += SetInputIndicate;
             _portInput?.OpenPort();
             _portInput?.AddCounterClockwiseDirection();
             if (!_isTwoPump) return;
             _portOutput = new PumpSerial(PortStrOutput, DirectionOutput);
             _portOutput.SetLogMessage += TestLog;
             _portOutput.SetQueue += SetOutputQueueValue;
+            _portOutput.SetSpeed += SetOutputIndicate;
             _portOutput?.OpenPort();
             _portOutput?.AddClockwiseDirection();
+        }
+
+        private void SetInputIndicate(string speed)
+        {
+            SetInputSpeed?.Invoke(speed);
+        }
+
+        private void SetOutputIndicate(string speed)
+        {
+            SetOutputSpeed?.Invoke(speed);
         }
 
         public void TestInputStart()
@@ -121,7 +135,8 @@ namespace LabControl.LogicModels
         public void SetMeasuredLevel(DistMeasureRes lvl)
         {
             if (lvl.Dist != 0) _measuredLvl = lvl;
-            if (_isTwoPump) OperateTwoPump(); else OperatePump();
+            if (_isTwoPump) OperateTwoPump();
+            else OperatePump();
         }
 
         public void SetRequiredLvl(double lvl)
@@ -177,19 +192,23 @@ namespace LabControl.LogicModels
         {
             var subLevel = _measuredLvl is null ? 0 : Math.Abs(_requiredLvl - _measuredLvl.Dist) + (add / 20);
 
-            return _speedGradeItems.Where(x => x.Different <= subLevel).OrderByDescending(x => x.Different).FirstOrDefault();
+            return _speedGradeItems.Where(x => x.Different <= subLevel).OrderByDescending(x => x.Different)
+                .FirstOrDefault();
         }
 
 
         private void OperatePump()
         {
-            var speed = GetPumpSpeed().value > _prevSpeed.value ? GetNextSpeed(_prevSpeed.value) : GetPrevSpeed(_prevSpeed.value);
+            var speed = GetPumpSpeed().value > _prevSpeed.value
+                ? GetNextSpeed(_prevSpeed.value)
+                : GetPrevSpeed(_prevSpeed.value);
 
             if (!_isPumpActive)
             {
                 StopPump(true);
                 return;
             }
+
             if (speed == _prevSpeed)
             {
                 if (Math.Abs(double.Parse(speed.Speed.Trim(), CultureInfo.InvariantCulture)) < 0.001)
@@ -202,6 +221,7 @@ namespace LabControl.LogicModels
                 _portInput?.AddSpeed(speed.Speed);
                 SetInputSpeed?.Invoke(speed.Speed);
             }
+
             var direction = GetDirection();
             switch (direction)
             {
@@ -219,10 +239,12 @@ namespace LabControl.LogicModels
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
             if (speed.value != 0)
             {
                 StartPump(true);
             }
+
             _prevSpeed = speed;
         }
 
@@ -240,9 +262,12 @@ namespace LabControl.LogicModels
 
             if (PumpingSpeed != 0)
             {
-                var sp = _speedGradeItems.Where(x => Math.Abs(PumpingSpeed - x.value) < 0.05).OrderByDescending(y => y.value).FirstOrDefault();
+                var sp = _speedGradeItems.Where(x => Math.Abs(PumpingSpeed - x.value) < 0.05)
+                    .OrderByDescending(y => y.value).FirstOrDefault();
                 _portInput.AddSpeed(direction == Direction.Clockwise ? GetPumpSpeed(PumpingSpeed).Speed : sp?.Speed);
-                _portOutput.AddSpeed(direction == Direction.CounterClockwise ? GetPumpSpeed(PumpingSpeed).Speed : sp?.Speed);
+                _portOutput.AddSpeed(direction == Direction.CounterClockwise
+                    ? GetPumpSpeed(PumpingSpeed).Speed
+                    : sp?.Speed);
                 StartPump(true);
                 StartPump(false);
                 return;
@@ -254,6 +279,7 @@ namespace LabControl.LogicModels
                 StopPump(false);
                 return;
             }
+
             switch (direction)
             {
                 case Direction.Clockwise:
@@ -299,12 +325,13 @@ namespace LabControl.LogicModels
 
             tmpDirection = !tmpDirection;
             return !tmpDirection ? Direction.Clockwise : Direction.CounterClockwise;
-
         }
     }
 
     internal enum Direction
     {
-        Clockwise, CounterClockwise, Stop
+        Clockwise,
+        CounterClockwise,
+        Stop
     }
 }

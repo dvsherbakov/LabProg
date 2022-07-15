@@ -14,17 +14,18 @@ namespace LabControl.PortModels
     {
         private readonly SerialPort _port;
         private readonly string _comId;
-        public bool PumpReverse { private get; set; }
+        private bool PumpReverse { get; set; }
         private readonly ObservableCollection<string> _cmdQueue;
         private readonly Timer _queueTimer;
 
-        public bool Active { get; private set; }
-        public double Speed { get; private set; }
+        private bool Active { get; set; }
 
         public delegate void LogMessage(string msg);
+        public delegate void SetSpeedIndicator(string speed);
 
         public event LogMessage SetLogMessage;
         public event LogMessage SetQueue;
+        public event SetSpeedIndicator SetSpeed;
 
         public PumpSerial(string portStr, bool startDirection)
         {
@@ -164,10 +165,17 @@ namespace LabControl.PortModels
             }
 
             var ascii = Encoding.ASCII;
-            if (mRxData.Length > 0)
+            if (mRxData.Length <= 0) return;
+            var logStr = ascii.GetString(mRxData);
+            switch (logStr.Substring(0, 2))
             {
-                SetLogMessage?.Invoke(($"{_comId}:{ascii.GetString(mRxData)}:{BitConverter.ToString(mRxData)}"));
-
+                case "nl":
+                case "nr":
+                    SetSpeed?.Invoke(logStr.Substring(2));
+                    break;
+                default:
+                    SetLogMessage?.Invoke(($"{_comId}:{ascii.GetString(mRxData)}:{BitConverter.ToString(mRxData)}"));
+                    break;
             }
         }
 
