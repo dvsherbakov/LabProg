@@ -167,11 +167,13 @@ namespace LabControl.PortModels
             var ascii = Encoding.ASCII;
             if (mRxData.Length <= 0) return;
             var logStr = ascii.GetString(mRxData);
-            switch (logStr.Substring(0, 2))
+            switch (logStr.Substring(2, 2))
             {
                 case "nl":
                 case "nr":
-                    SetSpeed?.Invoke(logStr.Substring(2));
+                case "yr":
+                case "yl":
+                    SetSpeed?.Invoke(logStr.Substring(4));
                     break;
                 default:
                     SetLogMessage?.Invoke(($"{_comId}:{ascii.GetString(mRxData)}:{BitConverter.ToString(mRxData)}"));
