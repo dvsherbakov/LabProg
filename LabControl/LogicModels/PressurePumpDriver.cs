@@ -52,7 +52,7 @@ namespace LabControl.LogicModels
             SetLogMessage?.Invoke("Запуск продувки");
             _ = ElvWrapper.AF1_Set_Press(_pId, 1900, _fCalibration, 1000);
             Thread.Sleep(2000);
-            _ = ElvWrapper.AF1_Set_Press(_pId, pressure * 10, _fCalibration, 1000);
+            _ = ElvWrapper.AF1_Set_Press(_pId, 0, _fCalibration, 1000);
         }
 
         private double GetPressure()
