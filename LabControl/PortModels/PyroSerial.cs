@@ -26,7 +26,6 @@ namespace LabControl.PortModels
             
             if (string.IsNullOrEmpty(port)) port = "COM4";
             _fRxIdx = 0;
-            SetLogMessage?.Invoke($"Try connected Pyro on port {port}");
             _port = new SerialPort(port)
             {
                 BaudRate = 57600,
@@ -81,7 +80,7 @@ namespace LabControl.PortModels
             EventHandler?.Invoke(t);
         }
 
-        private static float RcConvert(byte[] rData)
+        private static float RcConvert(IEnumerable<byte> rData)
         {
             var newData = TrimReceivedData(rData);
             if (newData.Length < 2) return 0;

@@ -14,7 +14,7 @@ namespace LabControl.PortModels
     {
         private readonly SerialPort _port;
         private readonly string _comId;
-        private bool PumpReverse { get; set; }
+        private bool PumpReverse { get; }
         private readonly ObservableCollection<string> _cmdQueue;
         private readonly Timer _queueTimer;
 

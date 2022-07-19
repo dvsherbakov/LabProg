@@ -1921,6 +1921,7 @@ namespace LabControl.ViewModels
                 new ObservableCollection<string>(new PortList().GetPortList(PressureSensorPortSelected));
             LightingPortCollection =
                 new ObservableCollection<string>(new PortList().GetPortList(PressureSensorPortSelected));
+            LightingPortSelected = Settings.Default.LightingPortSelected;
             // AirSupportPortCollection = new ObservableCollection<string>(new PortList().GetPortList(AirSupportPortSelected));
             DispenserModeCollection = new ObservableCollection<string>(new PortList().GetDispenserModes());
             PumpingSpeedCollection = new ObservableCollection<float>() { 0f, 0.5f, 2.5f, 11f, 25f, 45f, 65f, 150f };
@@ -2048,7 +2049,7 @@ namespace LabControl.ViewModels
 
             _pwrDriver = new PwrDriver();
             _pwrDriver.SetLogMessage += AddLogMessage;
-            _pwrDriver.SetChannelParameters += SetChannelParams;
+            _pwrDriver.SetChannelParameters += ChannelParams;
             _pwrDriver.PortStr = Settings.Default.PwrPortSelected;
 
             _laserDriver = new LaserDriver();
@@ -2376,7 +2377,7 @@ namespace LabControl.ViewModels
             _dispenserDriver?.SetFrequency(_fDispenserFrequency);
         }
 
-        private void SetChannelParams(int channel, DataModels.PwrItem pi)
+        private void ChannelParams(int channel, DataModels.PwrItem pi)
         {
             switch (channel)
             {
