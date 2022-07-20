@@ -1126,5 +1126,41 @@ namespace LabControl.Properties {
                 this["LightingPortSelectedIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double CoefficientA {
+            get {
+                return ((double)(this["CoefficientA"]));
+            }
+            set {
+                this["CoefficientA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double CoefficientB {
+            get {
+                return ((double)(this["CoefficientB"]));
+            }
+            set {
+                this["CoefficientB"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double CoefficientC {
+            get {
+                return ((double)(this["CoefficientC"]));
+            }
+            set {
+                this["CoefficientC"] = value;
+            }
+        }
     }
 }

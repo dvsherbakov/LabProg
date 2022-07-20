@@ -387,4 +387,7 @@
   <data name="DispenserTypeLabel" xml:space="preserve">
     <value>Тип диспенсера</value>
   </data>
+  <data name="LabelPyroCurveParams" xml:space="preserve">
+    <value>Пересчет температуры:</value>
+  </data>
 </root>

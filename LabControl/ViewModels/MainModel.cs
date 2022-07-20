@@ -5,7 +5,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using LabControl.ClassHelpers;
-using LabControl.DataModels;
 using LabControl.LogicModels;
 using LabControl.Properties;
 
@@ -13,8 +12,6 @@ namespace LabControl.ViewModels
 {
     internal class MainModel : ViewModel
     {
-        private readonly ApplicationContext _fDbContext;
-
         #region drivers
 
         private readonly PumpDriver _pumpDriver;
@@ -1302,13 +1299,13 @@ namespace LabControl.ViewModels
         public float PyroTemperature
         {
             get => _fPyroTemperature;
-            set
+            private set
             {
                 _ = Set(ref _fPyroTemperature, value);
                 //convert pyro to termo
                 if (value > 0)
-                    //CurrentTemperature = Math.Round((value * value * (-0.0118)) + (value * 2.9009) - 44.827, 3);
-                    CurrentTemperature = Math.Round((value * value * (-0.0173)) + (value * 3.2429) - 36.308, 3);
+                    CurrentTemperature = Math.Round((value * value * (CoefficientA)) + (value * CoefficientB) - CoefficientC);
+                //CurrentTemperature = Math.Round((value * value * (-0.0173)) + (value * 3.2429) - 36.308, 3);
             }
         }
 
@@ -1749,6 +1746,27 @@ namespace LabControl.ViewModels
             }
         }
 
+        private double _coefficientA;
+        public double CoefficientA
+        {
+            get => _coefficientA;
+            set => Set(ref _coefficientA, value);
+        }
+
+        private double _coefficientB;
+        public double CoefficientB
+        {
+            get => _coefficientB;
+            set => Set(ref _coefficientB, value);
+        }
+
+        private double _coefficientC;
+        public double CoefficientC
+        {
+            get => _coefficientC;
+            set => Set(ref _coefficientC, value);
+        }
+
         #endregion
 
         #region Collections
@@ -1859,6 +1877,8 @@ namespace LabControl.ViewModels
         public static string LabelLightingChannels => Resources.LabelLightingChannels;
         public static string LabelLightingChannelsAll => Resources.LabelLightingChannelsAll;
         public static string LabelDynamicManageChannels => Resources.LabelDynamicManageChannels;
+        public static string LabelPyroCurveParams => Resources.LabelPyroCurveParams;
+
 
         #endregion
 
@@ -2012,6 +2032,9 @@ namespace LabControl.ViewModels
             LightingBlueChannelValue = Settings.Default.LightingBlueChannelValue;
             LightingGreenRedChannelValue = Settings.Default.LightingGreenRedChannelValue;
             IsSingleLighting = Settings.Default.IsSingleLighting;
+            CoefficientA = Settings.Default.CoefficientA;
+            CoefficientB = Settings.Default.CoefficientB;
+            CoefficientC = Settings.Default.CoefficientC;
             //init command area
             QuitCommand = new LambdaCommand(OnQuitApp);
             MinimizedCommand = new LambdaCommand(OnMinimizedCommandExecute);
@@ -2128,6 +2151,9 @@ namespace LabControl.ViewModels
             Settings.Default.PressureSensorPortSelected = PressureSensorPortSelected;
             Settings.Default.PwrPortSelected = PwrPortSelected;
             Settings.Default.LaserTypeSelectedIndex = LaserTypeSelectedIndex;
+            Settings.Default.CoefficientA = CoefficientA;
+            Settings.Default.CoefficientB = CoefficientB;
+            Settings.Default.CoefficientC = CoefficientC;
             Settings.Default.PwrCh0Mode = PwrCh0Mode;
             Settings.Default.PwrCh0Bias = PwrCh0Bias;
             Settings.Default.PwrCh0Amplitude = PwrCh0Amplitude;

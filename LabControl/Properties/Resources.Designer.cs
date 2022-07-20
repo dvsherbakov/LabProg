@@ -700,6 +700,15 @@ namespace LabControl.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Пересчет температуры:.
+        /// </summary>
+        internal static string LabelPyroCurveParams {
+            get {
+                return ResourceManager.GetString("LabelPyroCurveParams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Порт пирометра.
         /// </summary>
         internal static string LabelPyroPort {

@@ -6,7 +6,7 @@ namespace LabControl.PortModels
 {
     internal abstract class LaserSerial
     {
-        public string Name { get; set; }
+        protected string Name { get; set; }
         public delegate void LogMessage(string msg);
         public event LogMessage SetLogMessage;
 
