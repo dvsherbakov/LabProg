@@ -1863,7 +1863,7 @@
                                         <TextBlock Grid.Row="0" Grid.Column="0"
                                                    VerticalAlignment="Center"
                                                    Foreground="SandyBrown"
-                                                   Text="{Binding LabelPyroPort}" />
+                                                   Text="{Binding LabelAirSupportPort}" />
                                         <ComboBox Grid.Row="0" Grid.Column="1"
                                                   Style="{StaticResource RoundComboBox}"
                                                   ItemsSource="{Binding DispenserPortCollection}"

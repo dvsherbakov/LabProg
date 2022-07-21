@@ -21,6 +21,7 @@ namespace LabControl.PortModels
         private bool Active { get; set; }
 
         public delegate void LogMessage(string msg);
+
         public delegate void SetSpeedIndicator(string speed);
 
         public event LogMessage SetLogMessage;
